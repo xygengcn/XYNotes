@@ -1,0 +1,120 @@
+<!-- 列表样式 -->
+<template>
+    <div class="itemContent" :class="{'itemActive':data === note}">
+        <div class="title">{{data.title}}</div>
+        <div class="itemTime">
+            <span>最后编辑于：</span>
+            <span>{{data.updated| toDate }}</span>
+        </div>
+        <small class="content">{{data.text | subInfor}}</small>
+        <div class="itemTool">
+            <i :class="data.mark?'el-icon-star-on':'el-icon-star-off'" :title="data.mark?'取消标记':'标记'" @click="markNote(data)"></i>
+            <i class="el-icon-delete" aria-hidden="true" title="删除笔记" @click="delNote(data)"></i>
+        </div>
+    </div>
+</template>
+<script>
+    export default {
+        props: ["data"],
+        methods: {
+            delNote(item) {
+                this.$store.commit("delNote", item);
+            },
+            markNote(item) {
+                this.$store.commit("markNote", item);
+            }
+        },
+        computed: {
+            note() {
+                return this.$store.state.note;
+            }
+        },
+        filters: {
+            subInfor: function (value) {
+                if (value.length && value.length < 50) return value;
+                else return value.substring(0, 50) + "...";
+            },
+            toDate: function (val) {
+                var date = new Date(val);
+                var year = date.getFullYear() || 0;
+                var month = date.getMonth() + 1 || 0;
+                var day = date.getDate() || 0;
+                var hour = date.getHours() || 0;
+                var minute = date.getMinutes() || 0;
+                var second = date.getSeconds() || 0;
+                return (
+                    String(year).padStart(4, "0") +
+                    "-" +
+                    String(month).padStart(2, "0") +
+                    "-" +
+                    String(day).padStart(2, "0") +
+                    " " +
+                    String(hour).padStart(2, "0") +
+                    ":" +
+                    String(minute).padStart(2, "0") +
+                    ":" +
+                    String(second).padStart(2, "0")
+                );
+            }
+        }
+    }
+</script>
+<style scoped>
+    .itemContent {
+        box-sizing: border-box;
+        padding: 10px 24px 30px;
+        border: 2px solid transparent;
+        border-bottom: 2px #eeeeee solid;
+    }
+
+    .itemContent:hover,
+    .itemActive {
+        border-color: #2dbe60;
+    }
+
+    .itemContent:hover i {
+        color: #2dbe60;
+    }
+
+    .itemContent .itemTool {
+        text-align: center;
+        margin: 10px 24px;
+        color: #fff;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .itemContent .itemTool i {
+        margin: 0px 5px;
+        font-size: 20px;
+    }
+
+    .itemContent .title {
+        font-family: gotham, helvetica, arial, sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        height: 30px;
+        margin-bottom: 5px;
+        max-height: 40px;
+        overflow: hidden;
+        overflow-wrap: break-word;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: break-word;
+        line-height: 30px;
+        width: 200px;
+    }
+
+    .itemContent .content,
+    .itemTime {
+        color: #878787;
+    }
+
+    .itemContent .itemTime {
+        margin-bottom: 10px;
+        font-size: 12px;
+    }
+</style>
