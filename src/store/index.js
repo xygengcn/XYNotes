@@ -63,7 +63,7 @@ export default new Vuex.Store({
       var temp = {
         title: '示例',
         text: '这里也有一些内容在这里呢！',
-        html: '',
+        html: '这里也有一些内容在这里呢！',
         mark: false,
         share: false,
         reminded: '',
@@ -99,6 +99,9 @@ export default new Vuex.Store({
         state.note = state.data.notes[0];
       }
     },
+    setData(state,data){
+      state.data =data;
+    }
 
   },
   actions: {},

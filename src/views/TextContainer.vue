@@ -1,10 +1,10 @@
 <!-- 显示面板 -->
 <template>
   <div id="TextContainer">
-    <navbar @editMode="isEdit=!isEdit"></navbar>
+    <navbar @editMode="editMode"></navbar>
     <div class="EditContent">
-      <EditTextarea v-if="isEdit"></EditTextarea>
-      <ViewTextarea v-if="!isEdit"></ViewTextarea>
+      <EditTextarea v-if="mode==1 || mode ==2" class="panel"></EditTextarea>
+      <ViewTextarea v-if="mode==0 || mode ==2" class="panel"></ViewTextarea>
     </div>
 
   </div>
@@ -22,15 +22,13 @@
     },
     data() {
       return {
-        isEdit: false
+        mode: 0
       }
     },
-    methods: {},
-    computed: {
-
-    },
-    watch: {
-
+    methods: {
+      editMode(mode) {
+        this.mode = mode;
+      }
     }
   }
 </script>
@@ -46,5 +44,11 @@
   .EditContent {
     flex: 1;
     height: 100%;
+    display: flex;
+  }
+
+  .EditContent .panel {
+    flex: 1;
+    border-right: 1px solid #ccc;
   }
 </style>

@@ -1,25 +1,37 @@
 <!-- 左侧菜单 -->
 <template>
   <div id="sidebar">
-    <div id="logo">
-      <img src="../assets/logo.png" alt="">
-    </div>
+    <router-link to="/">
+      <div id="logo">
+        <img src="../assets/logo.png" alt="">
+      </div>
+    </router-link>
     <div class="toolbar">
-      <div class="sideBtn" @click="addNote">
-        <i class="el-icon-plus" aria-hidden="true"></i>
-      </div>
-      <div class="sideBtn">
-        <i class="el-icon-s-order" aria-hidden="true"></i>
-      </div>
-      <div class="sideBtn">
-        <i class="el-icon-star-on" aria-hidden="true"></i>
-      </div>
-      <div class="sideBtn">
-        <i class="el-icon-upload" aria-hidden="true"></i>
-      </div>
-      <div class="sideBtn">
-        <i class="el-icon-s-tools" aria-hidden="true"></i>
-      </div>
+      <router-link to="/">
+        <div class="sideBtn" @click="addNote">
+          <i class="el-icon-plus" aria-hidden="true"></i>
+        </div>
+      </router-link>
+      <router-link to="/">
+        <div class="sideBtn">
+          <i class="el-icon-s-order" aria-hidden="true"></i>
+        </div>
+      </router-link>
+      <router-link to="/mark">
+        <div class="sideBtn">
+          <i class="el-icon-star-on" aria-hidden="true"></i>
+        </div>
+      </router-link>
+      <router-link to="/backup">
+        <div class="sideBtn">
+          <i class="el-icon-upload" aria-hidden="true"></i>
+        </div>
+      </router-link>
+      <router-link to="/setting">
+        <div class="sideBtn">
+          <i class="el-icon-s-tools" aria-hidden="true"></i>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -32,7 +44,7 @@
 
     },
     methods: {
-      addNote(){
+      addNote() {
         this.$store.commit("addNote");
       }
     }

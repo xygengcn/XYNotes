@@ -65,6 +65,7 @@
         padding: 10px 24px 30px;
         border: 2px solid transparent;
         border-bottom: 2px #eeeeee solid;
+        position: relative;
     }
 
     .itemContent:hover,
@@ -115,6 +116,6 @@
 
     .itemContent .itemTime {
         margin-bottom: 10px;
-        font-size: 12px;
+        font-size: 10px;
     }
 </style>

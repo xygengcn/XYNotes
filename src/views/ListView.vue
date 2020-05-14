@@ -1,6 +1,6 @@
 <!-- 笔记列表 -->
 <template>
-    <div class="NoteList">
+    <div class="ListView">
         <div class="ListHeader">
             <div class="ListTitle">笔记</div>
             <div class="ListNav">
@@ -28,8 +28,8 @@
     </div>
 </template>
 <script>
-    import OrderBar from "./OrderBar";
-    import Note from "./NoteItem";
+    import OrderBar from "../components/OrderBar";
+    import Note from "../components/NoteItem";
     export default {
         components: {
             OrderBar,
@@ -38,7 +38,10 @@
         data() {
             return {
                 searchkey: "",
-                sortkey:{key:"created",order:"asc"},
+                sortkey: {
+                    key: "created",
+                    order: "asc"
+                },
                 isOrder: false
             };
         },
@@ -55,31 +58,34 @@
         methods: {
             setActive(item) {
                 this.$store.commit("setActive", item);
-            }, 
+            },
             //排序
             compare() {
-                return (a, b)=>{
+                return (a, b) => {
                     var aa = a[this.sortkey.key];
                     var bb = b[this.sortkey.key];
                     if (this.sortkey.order == "desc") return bb - aa;
                     else return aa - bb;
                 };
             },
-            order(sortkey){
-                this.isOrder =!this.isOrder;
-                this.sortkey =sortkey;
+            order(sortkey) {
+                this.isOrder = !this.isOrder;
+                this.sortkey = sortkey;
             }
         }
     };
 </script>
 
 <style scoped>
-    .NoteList {
-        overflow-y: auto;
+    .ListView {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
     }
 
     .ListHeader {
-        font-family: gotham, helvetica, arial, sans-serif;
+        height: 100px;
         color: #878787;
         padding: 20px 24px 15px;
         border-bottom: 1px solid #d9d9d9;
@@ -102,23 +108,30 @@
         cursor: pointer;
     }
 
-    .NoteList .ListItem {
-        position: relative;
+
+    .ListView .NoteList {
+        height: 100%;
         box-sizing: border-box;
-        cursor: pointer;
+        overflow: auto;
+        padding-bottom: 20px;
     }
 
-    .NoteList ul {
+    .ListView ul {
         list-style: none;
         text-decoration: none;
         padding: 0;
         margin: 0;
     }
 
-    .NoteList ul li {
+    .ListView ul li {
         color: #333;
     }
 
+    .ListView .ListItem {
+        position: relative;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
 
 
     /*搜索 */

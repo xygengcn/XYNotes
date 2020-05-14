@@ -17,7 +17,13 @@ utils.getTime = function (timestamp, format) {
         default: return timestamp; break;
     }
 }
+//转url
+utils.dataToUrl = function (str) {
+    const blob = new Blob([str], { type: "" });
+    var URL = window.URL || window.webkitURL || window;
+    return URL.createObjectURL(blob);
 
+}
 exports.install = function (Vue, opt) {
     Vue.prototype.$utils = utils;
 }

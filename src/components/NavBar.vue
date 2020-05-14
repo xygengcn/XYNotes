@@ -21,11 +21,14 @@
                 </el-tooltip>
             </div>
             <div class="right">
-                <el-tooltip class="item" effect="dark" :content="isEidt?'切换浏览模式':'切换编辑模式'" placement="bottom">
-                    <el-button v-text="isEidt?'编辑模式':'浏览模式'" plain  @click="editMode"></el-button>
+                <el-tooltip class="item" :class="{active:mode==0}" effect="dark" :content="'浏览模式'" placement="bottom">
+                    <el-button v-text="'浏览模式'" plain  @click="editMode(0)"></el-button>
                 </el-tooltip>
-                <el-tooltip class="item" effect="dark" content="MarkDown编辑器" placement="bottom">
-                    <el-button plain>MD</el-button>
+                 <el-tooltip class="item" :class="{active:mode==1}" effect="dark" :content="'编辑模式'" placement="bottom">
+                    <el-button v-text="'编辑模式'" plain  @click="editMode(1)"></el-button>
+                </el-tooltip>
+                <el-tooltip class="item" :class="{active:mode==2}" effect="dark" content="双屏模式" placement="bottom">
+                    <el-button plain @click="editMode(2)">MD</el-button>
                 </el-tooltip>
             </div>
         </div>
@@ -36,7 +39,8 @@
     export default {
         data() {
             return {
-                isEidt:false
+                mode:0
+               
             };
         },
         computed: {
@@ -48,9 +52,9 @@
             delNote(item) {
                 this.$store.commit("delNote", item);
             },
-            editMode(){
-                this.isEidt =!this.isEidt;
-                this.$emit("editMode");
+            editMode(mode){
+                this.mode =mode;
+                this.$emit("editMode",mode);
             },
              markNote(item) {
                 this.$store.commit("markNote", item);
@@ -71,7 +75,8 @@
     }
 
     .header button:hover,
-    .header button:focus {
+    .header button:focus,
+    .active {
         border-color: #2dbe60;
         color: #2dbe60;
         outline: 0;

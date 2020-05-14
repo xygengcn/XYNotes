@@ -21,5 +21,6 @@ body,
   margin: 0;
   padding: 0;
   color: #383838;
+  font-family: gotham, helvetica, arial, sans-serif;
 }
 </style>
