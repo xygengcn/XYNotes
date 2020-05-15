@@ -14,15 +14,7 @@
 
 <script>
   export default {
-    components: {},
-    data() {
-      return {};
-    },
-    computed: {
-      activeNoteText() {
-        return this.$store.state.note;
-      }
-    }
+    props:["activeNoteText"]
   };
 </script>
 <style lang='css'>

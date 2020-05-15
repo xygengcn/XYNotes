@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+const sysConfig = require ("../../package.json");
+
 Vue.use(Vuex)
 
 var data = {
   status: 'success',
-  user: 'localhost',
-  version: '1.0.0',
+  user: sysConfig.name,
+  version: sysConfig.version,
   configs: {},
   notes: []
 }
@@ -39,6 +41,7 @@ data.notes = [{
 export default new Vuex.Store({
   state: {
     data: data,
+    sysConfig:sysConfig,
     note: data.notes[0],
   },
   mutations: {

@@ -5,7 +5,7 @@
     </navbar>
     <div class="EditContent" :class="{fullScreen:fullScreen}">
       <EditTextarea v-if="mode==1 || mode ==2" class="panel" id="EditTextarea"></EditTextarea>
-      <ViewTextarea v-if="mode==0 || mode ==2" class="panel" ref="ViewTextarea" id="ViewTextarea"></ViewTextarea>
+      <ViewTextarea v-if="mode==0 || mode ==2" class="panel" ref="ViewTextarea" id="ViewTextarea" :activeNoteText="note"></ViewTextarea>
       <div class="closeFullScreen" v-if="fullScreen" @click="fullScreen =false">
         <el-tooltip class="item" effect="dark" content="关闭全屏" placement="top">
           <i class="el-icon-circle-close"></i>
