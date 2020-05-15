@@ -42,6 +42,7 @@
             }
         },
         methods: {
+            //读取
             localUp: function () {
                 const reader = new FileReader();
                 reader.readAsText(this.file);
@@ -51,6 +52,7 @@
                     _this.$store.commit("setData", _this.data);
                 };
             },
+            //导入文件
             inputFile(event) {
                 this.file = event.target.files[0];
                 this.localUp();

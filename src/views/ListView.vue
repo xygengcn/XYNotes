@@ -4,7 +4,7 @@
         <div class="ListHeader">
             <div class="ListTitle">笔记</div>
             <div class="ListNav">
-                <small>0条笔记</small>
+                <small>{{data.length}}条笔记</small>
                 <small @click="isOrder =!isOrder">选项<i class="el-icon-arrow-down"></i></small>
                 <OrderBar id="OrderBar" v-if="isOrder" @isOrder="order" :sortkey="sortkey"></OrderBar>
             </div>

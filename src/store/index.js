@@ -5,15 +5,20 @@ Vue.use(Vuex)
 
 var data = {
   status: 'success',
-  web: false,
   user: 'localhost',
   version: '1.0.0',
+  configs: {},
   notes: []
 }
+data.configs = {
+  isUser: false,
+  isLocalStorage: true,
+  isWebStorage: false
+}
 data.notes = [{
-    title: '小小笔记本',
-    text: '小小笔记本是木芽博客新尝试的一个轻量级的本地笔记本，是一款基于vue+vuex框架的笔记本，可用于本地备份和云备份两种方式，支持跨设备之间数据传输。',
-    html: '小小笔记本是木芽博客新尝试的一个轻量级的本地笔记本，是一款基于vue+vuex框架的笔记本，可用于本地备份和云备份两种方式，支持跨设备之间数据传输。',
+    title: 'XY笔记本',
+    text: 'XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。',
+    html: 'XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。',
     share: false,
     mark: false,
     reminded: '',
@@ -51,12 +56,13 @@ export default new Vuex.Store({
           state.data.notes.splice(i, 1);
           break;
         }
-
       }
+      this.dispatch("isLocalStorageSave");
     },
     //标记笔记
     markNote: function (state, item) {
       item.mark = !item.mark;
+      this.dispatch("isLocalStorageSave");
     },
     //添加笔记
     addNote(state) {
@@ -99,11 +105,26 @@ export default new Vuex.Store({
         state.note = state.data.notes[0];
       }
     },
-    setData(state,data){
-      state.data =data;
+    //初始数据
+    setData(state, data) {
+      state.data = data;
+    },
+    setNotes(state,notes){
+      state.data.notes =notes;
+      state.note =state.data.notes[0];
+    },
+    setConfigs(state,configs){
+      state.data.configs =configs;
     }
 
   },
-  actions: {},
+  actions: {
+    isLocalStorageSave(content) {
+      localStorage.setItem("XYNOTESDATA", JSON.stringify(content.state.data.notes));
+    },
+    configSave(content) {
+      localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(content.state.data.configs));
+    }
+  },
   modules: {}
 })

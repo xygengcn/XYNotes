@@ -18,7 +18,24 @@
         props: ["data"],
         methods: {
             delNote(item) {
-                this.$store.commit("delNote", item);
+                this.$confirm('是否删除笔记?', '提示', {
+                    confirmButtonText: '删除',
+                    cancelButtonText: '取消',
+                    confirmButtonClass:"el-button--danger",
+                    type: 'warning'
+                }).then(() => {
+                    this.$store.commit("delNote", item);
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+
             },
             markNote(item) {
                 this.$store.commit("markNote", item);

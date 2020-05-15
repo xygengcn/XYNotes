@@ -1,6 +1,6 @@
 {
   "name": "xynotes",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "element-ui": "^2.13.1",
+    "html2canvas": "^1.0.0-rc.5",
     "marked": "^1.0.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",

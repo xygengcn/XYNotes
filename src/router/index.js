@@ -15,7 +15,7 @@ const routes = [{
   path: '/backup',
   name: 'Backup',
   component: () => import('../views/Backup')
-} ,{
+}, {
   path: '/setting',
   name: 'Setting',
   component: () => import('../views/Setting')

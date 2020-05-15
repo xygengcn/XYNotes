@@ -13,22 +13,22 @@
         </div>
       </router-link>
       <router-link to="/">
-        <div class="sideBtn">
+        <div class="sideBtn" :class="{active:$route.path=='/'}">
           <i class="el-icon-s-order" aria-hidden="true"></i>
         </div>
       </router-link>
       <router-link to="/mark">
-        <div class="sideBtn">
+        <div class="sideBtn" :class="{active:$route.path=='/mark'}">
           <i class="el-icon-star-on" aria-hidden="true"></i>
         </div>
       </router-link>
       <router-link to="/backup">
-        <div class="sideBtn">
+        <div class="sideBtn" :class="{active:$route.path=='/backup'}">
           <i class="el-icon-upload" aria-hidden="true"></i>
         </div>
       </router-link>
       <router-link to="/setting">
-        <div class="sideBtn">
+        <div class="sideBtn" :class="{active:$route.path=='/setting'}">
           <i class="el-icon-s-tools" aria-hidden="true"></i>
         </div>
       </router-link>
@@ -98,6 +98,5 @@
   .sideBtn.active {
     background-color: #2dbe60;
     color: #fff;
-    border: #2dbe60 1px solid;
   }
 </style>
