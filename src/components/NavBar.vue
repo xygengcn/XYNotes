@@ -1,3 +1,4 @@
+<!-- 工具栏 -->
 <template>
     <div>
         <div class="header">
@@ -39,7 +40,7 @@
                     <el-button v-text="'编辑模式'" @click="editMode(1)" size="mini" plain></el-button>
                 </el-tooltip>
                 <el-tooltip class="item" :class="{active:mode==2}" effect="dark" content="双屏模式" placement="bottom">
-                    <el-button @click="editMode(2)" size="mini" plain>MD</el-button>
+                    <el-button @click="editMode(2)" size="mini" plain>MD模式</el-button>
                 </el-tooltip>
             </div>
         </div>

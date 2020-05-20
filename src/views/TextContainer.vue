@@ -76,7 +76,11 @@
       },
       //生成图片
       HtmlToImage() {
-        html2canvas(this.$refs.ViewTextarea.$el).then(canvas => {
+        var option ={
+          useCORS:true,
+          scale:2
+        }
+        html2canvas(this.$refs.ViewTextarea.$el,option).then(canvas => {
           this.imgShareUrl = canvas.toDataURL();
           this.imgShareDownload = this.$utils.base64ImgtoFile(this.imgShareUrl, this.note.title);
           this.imgName =this.imgShareDownload.name;

@@ -3,8 +3,7 @@
     <div class="itemContent" :class="{'itemActive':data === note}">
         <div class="title">{{data.title}}</div>
         <div class="itemTime">
-            <span>最后编辑于：</span>
-            <span>{{data.updated| toDate }}</span>
+            <span>{{$utils.timeToDate(data.updated)}}</span>
         </div>
         <small class="content">{{data.text | subInfor}}</small>
         <div class="itemTool">
@@ -50,28 +49,6 @@
             subInfor: function (value) {
                 if (value.length && value.length < 50) return value;
                 else return value.substring(0, 50) + "...";
-            },
-            toDate: function (val) {
-                var date = new Date(val);
-                var year = date.getFullYear() || 0;
-                var month = date.getMonth() + 1 || 0;
-                var day = date.getDate() || 0;
-                var hour = date.getHours() || 0;
-                var minute = date.getMinutes() || 0;
-                var second = date.getSeconds() || 0;
-                return (
-                    String(year).padStart(4, "0") +
-                    "-" +
-                    String(month).padStart(2, "0") +
-                    "-" +
-                    String(day).padStart(2, "0") +
-                    " " +
-                    String(hour).padStart(2, "0") +
-                    ":" +
-                    String(minute).padStart(2, "0") +
-                    ":" +
-                    String(second).padStart(2, "0")
-                );
             }
         }
     }
