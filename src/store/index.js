@@ -1,47 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-const sysConfig = require ("../../package.json");
-
 Vue.use(Vuex)
 
-var data = {
-  status: 'success',
-  user: sysConfig.name,
-  version: sysConfig.version,
-  configs: {},
-  notes: []
-}
-data.configs = {
-  isUser: false,
-  isLocalStorage: true,
-  isWebStorage: false
-}
-data.notes = [{
-    title: 'XY笔记本',
-    text: 'XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。',
-    html: 'XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。',
-    share: false,
-    mark: false,
-    reminded: '',
-    created: 1574844708303,
-    updated: 1574844708302
-  },
-  {
-    title: '示例',
-    text: '这里也有一些内容在这里呢!',
-    html: '这里也有一些内容在这里呢!',
-    mark: true,
-    share: false,
-    reminded: '',
-    created: 1574844708310,
-    updated: 1574844708302
-  }
-];
+import storage  from './data';
+const sysConfig = require("../../package.json");
+var data = require("./default.json");
 export default new Vuex.Store({
   state: {
     data: data,
-    sysConfig:sysConfig,
     note: data.notes[0],
   },
   mutations: {
@@ -60,16 +26,17 @@ export default new Vuex.Store({
           break;
         }
       }
-      this.dispatch("isLocalStorageSave");
+      this.dispatch("del",item);
     },
     //标记笔记
     markNote: function (state, item) {
       item.mark = !item.mark;
-      this.dispatch("isLocalStorageSave");
+      this.dispatch("save");
     },
     //添加笔记
     addNote(state) {
       var temp = {
+        nid:new Date().getTime(),
         title: '示例',
         text: '这里也有一些内容在这里呢！',
         html: '这里也有一些内容在这里呢！',
@@ -122,11 +89,31 @@ export default new Vuex.Store({
 
   },
   actions: {
-    isLocalStorageSave(content) {
-      localStorage.setItem("XYNOTESDATA", JSON.stringify(content.state.data.notes));
+    del(content,note){
+      let configs =content.state.data.configs;
+      storage.del(configs.isLocalStorage,configs.isWebStorage,note,content.state.data.notes);
+    },
+    save(content) {
+      let configs =content.state.data.configs;
+      storage.save(configs.isLocalStorage,configs.isWebStorage,content.state.note,content.state.data.notes);
     },
     configSave(content) {
-      localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(content.state.data.configs));
+      let configs =content.state.data.configs;
+      configs.version =sysConfig.version,
+      localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(configs));
+    },
+    init(content){
+      if(localStorage.getItem("XYNOTESCONFIGS")){
+        content.commit("setConfigs",JSON.parse(localStorage.getItem("XYNOTESCONFIGS")))
+      }else{
+        localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(content.state.data.configs));
+      }
+      if(content.state.data.configs.isLocalStorage){
+        storage.init(content.state.data.notes).then(res=>{
+          content.commit("setNotes",res);
+        })
+      }
+      
     }
   },
   modules: {}

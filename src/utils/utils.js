@@ -1,8 +1,8 @@
 var utils = {}
 
 utils.getTime = function (timestamp, format) {
-    var date = timestamp ? timestamp : new Date();
-    var timestamp = date.getTime();
+    var date = timestamp ? new Date(timestamp) : new Date();
+    var timeStamp = new Date().getTime();
     var year = String(date.getFullYear()).padStart(4, "0"); //获取当前年份
     var month = String(date.getMonth() + 1).padStart(2, "0"); //获取当前月份
     var day = String(date.getDate()).padStart(2, "0"); //获取当前日
@@ -21,7 +21,7 @@ utils.getTime = function (timestamp, format) {
             return hour + ":" + minute + ":" + second;
             break;
         default:
-            return timestamp;
+            return timeStamp;
             break;
     }
 }
@@ -55,15 +55,7 @@ utils.timeToDate = function (dateTimeStamp) {
     } else if (diffValue >= 0 && diffValue <= minute) {
         result = "刚刚"
     } else {
-        var datetime = new Date();
-        datetime.setTime(dateTimeStamp);
-        var Nyear = datetime.getFullYear();
-        var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
-        var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-        var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
-        var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
-        var Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-        result = Nyear + "-" + Nmonth + "-" + Ndate
+        result = this.getTime(dateTimeStamp, 'yyy-MM-dd HH:mm:ss');
     }
     return result;
 }
@@ -113,6 +105,35 @@ utils.copy = function (text) {
         }
         document.body.removeChild(textarea)
     })
+}
+utils.sizeof = function (str, charset) {
+    var total = 0,
+        charCode, i, len;
+    charset = charset ? charset.toLowerCase() : '';
+    if (charset === 'utf-16' || charset === 'utf16') {
+        for (i = 0, len = str.length; i < len; i++) {
+            charCode = str.charCodeAt(i);
+            if (charCode <= 0xffff) {
+                total += 2;
+            } else {
+                total += 4;
+            }
+        }
+    } else {
+        for (i = 0, len = str.length; i < len; i++) {
+            charCode = str.charCodeAt(i);
+            if (charCode <= 0x007f) {
+                total += 1;
+            } else if (charCode <= 0x07ff) {
+                total += 2;
+            } else if (charCode <= 0xffff) {
+                total += 3;
+            } else {
+                total += 4;
+            }
+        }
+    }
+    return total;
 }
 exports.install = function (Vue, opt) {
     Vue.prototype.$utils = utils;

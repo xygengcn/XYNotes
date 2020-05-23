@@ -7,10 +7,6 @@
         <div class="container">
             <ul>
                 <li>
-                    <label>登录状态</label>
-                    <el-switch v-model="configs.isUser" active-color="#13ce66"></el-switch>
-                </li>
-                <li>
                     <label>本地存储</label>
                     <el-switch v-model="configs.isLocalStorage" active-color="#13ce66"></el-switch>
                 </li>
@@ -18,6 +14,7 @@
                     <label>网络存储</label>
                     <el-switch v-model="configs.isWebStorage" active-color="#13ce66"></el-switch>
                 </li>
+                
             </ul>
         </div>
         <div class="footer">
@@ -28,8 +25,8 @@
 <script>
     export default {
         data() {
+           // let size =this.$utils.sizeof(JSON.stringify(this.$store.state.data));
             return {
-
             }
         },
         methods: {
@@ -42,7 +39,7 @@
             }
         },
         computed: {
-            configs(){
+            configs() {
                 return this.$store.state.data.configs;
             }
         }

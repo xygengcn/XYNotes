@@ -30,13 +30,7 @@
       }
     },
     created(){
-      if(localStorage.getItem("XYNOTESCONFIGS")){
-        this.$store.commit("setConfigs",JSON.parse(localStorage.getItem("XYNOTESCONFIGS")))
-      }
-
-      if(localStorage.getItem("XYNOTESDATA") && this.$store.state.data.configs.isLocalStorage){
-        this.$store.commit("setNotes",JSON.parse(localStorage.getItem("XYNOTESDATA")))
-      }
+      this.$store.dispatch("init");
     }
   }
 </script>

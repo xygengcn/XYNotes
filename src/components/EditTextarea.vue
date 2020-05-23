@@ -71,11 +71,20 @@
       },
       //保存操作
       save(e) {
-        
         var text = e.target.value;
         this.$store.commit("setText", text);
-        let html = marked(text);
-        this.$store.commit("setHtml", html);
+        marked.setOptions({
+          renderer: new marked.Renderer(),
+          gfm: true,
+          tables: true,
+          breaks: true,
+          pedantic: false,
+          sanitize: false,
+          smartLists: true,
+          smartypants: false
+        })
+        this.string = marked(text);
+        this.$store.commit("setHtml",  this.string);
         this.editTime();
         this.$store.commit("removeNote");
       },
@@ -84,7 +93,7 @@
         clearTimeout(this.autosave);
         this.isSave = true;
         if (this.$store.state.data.configs.isLocalStorage) {
-          this.$store.dispatch("isLocalStorageSave");
+          this.$store.dispatch("save");
         }
         console.log("自动保存成功———" + this.$utils.getTime(new Date(), 'yyy-MM-dd HH:mm:ss'));
       },
@@ -156,7 +165,7 @@
         }).then(({
           value
         }) => {
-        this.insertText(this.$refs.EditArea,`![](${value})`);
+          this.insertText(this.$refs.EditArea, `![](${value})`);
         }).catch(() => {
           this.$message({
             type: 'info',
