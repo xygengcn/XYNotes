@@ -140,7 +140,25 @@ var JSQL = function (dbName) {
                 reject(e);
             };
         })
+    },
+    //删除数据库
+    this.deleteDB = () => {
+        return new Promise((resolve, reject) => {
+            var result = this.indexedDB.deleteDatabase(this.dbName); 
+            result.onsuccess = e => {
+                console.log("删除成功", e);
+                if (result.result) {
+                    resolve(result.result);
+                }
+            };
+            result.onerror = e => {
+                console.log("删除失败", e);
+                reject(e);
+            };
+        })
     }
+
+
 }
 export default JSQL;
 

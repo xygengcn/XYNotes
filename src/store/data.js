@@ -1,8 +1,6 @@
 //数据保存处理中心
 import JSQL from '../utils/JSQL'
-var storage = {
-
-};
+var storage = {};
 
 storage.init =function(data){
     let db = new JSQL('XYNOTES');
@@ -47,6 +45,15 @@ storage.save = function (isLocal = true, isWeb = false, note, notes) {
             this.localStorage("notes", notes);
         }
     }
+}
+storage.clean = function () {
+        let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        let db = new JSQL('XYNOTES')
+        if (indexedDB) {
+            db.deleteDB();
+        } else {
+            localStorage.removeItem("notes");
+        }
 }
 
 storage.localStorage = function (key, object) {

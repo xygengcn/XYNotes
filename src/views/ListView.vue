@@ -5,8 +5,25 @@
             <div class="ListTitle">笔记</div>
             <div class="ListNav">
                 <small>{{data.length}}条笔记</small>
-                <small @click="isOrder =!isOrder">选项<i class="el-icon-arrow-down"></i></small>
-                <OrderBar id="OrderBar" v-if="isOrder" @isOrder="order" :sortkey="sortkey"></OrderBar>
+                <el-dropdown trigger="click" class="order" @command="order">
+                    <span class="el-dropdown-link">
+                        <small>排序方式<i class="el-icon-arrow-down el-icon--right"></i></small>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item :icon="sortkey==sorts[0]?'el-icon-check':'el-icon-minus'" :command="sorts[0]">
+                            创建时间（最早优先）
+                        </el-dropdown-item>
+                        <el-dropdown-item :icon="sortkey==sorts[1]?'el-icon-check':'el-icon-minus'" :command="sorts[1]">
+                            创建时间（最晚优先）
+                        </el-dropdown-item>
+                        <el-dropdown-item :icon="sortkey==sorts[2]?'el-icon-check':'el-icon-minus'" :command="sorts[2]">
+                            更新时间（最早优先）
+                        </el-dropdown-item>
+                        <el-dropdown-item :icon="sortkey==sorts[3]?'el-icon-check':'el-icon-minus'" :command="sorts[3]">
+                            更新时间（最晚优先）
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
             </div>
         </div>
         <div class="SearchBar">
@@ -28,21 +45,31 @@
     </div>
 </template>
 <script>
-    import OrderBar from "../components/OrderBar";
     import Note from "../components/NoteItem";
     export default {
         components: {
-            OrderBar,
             Note
         },
         data() {
-            return {
-                searchkey: "",
-                sortkey: {
+            var sorts = [{
                     key: "created",
                     order: "asc"
+                }, {
+                    key: "created",
+                    order: "desc"
                 },
-                isOrder: false
+                {
+                    key: "updated",
+                    order: "asc"
+                }, {
+                    key: "updated",
+                    order: "desc"
+                }
+            ];
+            return {
+                searchkey: "",
+                sorts: sorts,
+                sortkey: sorts[0]
             };
         },
         computed: {
@@ -58,6 +85,9 @@
         methods: {
             setActive(item) {
                 this.$store.commit("setActive", item);
+                if (this.$store.state.isMobie) {
+                    this.$router.push('/m/note');
+                }
             },
             //排序
             compare() {
@@ -69,7 +99,6 @@
                 };
             },
             order(sortkey) {
-                this.isOrder = !this.isOrder;
                 this.sortkey = sortkey;
             }
         }
@@ -102,10 +131,11 @@
         margin-bottom: 20px;
     }
 
-    .ListNav small:nth-child(2) {
+    .ListNav .order {
         float: right;
         position: relative;
         cursor: pointer;
+        color: #878787;
     }
 
 

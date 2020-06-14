@@ -62,8 +62,8 @@
         position: relative;
     }
 
-    .itemContent:hover,
-    .itemActive {
+    .pc .itemContent:hover,
+    .pc .itemActive {
         border-color: #2dbe60;
     }
 

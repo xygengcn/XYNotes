@@ -14,7 +14,10 @@
                     <label>网络存储</label>
                     <el-switch v-model="configs.isWebStorage" active-color="#13ce66"></el-switch>
                 </li>
-                
+                <li>
+                    <label>恢复默认</label>
+                    <el-button type="danger" size="mini" @click="rebuild">恢复</el-button>
+                </li>
             </ul>
         </div>
         <div class="footer">
@@ -23,11 +26,11 @@
     </div>
 </template>
 <script>
+    import storage from '../store/data';
     export default {
         data() {
-           // let size =this.$utils.sizeof(JSON.stringify(this.$store.state.data));
-            return {
-            }
+            // let size =this.$utils.sizeof(JSON.stringify(this.$store.state.data));
+            return {}
         },
         methods: {
             saveConfig() {
@@ -35,6 +38,25 @@
                 this.$message({
                     message: '保存配置成功',
                     type: 'success'
+                });
+            },
+            rebuild() {
+                this.$confirm('操作数据清空，配置默认！建议操作前备份数据！', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    storage.clean();
+                    this.$message({
+                        type: 'success',
+                        message: '恢复成功!'
+                    })
+                    window.location ='/';
+                }).catch(e => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消恢复'
+                    });
                 });
             }
         },
@@ -62,14 +84,13 @@
     }
 
     .setting li {
+        display: flex;
         padding: 15px 20px;
         border-bottom: 1px #ccc solid;
     }
 
     .setting li label {
-        display: inline-block;
-        width: 80%;
-
+        flex: 1;
     }
 
     .container {

@@ -7,7 +7,7 @@
       </div>
     </router-link>
     <div class="toolbar">
-      <router-link to="/">
+       <router-link to="/">
         <div class="sideBtn" @click="addNote">
           <i class="el-icon-plus" aria-hidden="true"></i>
         </div>
@@ -22,6 +22,7 @@
           <i class="el-icon-star-on" aria-hidden="true"></i>
         </div>
       </router-link>
+      
       <router-link to="/backup">
         <div class="sideBtn" :class="{active:$route.path=='/backup'}">
           <i class="el-icon-upload" aria-hidden="true"></i>
@@ -61,6 +62,21 @@
     background-color: #f8f8f8;
     -webkit-app-region: drag;
     padding: 15px;
+  }
+  .mobie #sidebar{
+    /* position: absolute;
+    bottom: 0; */
+    display:flex;
+    flex-direction: row;
+    height: 73px;
+    width: 100%;
+  }
+  .mobie .toolbar{
+    width: 100%;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   #logo {

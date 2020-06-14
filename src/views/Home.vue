@@ -1,19 +1,19 @@
+<!-- 移动端首页 -->
 <template>
-  <div class="home">
+  <div class="home" :class="isMobie?'mobie':'pc'">
     <Sidebar></Sidebar>
     <transition tag="div" appear>
       <MainContainer v-if="isTriggle"></MainContainer>
     </transition>
-    <TextContainer @Triggle="Triggle"></TextContainer>
+    <TextContainer @Triggle="Triggle" v-if="!isMobie"></TextContainer>
   </div>
 </template>
 
 <script>
   import Sidebar from "../components/Sidebar";
   import MainContainer from "../views/MainContainer"
-  import TextContainer from "../views/TextContainer"
+  import TextContainer from "./TextContainer"
   export default {
-    name: 'Home',
     components: {
       Sidebar,
       MainContainer,
@@ -22,6 +22,11 @@
     data() {
       return {
         isTriggle: true
+      }
+    },
+    computed:{
+      isMobie(){
+        return this.$store.state.isMobie;
       }
     },
     methods: {
@@ -36,9 +41,14 @@
 </script>
 <style scoped>
   .home {
-    display: flex;
     width: 100%;
     height: 100%;
+    position: relative;
+    overflow: hidden;
+    display:flex;
+  }
+  .mobie {
+    flex-direction: column-reverse;
   }
 
   .v-enter,

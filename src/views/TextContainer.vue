@@ -106,14 +106,16 @@
     height: 100%;
     display: flex;
     position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .mobie .EditContent{
+    margin: 0px;
   }
 
   .EditContent .panel {
     flex: 1;
     min-width: 50%;
-  }
-  #EditTextarea{
-    border-right: 1px solid #f7f1f1;
   }
 
   .fullScreen {

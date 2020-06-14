@@ -1,3 +1,4 @@
+<!-- 编辑区 -->
 <template>
   <div class="Edit">
     <div class="EditHeader">
@@ -84,7 +85,7 @@
           smartypants: false
         })
         this.string = marked(text);
-        this.$store.commit("setHtml",  this.string);
+        this.$store.commit("setHtml", this.string);
         this.editTime();
         this.$store.commit("removeNote");
       },
@@ -194,8 +195,29 @@
   .EditContain {
     width: 100%;
     height: 100%;
-    padding: 0px 50px;
+    padding-left: 50px;
     box-sizing: border-box;
+  }
+
+  .mobie .EditContain {
+    padding: 0px;
+  }
+
+  .mobie .EditHeader {
+    height: 48px;
+    margin: 0px;
+
+    padding: 0px 20px;
+  }
+
+  .mobie .EditHeader .title {
+    height: 48px;
+    line-height: 48px;
+  }
+
+  .mobie .Edit .EditArea {
+    padding: 10px 20px;
+    font-size: 1em;
   }
 
   /* 标题 */
@@ -235,7 +257,7 @@
   /* 正文 */
   .EditArea {
     font-family: gotham, helvetica, arial, sans-serif;
-    width: calc(100% - 10px);
+    width: 100%;
     box-sizing: border-box;
     height: 100%;
     border: none;
@@ -245,7 +267,7 @@
     font-size: 14px;
     line-height: 1.5em;
     resize: none;
-    padding: 15px 0px 50px 0px;
+    padding: 15px 50px 50px 0px;
     -webkit-appearance: none;
     position: relative;
   }
@@ -285,6 +307,7 @@
   ::-webkit-scrollbar {
     width: 6px;
     background-color: #f5f5f5;
+
   }
 
   ::-webkit-scrollbar-thumb {

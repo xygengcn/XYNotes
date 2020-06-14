@@ -4,21 +4,23 @@
         <div class="title">
             <i class="el-icon-coin"></i>备份与恢复
         </div>
-        <div class="panel">
-            <div class="title">
-                <i class="el-icon-upload2"></i>本地恢复
+        <div class="container">
+            <div class="panel">
+                <div class="title">
+                    <i class="el-icon-upload2"></i>本地恢复
+                </div>
+                <div class="contain">
+                    <input type="file" accept=".xy" @change="inputFile($event)" id="localUp" />
+                    <i class="el-icon-upload2"></i>
+                </div>
             </div>
-            <div class="contain">
-                <input type="file" accept=".xy" @change="inputFile($event)" id="localUp" />
-                <i class="el-icon-upload2"></i>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="title">
-                <i class="el-icon-download"></i>本地备份
-            </div>
-            <div class="contain">
-                <i class="el-icon-download" @click="localDownDialog=true"></i>
+            <div class="panel">
+                <div class="title">
+                    <i class="el-icon-download"></i>本地备份
+                </div>
+                <div class="contain">
+                    <i class="el-icon-download" @click="localDownDialog=true"></i>
+                </div>
             </div>
         </div>
         <el-dialog title="本地备份" :visible.sync="localDownDialog" width="30%" center>
@@ -75,7 +77,7 @@
     }
 
     .backupBar .title i {
-        margin-right:10px;
+        margin-right: 10px;
     }
 
     .backupBar>.title {
@@ -83,6 +85,9 @@
         height: 60px;
         border-bottom: 1px solid #d9d9d9;
         line-height: 60px;
+    }
+    .backupBar .container{
+        overflow: auto;
     }
 
     .backupBar .panel {
@@ -116,6 +121,7 @@
         opacity: 0;
         background: #cccccc;
         position: absolute;
+        left: 0;
         cursor: pointer;
     }
 

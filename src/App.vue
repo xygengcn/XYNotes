@@ -1,26 +1,23 @@
 <template>
   <div id="app">
-    <Home></Home>
+    <router-view></router-view>
   </div>
 </template>
-<script>
-  import Home from './views/Home';
-  export default {
-    name: "App",
-    components: {
-      Home
-    }
-  };
-</script>
 <style>
-html,
-body,
-#app {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  color: #383838;
-  font-family: gotham, helvetica, arial, sans-serif;
-}
+  html,
+  body,
+  #app {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    color: #383838;
+    font-family: gotham, helvetica, arial, sans-serif;
+  }
+
+  a {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
 </style>

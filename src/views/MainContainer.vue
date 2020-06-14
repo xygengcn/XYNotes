@@ -4,31 +4,16 @@
     <router-view></router-view>
   </div>
 </template>
-<script>
-  export default {
-    components: {
-
-    },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
-    computed: {
-
-    },
-    watch: {
-
-    }
-  }
-</script>
 <style scoped>
- #MainContainer {
-    height: 100%;
+  .mobie #MainContainer {
+    height: calc( 100% - 73px);
+    flex: 1;
+    border-right: 1px solid #d9d9d9;
+  }
+
+  .pc #MainContainer {
     width: 300px;
+    height: 100%;
     border-right: 1px solid #d9d9d9;
   }
 </style>
