@@ -15,7 +15,11 @@
                     <el-switch v-model="configs.isWebStorage" active-color="#13ce66"></el-switch>
                 </li>
                 <li>
-                    <label>恢复默认</label>
+                    <label>恢复设置</label>
+                    <el-button type="danger" size="mini" @click="recover">恢复</el-button>
+                </li>
+                <li>
+                    <label>恢复出厂</label>
                     <el-button type="danger" size="mini" @click="rebuild">恢复</el-button>
                 </li>
             </ul>
@@ -51,7 +55,27 @@
                         type: 'success',
                         message: '恢复成功!'
                     })
-                    window.location ='/';
+                    window.location = '/';
+                }).catch(e => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消恢复'
+                    });
+                });
+            },
+            recover() {
+                this.$confirm('配置恢复！', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    localStorage.removeItem("XYNOTESCONFIGS");
+                    localStorage.removeItem("XYNOTESFONT");
+                    this.$message({
+                        type: 'success',
+                        message: '恢复成功!'
+                    })
+                    window.location = '/';
                 }).catch(e => {
                     this.$message({
                         type: 'info',

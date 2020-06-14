@@ -10,56 +10,65 @@
                 <el-button class="el-icon-s-unfold" size="mini" @click="Triggle" plain>
                 </el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" :content="note.mark?'取消标记':'标记'" placement="bottom" :disabled ="isMobie">
+            <el-tooltip class="item" effect="dark" :content="note.mark?'取消标记':'标记'" placement="bottom"
+                :disabled="isMobie">
                 <el-button :class="note.mark?'el-icon-star-on':'el-icon-star-off'" @click="markNote(note)" size="mini"
                     plain>
                 </el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="删除笔记" placement="bottom" :disabled ="isMobie">
+            <el-tooltip class="item" effect="dark" content="删除笔记" placement="bottom" :disabled="isMobie">
                 <el-button class="el-icon-delete" aria-hidden="true" @click="delNote(note)" size="mini" plain>
                 </el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="网页截图" placement="bottom" :disabled ="isMobie">
+            <el-tooltip class="item" effect="dark" content="网页截图" placement="bottom" :disabled="isMobie">
                 <el-button class="el-icon-camera-solid" size="mini" @click="screenShot" plain></el-button>
             </el-tooltip>
 
-            <el-tooltip class="item" effect="dark" content="全屏" placement="bottom" :disabled ="isMobie">
+            <el-tooltip class="item" effect="dark" content="全屏" placement="bottom" :disabled="isMobie">
                 <el-button class="el-icon-full-screen" size="mini" @click="fullScreen" plain></el-button>
             </el-tooltip>
 
-            <el-tooltip class="item" effect="dark" content="更多" placement="bottom" :disabled ="isMobie">
-                <el-button class="el-icon-more" size="mini" plain></el-button>
+            <el-tooltip class="item" effect="dark" content="字体" placement="bottom" :disabled="isMobie">
+                <el-button size="mini" plain @click="isShow=true">Aa</el-button>
             </el-tooltip>
+
         </div>
         <div class="right">
-            <el-tooltip class="item" :class="{active:mode==0}" effect="dark" :content="'浏览模式'" placement="bottom" :disabled ="isMobie">
-                <el-button v-text="'浏览模式'" @click="editMode(0)" size="mini" plain></el-button>
+            <el-tooltip class="item" effect="dark" content="预览" placement="bottom" :disabled="isMobie" v-if="mode == 1">
+                <el-button size="mini" plain class="el-icon-view" @click="editMode(0)"></el-button>
             </el-tooltip>
-            <el-tooltip class="item" :class="{active:mode==1}" effect="dark" :content="'编辑模式'" placement="bottom" :disabled ="isMobie">
-                <el-button v-text="'编辑模式'" @click="editMode(1)" size="mini" plain></el-button>
+            <el-tooltip class="item" effect="dark" content="编辑" placement="bottom" :disabled="isMobie" v-if="mode != 1">
+                <el-button size="mini" plain class="el-icon-edit" @click="editMode(1)"></el-button>
             </el-tooltip>
-            <el-tooltip class="item" :class="{active:mode==2}" effect="dark" content="双屏模式" placement="bottom" v-if="!isMobie">
-                <el-button @click="editMode(2)" size="mini" plain>MD模式</el-button>
+            <el-tooltip class="item" effect="dark" content="双屏模式" placement="bottom" :disabled="isMobie"
+                :class="{active:mode==2}" v-if="!isMobie">
+                <el-button size="mini" plain @click="editMode(2)">MD</el-button>
             </el-tooltip>
         </div>
+        <FontDialog :isShow="isShow" @close="isShow=false"></FontDialog>
     </div>
 </template>
 
 <script>
+    import FontDialog from "../components/FontDialog"
     export default {
         props: ['isFullScreen'],
+        components: {
+            FontDialog
+        },
         data() {
             return {
                 mode: 0,
-                isTriggle: true
+                isTriggle: true,
+                isShow: false
             };
         },
         computed: {
             note() {
                 return this.$store.state.note;
             },
-            isMobie(){
-                return this.$store.state.isMobie?true:false;
+            isMobie() {
+                return this.$store.state.isMobie ? true : false;
             }
         },
         methods: {
@@ -112,7 +121,8 @@
         padding: 15px;
         display: flex;
     }
-    .mobie .header{
+
+    .mobie .header {
         flex-direction: column;
         height: auto;
         line-height: 44px;

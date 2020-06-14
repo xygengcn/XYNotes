@@ -8,8 +8,8 @@ storage.init =function(data){
         db.init('notes',1,data).then(e=>{
             e.fetchAll().then(res=>{
                 if(res.length==0){
-                    if(localStorage.getItem("XYNOTESCONFIGS")){
-                        resolve(localStorage.getItem("XYNOTESCONFIGS"));
+                    if(localStorage.getItem("notes")){
+                        resolve(localStorage.getItem("notes"));
                       }else{
                           resolve([]);
                       }
@@ -51,9 +51,10 @@ storage.clean = function () {
         let db = new JSQL('XYNOTES')
         if (indexedDB) {
             db.deleteDB();
-        } else {
-            localStorage.removeItem("notes");
         }
+        localStorage.removeItem("notes");
+        localStorage.removeItem("XYNOTESCONFIGS");
+        localStorage.removeItem("XYNOTESFONT");
 }
 
 storage.localStorage = function (key, object) {

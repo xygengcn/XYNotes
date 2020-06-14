@@ -8,7 +8,7 @@
     <div class="EditContain">
       <textarea id="EditArea" class="EditArea" :value="activeNoteText.text" @blur="editNote" @input="autoSave"
         @keydown="handleEvent" placeholder="直接开始输入" ref="EditArea" @contextmenu.prevent="context_menu"
-        @click="isContextMenu =false"></textarea>
+        @click="isContextMenu =false" :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></textarea>
       <div class="contextmenu" :style="contextMenuStyle" v-show="isContextMenu">
         <ul>
           <li @click="copy">复制</li>
@@ -35,6 +35,10 @@
     computed: {
       activeNoteText() {
         return this.$store.state.note;
+      },
+      font() {
+        console.log(this.$store.state.data.font);
+        return this.$store.state.data.font;
       }
     },
     watch: {},

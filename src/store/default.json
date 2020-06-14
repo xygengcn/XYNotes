@@ -6,6 +6,10 @@
         "isLocalStorage": true,
         "isWebStorage": false
     },
+    "font":{
+        "size":"14",
+        "lineHeight":"1.5"
+    },
     "notes": [
         {
             "nid":1574844708303,

@@ -12,7 +12,7 @@ export default new Vuex.Store({
   state: {
     data: defaultData,
     note: defaultData.notes[0],
-    isMobie:isMobie
+    isMobie: isMobie
   },
   mutations: {
     //选择笔记
@@ -90,6 +90,9 @@ export default new Vuex.Store({
     },
     setConfigs(state, configs) {
       state.data.configs = configs;
+    },
+    setFont(state, font) {
+      state.data.font = font;
     }
 
   },
@@ -108,11 +111,20 @@ export default new Vuex.Store({
       configs.version = sysConfig.version;
       localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(configs));
     },
+    fontSave(content) {
+      localStorage.setItem("XYNOTESFONT", JSON.stringify(content.state.data.font));
+    },
     init(content) {
       if (localStorage.getItem("XYNOTESCONFIGS")) {
         content.commit("setConfigs", JSON.parse(localStorage.getItem("XYNOTESCONFIGS")))
+
       } else {
         localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(content.state.data.configs));
+      }
+      if (localStorage.getItem("XYNOTESFONT")) {
+        content.commit("setFont", JSON.parse(localStorage.getItem("XYNOTESFONT")))
+      } else {
+        localStorage.setItem("XYNOTESFONT", JSON.stringify(content.state.data.font));
       }
       if (content.state.data.configs.isLocalStorage) {
         storage.init(content.state.data.notes).then(res => {

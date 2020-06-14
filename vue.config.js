@@ -1,7 +1,7 @@
 // vue.config.js
 module.exports = {
 
-  publicPath:"./",
+  publicPath: "./",
   //去掉map
   productionSourceMap: false,
   // devServer: {
@@ -15,5 +15,20 @@ module.exports = {
         args[0].title = 'XY笔记'
         return args
       })
+  },
+  pwa: {
+    name: 'XY笔记',
+    themeColor: '#ffffff',
+    msTileColor: '#ffffff',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'while',
+    manifestPath:'manifest.json',
+    iconPaths: {
+      favicon32: './img/logo-32.png',
+      favicon16: './img/logo-16.png',
+      appleTouchIcon: './favicon.ico',
+      maskIcon: './favicon.ico',
+      msTileImage: './favicon.ico'
+    }
   }
 }

@@ -5,14 +5,19 @@
       <div class="title" v-text="activeNoteText.title"></div>
     </div>
     <div class="ViewContain">
-      <div class="ViewArea" v-html="activeNoteText.html"></div>
+      <div class="ViewArea" v-html="activeNoteText.html" :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    props: ["activeNoteText"]
+    props: ["activeNoteText"],
+    computed:{
+      font(){
+        return this.$store.state.data.font;
+      }
+    }
   };
 </script>
 <style lang='css' scoped>
