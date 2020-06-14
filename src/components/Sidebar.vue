@@ -7,29 +7,29 @@
       </div>
     </router-link>
     <div class="toolbar">
-       <router-link to="/">
+      <router-link to="/">
         <div class="sideBtn" @click="addNote">
           <i class="el-icon-plus" aria-hidden="true"></i>
         </div>
       </router-link>
       <router-link to="/">
-        <div class="sideBtn" :class="{active:$route.path=='/'}">
+        <div class="sideBtn" :class="{active:$route.path=='/' || $route.path=='/m/' }">
           <i class="el-icon-s-order" aria-hidden="true"></i>
         </div>
       </router-link>
       <router-link to="/mark">
-        <div class="sideBtn" :class="{active:$route.path=='/mark'}">
+        <div class="sideBtn" :class="{active:$route.path=='/mark'|| $route.path=='/m/mark'}">
           <i class="el-icon-star-on" aria-hidden="true"></i>
         </div>
       </router-link>
-      
+
       <router-link to="/backup">
-        <div class="sideBtn" :class="{active:$route.path=='/backup'}">
+        <div class="sideBtn" :class="{active:$route.path=='/backup' ||$route.path=='/m/backup'}">
           <i class="el-icon-upload" aria-hidden="true"></i>
         </div>
       </router-link>
       <router-link to="/setting">
-        <div class="sideBtn" :class="{active:$route.path=='/setting'}">
+        <div class="sideBtn" :class="{active:$route.path=='/setting' ||$route.path=='/m/setting'}">
           <i class="el-icon-s-tools" aria-hidden="true"></i>
         </div>
       </router-link>
@@ -63,15 +63,17 @@
     -webkit-app-region: drag;
     padding: 15px;
   }
-  .mobie #sidebar{
+
+  .mobie #sidebar {
     /* position: absolute;
     bottom: 0; */
-    display:flex;
+    display: flex;
     flex-direction: row;
     height: 73px;
     width: 100%;
   }
-  .mobie .toolbar{
+
+  .mobie .toolbar {
     width: 100%;
     margin-left: 20px;
     display: flex;

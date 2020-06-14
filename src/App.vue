@@ -16,7 +16,7 @@
     font-family: gotham, helvetica, arial, sans-serif;
   }
 
-  a {
+  a,button{
     -webkit-tap-highlight-color: transparent;
     outline: none;
   }

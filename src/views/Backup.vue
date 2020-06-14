@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <el-dialog title="本地备份" :visible.sync="localDownDialog" width="30%" center>
+        <el-dialog title="本地备份" :visible.sync="localDownDialog" class="backupDialog" center>
             <span class="dialog">xy笔记.xy</span>
             <span slot="footer" class="dialog-footer">
                 <a :href="localDownUrl" download="xy笔记.xy">
@@ -124,7 +124,9 @@
         left: 0;
         cursor: pointer;
     }
-
+    .backupDialog{
+        min-width: 220px;
+    }
     .dialog {
         text-align: center;
         display: inline-block;
