@@ -7,7 +7,7 @@ const sysConfig = require("../../package.json");
 var defaultData = require("./default.json");
 const isMobie = navigator.userAgent.match(
   /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-);
+)?true:false;
 export default new Vuex.Store({
   state: {
     data: defaultData,

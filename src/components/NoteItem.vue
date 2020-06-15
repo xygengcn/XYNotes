@@ -1,13 +1,14 @@
 <!-- 列表样式 -->
 <template>
-    <div class="itemContent" :class="{'itemActive':data === note}">
+    <div class="itemContent noselect" :class="{'itemActive':data === note}">
         <div class="title">{{data.title}}</div>
         <div class="itemTime">
             <span>{{$utils.timeToDate(data.updated)}}</span>
         </div>
         <small class="content">{{data.text | subInfor}}</small>
-        <div class="itemTool">
-            <i :class="data.mark?'el-icon-star-on':'el-icon-star-off'" :title="data.mark?'取消标记':'标记'" @click="markNote(data)"></i>
+        <div class="itemTool" v-if="!isMobie">
+            <i :class="data.mark?'el-icon-star-on':'el-icon-star-off'" :title="data.mark?'取消标记':'标记'"
+                @click="markNote(data)"></i>
             <i class="el-icon-delete" aria-hidden="true" title="删除笔记" @click="delNote(data)"></i>
         </div>
     </div>
@@ -20,7 +21,7 @@
                 this.$confirm('是否删除笔记?', '提示', {
                     confirmButtonText: '删除',
                     cancelButtonText: '取消',
-                    confirmButtonClass:"el-button--danger",
+                    confirmButtonClass: "el-button--danger",
                     type: 'warning'
                 }).then(() => {
                     this.$store.commit("delNote", item);
@@ -43,6 +44,9 @@
         computed: {
             note() {
                 return this.$store.state.note;
+            },
+            isMobie() {
+                return this.$store.state.isMobie;
             }
         },
         filters: {
@@ -56,10 +60,16 @@
 <style scoped>
     .itemContent {
         box-sizing: border-box;
-        padding: 10px 24px 30px;
+        padding: 20px 24px;
         border: 2px solid transparent;
         border-bottom: 2px #eeeeee solid;
         position: relative;
+    }
+
+    .mobie .itemContent {
+        box-shadow: 0 2px 8px 2px rgba(0, 0, 0, .1);
+        margin: 10px;
+        border-radius: 4px;
     }
 
     .pc .itemContent:hover,

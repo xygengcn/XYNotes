@@ -1,49 +1,18 @@
 <!-- 工具栏 -->
 <template>
-    <div class="header">
-        <div class="left">
-            <el-tooltip class="item" effect="dark" :content="'收起侧栏'" placement="bottom" v-if="isTriggle &&!isMobie">
-                <el-button class="el-icon-s-fold" size="mini" @click="Triggle" plain>
-                </el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" :content="'展开侧栏'" placement="bottom" v-if="!isTriggle &&!isMobie">
-                <el-button class="el-icon-s-unfold" size="mini" @click="Triggle" plain>
-                </el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" :content="note.mark?'取消标记':'标记'" placement="bottom"
-                :disabled="isMobie">
-                <el-button :class="note.mark?'el-icon-star-on':'el-icon-star-off'" @click="markNote(note)" size="mini"
-                    plain>
-                </el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="删除笔记" placement="bottom" :disabled="isMobie">
-                <el-button class="el-icon-delete" aria-hidden="true" @click="delNote(note)" size="mini" plain>
-                </el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="网页截图" placement="bottom" :disabled="isMobie">
-                <el-button class="el-icon-camera-solid" size="mini" @click="screenShot" plain></el-button>
-            </el-tooltip>
-
-            <el-tooltip class="item" effect="dark" content="全屏" placement="bottom" :disabled="isMobie">
-                <el-button class="el-icon-full-screen" size="mini" @click="fullScreen" plain></el-button>
-            </el-tooltip>
-
-            <el-tooltip class="item" effect="dark" content="字体" placement="bottom" :disabled="isMobie">
-                <el-button size="mini" plain @click="isShow=true">Aa</el-button>
-            </el-tooltip>
-
-        </div>
-        <div class="right">
-            <el-tooltip class="item" effect="dark" content="预览" placement="bottom" :disabled="isMobie" v-if="mode == 1">
-                <el-button size="mini" plain class="el-icon-view" @click="editMode(0)"></el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="编辑" placement="bottom" :disabled="isMobie" v-if="mode != 1">
-                <el-button size="mini" plain class="el-icon-edit" @click="editMode(1)"></el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="双屏模式" placement="bottom" :disabled="isMobie"
-                :class="{active:mode==2}" v-if="!isMobie">
-                <el-button size="mini" plain @click="editMode(2)">MD</el-button>
-            </el-tooltip>
+    <div class="header" :style="{'width':width}">
+        <div class="toolBar">
+            <el-button class="el-icon-s-fold" @click="Triggle" v-if="isTriggle &&!isMobie" plain></el-button>
+            <el-button class="el-icon-s-unfold" @click="Triggle" v-if="!isTriggle &&!isMobie" plain></el-button>
+            <el-button :class="note.mark?'el-icon-star-on':'el-icon-star-off'" @click="markNote(note)" plain>
+            </el-button>
+            <el-button class="el-icon-delete" aria-hidden="true" @click="delNote(note)" plain></el-button>
+            <el-button class="el-icon-camera-solid" @click="screenShot" plain></el-button>
+            <el-button class="el-icon-full-screen" @click="fullScreen" plain></el-button>
+            <el-button @click="isShow=true" plain>Aa</el-button>
+            <el-button class="el-icon-view" @click="editMode(0)" v-if="mode == 1" plain></el-button>
+            <el-button class="el-icon-edit" @click="editMode(1)" v-if="mode != 1" plain></el-button>
+            <el-button plain @click="editMode(2)" v-if="!isMobie">MD</el-button>
         </div>
         <FontDialog :isShow="isShow" @close="isShow=false"></FontDialog>
     </div>
@@ -60,7 +29,8 @@
             return {
                 mode: 0,
                 isTriggle: true,
-                isShow: false
+                isShow: false,
+                width: "100%"
             };
         },
         computed: {
@@ -68,7 +38,16 @@
                 return this.$store.state.note;
             },
             isMobie() {
-                return this.$store.state.isMobie ? true : false;
+                return this.$store.state.isMobie;
+            }
+        },
+        created() {
+            if (!this.isMobie) {
+                if (document.documentElement.clientWidth > 978) {
+                    this.width = "auto"
+                } else {
+                    this.width = document.documentElement.clientWidth - 373 + "px"
+                }
             }
         },
         methods: {
@@ -80,6 +59,9 @@
                     type: 'warning'
                 }).then(() => {
                     this.$store.commit("delNote", item);
+                    if(this.isMobie){
+                        this.$router.go(-1);
+                    }
                     this.$message({
                         type: 'success',
                         message: '删除成功!'
@@ -118,19 +100,35 @@
     .header {
         height: 65px;
         line-height: 65px;
-        padding: 15px;
+        margin: 15px 0px;
+        padding: 0px 50px;
         display: flex;
+        box-sizing: border-box;
     }
 
     .mobie .header {
+        height: 50px;
+        line-height: 50px;
         flex-direction: column;
-        height: auto;
-        line-height: 44px;
-        padding: 10px 20px;
+        margin: 20px 0px 10px;
+        padding: 0px 20px;
     }
 
-    .header .left {
-        flex: 1;
+    .header .toolBar {
+        height: 100%;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .header .toolBar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .header .toolBar {
+        display: flex;
+        align-items: center;
     }
 
     .header button:hover,
@@ -142,6 +140,17 @@
     }
 
     .header button {
+        box-sizing: border-box;
         font-size: 1em;
+        border: none;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .1);
+    }
+
+    .pc .header button:hover {
+        box-shadow: 0 2px 8px 2px rgba(0, 0, 0, .1);
+    }
+
+    .el-button+.el-button {
+        margin-left: 20px;
     }
 </style>

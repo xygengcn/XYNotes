@@ -16,8 +16,25 @@
     font-family: gotham, helvetica, arial, sans-serif;
   }
 
-  a,button{
+  a,
+  button {
     -webkit-tap-highlight-color: transparent;
     outline: none;
   }
+
+  .noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+</style>
+<style>
+@media screen and (max-width: 750px) {
+  .el-message-box ,.el-dialog{
+    width: 60% !important;
+  }
+}
 </style>
