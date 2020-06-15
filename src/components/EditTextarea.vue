@@ -274,6 +274,7 @@
     padding: 15px 50px 50px 0px;
     -webkit-appearance: none;
     position: relative;
+    color: #383838;
   }
 
   /*右键 */

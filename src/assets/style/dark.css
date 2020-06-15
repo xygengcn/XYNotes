@@ -1,0 +1,45 @@
+.dark,.dark #sidebar,.dark #sidebar .sideBtn{
+    background-color: #333 !important;
+    border-color: #333 !important;
+    color: #858585;
+}
+.dark #sidebar .sideBtn{
+    background-color: #333 !important;
+}
+.dark #sidebar .sideBtn:hover,
+.dark #sidebar .sideBtn.active {
+    color: #2dbe60 !important;
+    border-color: #2dbe60 !important;
+}
+.dark #MainContainer{
+    background-color: #252526;
+    border-color: #252526 !important;
+}
+.dark #MainContainer .setting li{
+    border-color: #1E1E1E !important;
+}
+.dark .itemContent .title,.dark #MainContainer .search-input{
+    color:#ccc;
+}
+.dark .itemContent {
+    border-color: #1E1E1E !important;
+}
+.dark .itemContent:hover{
+    border-color: #2dbe60 !important;
+}
+.dark .itemContent .itemTool {
+    color: #252526 !important;
+}
+.dark #TextContainer{
+    background-color: #1E1E1E;
+}
+.dark .header button{
+    background: #333;
+    color: #ccc;
+}
+.dark #EditTextarea input,.dark #EditTextarea .EditArea,.dark #TextContainer .tag{
+    background-color: #1E1E1E !important;
+}
+.dark .EditArea,.dark .ViewArea{
+    color:#ccc !important;
+}

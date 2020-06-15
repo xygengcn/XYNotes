@@ -83,7 +83,7 @@
 
     .itemContent .itemTool {
         text-align: center;
-        margin: 10px 24px;
+        margin: 20px 24px;
         color: #fff;
         position: absolute;
         right: 0px;

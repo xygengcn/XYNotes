@@ -1,6 +1,6 @@
 <!-- 移动端首页 -->
 <template>
-  <div class="home" :class="isMobie?'mobie':'pc'">
+  <div class="home" :class="{'mobie':isMobie,'pc':!isMobie,'dark':isDark}">
     <Sidebar></Sidebar>
     <transition tag="div" appear>
       <MainContainer v-if="isTriggle"></MainContainer>
@@ -24,9 +24,12 @@
         isTriggle: true
       }
     },
-    computed:{
-      isMobie(){
+    computed: {
+      isMobie() {
         return this.$store.state.isMobie;
+      },
+      isDark() {
+        return this.$store.state.data.configs.isDark;
       }
     },
     methods: {
@@ -34,7 +37,7 @@
         this.isTriggle = is;
       }
     },
-    created(){
+    created() {
       this.$store.dispatch("init");
     }
   }
@@ -45,8 +48,9 @@
     height: 100%;
     position: relative;
     overflow: hidden;
-    display:flex;
+    display: flex;
   }
+
   .mobie {
     flex-direction: column-reverse;
   }

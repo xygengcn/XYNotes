@@ -3,7 +3,7 @@
   <div id="sidebar">
     <router-link to="/">
       <div id="logo">
-        <img src="../assets/logo.png" alt="">
+        <img class="img" :src="logo" alt="logo">
       </div>
     </router-link>
     <div class="toolbar">
@@ -38,11 +38,10 @@
 </template>
 <script>
   export default {
-    data() {
-      return {};
-    },
     computed: {
-
+      logo(){
+        return this.$store.state.data.configs.isDark?require('../assets/logo-dark.png'):require('../assets/logo.png');
+      }
     },
     methods: {
       addNote() {
@@ -65,8 +64,6 @@
   }
 
   .mobie #sidebar {
-    /* position: absolute;
-    bottom: 0; */
     display: flex;
     flex-direction: row;
     height: 73px;
@@ -87,7 +84,7 @@
     text-align: center;
   }
 
-  #logo img {
+  #logo .img {
     height: 36px;
     line-height: 36px;
     font-size: 2em;

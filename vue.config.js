@@ -29,6 +29,9 @@ module.exports = {
       appleTouchIcon: './favicon.ico',
       maskIcon: './favicon.ico',
       msTileImage: './favicon.ico'
+    },
+    workboxOptions: {
+      skipWaiting: true
     }
   }
 }

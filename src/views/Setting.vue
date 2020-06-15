@@ -8,11 +8,15 @@
             <ul>
                 <li>
                     <label>本地存储</label>
-                    <el-switch v-model="configs.isLocalStorage" active-color="#13ce66"></el-switch>
+                    <el-switch v-model="configs.isLocalStorage" active-color="#13ce66" @change="saveConfig"></el-switch>
                 </li>
                 <li>
                     <label>网络存储</label>
-                    <el-switch v-model="configs.isWebStorage" active-color="#13ce66"></el-switch>
+                    <el-switch v-model="configs.isWebStorage" active-color="#13ce66" @change="saveConfig"></el-switch>
+                </li>
+                <li>
+                    <label>黑暗主题</label>
+                    <el-switch v-model="configs.isDark" active-color="#13ce66" @change="saveConfig"></el-switch>
                 </li>
                 <li>
                     <label>恢复设置</label>
@@ -22,10 +26,8 @@
                     <label>恢复出厂</label>
                     <el-button type="danger" size="mini" @click="rebuild">恢复</el-button>
                 </li>
+
             </ul>
-        </div>
-        <div class="footer">
-            <el-button type="success" class="save" @click="saveConfig">保存配置</el-button>
         </div>
     </div>
 </template>
@@ -133,14 +135,5 @@
 
     .setting .title i {
         margin-right: 10px;
-    }
-
-    .footer {
-
-        margin: 30px;
-    }
-
-    .footer .save {
-        width: 100%;
     }
 </style>

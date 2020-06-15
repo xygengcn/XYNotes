@@ -6,6 +6,7 @@ import './registerServiceWorker'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import "./assets/style/dark.css";
 Vue.use(ElementUI);
 
 const utils =require("./utils/utils.js");
