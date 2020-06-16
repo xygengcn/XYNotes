@@ -5,7 +5,8 @@
       <div class="title" v-text="activeNoteText.title"></div>
     </div>
     <div class="ViewContain">
-      <div class="ViewArea" v-html="activeNoteText.html" :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></div>
+      <div class="ViewArea marked" v-html="activeNoteText.html"
+        :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></div>
     </div>
   </div>
 </template>
@@ -13,8 +14,8 @@
 <script>
   export default {
     props: ["activeNoteText"],
-    computed:{
-      font(){
+    computed: {
+      font() {
         return this.$store.state.data.font;
       }
     }
@@ -33,10 +34,12 @@
     margin-top: 10px;
     padding: 0 50px;
   }
-  .mobie .ViewHeader{
+
+  .mobie .ViewHeader {
     height: 48px;
     margin: 0px;
   }
+
   .mobie .ViewHeader .title {
     height: 48px;
     line-height: 48px;
@@ -87,42 +90,5 @@
     line-height: 1.5em;
     padding: 15px 50px 50px 0px;
     overflow: auto;
-  }
-
-  .View .ViewArea p>code,
-  .View .ViewArea span>code,
-  .View .ViewArea li>code {
-    margin: 0px 5px;
-    border: 1px solid #ddd;
-    background: #f6f6f6;
-    padding: 3px;
-    border-radius: 3px;
-    font-size: 14px;
-    color: #dc9696;
-  }
-
-  .View blockquote {
-    color: #666;
-    border-left: 4px solid #ddd;
-    padding: 8px 15px;
-    margin-left: 0;
-    background-color: #f5f5f5;
-  }
-
-  .View pre {
-    width: 100%;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    background: #333;
-    padding: 10px 30px;
-    color: #ccc;
-    box-sizing: border-box;
-  }
-
-  .View ul,
-  .View ol {
-    padding: 0;
-    margin: 0;
-    padding-left: 20px;
   }
 </style>

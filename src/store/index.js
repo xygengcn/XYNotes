@@ -102,7 +102,6 @@ export default new Vuex.Store({
       storage.del(configs.isLocalStorage, configs.isWebStorage, note, content.state.data.notes);
     },
     save(content) {
-      console.log(content.state.data);
       let configs = content.state.data.configs;
       storage.save(configs.isLocalStorage, configs.isWebStorage, content.state.note, content.state.data.notes);
     },

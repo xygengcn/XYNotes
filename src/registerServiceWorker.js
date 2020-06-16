@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
+
 import { register } from 'register-service-worker'
+import Vue from 'vue';
+let v = new Vue();
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready () {
@@ -19,7 +22,11 @@ if (process.env.NODE_ENV === 'production') {
     },
     updated () {
       console.log('New content is available; please refresh.')
-      window.location.reload(true);
+      v.$notify.info({
+        title: '更新提示',
+        message: 'XY笔记有新版了，请刷新后使用！',
+        duration: 0
+      });
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')

@@ -8,7 +8,8 @@
     <div class="EditContain">
       <textarea id="EditArea" class="EditArea" :value="activeNoteText.text" @blur="editNote" @input="autoSave"
         @keydown="handleEvent" placeholder="直接开始输入" ref="EditArea" @contextmenu.prevent="context_menu"
-        @click="isContextMenu =false" :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></textarea>
+        @click="isContextMenu =false"
+        :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></textarea>
       <div class="contextmenu" :style="contextMenuStyle" v-show="isContextMenu">
         <ul>
           <li @click="copy">复制</li>
@@ -20,7 +21,7 @@
   </div>
 </template>
 <script>
-  const marked = require('marked');
+  import markdown from '../utils/markdown/markdown';
   export default {
     components: {},
     data() {
@@ -37,7 +38,6 @@
         return this.$store.state.note;
       },
       font() {
-        console.log(this.$store.state.data.font);
         return this.$store.state.data.font;
       }
     },
@@ -78,17 +78,7 @@
       save(e) {
         var text = e.target.value;
         this.$store.commit("setText", text);
-        marked.setOptions({
-          renderer: new marked.Renderer(),
-          gfm: true,
-          tables: true,
-          breaks: true,
-          pedantic: false,
-          sanitize: false,
-          smartLists: true,
-          smartypants: false
-        })
-        this.string = marked(text);
+        this.string = markdown(text);
         this.$store.commit("setHtml", this.string);
         this.editTime();
         this.$store.commit("removeNote");
