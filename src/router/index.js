@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const isMobie = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
 const routes = [{
     path: '/',
-    component: () => import('../views/Home'),
+    component: () => import('../views/App'),
     children: [{
       path: '/',
       component: () => import('../views/ListView')
@@ -15,22 +15,15 @@ const routes = [{
       component: () => import('../views/ListView')
     },{
       path: 'mark',
-      name: 'Mark',
       component: () => import('../views/MarkView')
     }, {
-      path: 'backup',
-      name: 'Backup',
-      component: () => import('../views/Backup')
-    }, {
       path: 'setting',
-      name: 'Setting',
-      component: () => import('../views/Setting')
+      component: () => import('../views/SettingView')
     }]
   },
   {
     path: '/m',
-    name: 'Mobile',
-    component: () => import('../views/Home'),
+    component: () => import('../views/App'),
     children: [{
       path: '/',
       component: () => import('../views/ListView')
@@ -40,16 +33,10 @@ const routes = [{
     },
     {
       path: 'mark',
-      name: 'Mark',
       component: () => import('../views/MarkView')
-    }, {
-      path: 'backup',
-      name: 'Backup',
-      component: () => import('../views/Backup')
-    }, {
+    },  {
       path: 'setting',
-      name: 'Setting',
-      component: () => import('../views/Setting')
+      component: () => import('../views/SettingView')
     }]
   }
 ]

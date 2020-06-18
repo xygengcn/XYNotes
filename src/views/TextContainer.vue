@@ -109,10 +109,7 @@
     margin-bottom: 20px;
     overflow: hidden;
   }
-  .mobie .EditContent{
-    margin: 0px;
-  }
-
+  
   .EditContent .panel {
     flex: 1;
     min-width: 50%;

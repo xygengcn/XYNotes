@@ -138,29 +138,11 @@
         color: #878787;
     }
 
-
     .ListView .NoteList {
         height: 100%;
         box-sizing: border-box;
         overflow: auto;
         padding-bottom: 20px;
-    }
-
-    .ListView ul {
-        list-style: none;
-        text-decoration: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .ListView ul li {
-        color: #333;
-    }
-
-    .ListView .ListItem {
-        position: relative;
-        box-sizing: border-box;
-        cursor: pointer;
     }
 
 
@@ -222,11 +204,5 @@
         line-height: 36px;
         background: transparent;
         color: #d9d9d9;
-    }
-
-    .blank {
-        color: #cccccc !important;
-        text-align: center;
-        padding: 50px;
     }
 </style>

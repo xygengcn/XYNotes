@@ -1,11 +1,11 @@
 <!-- 列表样式 -->
 <template>
-    <div class="itemContent noselect" :class="{'itemActive':data === note}">
+    <div class="itemContent" :class="{'itemActive':data === note}">
         <div class="title">{{data.title}}</div>
         <div class="itemTime">
             <span>{{$utils.timeToDate(data.updated)}}</span>
         </div>
-        <small class="content">{{data.text | subInfor}}</small>
+        <small class="content noselect">{{data.text | subInfor}}</small>
         <div class="itemTool" v-if="!isMobie">
             <i :class="data.mark?'el-icon-star-on':'el-icon-star-off'" :title="data.mark?'取消标记':'标记'"
                 @click="markNote(data)"></i>
@@ -64,16 +64,11 @@
         border: 2px solid transparent;
         border-bottom: 2px #eeeeee solid;
         position: relative;
+        color: #333;
+        cursor: pointer;
     }
-
-    .mobie .itemContent {
-        box-shadow: 0 2px 8px 2px rgba(0, 0, 0, .1);
-        margin: 10px;
-        border-radius: 4px;
-    }
-
-    .pc .itemContent:hover,
-    .pc .itemActive {
+    .itemContent:hover,
+    .itemActive {
         border-color: #2dbe60;
     }
 

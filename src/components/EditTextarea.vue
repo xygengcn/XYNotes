@@ -193,27 +193,6 @@
     box-sizing: border-box;
   }
 
-  .mobie .EditContain {
-    padding: 0px;
-  }
-
-  .mobie .EditHeader {
-    height: 48px;
-    margin: 0px;
-
-    padding: 0px 20px;
-  }
-
-  .mobie .EditHeader .title {
-    height: 48px;
-    line-height: 48px;
-  }
-
-  .mobie .Edit .EditArea {
-    padding: 10px 20px;
-    font-size: 1em;
-  }
-
   /* 标题 */
   .EditHeader .title,
   .title::-webkit-input-placeholder {
@@ -295,29 +274,5 @@
   .contextmenu ul li:hover {
     background-color: #2dbe60;
     color: #fff;
-  }
-</style>
-<style lang="css">
-  /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-  ::-webkit-scrollbar {
-    width: 6px;
-    background-color: #f5f5f5;
-
-  }
-
-  ::-webkit-scrollbar-thumb {
-    height: 200px;
-  }
-
-  /*定义滚动条轨道 内阴影+圆角*/
-  ::-webkit-scrollbar-track {
-    border-radius: 3px;
-    background-color: #f5f5f5;
-  }
-
-  /*定义滑块 内阴影+圆角*/
-  ::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: #eeeeee;
   }
 </style>

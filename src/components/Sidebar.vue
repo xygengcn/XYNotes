@@ -1,7 +1,7 @@
 <!-- 左侧菜单 -->
 <template>
   <div id="sidebar">
-    <router-link to="/">
+    <router-link to="/" v-if="!isMoibe">
       <div id="logo">
         <img class="img" :src="logo" alt="logo">
       </div>
@@ -22,12 +22,6 @@
           <i class="el-icon-star-on" aria-hidden="true"></i>
         </div>
       </router-link>
-
-      <router-link to="/backup">
-        <div class="sideBtn" :class="{active:$route.path=='/backup' ||$route.path=='/m/backup'}">
-          <i class="el-icon-upload" aria-hidden="true"></i>
-        </div>
-      </router-link>
       <router-link to="/setting">
         <div class="sideBtn" :class="{active:$route.path=='/setting' ||$route.path=='/m/setting'}">
           <i class="el-icon-s-tools" aria-hidden="true"></i>
@@ -41,6 +35,9 @@
     computed: {
       logo(){
         return this.$store.state.data.configs.isDark?require('../assets/logo-dark.png'):require('../assets/logo.png');
+      },
+      isMoibe(){
+        return this.$store.state.isMobie;
       }
     },
     methods: {
@@ -61,21 +58,6 @@
     background-color: #f8f8f8;
     -webkit-app-region: drag;
     padding: 15px;
-  }
-
-  .mobie #sidebar {
-    display: flex;
-    flex-direction: row;
-    height: 73px;
-    width: 100%;
-  }
-
-  .mobie .toolbar {
-    width: 100%;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
   }
 
   #logo {

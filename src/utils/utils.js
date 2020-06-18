@@ -83,6 +83,20 @@ utils.dataToUrl = function (str) {
     return URL.createObjectURL(blob);
 
 }
+utils.download = function (content, filename) {
+    // 创建a标签
+    let linkNode = document.createElement('a');
+    linkNode.download = filename;
+    linkNode.style.display = 'none';
+    // 利用Blob对象将字符内容转变成二进制数据
+    let blob = new Blob([content]);
+    linkNode.href = URL.createObjectURL(blob);
+    // 点击
+    document.body.appendChild(linkNode);
+    linkNode.click();
+    // 移除
+    document.body.removeChild(linkNode);
+};
 utils.copy = function (text) {
     return new Promise(function (resolve, reject) {
         const textarea = document.createElement("textarea")

@@ -3,10 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
-
 import ElementUI from 'element-ui';
+
 import 'element-ui/lib/theme-chalk/index.css';
-import "./assets/style/dark.css";
+import "./assets/style/master.css";
+import "./assets/style/theme-dark.css";
+import "./assets/style/mobie.css";
+
 Vue.use(ElementUI);
 
 const utils =require("./utils/utils.js");

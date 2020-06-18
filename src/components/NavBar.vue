@@ -106,14 +106,6 @@
         box-sizing: border-box;
     }
 
-    .mobie .header {
-        height: 50px;
-        line-height: 50px;
-        flex-direction: column;
-        margin: 20px 0px 10px;
-        padding: 0px 20px;
-    }
-
     .header .toolBar {
         height: 100%;
         white-space: nowrap;
@@ -146,7 +138,7 @@
         box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .1);
     }
 
-    .pc .header button:hover {
+    .header button:hover {
         box-shadow: 0 2px 8px 2px rgba(0, 0, 0, .1);
     }
 

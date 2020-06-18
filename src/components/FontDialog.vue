@@ -1,4 +1,4 @@
-<!--  -->
+<!-- 字体弹窗 -->
 <template>
     <el-dialog title="字体选择" :visible.sync="isShow" :show-close="false" center custom-class="fontDialog"
         :close-on-click-modal="false">
@@ -49,8 +49,3 @@
         }
     }
 </script>
-<style>
-    .fontDialog {
-        width: 350px;
-    }
-</style>

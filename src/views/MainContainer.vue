@@ -5,13 +5,7 @@
   </div>
 </template>
 <style scoped>
-  .mobie #MainContainer {
-    height: calc( 100% - 73px);
-    flex: 1;
-    border-right: 1px solid #d9d9d9;
-  }
-
-  .pc #MainContainer {
+  #MainContainer {
     width: 300px;
     height: 100%;
     border-right: 1px solid #d9d9d9;
