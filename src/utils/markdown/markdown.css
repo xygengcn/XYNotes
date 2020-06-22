@@ -1,11 +1,17 @@
   /* markdown样式 */
 
+  .marked{
+      color: #383838;
+  }
   .marked a{
       color: #0069d6;
   }
   .marked a:hover{
       outline: none;
       text-decoration: none;
+  }
+  .marked img{
+    max-width: 100%;
   }
 
   .marked p>code,
@@ -24,6 +30,12 @@
   .marked ol {
       padding: 0;
       margin: 0;
+  }
+  .marked ul li{
+    list-style-type: disc;
+  }
+  .marked ol li{
+      list-style-type: decimal;
   }
 
   .marked li {

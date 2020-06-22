@@ -42,5 +42,6 @@
     box-sizing: border-box;
     overflow: auto;
     padding-bottom: 20px;
+    position: relative;
   }
 </style>

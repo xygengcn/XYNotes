@@ -908,7 +908,6 @@
     _proto.emoji = function emoji(src) {
       var cap = this.rules.inline.emoji.exec(src);
       if (cap) {
-        console.log(cap[0]);
         return {
           type: 'emoji',
           raw: cap[0],
@@ -1860,7 +1859,7 @@
         return text;
       }
 
-      var out = '<img src="' + href + '" alt="' + text + '"';
+      var out = '<img src="' + href+'" alt="' + text + '"';
 
       if (title) {
         out += ' title="' + title + '"';

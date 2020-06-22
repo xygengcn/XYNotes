@@ -75,7 +75,7 @@
   .sideBtn {
     width: 36px;
     height: 36px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     border-radius: 18px;
     background-color: #fff;
     color: #2dbe60;

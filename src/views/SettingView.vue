@@ -39,28 +39,28 @@
                     </li>
                 </ul>
             </div>
+            <div class="version">Copyright &copy; 2020 Version {{version}}</div>
         </page-view>
     </div>
 </template>
 <script>
     import PageView from "../components/PageView";
     import storage from '../store/data';
+    import config from '../../package.json'
     export default {
         components: {
             PageView
         },
         data() {
             // let size =this.$utils.sizeof(JSON.stringify(this.$store.state.data));
-            return {}
+            return {
+                version: config.version
+            }
         },
         methods: {
             //保存配置
             saveConfig() {
                 this.$store.dispatch("configSave");
-                this.$message({
-                    message: '保存配置成功',
-                    type: 'success'
-                });
             },
             //恢复出厂
             rebuild() {
@@ -107,26 +107,30 @@
             inputFile(event) {
                 const reader = new FileReader();
                 reader.readAsText(event.target.files[0]);
-                reader.onload = (e) =>{
+                reader.onload = (e) => {
                     let data = JSON.parse(decodeURIComponent(escape(window.atob(e.target.result))));
                     this.$store.commit("setData", data);
                 };
             },
             //备份
-            localBackup(){
+            localBackup() {
                 let data = JSON.stringify(this.$store.state.data);
                 data = window.btoa(unescape(encodeURIComponent(data)));
-                this.$utils.download(data,"xy笔记.xy")
+                this.$utils.download(data, "xy笔记.xy")
             }
         },
         computed: {
             configs() {
                 return this.$store.state.data.configs;
             }
-        }
+        } 
     }
 </script>
 <style scoped>
+    .setting {
+        height: 100%;
+    }
+
     li {
         display: flex;
         padding: 15px 20px;
@@ -136,11 +140,13 @@
     li label {
         flex: 1;
     }
+
     .backup-span {
-        width:56px;
+        width: 56px;
         cursor: pointer;
         position: relative;
     }
+
     .backup-span input {
         width: 100%;
         height: 100%;
@@ -149,6 +155,15 @@
         position: absolute;
         left: 0;
         cursor: pointer;
-        filter:alpha(opacity=0);
+        filter: alpha(opacity=0);
+    }
+
+    .version {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        margin: 10px 0px 20px;
+        font-size: 12px;
+        text-align: center;
     }
 </style>

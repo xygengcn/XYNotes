@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import plugins from "@/plugins/index.js";
+
 Vue.use(VueRouter)
 
 const isMobie = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
@@ -47,7 +49,8 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from,next) => {
+  plugins.init("beforeEach",[to,from]);
   if (isMobie) {
     if (to.path.substring(0, 3) == '/m/' || to.path=="/m") {
       next();

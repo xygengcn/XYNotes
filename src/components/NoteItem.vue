@@ -61,8 +61,7 @@
     .itemContent {
         box-sizing: border-box;
         padding: 20px 24px;
-        border: 2px solid transparent;
-        border-bottom: 2px #eeeeee solid;
+        border: 1px solid transparent;
         position: relative;
         color: #333;
         cursor: pointer;

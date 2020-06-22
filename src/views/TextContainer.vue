@@ -33,7 +33,7 @@
   import navbar from "../components/NavBar"
   import EditTextarea from "../components/EditTextarea";
   import ViewTextarea from "../components/ViewTextarea";
-  import html2canvas from "html2canvas";
+  import html2canvas from "../utils/html2canvas";
   export default {
     name: '',
     components: {
@@ -77,16 +77,17 @@
       //生成图片
       HtmlToImage() {
         var option ={
-          useCORS:true,
+          useCORS: true,
           scale:2
         }
+        this.$emit('changeLoading',true);
         html2canvas(this.$refs.ViewTextarea.$el,option).then(canvas => {
-          this.imgShareUrl = canvas.toDataURL();
+          this.$emit('changeLoading',false);
+          this.imgShareUrl = canvas.toDataURL("image/png");
           this.imgShareDownload = this.$utils.base64ImgtoFile(this.imgShareUrl, this.note.title);
           this.imgName =this.imgShareDownload.name;
           this.imgShareDownload = this.$utils.dataToUrl(this.imgShareDownload);
           this.imgShareDialog = true;
-
         });
       }
     }

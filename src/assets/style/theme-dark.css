@@ -1,45 +1,77 @@
-.dark,.dark #sidebar,.dark #sidebar .sideBtn{
+.dark,
+.dark #sidebar,
+.dark #sidebar .sideBtn {
     background-color: #333 !important;
     border-color: #333 !important;
     color: #858585;
 }
-.dark #sidebar .sideBtn{
-    background-color: #333 !important;
+
+.dark #sidebar .sideBtn {
+    background-color: #252526 !important;
 }
+
 .dark #sidebar .sideBtn:hover,
 .dark #sidebar .sideBtn.active {
     color: #2dbe60 !important;
     border-color: #2dbe60 !important;
 }
-.dark #MainContainer{
+
+.dark #MainContainer {
     background-color: #252526;
     border-color: #252526 !important;
 }
-.dark #MainContainer .setting li{
+.dark .ListView .NoteList ul li,
+.dark #MainContainer .setting li,
+.dark .main-wrap>.title,
+.dark .SearchBar,
+.dark .ListHeader {
     border-color: #1E1E1E !important;
 }
-.dark .itemContent .title,.dark #MainContainer .search-input{
-    color:#ccc;
+
+.dark .itemContent .title,
+.dark #MainContainer .search-input {
+    color: #ccc;
 }
-.dark .itemContent {
-    border-color: #1E1E1E !important;
-}
-.dark .itemContent:hover{
-    border-color: #2dbe60 !important;
-}
+
 .dark .itemContent .itemTool {
     color: #252526 !important;
 }
-.dark #TextContainer{
+
+.dark #TextContainer,.dark #ViewTextarea{
     background-color: #1E1E1E;
 }
-.dark .header button{
+
+.dark .header button {
     background: #333;
     color: #ccc;
 }
-.dark #EditTextarea input,.dark #EditTextarea .EditArea,.dark #TextContainer .tag{
+
+.dark #EditTextarea input,
+.dark #EditTextarea .EditArea,
+.dark #TextContainer .tag {
     background-color: #1E1E1E !important;
 }
-.dark .EditArea,.dark .ViewArea{
-    color:#ccc !important;
+
+.dark .EditArea,
+.dark .ViewArea {
+    color: #ccc !important;
+}
+
+.dark .View .ViewArea,
+.dark .Edit .EditArea {
+    border-color: #151515 !important;
+}
+
+.dark ::-webkit-scrollbar {
+
+    background-color: #1E1E1E;
+
+}
+
+.dark ::-webkit-scrollbar-track {
+    background-color: #1E1E1E;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background-color: #151515;
 }
