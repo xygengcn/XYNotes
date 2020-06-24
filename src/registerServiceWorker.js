@@ -27,6 +27,7 @@ if (process.env.NODE_ENV === 'production') {
         message: 'XY笔记有新版了，请刷新后使用！',
         duration: 0
       });
+      // window.location.reload(true);
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')

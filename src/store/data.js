@@ -2,31 +2,33 @@
 import JSQL from '../utils/JSQL'
 var storage = {};
 
-storage.init =function(data){
+storage.init = function (data) {
     let db = new JSQL('XYNOTES');
-    return new Promise((resolve,reject)=>{
-        db.init('notes',1,data).then(e=>{
-            e.fetchAll().then(res=>{
-                if(res.length==0){
-                    if(localStorage.getItem("notes")){
+    return new Promise((resolve, reject) => {
+        db.init('notes', 1, data).then(e => {
+            e.fetchAll().then(res => {
+                if (res.length == 0) {
+                    if (localStorage.getItem("notes")) {
                         resolve(localStorage.getItem("notes"));
-                      }else{
-                          resolve([]);
-                      }
-                }else{
+                    } else {
+                        resolve([]);
+                    }
+                } else {
                     resolve(res);
                 }
             })
         })
     })
 }
-storage.del =function (isLocal = true, isWeb = false, note, notes) {
+storage.del = function (isLocal = true, isWeb = false, note, notes) {
     if (isLocal) {
         let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
         let db = new JSQL('XYNOTES')
         if (indexedDB) {
-            db.init("notes", 1,notes).then((e) => {
+            db.init("notes", 1, notes).then((e) => {
                 e.delete(note.nid);
+            }).catch(e => {
+                console.log(e);
             })
         } else {
             this.localStorage("notes", notes);
@@ -38,23 +40,44 @@ storage.save = function (isLocal = true, isWeb = false, note, notes) {
         let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
         let db = new JSQL('XYNOTES')
         if (indexedDB) {
-            db.init("notes", 1,notes).then((e) => {
+            db.init("notes", 1, notes).then((e) => {
                 e.put(note);
+            }).catch(e => {
+                console.log(e);
             })
         } else {
             this.localStorage("notes", notes);
         }
     }
 }
-storage.clean = function () {
-        let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-        let db = new JSQL('XYNOTES')
+storage.recover = function (data) {
+    let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    let db = new JSQL('XYNOTES')
+    localStorage.removeItem("notes");
+    return new Promise((resolve)=>{
         if (indexedDB) {
-            db.deleteDB();
+            db.deleteDB().then(e=>{
+                db.init('notes', 1, data).then(e => {
+                    resolve(e)
+                })
+                resolve(e)
+            });
         }
-        localStorage.removeItem("notes");
-        localStorage.removeItem("XYNOTESCONFIGS");
-        localStorage.removeItem("XYNOTESFONT");
+    })
+}
+storage.clean = function () {
+    let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    let db = new JSQL('XYNOTES')
+    localStorage.removeItem("notes");
+    localStorage.removeItem("XYNOTESCONFIGS");
+    localStorage.removeItem("XYNOTESFONT");
+    return new Promise((resolve,reject)=>{
+        if (indexedDB) {
+            db.deleteDB().then(res=>{
+                resolve(res);
+            });
+        }
+    })
 }
 
 storage.localStorage = function (key, object) {

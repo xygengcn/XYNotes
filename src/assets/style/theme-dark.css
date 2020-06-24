@@ -9,6 +9,14 @@
 .dark #sidebar .sideBtn {
     background-color: #252526 !important;
 }
+.dark .itemContent{
+    border-color: #1e1e1e !important;
+}
+
+.dark .itemContent:hover,
+.dark .itemActive {
+    border-color: #2dbe60 !important;
+}
 
 .dark #sidebar .sideBtn:hover,
 .dark #sidebar .sideBtn.active {
@@ -20,7 +28,7 @@
     background-color: #252526;
     border-color: #252526 !important;
 }
-.dark .ListView .NoteList ul li,
+
 .dark #MainContainer .setting li,
 .dark .main-wrap>.title,
 .dark .SearchBar,
@@ -37,7 +45,8 @@
     color: #252526 !important;
 }
 
-.dark #TextContainer,.dark #ViewTextarea{
+.dark #TextContainer,
+.dark #ViewTextarea {
     background-color: #1E1E1E;
 }
 

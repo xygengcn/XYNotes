@@ -47,7 +47,7 @@
     margin: 10px;
     border-radius: 4px;
 }
-
+.mobie .itemContent,
 .mobie .itemContent:hover,
 .mobie .itemActive {
     border-color: transparent !important;

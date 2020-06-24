@@ -7,7 +7,7 @@ const sysConfig = require("../../package.json");
 var defaultData = require("./default.json");
 const isMobie = navigator.userAgent.match(
   /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-)?true:false;
+) ? true : false;
 export default new Vuex.Store({
   state: {
     data: defaultData,
@@ -79,18 +79,19 @@ export default new Vuex.Store({
         state.note = state.data.notes[0];
       }
     },
-    //初始数据
     setData(state, data) {
       state.data = data;
-      this.dispatch("save");
     },
+    //设置所有笔记
     setNotes(state, notes) {
       state.data.notes = notes;
       state.note = state.data.notes[0];
     },
+    //设置配置
     setConfigs(state, configs) {
       state.data.configs = configs;
     },
+    //设置字体
     setFont(state, font) {
       state.data.font = font;
     }
@@ -112,6 +113,13 @@ export default new Vuex.Store({
     },
     fontSave(content) {
       localStorage.setItem("XYNOTESFONT", JSON.stringify(content.state.data.font));
+    },
+    recover(content,data) {
+      storage.recover(data.notes).then(() => {
+        content.commit("setData", data);
+        content.dispatch("configSave");
+        content.dispatch("fontSave");
+      });
     },
     init(content) {
       if (localStorage.getItem("XYNOTESCONFIGS")) {

@@ -81,7 +81,6 @@ var JSQL = function (dbName) {
         return new Promise((resolve, reject) => {
             var result = db.transaction(this.storeName, "readwrite").objectStore(this.storeName).put(data);
             result.onsuccess = e => {
-                console.log("成功");
                 resolve(e);
             };
             result.onerror = e => {
@@ -147,9 +146,7 @@ var JSQL = function (dbName) {
             var result = this.indexedDB.deleteDatabase(this.dbName); 
             result.onsuccess = e => {
                 console.log("删除成功", e);
-                if (result.result) {
-                    resolve(result.result);
-                }
+                    resolve(e);
             };
             result.onerror = e => {
                 console.log("删除失败", e);

@@ -145,11 +145,6 @@
         padding-bottom: 20px;
     }
 
-    .ListView .NoteList ul li{
-        border-bottom: 1px solid #d9d9d9;
-    }
-
-
     /*搜索 */
     .SearchBar {
         display: flex;
