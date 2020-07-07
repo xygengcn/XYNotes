@@ -13,5 +13,8 @@
         return this.$store.state.data.configs.isDark;
       }
     },
+    mounted(){
+      this.$plugins.init(this.$store.state.data.plugins);
+    }
   }
 </script>

@@ -4,7 +4,7 @@
     <div class="ViewHeader">
       <div class="title" v-text="activeNoteText.title"></div>
     </div>
-    <div class="ViewContain">
+    <div class="ViewContain" @dblclick="dblclick">
       <div class="ViewArea marked" v-html="activeNoteText.html"
         :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></div>
     </div>
@@ -17,6 +17,11 @@
     computed: {
       font() {
         return this.$store.state.data.font;
+      }
+    },
+    methods:{
+      dblclick(){
+        console.log(0);
       }
     }
   };

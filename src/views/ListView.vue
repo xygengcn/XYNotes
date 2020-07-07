@@ -7,20 +7,12 @@
                 <small>{{data.length}}条笔记</small>
                 <el-dropdown trigger="click" class="order" @command="order">
                     <span class="el-dropdown-link">
-                        <small>排序方式<i class="el-icon-arrow-down el-icon--right"></i></small>
+                        <small>{{sortkey.value}}<i class="el-icon-arrow-down el-icon--right"></i></small>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item :icon="sortkey==sorts[0]?'el-icon-check':'el-icon-minus'" :command="sorts[0]">
-                            创建时间（最早优先）
-                        </el-dropdown-item>
-                        <el-dropdown-item :icon="sortkey==sorts[1]?'el-icon-check':'el-icon-minus'" :command="sorts[1]">
-                            创建时间（最晚优先）
-                        </el-dropdown-item>
-                        <el-dropdown-item :icon="sortkey==sorts[2]?'el-icon-check':'el-icon-minus'" :command="sorts[2]">
-                            更新时间（最早优先）
-                        </el-dropdown-item>
-                        <el-dropdown-item :icon="sortkey==sorts[3]?'el-icon-check':'el-icon-minus'" :command="sorts[3]">
-                            更新时间（最晚优先）
+                        <el-dropdown-item v-for="(item,index) in sorts"
+                            :icon="isSort(item)?'el-icon-check':'el-icon-minus'" :command="item" :key="index">
+                            {{item["value"]}}
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
@@ -53,23 +45,26 @@
         data() {
             var sorts = [{
                     key: "created",
-                    order: "asc"
+                    order: "asc",
+                    value: "创建时间（最早优先）"
                 }, {
                     key: "created",
-                    order: "desc"
+                    order: "desc",
+                    value: "创建时间（最晚优先）"
                 },
                 {
                     key: "updated",
-                    order: "asc"
+                    order: "asc",
+                    value: "更新时间（最早优先）"
                 }, {
                     key: "updated",
-                    order: "desc"
+                    order: "desc",
+                    value: "更新时间（最晚优先）"
                 }
             ];
             return {
                 searchkey: "",
-                sorts: sorts,
-                sortkey: sorts[0]
+                sorts: sorts
             };
         },
         computed: {
@@ -80,9 +75,16 @@
                         return item;
                     }
                 }).sort(this.compare());
+            },
+            sortkey() {
+                return this.$store.state.data.configs.listSort;
             }
         },
         methods: {
+            isSort(order) {
+                return order.key == this.sortkey.key && order.order == this.sortkey.order;
+
+            },
             setActive(item) {
                 this.$store.commit("setActive", item);
                 if (this.$store.state.isMobie) {
@@ -98,8 +100,10 @@
                     else return aa - bb;
                 };
             },
+            //排序记录
             order(sortkey) {
-                this.sortkey = sortkey;
+                this.$store.commit("setOrder", sortkey);
+                this.$store.dispatch("configSave");
             }
         }
     };

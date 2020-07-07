@@ -41,7 +41,7 @@
     height: 100%;
     box-sizing: border-box;
     overflow: auto;
-    padding-bottom: 20px;
+    padding-bottom: 60px;
     position: relative;
   }
 </style>

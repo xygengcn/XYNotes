@@ -5,7 +5,6 @@ import plugins from "@/plugins/index.js";
 
 Vue.use(VueRouter)
 
-const isMobie = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
 const routes = [{
     path: '/',
     component: () => import('../views/App'),
@@ -21,6 +20,9 @@ const routes = [{
     }, {
       path: 'setting',
       component: () => import('../views/SettingView')
+    }, {
+      path: 'plugins',
+      component: () => import('../views/PluginsView')
     }]
   },
   {
@@ -39,6 +41,9 @@ const routes = [{
     },  {
       path: 'setting',
       component: () => import('../views/SettingView')
+    },{
+      path: 'plugins',
+      component: () => import('../views/PluginsView')
     }]
   }
 ]
@@ -50,7 +55,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from,next) => {
-  plugins.init("beforeEach",[to,from]);
+  plugins.hook("beforeEach",[to,from,next,routes]);
+  const isMobie = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
   if (isMobie) {
     if (to.path.substring(0, 3) == '/m/' || to.path=="/m") {
       next();

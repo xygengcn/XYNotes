@@ -1,12 +1,12 @@
-<!-- 移动端首页 -->
+<!-- 首页 -->
 <template>
-  <div class="wrap" v-loading="isLoading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"
+  <div class="wrap" v-loading="loading.status" :element-loading-text="loading.text" element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.8)">
     <sidebar></sidebar>
     <transition tag="div" appear>
       <main-container v-if="isTriggle"></main-container>
     </transition>
-    <text-container @Triggle="Triggle" v-if="!isMobie" @changeLoading="changeLoading"></text-container>
+    <text-container @Triggle="Triggle" v-if="!isMobie"></text-container>
   </div>
 </template>
 <script>
@@ -22,25 +22,25 @@
     data() {
       return {
         isTriggle: true,
-        isLoading:false,
+        isLoading: false,
       }
     },
     computed: {
       isMobie() {
         return this.$store.state.isMobie;
+      },
+      loading() {
+        return this.$store.state.loading;
       }
     },
     methods: {
       Triggle(is) {
         this.isTriggle = is;
-      },
-      changeLoading(isLoading){
-        this.isLoading =isLoading;
       }
     },
     created() {
       this.$store.dispatch("init");
-      this.$plugins.init("start");
+      this.$plugins.hook("start");
     }
   }
 </script>

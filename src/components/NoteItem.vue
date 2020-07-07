@@ -1,11 +1,16 @@
 <!-- 列表样式 -->
 <template>
-    <div class="itemContent" :class="{'itemActive':data === note}">
+    <div class="note item" :class="{'itemActive':data === note}">
         <div class="title">{{data.title}}</div>
         <div class="itemTime">
             <span>{{$utils.timeToDate(data.updated)}}</span>
         </div>
-        <small class="content noselect">{{data.text | subInfor}}</small>
+        <div class="itemContent noselect">
+            <small>{{data.text}}</small>
+            <div class="itemContent-cover" v-if="cover">
+                <img :src="cover[2]" :alt="cover[1]">
+            </div>
+        </div>
         <div class="itemTool" v-if="!isMobie">
             <i :class="data.mark?'el-icon-star-on':'el-icon-star-off'" :title="data.mark?'取消标记':'标记'"
                 @click="markNote(data)"></i>
@@ -47,6 +52,11 @@
             },
             isMobie() {
                 return this.$store.state.isMobie;
+            },
+            cover() {
+                let reg = /!\[(.*?)\]\((.*?)\)/;
+                let result = this.data.text.match(reg);
+                return result;
             }
         },
         filters: {
@@ -58,7 +68,7 @@
     }
 </script>
 <style scoped>
-    .itemContent {
+    .item {
         box-sizing: border-box;
         padding: 20px 24px;
         border: 1px solid transparent;
@@ -67,16 +77,17 @@
         color: #333;
         cursor: pointer;
     }
-    .itemContent:hover,
+
+    .item:hover,
     .itemActive {
         border-color: #2dbe60;
     }
 
-    .itemContent:hover i {
+    .item:hover i {
         color: #2dbe60;
     }
 
-    .itemContent .itemTool {
+    .item .itemTool {
         text-align: center;
         margin: 20px 24px;
         color: #fff;
@@ -87,12 +98,12 @@
         line-height: 30px;
     }
 
-    .itemContent .itemTool i {
+    .item .itemTool i {
         margin: 0px 5px;
         font-size: 20px;
     }
 
-    .itemContent .title {
+    .item .title {
         font-family: gotham, helvetica, arial, sans-serif;
         font-size: 18px;
         font-weight: 400;
@@ -108,12 +119,42 @@
         width: 200px;
     }
 
-    .itemContent .content,
+    .item .itemContent {
+        display: flex;
+    }
+
+    .item .itemContent small {
+        flex: 1;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+
+    .item .itemContent .itemContent-cover {
+        position: relative;
+        box-sizing: border-box;
+        width: 80px;
+        overflow: hidden;
+        margin-left: 15px;
+        max-height: 80px;
+    }
+
+    .item .itemContent .itemContent-cover img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: 0;
+        transform: translate(-50%, -50%);
+        height: 100%;
+    }
+
+    .item .itemContent,
     .itemTime {
         color: #878787;
     }
 
-    .itemContent .itemTime {
+    .item .itemTime {
         margin-bottom: 10px;
         font-size: 10px;
     }

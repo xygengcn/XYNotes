@@ -2,11 +2,16 @@
 //     console.log(this.name);
 // }
 
-var hello=function(to,from){
-      //  console.log(from);
-}
-xy.extend("beforeEach",hello);
+var hello = function (to, from, next, routes) {
 
-xy.extend("start",function(){
-    console.log(this);
+}
+//vue.$plugins.extend("beforeEach", hello);
+
+vue.$plugins.extend("start", function () {
+
+    // vue.$notify({
+    //       title: '早上好',
+    //       message: '欢迎庚哥哥回来',
+    //       type: 'success'
+    // });
 });

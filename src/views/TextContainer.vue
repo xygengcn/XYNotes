@@ -5,7 +5,8 @@
     </navbar>
     <div class="EditContent" :class="{fullScreen:fullScreen}">
       <EditTextarea v-if="mode==1 || mode ==2" class="panel" id="EditTextarea"></EditTextarea>
-      <ViewTextarea v-if="mode==0 || mode ==2" class="panel" ref="ViewTextarea" id="ViewTextarea" :activeNoteText="note"></ViewTextarea>
+      <ViewTextarea v-if="mode==0 || mode ==2" class="panel" ref="ViewTextarea" id="ViewTextarea"
+        :activeNoteText="note"></ViewTextarea>
       <div class="closeFullScreen" v-if="fullScreen" @click="fullScreen =false">
         <el-tooltip class="item" effect="dark" content="关闭全屏" placement="top">
           <i class="el-icon-circle-close"></i>
@@ -48,7 +49,7 @@
         imgShareDialog: false,
         imgShareUrl: "",
         imgShareDownload: {},
-        imgName:""
+        imgName: ""
       }
     },
     computed: {
@@ -76,16 +77,16 @@
       },
       //生成图片
       HtmlToImage() {
-        var option ={
+        var option = {
           useCORS: true,
-          scale:2
+          scale: 2
         }
-        this.$emit('changeLoading',true);
-        html2canvas(this.$refs.ViewTextarea.$el,option).then(canvas => {
-          this.$emit('changeLoading',false);
+        this.$store.commit('setLoading', true);
+        html2canvas(this.$refs.ViewTextarea.$el, option).then(canvas => {
+          this.$store.commit('setLoading', false);
           this.imgShareUrl = canvas.toDataURL("image/png");
           this.imgShareDownload = this.$utils.base64ImgtoFile(this.imgShareUrl, this.note.title);
-          this.imgName =this.imgShareDownload.name;
+          this.imgName = this.imgShareDownload.name;
           this.imgShareDownload = this.$utils.dataToUrl(this.imgShareDownload);
           this.imgShareDialog = true;
         });
@@ -110,7 +111,7 @@
     margin-bottom: 20px;
     overflow: hidden;
   }
-  
+
   .EditContent .panel {
     flex: 1;
     min-width: 50%;
@@ -122,6 +123,8 @@
     width: 100%;
     left: 0;
     right: 0;
+    bottom: 0;
+    top: 0;
   }
 
   .closeFullScreen {
@@ -154,7 +157,7 @@
   }
 
   .imgShareDialog .dialogBody {
-    max-height: 600px;
+    max-height: 40vh;
     overflow: hidden;
   }
 
@@ -162,7 +165,8 @@
     width: 100%;
     margin: 0px auto;
   }
-  button{
+
+  button {
     margin: 10px;
   }
 </style>

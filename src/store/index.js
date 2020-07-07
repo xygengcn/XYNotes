@@ -12,9 +12,18 @@ export default new Vuex.Store({
   state: {
     data: defaultData,
     note: defaultData.notes[0],
-    isMobie: isMobie
+    isMobie: isMobie, //判断移动设备
+    loading: { //加载状态
+      status: false,
+      text: "拼命加载中"
+    }
   },
   mutations: {
+    //修改加载状态
+    setLoading(state, status, text = "拼命加载中") {
+      state.loading.status = status;
+      state.loading.text = text;
+    },
     //选择笔记
     setActive(state, item) {
       state.note = item;
@@ -94,6 +103,13 @@ export default new Vuex.Store({
     //设置字体
     setFont(state, font) {
       state.data.font = font;
+    },
+    //添加插件
+    addPlugin(state, plugin) {
+      state.data.plugins.push(plugin);
+    },
+    setOrder(state, order) {
+      state.data.configs.listSort = order;
     }
 
   },
@@ -114,11 +130,13 @@ export default new Vuex.Store({
     fontSave(content) {
       localStorage.setItem("XYNOTESFONT", JSON.stringify(content.state.data.font));
     },
-    recover(content,data) {
+    recover(content, data) {
+      content.commit('setLoading', true);
       storage.recover(data.notes).then(() => {
         content.commit("setData", data);
         content.dispatch("configSave");
         content.dispatch("fontSave");
+        content.commit('setLoading', false);
       });
     },
     init(content) {

@@ -18,17 +18,17 @@ module.exports = {
   },
   pwa: {
     name: 'XY笔记',
-    themeColor: '#ffffff',
-    msTileColor: '#ffffff',
+    themeColor: '#333333',
+    msTileColor: '#333333',
     appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'while',
-    manifestPath:'manifest.json',
+    appleMobileWebAppStatusBarStyle: '#333333',
+    manifestPath: 'manifest.json',
     iconPaths: {
       favicon32: './img/logo-32.png',
       favicon16: './img/logo-16.png',
-      appleTouchIcon: './img/logo-72.png',
-      maskIcon: './img/logo-72.png',
-      msTileImage: './img/logo-72.png'
+      appleTouchIcon: './img/logo-256.png',
+      maskIcon: './img/logo-256.png',
+      msTileImage: './img/logo-256.png'
     },
     workboxOptions: {
       skipWaiting: true

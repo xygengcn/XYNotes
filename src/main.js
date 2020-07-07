@@ -26,6 +26,6 @@ new Vue({
   store,
   render: h => h(App),
   created() {
-    window.xy = this.$plugins;
+    window.vue = this;
   }
 }, ).$mount('#app')

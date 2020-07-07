@@ -22,6 +22,11 @@
           <i class="el-icon-star-on" aria-hidden="true"></i>
         </div>
       </router-link>
+      <router-link to="/plugins">
+        <div class="sideBtn" :class="{active:$route.path=='/plugins'|| $route.path=='/m/plugins'}">
+          <i class="el-icon-s-grid" aria-hidden="true"></i>
+        </div>
+      </router-link>
       <router-link to="/setting">
         <div class="sideBtn" :class="{active:$route.path=='/setting' ||$route.path=='/m/setting'}">
           <i class="el-icon-s-tools" aria-hidden="true"></i>

@@ -2,18 +2,31 @@
     "status": "success",
     "user": "xygengcn",
     "version": "1.0.0",
+    "plugins": [{
+        "id": "text",
+        "name": "测试",
+        "author": "xygengcn",
+        "version": "1.0.0",
+        "url": "./test.js",
+        "status": true,
+        "description": "xy笔记测试插件库专用第一款插件，功能暂时为打开问候语，未来会开放更多权限开发插件，完成笔记本更多功能。"
+    }],
     "configs": {
         "isLocalStorage": true,
         "isWebStorage": false,
-        "isDark":false
+        "isDark": false,
+        "listSort": {
+            "key": "created",
+            "order": "asc",
+            "value": "创建时间（最早优先）"
+        }
     },
-    "font":{
-        "size":"14",
-        "lineHeight":"1.5"
+    "font": {
+        "size": "14",
+        "lineHeight": "1.5"
     },
-    "notes": [
-        {
-            "nid":1574844708303,
+    "notes": [{
+            "nid": 1574844708303,
             "title": "XY笔记本",
             "text": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。",
             "html": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。",
@@ -24,7 +37,7 @@
             "updated": 1574844708302
         },
         {
-            "nid":1574844708310,
+            "nid": 1574844708310,
             "title": "示例",
             "text": "这里也有一些内容在这里呢!",
             "html": "这里也有一些内容在这里呢!",

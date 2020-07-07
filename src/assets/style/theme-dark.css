@@ -9,11 +9,11 @@
 .dark #sidebar .sideBtn {
     background-color: #252526 !important;
 }
-.dark .itemContent{
-    border-color: #1e1e1e !important;
+.dark .item{
+    border-color:#333333 !important;
 }
 
-.dark .itemContent:hover,
+.dark .item:hover,
 .dark .itemActive {
     border-color: #2dbe60 !important;
 }
@@ -33,15 +33,15 @@
 .dark .main-wrap>.title,
 .dark .SearchBar,
 .dark .ListHeader {
-    border-color: #1E1E1E !important;
+    border-color: #333333 !important;
 }
 
-.dark .itemContent .title,
+.dark .item .title,
 .dark #MainContainer .search-input {
     color: #ccc;
 }
 
-.dark .itemContent .itemTool {
+.dark .item .itemTool {
     color: #252526 !important;
 }
 
@@ -68,7 +68,7 @@
 
 .dark .View .ViewArea,
 .dark .Edit .EditArea {
-    border-color: #151515 !important;
+    border-color: #1a1a1a !important;
 }
 
 .dark ::-webkit-scrollbar {

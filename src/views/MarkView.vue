@@ -5,7 +5,7 @@
             <li class="ListItem" v-for="(item,index) in data" :key="index" @click="setActive(item)">
                 <Note :data="item"></Note>
             </li>
-            <li v-if="this.data.length==0" class="blank">文章为空</li>
+            <li v-if="data.length==0" class="blank">文章为空</li>
         </ul>
     </page-view>
 </template>

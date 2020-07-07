@@ -16,13 +16,15 @@ button {
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
+
 ul,
 li {
-    list-style: none;
-    text-decoration: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
 }
+
 input {
   -webkit-appearance: none;
 }
@@ -35,11 +37,13 @@ input {
   -ms-user-select: none;
   user-select: none;
 }
+
 .blank {
   color: #cccccc !important;
   text-align: center;
   padding: 50px;
 }
+
 /** 中间栏模板 **/
 
 

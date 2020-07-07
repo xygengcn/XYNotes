@@ -42,13 +42,13 @@
     font-size: 1em;
 }
 
-.mobie .itemContent {
+.mobie .item {
     box-shadow: 0 2px 8px 2px rgba(0, 0, 0, .1);
     margin: 10px;
     border-radius: 4px;
 }
-.mobie .itemContent,
-.mobie .itemContent:hover,
+.mobie .item,
+.mobie .item:hover,
 .mobie .itemActive {
     border-color: transparent !important;
 }

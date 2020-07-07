@@ -63,7 +63,7 @@
         var time = this.$utils.getTime();
         this.$store.commit("setTime", time);
       },
-      //无操作5s自动保存
+      //无操作5s自动操作
       autoSave: function (e) {
         this.isSave = false;
         this.save(e);
@@ -74,7 +74,7 @@
           this.saveToSql();
         }, 5000);
       },
-      //保存操作
+      //保存
       save(e) {
         var text = e.target.value;
         this.$store.commit("setText", text);
