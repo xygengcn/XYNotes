@@ -7,7 +7,9 @@
                 <li v-if="data.length==0" class="blank">文章为空</li>
             </ul>
         </page-view>
-        <div class="addItem"><el-button icon="el-icon-plus" @click="addItem" circle=""></el-button></div>
+        <div class="addItem" v-if="false">
+            <el-button icon="el-icon-plus" @click="addItem" circle=""></el-button>
+        </div>
     </div>
 </template>
 
@@ -24,17 +26,17 @@
                 return this.$store.state.data.plugins;
             }
         },
-        methods:{
-            addItem(){
+        methods: {
+            addItem() {
                 console.log("添加插件");
-                let plugin ={
-                    name:"sss",
-                    version:"1.0.0",
-                    author:"xxx",
-                    status:false,
-                    description:"ss"
+                let plugin = {
+                    name: "sss",
+                    version: "1.0.0",
+                    author: "xxx",
+                    status: false,
+                    description: "ss"
                 }
-                this.$store.commit("addPlugin",plugin);
+                this.$store.commit("addPlugin", plugin);
             }
         }
 
@@ -57,12 +59,14 @@
         font-size: 1.5em;
         text-align: center;
     }
-    #plugins .addItem button{
-        color:#fff;
-        background-color:#2dbe60 ;
-        border-color:#2dbe60 ;
+
+    #plugins .addItem button {
+        color: #fff;
+        background-color: #2dbe60;
+        border-color: #2dbe60;
     }
-    #plugins .addItem button:hover{
+
+    #plugins .addItem button:hover {
         opacity: .8;
     }
 </style>
