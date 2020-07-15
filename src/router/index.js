@@ -7,43 +7,43 @@ Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
-    component: () => import('../views/App'),
+    component: () => import('@/views/App'),
     children: [{
       path: '/',
-      component: () => import('../views/ListView')
+      component: () => import('@/views/ListView')
     },  {
       path: 'note',
-      component: () => import('../views/ListView')
+      component: () => import('@/views/ListView')
     },{
       path: 'mark',
-      component: () => import('../views/MarkView')
+      component: () => import('@/views/MarkView')
     }, {
       path: 'setting',
-      component: () => import('../views/SettingView')
+      component: () => import('@/views/SettingView')
     }, {
       path: 'plugins',
-      component: () => import('../views/PluginsView')
+      component: () => import('@/views/PluginsView')
     }]
   },
   {
     path: '/m',
-    component: () => import('../views/App'),
+    component: () => import('@/views/App'),
     children: [{
       path: '/',
-      component: () => import('../views/ListView')
+      component: () => import('@/views/ListView')
     }, {
       path: 'note',
-      component: () => import('../views/TextContainer')
+      component: () => import('@/views/TextContainer')
     },
     {
       path: 'mark',
-      component: () => import('../views/MarkView')
+      component: () => import('@/views/MarkView')
     },  {
       path: 'setting',
-      component: () => import('../views/SettingView')
+      component: () => import('@/views/SettingView')
     },{
       path: 'plugins',
-      component: () => import('../views/PluginsView')
+      component: () => import('@/views/PluginsView')
     }]
   }
 ]

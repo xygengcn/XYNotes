@@ -72,14 +72,19 @@ var plugins = {
     //初始化插件
     init: (array) => {
         array.forEach(element => {
-            if (element.status)
+            if (element.status){
                 plugins.install(element);
+            }
         });
     }
 };
 
 /**
- * 测试
+ * 接口集
+ */
+
+/**
+ * 界面初始化
  */
 plugins.start = function () {
 

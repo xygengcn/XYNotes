@@ -70,11 +70,16 @@
         computed: {
             data() {
                 let notes = this.$store.state.data.notes || [];
-                return notes.filter(item => {
+
+
+                notes= notes.filter(item => {
                     if (item.title.includes(this.searchkey) || item.text.includes(this.searchkey)) {
                         return item;
                     }
                 }).sort(this.compare());
+
+                this.$store.commit("setActive",notes[0]);
+                return notes;
             },
             sortkey() {
                 return this.$store.state.data.configs.listSort;

@@ -35,27 +35,32 @@
             <label>恢复出厂</label>
             <el-button type="danger" size="mini" @click="rebuild">恢复</el-button>
           </li>
+          <li>
+            <label>版本{{configs.version}}</label>
+            <el-button type="danger" size="mini" @click="updata">更新</el-button>
+          </li>
         </ul>
       </div>
-      <div class="version">Copyright &copy; 2020 Version {{version}}</div>
+      <div class="version">Copyright &copy; 2020 Version {{configs.version}}</div>
     </page-view>
   </div>
 </template>
 <script>
   import PageView from "../components/PageView";
   import storage from "../store/data";
-  import config from "../../package.json";
   export default {
     components: {
       PageView
     },
     data() {
-      // let size =this.$utils.sizeof(JSON.stringify(this.$store.state.data));
       return {
-        version: config.version
+        
       };
     },
     methods: {
+      updata(){
+        this.$utils.reload();
+      },
       //保存配置
       saveConfig() {
         this.$store.dispatch("configSave");

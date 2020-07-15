@@ -10,9 +10,9 @@
   </div>
 </template>
 <script>
-  import sidebar from "../components/SideBar";
-  import MainContainer from "../views/MainContainer"
-  import TextContainer from "./TextContainer"
+  import sidebar from "@/components/Sidebar";
+  import MainContainer from "@/views/MainContainer"
+  import TextContainer from "@/views/TextContainer"
   export default {
     components: {
       sidebar,
@@ -38,7 +38,7 @@
         this.isTriggle = is;
       }
     },
-    created() {
+    beforeCreate() {
       this.$store.dispatch("init");
       this.$plugins.hook("start");
     }
