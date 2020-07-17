@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-import storage from './data';
+import storage from './data/data';
 const sysConfig = require("../../package.json");
 var defaultData = require("./default.json");
 const isMobie = navigator.userAgent.match(
@@ -101,13 +101,14 @@ export default new Vuex.Store({
       state.data.configs = configs;
     },
     //设置字体
-    setFont(state, font) {
-      state.data.font = font;
+    setFont(state, fonts) {
+      state.data.fonts = fonts;
     },
     //添加插件
     addPlugin(state, plugin) {
       state.data.plugins.push(plugin);
     },
+    //设置排序
     setOrder(state, order) {
       state.data.configs.listSort = order;
     }
@@ -128,8 +129,9 @@ export default new Vuex.Store({
       localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(configs));
     },
     fontSave(content) {
-      localStorage.setItem("XYNOTESFONT", JSON.stringify(content.state.data.font));
+      localStorage.setItem("XYNOTESFONTS", JSON.stringify(content.state.data.fonts));
     },
+    //恢复数据
     recover(content, data) {
       content.commit('setLoading', true);
       storage.recover(data.notes).then(() => {
@@ -146,10 +148,10 @@ export default new Vuex.Store({
       } else {
         localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(content.state.data.configs));
       }
-      if (localStorage.getItem("XYNOTESFONT")) {
-        content.commit("setFont", JSON.parse(localStorage.getItem("XYNOTESFONT")))
+      if (localStorage.getItem("XYNOTESFONTS")) {
+        content.commit("setFont", JSON.parse(localStorage.getItem("XYNOTESFONTS")))
       } else {
-        localStorage.setItem("XYNOTESFONT", JSON.stringify(content.state.data.font));
+        localStorage.setItem("XYNOTESFONTS", JSON.stringify(content.state.data.fonts));
       }
       if (content.state.data.configs.isLocalStorage) {
         storage.init(content.state.data.notes).then(res => {

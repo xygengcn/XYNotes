@@ -7,7 +7,8 @@ var hello = function (to, from, next, routes) {
 }
 //vue.$plugins.extend("beforeEach", hello);
 
-vue.$plugins.extend("start", function () {
+vue.$plugins.extend("beforeEach", function (e) {
+    //console.log(e);
 
     // vue.$notify({
     //       title: '早上好',

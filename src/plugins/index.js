@@ -15,12 +15,17 @@ var plugins = {
         document.querySelector('head').appendChild(style);
     },
     html: (el, arr) => {
-        var keys = ["childs", "element"];
+        var keys = ["childs", "element", "data"];
         arr.forEach(item => {
             var element = document.createElement(item.element);
             for (let key in item) {
                 if (keys.indexOf(key) == -1) {
                     element[key] = item[key];
+                }
+                if (key == "data") {
+                    for (let dataKey in item[key]) {
+                        element["data-" + dataKey] = item[key][dataKey];
+                    }
                 }
             }
             if (item.childs) {
@@ -40,7 +45,7 @@ var plugins = {
                     if (!obj.hasOwnProperty(funcName) && funcName != "constructor") {
                         let func = eval("obj." + funcName);
                         if (typeof func == "function")
-                        resolve(func.call(obj, ...args));
+                            resolve(func.call(obj, ...args));
                     }
                 }
             } else {
@@ -72,7 +77,7 @@ var plugins = {
     //初始化插件
     init: (array) => {
         array.forEach(element => {
-            if (element.status){
+            if (element.status) {
                 plugins.install(element);
             }
         });
@@ -87,6 +92,7 @@ var plugins = {
  * 界面初始化
  */
 plugins.start = function () {
+    this.name = "start";
 
 }
 

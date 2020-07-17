@@ -1,15 +1,23 @@
 //数据保存处理中心
-import JSQL from '../utils/JSQL'
-var storage = {};
-
+import JSQL from './JSQL'
+var storage = {
+    dateBaseName: 'XYNOTES',
+    noteListName: 'notes',
+    orderName: {
+        config: 'XYNOTESCONFIGS',
+        font: 'XYNOTESFONTS',
+        plugin: 'XYNOTESPLUGINS'
+    }
+};
+//初始化数据
 storage.init = function (data) {
-    let db = new JSQL('XYNOTES');
+    let db = new JSQL(storage.dateBaseName);
     return new Promise((resolve, reject) => {
-        db.init('notes', 1, data).then(e => {
+        db.init(storage.noteListName, 1, data).then(e => {
             e.fetchAll().then(res => {
                 if (res.length == 0) {
-                    if (localStorage.getItem("notes")) {
-                        resolve(localStorage.getItem("notes"));
+                    if (localStorage.getItem(storage.noteListName)) {
+                        resolve(localStorage.getItem(storage.noteListName));
                     } else {
                         resolve([]);
                     }
@@ -20,44 +28,47 @@ storage.init = function (data) {
         })
     })
 }
+//删除文章
 storage.del = function (isLocal = true, isWeb = false, note, notes) {
     if (isLocal) {
         let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-        let db = new JSQL('XYNOTES')
+        let db = new JSQL(storage.dateBaseName)
         if (indexedDB) {
-            db.init("notes", 1, notes).then((e) => {
+            db.init(storage.noteListName, 1, notes).then((e) => {
                 e.delete(note.nid);
             }).catch(e => {
                 console.log(e);
             })
         } else {
-            this.localStorage("notes", notes);
+            this.localStorage(storage.noteListName, notes);
         }
     }
 }
+//保存文章
 storage.save = function (isLocal = true, isWeb = false, note, notes) {
     if (isLocal) {
         let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-        let db = new JSQL('XYNOTES')
+        let db = new JSQL(storage.dateBaseName)
         if (indexedDB) {
-            db.init("notes", 1, notes).then((e) => {
+            db.init(storage.noteListName, 1, notes).then((e) => {
                 e.put(note);
             }).catch(e => {
                 console.log(e);
             })
         } else {
-            this.localStorage("notes", notes);
+            this.localStorage(storage.noteListName, notes);
         }
     }
 }
+//恢复数据
 storage.recover = function (data) {
     let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-    let db = new JSQL('XYNOTES')
-    localStorage.removeItem("notes");
-    return new Promise((resolve)=>{
+    let db = new JSQL(storage.dateBaseName)
+    localStorage.removeItem(storage.noteListName);
+    return new Promise((resolve) => {
         if (indexedDB) {
-            db.deleteDB().then(e=>{
-                db.init('notes', 1, data).then(e => {
+            db.deleteDB().then(e => {
+                db.init(storage.noteListName, 1, data).then(e => {
                     resolve(e)
                 })
                 resolve(e)
@@ -65,15 +76,17 @@ storage.recover = function (data) {
         }
     })
 }
+//恢复出厂
 storage.clean = function () {
     let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-    let db = new JSQL('XYNOTES')
-    localStorage.removeItem("notes");
-    localStorage.removeItem("XYNOTESCONFIGS");
-    localStorage.removeItem("XYNOTESFONT");
-    return new Promise((resolve,reject)=>{
+    let db = new JSQL(storage.dateBaseName)
+    localStorage.removeItem(storage.noteListName);
+    for (let item in storage.orderName) {
+        localStorage.removeItem(storage.orderName[item]);
+    }
+    return new Promise((resolve, reject) => {
         if (indexedDB) {
-            db.deleteDB().then(res=>{
+            db.deleteDB().then(res => {
                 resolve(res);
             });
         }
