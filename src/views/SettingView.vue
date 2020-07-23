@@ -58,7 +58,15 @@
                     </li>
                 </ul>
             </div>
-            <div class="version">Copyright &copy; 2020 Version {{configs.version}}</div>
+            <div class="version">
+                Copyright &copy; 2020 Version {{configs.version}} By
+                <el-link
+                    href="https://github.com/xygengcn/XYNotes"
+                    target="_blank"
+                    :underline="false"
+                    class="github"
+                >XYNotes</el-link>
+            </div>
         </page-view>
     </div>
 </template>
@@ -67,7 +75,7 @@ import PageView from "../components/PageView";
 import storage from "../store/data/data";
 export default {
     components: {
-        PageView
+        PageView,
     },
     data() {
         return {};
@@ -88,21 +96,21 @@ export default {
                 {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
-                    type: "warning"
+                    type: "warning",
                 }
             )
                 .then(() => {
                     storage.clean();
                     this.$message({
                         type: "success",
-                        message: "恢复成功!"
+                        message: "恢复成功!",
                     });
                     window.location = "/";
                 })
-                .catch(e => {
+                .catch((e) => {
                     this.$message({
                         type: "info",
-                        message: "取消恢复"
+                        message: "取消恢复",
                     });
                 });
         },
@@ -111,21 +119,21 @@ export default {
             this.$confirm("重置配置！", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
-                type: "warning"
+                type: "warning",
             })
                 .then(() => {
                     localStorage.removeItem("XYNOTESCONFIGS");
                     localStorage.removeItem("XYNOTESFONT");
                     this.$message({
                         type: "success",
-                        message: "恢复成功!"
+                        message: "恢复成功!",
                     });
                     window.location = "/";
                 })
-                .catch(e => {
+                .catch((e) => {
                     this.$message({
                         type: "info",
-                        message: "取消恢复"
+                        message: "取消恢复",
                     });
                 });
         },
@@ -133,7 +141,7 @@ export default {
         inputFile(event) {
             const reader = new FileReader();
             reader.readAsText(event.target.files[0]);
-            reader.onload = e => {
+            reader.onload = (e) => {
                 let data = JSON.parse(
                     decodeURIComponent(escape(window.atob(e.target.result)))
                 );
@@ -145,13 +153,13 @@ export default {
             let data = JSON.stringify(this.$store.state.data);
             data = window.btoa(unescape(encodeURIComponent(data)));
             this.$utils.download(data, "xy笔记.xy");
-        }
+        },
     },
     computed: {
         configs() {
             return this.$store.state.data.configs;
-        }
-    }
+        },
+    },
 };
 </script>
 <style scoped>
@@ -193,5 +201,9 @@ li label {
     margin: 10px 0px 20px;
     font-size: 12px;
     text-align: center;
+}
+.version .github {
+    font-size: 12px;
+    color: #878787;
 }
 </style>

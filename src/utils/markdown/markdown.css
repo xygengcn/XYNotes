@@ -47,6 +47,10 @@
       margin: 0;
   }
 
+  .marked .li-checkbox input{
+    -webkit-appearance: checkbox;
+  }
+
   .marked blockquote {
       color: #666;
       border-left: 4px solid #ddd;
