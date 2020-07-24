@@ -1,37 +1,34 @@
 <template>
     <div id="plugins">
-        <page-view :title="'插件库'" :icon="'el-icon-s-grid'">
+        <page :title="'插件库'" :icon="'el-icon-s-grid'">
             <ul>
                 <li class="ListItem" v-for="(item,index) in data" :key="index">
-                    <plugin-item :data="item"></plugin-item>
+                    <plugin :data="item" :id="'plugin-'+item.id"></plugin>
                 </li>
                 <li v-if="data.length==0" class="blank">文章为空</li>
             </ul>
-        </page-view>
+        </page>
 
         <addPlugin></addPlugin>
     </div>
 </template>
 
 <script>
-import PageView from "@/components/PageView";
-import PluginItem from "@/components/plugins/PluginItem";
-import addPlugin from "@/components/plugins/AddPlugin";
+import page from "@/components/mainbar/common/Page";
+import plugin from "@/components/mainbar/plugins/Plugin";
+import addPlugin from "@/components/mainbar/plugins/AddPlugin";
 export default {
     components: {
-        PageView,
-        PluginItem,
-        addPlugin
-    },
-    data() {
-        return {};
+        page,
+        plugin,
+        addPlugin,
     },
     computed: {
         data() {
             return this.$store.state.data.plugins;
-        }
+        },
     },
-    methods: {}
+    methods: {},
 };
 </script>
 

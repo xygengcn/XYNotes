@@ -1,5 +1,5 @@
 <template>
-    <div class="item" @click="to(data.id)">
+    <div class="plugin item noselect" @click="to(data.id)">
         <div class="title">
             {{data.name}}
             <em class="tag">{{data.version}}</em>
@@ -9,14 +9,7 @@
         </div>
         <div class="itemTool">
             <span class="author">{{data.author}}</span>
-            <el-button type="success" size="mini" class="btn-install" v-if="!data.status">安装</el-button>
-            <el-button
-                class="btn-setting"
-                icon="el-icon-setting"
-                size="mini"
-                v-if="data.status"
-                circle
-            ></el-button>
+            <el-tag :type="data.status?'success':'info'" size="mini">{{data.status?"已启动":"未启动"}}</el-tag>
         </div>
     </div>
 </template>
@@ -25,10 +18,14 @@
 export default {
     props: ["data"],
     methods: {
-        to(name) {
-            this.$router.push({ path: `/plugins/${name}` });
-        }
-    }
+        to(id) {
+            if (this.$store.state.isMobie) {
+                this.$router.push({ path: `/m/plugins/${id}` });
+            } else {
+                this.$router.push({ path: `/plugins/${id}` });
+            }
+        },
+    },
 };
 </script>
 
@@ -69,6 +66,7 @@ export default {
 .item .itemContent {
     margin: 10px 0px;
     color: #878787;
+    overflow: hidden;
 }
 
 .item .itemContent small {
@@ -81,24 +79,16 @@ export default {
 .item .itemTool {
     display: flex;
     align-items: center;
+    margin: 10px 0px 0px;
 }
 
 .item .itemTool .author {
     flex: 1;
     font-weight: 600;
     font-size: 14px;
+    height: 20px;
+    line-height: 20px;
     color: #878787;
-}
-
-.item .itemTool .btn-install {
-    padding: 2px 8px;
-}
-.item .itemTool .btn-setting {
-    color: #878787;
-    font-size: 18px;
-    background: transparent;
-    border: none;
-    padding: 2px 8px;
 }
 
 .item:hover {

@@ -1,6 +1,6 @@
 <!-- 浏览模式 -->
 <template>
-    <div class="View" ref="view">
+    <div class="viewHome" id="viewHome" ref="viewHome">
         <div class="ViewHeader">
             <div class="title" v-text="activeNoteText.title"></div>
         </div>
@@ -20,17 +20,17 @@ export default {
     computed: {
         font() {
             return this.$store.state.data.fonts;
-        }
+        },
     },
     methods: {
         dblclick() {
             console.log(0);
-        }
-    }
+        },
+    },
 };
 </script>
 <style lang='css' scoped>
-.View {
+.viewHome {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -65,7 +65,7 @@ export default {
 }
 
 .mobie .ViewHeader,
-.mobie .View .ViewArea {
+.mobie .viewHome .ViewArea {
     padding: 0px 20px;
     font-size: 1em;
 }
@@ -88,7 +88,7 @@ export default {
 }
 
 /* 正文 */
-.View .ViewArea {
+.viewHome .ViewArea {
     font-family: gotham, helvetica, arial, sans-serif;
     width: 100%;
     box-sizing: border-box;

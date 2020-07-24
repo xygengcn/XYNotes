@@ -152,7 +152,7 @@ utils.sizeof = function (str, charset) {
 utils.isMobie = function () {
     return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i) ? true : false;
 }
-utils.reload =function (){
+utils.reload = function () {
     window.location.reload(true);
 }
 exports.install = function (Vue, opt) {

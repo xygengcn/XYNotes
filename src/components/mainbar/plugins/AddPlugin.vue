@@ -25,8 +25,8 @@
                 </el-form-item>
                 <el-form-item label="插件状态" label-width="100">
                     <el-select v-model="plugin.status" placeholder="是否开启">
-                        <el-option label="开启" value="true"></el-option>
-                        <el-option label="关闭" value="false"></el-option>
+                        <el-option label="开启" :value="true"></el-option>
+                        <el-option label="关闭" :value="false"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="插件描述" label-width="100">
@@ -50,11 +50,11 @@ export default {
                 id: "",
                 name: "",
                 url: "",
-                status: "",
+                status: false,
                 version: "0.0.1",
                 intro: "",
-                status: "false"
-            }
+                status: "false",
+            },
         };
     },
     methods: {
@@ -64,10 +64,10 @@ export default {
             this.$store.commit("addPlugin", this.plugin);
             this.$message({
                 message: "插件添加成功，刷新后生效",
-                type: "success"
+                type: "success",
             });
-        }
-    }
+        },
+    },
 };
 </script>
 

@@ -8,6 +8,20 @@ var defaultData = require("./default.json");
 const isMobie = navigator.userAgent.match(
   /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
 ) ? true : false;
+
+
+//排序
+let compare = (sortkey) => {
+  return (a, b) => {
+    var aa = a[sortkey.key];
+    var bb = b[sortkey.key];
+    if (sortkey.order == "desc") {
+      return bb - aa;
+    } else {
+      return aa - bb;
+    }
+  };
+};
 export default new Vuex.Store({
   state: {
     data: defaultData,
@@ -92,8 +106,8 @@ export default new Vuex.Store({
       state.data = data;
     },
     //设置所有笔记
-    setNotes(state, notes) {
-      state.data.notes = notes;
+    setNotes(state, { notes, sortkey }) {
+      state.data.notes = notes.sort(compare(sortkey));
       state.note = state.data.notes[0];
     },
     //设置配置
@@ -123,11 +137,13 @@ export default new Vuex.Store({
       let configs = content.state.data.configs;
       storage.save(configs.isLocalStorage, configs.isWebStorage, content.state.note, content.state.data.notes);
     },
+    //保存
     configSave(content) {
       let configs = content.state.data.configs;
       configs.version = sysConfig.version;
       localStorage.setItem("XYNOTESCONFIGS", JSON.stringify(configs));
     },
+    //保存
     fontSave(content) {
       localStorage.setItem("XYNOTESFONTS", JSON.stringify(content.state.data.fonts));
     },
@@ -155,7 +171,7 @@ export default new Vuex.Store({
       }
       if (content.state.data.configs.isLocalStorage) {
         storage.init(content.state.data.notes).then(res => {
-          content.commit("setNotes", res);
+          content.commit("setNotes", { notes: res, sortkey: content.state.data.configs.listSort });
         })
       }
     }

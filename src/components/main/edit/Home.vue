@@ -1,6 +1,6 @@
 <!-- 编辑区 -->
 <template>
-    <div class="Edit">
+    <div class="editHome">
         <div class="EditHeader">
             <input
                 type="text"
@@ -36,7 +36,7 @@
     </div>
 </template>
 <script>
-import markdown from "../utils/markdown/markdown";
+import markdown from "@/utils/markdown/markdown";
 export default {
     components: {},
     data() {
@@ -45,7 +45,7 @@ export default {
             isSave: true, //防止多次保存
             contextMenuStyle: {},
             isContextMenu: false,
-            selectText: ""
+            selectText: "",
         };
     },
     computed: {
@@ -54,12 +54,12 @@ export default {
         },
         font() {
             return this.$store.state.data.fonts;
-        }
+        },
     },
     watch: {},
     methods: {
         //编辑文本
-        editNote: function(e) {
+        editNote: function (e) {
             if (!this.isSave) {
                 this.save(e);
                 clearTimeout(this.autosave);
@@ -67,19 +67,19 @@ export default {
             }
         },
         //更新标题
-        editTitle: function(e) {
+        editTitle: function (e) {
             var text = e.target.value;
             this.$store.commit("setTitle", text);
             this.editTime();
             this.saveToSql();
         },
         //更新时间
-        editTime: function() {
+        editTime: function () {
             var time = this.$utils.getTime();
             this.$store.commit("setTime", time);
         },
         //无操作5s自动操作
-        autoSave: function(e) {
+        autoSave: function (e) {
             this.isSave = false;
             this.save(e);
             if (this.autosave != null) {
@@ -116,7 +116,7 @@ export default {
                 this.saveToSql();
                 this.$message({
                     message: "保存成功",
-                    type: "success"
+                    type: "success",
                 });
                 event.preventDefault();
                 event.returnValue = false;
@@ -161,7 +161,7 @@ export default {
             this.isContextMenu = true;
             this.contextMenuStyle = {
                 left: e.clientX + "px",
-                top: e.clientY + "px"
+                top: e.clientY + "px",
             };
         },
         //复制
@@ -172,10 +172,10 @@ export default {
                 .then(() => {
                     this.$message({
                         message: "复制成功",
-                        type: "success"
+                        type: "success",
                     });
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.error(err);
                 });
         },
@@ -185,7 +185,7 @@ export default {
                 confirmButtonText: "插入",
                 cancelButtonText: "取消",
                 inputPattern: /(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?/,
-                inputErrorMessage: "图片地址不正确"
+                inputErrorMessage: "图片地址不正确",
             })
                 .then(({ value }) => {
                     this.insertText(this.$refs.EditArea, `![](${value})`);
@@ -193,15 +193,15 @@ export default {
                 .catch(() => {
                     this.$message({
                         type: "info",
-                        message: "取消插入"
+                        message: "取消插入",
                     });
                 });
-        }
-    }
+        },
+    },
 };
 </script>
 <style lang='css' scoped>
-.Edit {
+.editHome {
     display: flex;
     flex-direction: column;
     height: 100%;

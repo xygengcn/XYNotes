@@ -1,7 +1,7 @@
 <!-- 配置界面 -->
 <template>
     <div class="setting">
-        <page-view :title="'设置'" :icon="'el-icon-setting'">
+        <page :title="'设置'" :icon="'el-icon-setting'">
             <div class="setting-container">
                 <ul>
                     <li>
@@ -67,15 +67,15 @@
                     class="github"
                 >XYNotes</el-link>
             </div>
-        </page-view>
+        </page>
     </div>
 </template>
 <script>
-import PageView from "../components/PageView";
-import storage from "../store/data/data";
+import page from "@/components/mainbar/common/Page";
+import storage from "@/store/data/data";
 export default {
     components: {
-        PageView,
+        page,
     },
     data() {
         return {};

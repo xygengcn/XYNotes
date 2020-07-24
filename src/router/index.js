@@ -10,25 +10,25 @@ const routes = [{
   component: () => import('@/views/App'),
   children: [{
     path: '/',
-    component: () => import('@/views/ListView')
+    component: () => import('@/components/mainbar/notes/Home')
   }, {
     path: 'note',
-    component: () => import('@/views/ListView')
+    component: () => import('@/components/mainbar/notes/Home')
   }, {
     path: 'mark',
-    component: () => import('@/views/MarkView')
+    component: () => import('@/components/mainbar/mark/Home')
   }, {
     path: 'setting',
-    component: () => import('@/views/SettingView')
+    component: () => import('@/components/mainbar/setting/Home')
   }, {
     path: 'plugins',
-    component: () => import('@/views/PluginsView')
+    component: () => import('@/components/mainbar/plugins/Home')
   }, {
     path: 'plugins/:id',
-    component: () => import('@/components/plugins/PluginPage')
+    component: () => import('@/components/mainbar/plugins/PluginPage')
   }, {
     path: 'plugins/:id/:name',
-    component: () => import('@/components/plugins/PluginPage')
+    component: () => import('@/components/mainbar/plugins/PluginPage')
   }]
 },
 {
@@ -36,20 +36,26 @@ const routes = [{
   component: () => import('@/views/App'),
   children: [{
     path: '/',
-    component: () => import('@/views/ListView')
+    component: () => import('@/components/mainbar/notes/Home')
   }, {
     path: 'note',
-    component: () => import('@/views/TextContainer')
+    component: () => import('@/components/main/Home')
   },
   {
     path: 'mark',
-    component: () => import('@/views/MarkView')
+    component: () => import('@/components/mainbar/mark/Home')
   }, {
     path: 'setting',
-    component: () => import('@/views/SettingView')
+    component: () => import('@/components/mainbar/setting/Home')
   }, {
     path: 'plugins',
-    component: () => import('@/views/PluginsView')
+    component: () => import('@/components/mainbar/plugins/Home')
+  }, {
+    path: 'plugins/:id',
+    component: () => import('@/components/mainbar/plugins/PluginPage')
+  }, {
+    path: 'plugins/:id/:name',
+    component: () => import('@/components/mainbar/plugins/PluginPage')
   }]
 }
 ]

@@ -9,6 +9,8 @@
 .dark #sidebar .sideBtn {
     background-color: #252526 !important;
 }
+
+/* 笔记列表 */
 .dark .item{
     border-color:#333333 !important;
 }
@@ -45,19 +47,23 @@
     color: #252526 !important;
 }
 
-.dark #TextContainer,
-.dark #ViewTextarea {
+.dark #mainHome,
+.dark #viewHome {
     background-color: #1E1E1E;
 }
 
-.dark .header button {
+.dark .navbar button {
     background: #333;
     color: #ccc;
+    border-color: #333;
+}
+.dark .navbar button:hover{
+    opacity: 0.8;
 }
 
 .dark #EditTextarea input,
 .dark #EditTextarea .EditArea,
-.dark #TextContainer .tag {
+.dark #mainHome .tag {
     background-color: #1E1E1E !important;
 }
 
@@ -66,8 +72,8 @@
     color: #ccc !important;
 }
 
-.dark .View .ViewArea,
-.dark .Edit .EditArea {
+.dark .viewHome .ViewArea,
+.dark .editHome .EditArea {
     border-color: #1a1a1a !important;
 }
 

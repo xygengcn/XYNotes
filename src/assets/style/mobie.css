@@ -8,7 +8,8 @@
     flex: 1;
 }
 
-.mobie .header {
+/** 导航栏 **/
+.mobie #navbar {
     height: 50px !important;
     line-height: 50px !important;
     flex-direction: column !important;
@@ -16,7 +17,7 @@
     padding: 0px 20px !important;
 }
 
-.mobie .EditContent {
+.mobie .mainContent {
     margin: 10px 0px 0px;
 }
 
@@ -37,7 +38,7 @@
     ;
 }
 
-.mobie .Edit .EditArea {
+.mobie .editHome .EditArea {
     padding: 10px 20px;
     font-size: 1em;
 }

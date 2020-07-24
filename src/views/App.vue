@@ -1,74 +1,80 @@
 <!-- 首页 -->
 <template>
-  <div class="wrap" v-loading="loading.status" :element-loading-text="loading.text" element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)">
-    <sidebar></sidebar>
-    <transition tag="div" appear>
-      <main-container v-if="isTriggle"></main-container>
-    </transition>
-    <text-container @Triggle="Triggle" v-if="!isMobie"></text-container>
-  </div>
+    <div
+        class="wrap"
+        v-loading="loading.status"
+        :element-loading-text="loading.text"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
+        <sidebar></sidebar>
+        <transition tag="div" appear>
+            <mainbar v-if="isTriggle"></mainbar>
+        </transition>
+        <mainWap @Triggle="Triggle" v-if="!isMobie"></mainWap>
+    </div>
 </template>
 <script>
-  import sidebar from "@/components/Sidebar";
-  import MainContainer from "@/views/MainContainer"
-  import TextContainer from "@/views/TextContainer"
-  export default {
+import sidebar from "@/components/sidebar/Home";
+import mainbar from "@/components/mainbar/Home";
+import mainWap from "@/components/main/Home";
+import { Loading } from "element-ui";
+export default {
     components: {
-      sidebar,
-      MainContainer,
-      TextContainer
+        sidebar,
+        mainbar,
+        mainWap,
     },
     data() {
-      return {
-        isTriggle: true,
-        isLoading: false,
-      }
+        return {
+            isTriggle: true,
+            isLoading: false,
+        };
     },
     computed: {
-      isMobie() {
-        return this.$store.state.isMobie;
-      },
-      loading() {
-        return this.$store.state.loading;
-      }
+        isMobie() {
+            return this.$store.state.isMobie;
+        },
+        loading() {
+            return this.$store.state.loading;
+        },
     },
     methods: {
-      Triggle(is) {
-        this.isTriggle = is;
-      }
+        Triggle(is) {
+            this.isTriggle = is;
+        },
     },
     beforeCreate() {
-      this.$store.dispatch("init");
-      this.$plugins.hook("start");
-    }
-  }
+        this.$store.dispatch("init");
+        this.$plugins.hook("start");
+    },
+};
 </script>
 <style scoped>
-  .wrap {
+.wrap {
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
     display: flex;
-  }
+}
 
-  .v-enter,
-  .v-leave-to {
+.v-enter,
+.v-leave-to {
     opacity: 0;
     transform: translateX(-300px);
-  }
+}
 
-  .v-enter-active,
-  .v-leave-active {
-    transition: all .5s ease;
-  }
+.v-enter-active,
+.v-leave-active {
+    transition: all 0.5s ease;
+}
 
-  .v-move {
-    transition: all .5s ease;
-  }
+.v-move {
+    transition: all 0.5s ease;
+}
 
-  .v-leave-active {
+.v-leave-active {
     position: absolute;
-  }
+}
 </style>
