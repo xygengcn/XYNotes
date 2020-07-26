@@ -57,8 +57,7 @@ export default {
         },
         //更新时间
         editTime: function () {
-            var time = this.$utils.time();
-            this.$store.commit("setTime", time);
+            this.$store.commit("setTime", this.$utils.time());
         },
         //无操作5s自动操作
         autoSave: function (e) {
@@ -90,7 +89,7 @@ export default {
 
             console.log(
                 "自动保存成功———" +
-                    this.$utils.time(new Date(), "yyy-MM-dd HH:mm:ss")
+                    this.$utils.time(new Date(), "yyyy-MM-dd HH:mm:ss")
             );
 
             /**

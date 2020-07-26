@@ -25,7 +25,7 @@
         "isLocalStorage": true,
         "isWebStorage": false,
         "isDark": false,
-        "listSort": {
+        "sortKey": {
             "key": "created",
             "order": "asc",
             "value": "创建时间（最早优先）"

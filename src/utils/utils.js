@@ -1,6 +1,6 @@
 var utils = {}
 
-utils.time = function (timestamp, format = "yyyy-MM-dd HH:mm:ss") {
+utils.time = function(timestamp, format = "yyyy-MM-dd HH:mm:ss") {
     if (!timestamp) return new Date().getTime();
     var date = timestamp ? new Date(timestamp) : new Date();
     var year = String(date.getFullYear()).padStart(4, "0"); //获取当前年份
@@ -13,7 +13,7 @@ utils.time = function (timestamp, format = "yyyy-MM-dd HH:mm:ss") {
     var second = date.getSeconds().toString().padStart(2, "0"); //获取秒
     return format.replace("yyyy", year).replace("MM", month).replace("dd", day).replace("HH", hour).replace("mm", minute).replace("ss", second).replace("day", weekday);
 }
-utils.os = function () {
+utils.os = function() {
     var ua = navigator.userAgent,
         isWindowsPhone = /(?:Windows Phone)/.test(ua),
         isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
@@ -32,7 +32,7 @@ utils.os = function () {
         isMobie: isMobie
     };
 }
-utils.timeToDate = function (dateTimeStamp) {
+utils.timeToDate = function(dateTimeStamp) {
     var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示
     var hour = minute * 60;
     var day = hour * 24;
@@ -62,12 +62,12 @@ utils.timeToDate = function (dateTimeStamp) {
     } else if (diffValue >= 0 && diffValue <= minute) {
         result = "刚刚"
     } else {
-        result = this.getTime(dateTimeStamp, 'yyy-MM-dd HH:mm:ss');
+        result = this.time(dateTimeStamp, 'yyyy-MM-dd HH:mm:ss');
     }
     return result;
 }
 //生成图片
-utils.base64ImgtoFile = function (dataurl, filename = "XYNote") {
+utils.base64ImgtoFile = function(dataurl, filename = "XYNote") {
     let arr = dataurl.split(",");
     let mime = arr[0].match(/:(.*?);/)[1];
     let suffix = mime.split("/")[1];
@@ -82,7 +82,7 @@ utils.base64ImgtoFile = function (dataurl, filename = "XYNote") {
     });
 }
 //转url
-utils.dataToUrl = function (str) {
+utils.dataToUrl = function(str) {
     const blob = new Blob([str], {
         type: ""
     });
@@ -90,7 +90,7 @@ utils.dataToUrl = function (str) {
     return URL.createObjectURL(blob);
 
 }
-utils.download = function (content, filename) {
+utils.download = function(content, filename) {
     // 创建a标签
     let linkNode = document.createElement('a');
     linkNode.download = filename;
@@ -104,8 +104,8 @@ utils.download = function (content, filename) {
     // 移除
     document.body.removeChild(linkNode);
 };
-utils.copy = function (text) {
-    return new Promise(function (resolve, reject) {
+utils.copy = function(text) {
+    return new Promise(function(resolve, reject) {
         const textarea = document.createElement("textarea")
         textarea.style.position = 'fixed'
         textarea.style.top = 0
@@ -127,7 +127,7 @@ utils.copy = function (text) {
         document.body.removeChild(textarea)
     })
 }
-utils.sizeof = function (str, charset) {
+utils.sizeof = function(str, charset) {
     var total = 0,
         charCode, i, len;
     charset = charset ? charset.toLowerCase() : '';
@@ -156,12 +156,12 @@ utils.sizeof = function (str, charset) {
     }
     return total;
 }
-utils.isMobie = function () {
+utils.isMobie = function() {
     return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i) ? true : false;
 }
-utils.reload = function () {
+utils.reload = function() {
     window.location.reload(true);
 }
-exports.install = function (Vue, opt) {
+exports.install = function(Vue, opt) {
     Vue.prototype.$utils = utils;
 }

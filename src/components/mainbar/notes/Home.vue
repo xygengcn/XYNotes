@@ -18,12 +18,7 @@
         </div>
         <div class="NoteList">
             <ul>
-                <li
-                    class="ListItem"
-                    v-for="(item,index) in data"
-                    :key="index"
-                    @click="setActive(item)"
-                >
+                <li class="ListItem" v-for="(item,index) in data" :key="index" @click="setActive(item)">
                     <Note :data="item"></Note>
                 </li>
                 <li v-if="this.data.length==0" class="blank">文章为空</li>
@@ -46,15 +41,16 @@ export default {
     },
     computed: {
         data() {
-            let notes = this.$store.state.data.notes || [];
-            notes = notes.filter((item) => {
-                if (
-                    item.title.includes(this.searchkey) ||
-                    item.text.includes(this.searchkey)
-                ) {
-                    return item;
-                }
-            });
+            let notes =
+                this.$store.state.data.notes ||
+                [].filter((item) => {
+                    if (
+                        item.title.includes(this.searchkey) ||
+                        item.text.includes(this.searchkey)
+                    ) {
+                        return item;
+                    }
+                });
             return notes;
         },
     },

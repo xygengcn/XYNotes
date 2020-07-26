@@ -71,12 +71,11 @@ export default {
         state.data = data;
     },
     //设置所有笔记
-    setNotes(state, {
-        notes,
-        sortkey
-    }) {
+    setNotes(state, notes = state.data.notes) {
+
+        var sortkey = state.data.configs.sortKey
         //排序
-        let compare = (sortkey) => {
+        let compare = () => {
             return (a, b) => {
                 var aa = a[sortkey.key];
                 var bb = b[sortkey.key];
@@ -87,7 +86,7 @@ export default {
                 }
             };
         };
-        state.data.notes = notes.sort(compare(sortkey));
+        state.data.notes = notes.sort(compare());
         state.note = state.data.notes[0];
     }
 }

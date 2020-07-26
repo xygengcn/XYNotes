@@ -17,16 +17,6 @@ export default {
     data() {
         var sorts = [
             {
-                key: "created",
-                order: "asc",
-                value: "创建时间（最早优先）",
-            },
-            {
-                key: "created",
-                order: "desc",
-                value: "创建时间（最晚优先）",
-            },
-            {
                 key: "updated",
                 order: "asc",
                 value: "更新时间（最早优先）",
@@ -47,7 +37,7 @@ export default {
             return this.$store.state.data.notes;
         },
         sortkey() {
-            return this.$store.state.data.configs.listSort;
+            return this.$store.state.data.configs.sortKey;
         },
     },
     methods: {
@@ -60,7 +50,7 @@ export default {
         //排序记录
         order(sortkey) {
             this.$store.commit("setOrder", sortkey);
-            this.$store.commit("setNotes", { notes: this.notes, sortkey });
+            this.$store.commit("setNotes");
             this.$store.dispatch("SAVE_DATA_ITEM", "configs");
         },
     },

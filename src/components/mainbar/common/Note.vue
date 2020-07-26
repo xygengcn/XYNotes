@@ -3,7 +3,7 @@
     <div class="note item" :class="{'itemActive':data === note}">
         <div class="title">{{data.title}}</div>
         <div class="itemTime">
-            <span>{{$utils.time(data.updated)}}</span>
+            <span>{{$utils.timeToDate(data.updated)}}</span>
         </div>
         <div class="itemContent">
             <small>{{data.text}}</small>
@@ -78,7 +78,7 @@ export default {
     cursor: pointer;
 
     &:hover,
-    .itemActive {
+    &.itemActive {
         border-color: $theme-color;
         & i {
             color: #2dbe60;

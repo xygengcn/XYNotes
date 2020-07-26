@@ -42,7 +42,7 @@ export default new Vuex.Store({
 
         //设置排序
         setOrder(state, order) {
-            state.data.configs.listSort = order;
+            state.data.configs.sortKey = order;
         }
 
     },
@@ -57,6 +57,7 @@ export default new Vuex.Store({
         },
         save(content) {
             let configs = content.state.data.configs;
+            content.commit("setNotes");
             storage.save(configs.isLocalStorage, configs.isWebStorage, content.state.note, content.state.data.notes);
         },
         //恢复数据
@@ -89,10 +90,7 @@ export default new Vuex.Store({
             return new Promise((resolve) => {
                 if (content.state.data.configs.isLocalStorage) {
                     storage.init(content.state.data.notes).then(res => {
-                        content.commit("setNotes", {
-                            notes: res,
-                            sortkey: content.state.data.configs.listSort
-                        });
+                        content.commit("setNotes", res);
                         resolve();
                     })
                 }
