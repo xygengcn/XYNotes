@@ -1,13 +1,6 @@
 <!-- 字体弹窗 -->
 <template>
-    <el-dialog
-        title="字体选择"
-        :visible.sync="isShow"
-        :show-close="false"
-        center
-        custom-class="fontDialog"
-        :close-on-click-modal="false"
-    >
+    <el-dialog title="字体选择" :visible.sync="isShow" :show-close="false" center custom-class="fontDialog" :close-on-click-modal="false">
         <el-form :model="font">
             <el-form-item label="字体大小">
                 <el-select v-model="font.size" placeholder="请选择">
@@ -33,7 +26,7 @@ export default {
     props: ["isShow"],
     data() {
         return {
-            fontSize: [12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
+            fontSize: [12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
         };
     },
     methods: {
@@ -41,15 +34,19 @@ export default {
             this.$emit("close");
         },
         save() {
-            this.$store.dispatch("fontSave");
+            this.$store.dispatch("SAVE_DATA_ITEM", "fonts");
             this.$emit("close");
-        }
+        },
     },
     computed: {
         font() {
             return this.$store.state.data.fonts;
-        }
+        },
     },
-    watch: {}
 };
 </script>
+<style lang="scss" scoped>
+.fontDialog {
+    width: 350px;
+}
+</style>

@@ -1,18 +1,20 @@
-// xy.say.prototype.hello=function(state){
-//     console.log(this.name);
-// }
+// $_plugins.extend("beforeEach", "hello", function(to, from) {
 
-var hello = function (to, from, next, routes) {
+// });
 
+// $_plugins.extend("afterEach", "hello", function(to, from) {
+
+// });
+var option = {
+    id: "test",
+    api: {
+        label: "接口地址",
+        value: "localhost"
+    },
+    //type: "post"
 }
-//vue.$plugins.extend("beforeEach", hello);
+$_plugins.option(option).extend("start", "hello", function() {});
+$_plugins.extend("start", "hellos", function(e) {
+    console.log(e);
 
-vue.$plugins.extend("beforeEach", function (e) {
-    //console.log(e);
-
-    // vue.$notify({
-    //     title: '早上好',
-    //     message: '欢迎庚哥哥回来',
-    //     type: 'success'
-    // });
-});
+})

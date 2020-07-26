@@ -2,7 +2,7 @@
 <template>
     <div class="setting">
         <page :title="'设置'" :icon="'el-icon-setting'">
-            <div class="setting-container">
+            <div class="setting-container" slot="body">
                 <ul>
                     <li>
                         <label>本地存储</label>
@@ -42,125 +42,137 @@
                     </li>
                     <li>
                         <label>本地备份</label>
-                        <el-button type="info" size="mini" @click="localBackup">备份</el-button>
+                        <el-button type="info" size="mini" @click="localBackup"
+                            >备份</el-button
+                        >
                     </li>
                     <li>
                         <label>重置设置</label>
-                        <el-button type="danger" size="mini" @click="recover">重置</el-button>
+                        <el-button type="danger" size="mini" @click="recover"
+                            >重置</el-button
+                        >
                     </li>
                     <li>
                         <label>恢复出厂</label>
-                        <el-button type="danger" size="mini" @click="rebuild">恢复</el-button>
+                        <el-button type="danger" size="mini" @click="rebuild"
+                            >恢复</el-button
+                        >
                     </li>
                     <li>
-                        <label>版本{{configs.version}}</label>
-                        <el-button type="danger" size="mini" @click="updata">更新</el-button>
+                        <label>版本{{ version }}</label>
+                        <el-button type="danger" size="mini" @click="updata"
+                            >更新</el-button
+                        >
                     </li>
                 </ul>
             </div>
             <div class="version">
-                Copyright &copy; 2020 Version {{configs.version}} By
+                Copyright &copy; 2020 Version {{ version }} By
                 <el-link
                     href="https://github.com/xygengcn/XYNotes"
                     target="_blank"
                     :underline="false"
                     class="github"
-                >XYNotes</el-link>
+                    >XYNotes</el-link
+                >
             </div>
         </page>
     </div>
 </template>
 <script>
-import page from "@/components/mainbar/common/Page";
-import storage from "@/store/data/data";
+import page from '@/components/mainbar/common/Page'
+import storage from '@/store/data/data'
 export default {
     components: {
         page,
     },
     data() {
-        return {};
+        return {}
     },
     methods: {
         updata() {
-            this.$utils.reload();
+            this.$utils.reload()
         },
         //保存配置
         saveConfig() {
-            this.$store.dispatch("configSave");
+            this.$store.dispatch('SAVE_DATA_ITEM', 'configs')
         },
         //恢复出厂
         rebuild() {
             this.$confirm(
-                "操作数据清空，配置默认！建议操作前备份数据！",
-                "提示",
+                '操作数据清空，配置默认！建议操作前备份数据！',
+                '提示',
                 {
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    type: "warning",
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning',
                 }
             )
                 .then(() => {
-                    storage.clean();
+                    storage.clean()
                     this.$message({
-                        type: "success",
-                        message: "恢复成功!",
-                    });
-                    window.location = "/";
+                        type: 'success',
+                        message: '恢复成功!',
+                    })
+                    window.location = '/'
                 })
                 .catch((e) => {
                     this.$message({
-                        type: "info",
-                        message: "取消恢复",
-                    });
-                });
+                        type: 'info',
+                        message: '取消恢复',
+                    })
+                })
         },
         //重置配置
         recover() {
-            this.$confirm("重置配置！", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                type: "warning",
+            this.$confirm('重置配置！', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
             })
                 .then(() => {
-                    localStorage.removeItem("XYNOTESCONFIGS");
-                    localStorage.removeItem("XYNOTESFONT");
+                    localStorage.removeItem('XYNOTESCONFIGS')
+                    localStorage.removeItem('XYNOTESFONT')
                     this.$message({
-                        type: "success",
-                        message: "恢复成功!",
-                    });
-                    window.location = "/";
+                        type: 'success',
+                        message: '恢复成功!',
+                    })
+                    window.location = '/'
                 })
                 .catch((e) => {
                     this.$message({
-                        type: "info",
-                        message: "取消恢复",
-                    });
-                });
+                        type: 'info',
+                        message: '取消恢复',
+                    })
+                })
         },
         //恢复数据
         inputFile(event) {
-            const reader = new FileReader();
-            reader.readAsText(event.target.files[0]);
+            const reader = new FileReader()
+            reader.readAsText(event.target.files[0])
             reader.onload = (e) => {
                 let data = JSON.parse(
                     decodeURIComponent(escape(window.atob(e.target.result)))
-                );
-                this.$store.dispatch("recover", data);
-            };
+                )
+                this.$store.dispatch('recover', data)
+            }
         },
         //备份
         localBackup() {
-            let data = JSON.stringify(this.$store.state.data);
-            data = window.btoa(unescape(encodeURIComponent(data)));
-            this.$utils.download(data, "xy笔记.xy");
+            let data = JSON.stringify(this.$store.state.data)
+            data = window.btoa(unescape(encodeURIComponent(data)))
+            this.$utils.download(data, 'xy笔记.xy')
         },
     },
     computed: {
+        version() {
+            return this.$store.state.data.version
+        },
         configs() {
-            return this.$store.state.data.configs;
+            return this.$store.state.data.configs
         },
     },
-};
+}
 </script>
 <style scoped>
 .setting {

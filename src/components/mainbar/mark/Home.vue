@@ -1,11 +1,11 @@
 <!-- 标记文章列表  -->
 <template>
     <page :title="'标记文章'" :icon="'el-icon-price-tag'">
-        <ul>
-            <li class="ListItem" v-for="(item,index) in data" :key="index" @click="setActive(item)">
+        <ul slot="body">
+            <li class="ListItem" v-for="(item, index) in data" :key="index" @click="setActive(item)">
                 <Note :data="item"></Note>
             </li>
-            <li v-if="data.length==0" class="blank">文章为空</li>
+            <li v-if="data.length == 0" class="blank">文章为空</li>
         </ul>
     </page>
 </template>

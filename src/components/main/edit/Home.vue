@@ -1,30 +1,12 @@
 <!-- 编辑区 -->
 <template>
-    <div class="editHome">
+    <div class="EditHome">
         <div class="EditHeader">
-            <input
-                type="text"
-                class="title"
-                :value="activeNoteText.title"
-                @blur="editTitle"
-                placeholder="写下笔记标题"
-            />
+            <input type="text" class="title" :value="activeNoteText.title" @blur="editTitle" placeholder="写下笔记标题" />
             <em class="tag">正在编辑</em>
         </div>
         <div class="EditContain">
-            <textarea
-                id="EditArea"
-                class="EditArea"
-                :value="activeNoteText.text"
-                @blur="editNote"
-                @input="autoSave"
-                @keydown="handleEvent"
-                placeholder="直接开始输入"
-                ref="EditArea"
-                @contextmenu.prevent="context_menu"
-                @click="isContextMenu =false"
-                :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"
-            ></textarea>
+            <textarea id="EditArea" class="EditArea" :value="activeNoteText.text" @blur="editNote" @input="autoSave" @keydown="handleEvent" placeholder="直接开始输入" ref="EditArea" @contextmenu.prevent="context_menu" @click="isContextMenu =false" :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></textarea>
             <div class="contextmenu" :style="contextMenuStyle" v-show="isContextMenu">
                 <ul>
                     <li @click="copy">复制</li>
@@ -75,7 +57,7 @@ export default {
         },
         //更新时间
         editTime: function () {
-            var time = this.$utils.getTime();
+            var time = this.$utils.time();
             this.$store.commit("setTime", time);
         },
         //无操作5s自动操作
@@ -105,10 +87,16 @@ export default {
             if (this.$store.state.data.configs.isLocalStorage) {
                 this.$store.dispatch("save");
             }
+
             console.log(
                 "自动保存成功———" +
-                    this.$utils.getTime(new Date(), "yyy-MM-dd HH:mm:ss")
+                    this.$utils.time(new Date(), "yyy-MM-dd HH:mm:ss")
             );
+
+            /**
+             * 自动保存Hook
+             */
+            this.$plugins.hook("saved", [this.activeNoteText]);
         },
         //键盘监听
         handleEvent(event) {
@@ -200,79 +188,81 @@ export default {
     },
 };
 </script>
-<style lang='css' scoped>
-.editHome {
+<style lang='scss' scoped>
+.EditHome {
     display: flex;
     flex-direction: column;
     height: 100%;
     box-sizing: border-box;
-}
 
-.EditHeader {
-    height: 60px;
-    margin-top: 10px;
-    padding: 0 50px;
-    position: relative;
-}
+    /* 标题 */
+    .EditHeader {
+        height: 60px;
+        margin-top: 10px;
+        padding: 0 50px;
+        position: relative;
 
-.EditContain {
-    width: 100%;
-    height: 100%;
-    padding-left: 50px;
-    box-sizing: border-box;
-}
+        .title {
+            &::-webkit-input-placeholder,
+            & {
+                width: 100%;
+                height: 60px;
+                line-height: 60px;
+                border: none;
+                outline: none;
+                font-family: caecilia, times, serif;
+                font-size: 28px;
+                font-weight: 300;
+                color: #2dbe60;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
 
-/* 标题 */
-.EditHeader .title,
-.title::-webkit-input-placeholder {
-    width: 100%;
-    height: 60px;
-    line-height: 60px;
-    border: none;
-    outline: none;
-    font-family: caecilia, times, serif;
-    font-size: 28px;
-    font-weight: 300;
-    color: #2dbe60;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+        .tag {
+            position: absolute;
+            font-style: normal;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            height: 1.5em;
+            line-height: 1.5em;
+            font-size: 12px;
+            right: 50px;
+            padding: 2px 5px;
+            box-sizing: border-box;
+            display: inline-block;
+            background: #f7f7f7;
+            color: #adacac;
+        }
+    }
 
-.tag {
-    position: absolute;
-    font-style: normal;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    height: 1.5em;
-    line-height: 1.5em;
-    font-size: 12px;
-    right: 50px;
-    padding: 2px 5px;
-    box-sizing: border-box;
-    display: inline-block;
-    background: #f7f7f7;
-    color: #adacac;
-}
+    .EditContain {
+        width: 100%;
+        height: 100%;
+        padding-left: 50px;
+        box-sizing: border-box;
 
-/* 正文 */
-.EditArea {
-    font-family: gotham, helvetica, arial, sans-serif;
-    width: 100%;
-    box-sizing: border-box;
-    height: 100%;
-    border: none;
-    outline: none;
-    border-top: 1px solid #f7f7f7;
-    border-radius: 0;
-    font-size: 14px;
-    line-height: 1.5em;
-    resize: none;
-    padding: 15px 50px 50px 0px;
-    -webkit-appearance: none;
-    position: relative;
-    color: #383838;
+        /* 正文 */
+        .EditArea {
+            font-family: gotham, helvetica, arial, sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+            height: 100%;
+            border: none;
+            outline: none;
+            border-top: 1px solid #f7f7f7;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5em;
+            resize: none;
+            padding: 15px 50px 50px 0px;
+            -webkit-appearance: none;
+            position: relative;
+            color: #383838;
+        }
+    }
 }
 
 /*右键 */
@@ -280,28 +270,29 @@ export default {
     position: fixed;
     background: #fff;
     border: 1px solid #eee;
-    box-shadow: 0 0.5em 1em 0 rgba(0, 0, 0, 0.1);
+    box-shadow: $box-shadow;
     border-radius: 1px;
     border-radius: 3px;
     z-index: 999;
-}
 
-.contextmenu ul,
-.contextmenu ul li {
-    text-decoration: none;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+    ul {
+        &,
+        li {
+            text-decoration: none;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
 
-.contextmenu ul li {
-    text-align: center;
-    padding: 15px 20px;
-    cursor: pointer;
-}
-
-.contextmenu ul li:hover {
-    background-color: #2dbe60;
-    color: #fff;
+        li {
+            text-align: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            &:hover {
+                background-color: $theme-color;
+                color: #fff;
+            }
+        }
+    }
 }
 </style>

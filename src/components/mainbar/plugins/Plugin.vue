@@ -1,15 +1,18 @@
 <template>
-    <div class="plugin item noselect" @click="to(data.id)">
+    <div class="plugin item noselect">
         <div class="title">
-            {{data.name}}
-            <em class="tag">{{data.version}}</em>
+            <span>{{ data.name }}</span>
+            <em class="tag">{{ data.version }}</em>
         </div>
         <div class="itemContent">
-            <small>{{data.intro}}</small>
+            <small>{{ data.intro }}</small>
         </div>
         <div class="itemTool">
-            <span class="author">{{data.author}}</span>
-            <el-tag :type="data.status?'success':'info'" size="mini">{{data.status?"已启动":"未启动"}}</el-tag>
+            <p class="author">{{ data.author }}</p>
+            <el-tag type="success" size="mini" v-if="!data.status" @click="install(data)">
+                <span>安装</span>
+            </el-tag>
+            <i class="el-icon-setting" v-if="data.status" @click="to(data.id)"></i>
         </div>
     </div>
 </template>
@@ -20,10 +23,31 @@ export default {
     methods: {
         to(id) {
             if (this.$store.state.isMobie) {
-                this.$router.push({ path: `/m/plugins/${id}` });
+                this.$router.push({
+                    path: `/m/plugins/${id}`,
+                });
             } else {
-                this.$router.push({ path: `/plugins/${id}` });
+                this.$router.push({
+                    path: `/plugins/${id}`,
+                });
             }
+        },
+        install(plugin) {
+            this.$confirm("安装插件将会重载环境，是否继续？", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "info",
+            })
+                .then(() => {
+                    this.$store.dispatch("PLUGIN_INSTALL_UNSTALL", plugin);
+                    this.$utils.reload();
+                })
+                .catch(() => {
+                    this.$message({
+                        type: "info",
+                        message: "已取消安装",
+                    });
+                });
         },
     },
 };
@@ -64,7 +88,7 @@ export default {
 }
 
 .item .itemContent {
-    margin: 10px 0px;
+    margin: 15px 0px;
     color: #878787;
     overflow: hidden;
 }
@@ -82,6 +106,9 @@ export default {
     margin: 10px 0px 0px;
 }
 
+.item .itemTool i {
+    color: #878787;
+}
 .item .itemTool .author {
     flex: 1;
     font-weight: 600;
@@ -89,6 +116,7 @@ export default {
     height: 20px;
     line-height: 20px;
     color: #878787;
+    margin: 0px;
 }
 
 .item:hover {

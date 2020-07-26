@@ -1,0 +1,85 @@
+.mobie .wrap {
+    flex-direction: column-reverse;
+
+    #sidebar {
+        display: flex;
+        flex-direction: row;
+        height: 73px !important;
+        width: 100% !important;
+    }
+
+    #mainbarHome {
+        width: 100% !important;
+        height: calc(100% - 73px) !important;
+        flex: 1;
+    }
+
+    #mainHome {
+
+        /** 导航栏 **/
+        #navbar {
+            height: 50px !important;
+            line-height: 50px !important;
+            flex-direction: column !important;
+            margin: 20px 0px 0px !important;
+            padding: 0px 10px !important;
+        }
+
+        /* 文字区域 */
+        .mainContent {
+            margin: 10px 0px 0px;
+
+            .EditHome {
+
+                .EditHeader {
+                    height: 48px !important;
+                    margin: 0px;
+                    padding: 0px 20px !important;
+
+                    .title {
+                        height: 48px !important;
+                        line-height: 48px !important;
+                    }
+                }
+
+                .EditContain {
+                    padding: 0px !important;
+
+                    .EditArea {
+                        padding: 10px 20px;
+                        font-size: 1em;
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    /* 共用样式 */
+
+    .item {
+        box-shadow: $box-shadow;
+        margin: 10px;
+        border-radius: 4px;
+
+        &,
+        &:hover,
+        &.itemActive {
+            border-color: transparent !important;
+        }
+    }
+
+    .toolbar {
+        padding: 0px 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .el-message-box,
+    .el-dialog {
+        width: 80% !important;
+    }
+}

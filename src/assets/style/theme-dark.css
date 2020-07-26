@@ -11,8 +11,8 @@
 }
 
 /* 笔记列表 */
-.dark .item{
-    border-color:#333333 !important;
+.dark .item {
+    border-color: #333333 !important;
 }
 
 .dark .item:hover,
@@ -26,12 +26,12 @@
     border-color: #2dbe60 !important;
 }
 
-.dark #MainContainer {
+.dark #mainbarHome {
     background-color: #252526;
     border-color: #252526 !important;
 }
 
-.dark #MainContainer .setting li,
+.dark #mainbarHome .setting li,
 .dark .main-wrap>.title,
 .dark .SearchBar,
 .dark .ListHeader {
@@ -39,7 +39,7 @@
 }
 
 .dark .item .title,
-.dark #MainContainer .search-input {
+.dark #mainbarHome .search-input {
     color: #ccc;
 }
 
@@ -57,7 +57,8 @@
     color: #ccc;
     border-color: #333;
 }
-.dark .navbar button:hover{
+
+.dark .navbar button:hover {
     opacity: 0.8;
 }
 

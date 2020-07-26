@@ -1,12 +1,6 @@
 <!-- 首页 -->
 <template>
-    <div
-        class="wrap"
-        v-loading="loading.status"
-        :element-loading-text="loading.text"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
-    >
+    <div class="wrap" v-loading="loading.status" :element-loading-text="loading.text" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <sidebar></sidebar>
         <transition tag="div" appear>
             <mainbar v-if="isTriggle"></mainbar>
@@ -45,7 +39,6 @@ export default {
         },
     },
     beforeCreate() {
-        this.$store.dispatch("init");
         this.$plugins.hook("start");
     },
 };

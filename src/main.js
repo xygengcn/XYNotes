@@ -6,26 +6,29 @@ import './registerServiceWorker'
 import ElementUI from 'element-ui';
 
 import 'element-ui/lib/theme-chalk/index.css';
-import "./assets/style/master.css";
-import "./assets/style/theme-dark.css";
-import "./assets/style/mobie.css";
+import "@/assets/style/master.css";
+import "@/assets/style/theme-dark.css";
+import "@/assets/style/mobie.scss";
+
+import plugins from "@/plugins/index.js";
 
 Vue.use(ElementUI);
 
 const utils = require("./utils/utils.js");
-const plugins = require("@/plugins/index.js");
+
 
 Vue.use(utils);
 
-Vue.prototype.$plugins = plugins.default;
+Vue.prototype.$plugins = plugins;
 
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App),
-  created() {
-    window.vue = this;
-  }
+    router,
+    store,
+    render: h => h(App),
+    created() {
+        window.vue = this;
+        window.$_plugins = plugins;
+    }
 }, ).$mount('#app')

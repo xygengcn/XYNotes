@@ -1,9 +1,38 @@
 /**
  * xy笔记插件拓展
+ * 需要将window.vue指向vue对象
  */
-var plugins = {
-    name: 'XYNotes',
-    css: (css) => {
+var plugins = function() {
+    this.options = {};
+    this.localOptions = {};
+    this.localOption = (plugins) => {
+        for (let item of plugins) {
+            this.localOptions[item.id] = item.options;
+        }
+    };
+    this.option = (options) => {
+        if (options.id) {
+            this.options[options.id] = this.options[options.id] || {};
+            this.localOptions[options.id] = this.localOptions[options.id] || {};
+            for (let key in options) {
+                if (key == "id" || typeof options[key] == "object") {
+                    this.localOptions[options.id][key] = this.localOptions[options.id][key] || null;
+                    this.options[options.id][key] = this.localOptions[options.id][key] || options[key]
+                }
+                if (key != "id" && typeof options[key] == "string") {
+                    this.options[options.id][key] = this.options[options.id][key] || {};
+                    this.localOptions[options.id][key] = this.localOptions[options.id][key] || {};
+                    this.options[options.id][key].label = this.localOptions[options.id][key].label || key;
+                    this.options[options.id][key].value = this.localOptions[options.id][key].value || options[key];
+                }
+
+            }
+            //this.options[options.id] = Object.assign(this.options[options.id] || {}, options);
+        }
+
+        return this;
+    };
+    this.css = (css) => {
         var style = document.createElement('style');
         style.type = 'text/css';
         style.rel = 'stylesheet';
@@ -13,8 +42,8 @@ var plugins = {
             style.styleSheet.cssText = css;
         }
         document.querySelector('head').appendChild(style);
-    },
-    html: (el, arr) => {
+    };
+    this.html = (el, arr) => {
         var keys = ["childs", "element", "data"];
         arr.forEach(item => {
             var element = document.createElement(item.element);
@@ -33,9 +62,9 @@ var plugins = {
             }
             el.appendChild(element);
         });
-    },
+    };
     //接口
-    hook: (hook, args = []) => {
+    this.hook = (hook, args = []) => {
         let h = eval("plugins." + hook);
         return new Promise((resolve, reject) => {
             if (typeof h == "function") {
@@ -44,41 +73,49 @@ var plugins = {
                 for (var funcName of funcArray) {
                     if (!obj.hasOwnProperty(funcName) && funcName != "constructor") {
                         let func = eval("obj." + funcName);
-                        if (typeof func == "function")
-                            resolve(func.call(obj, ...args));
+                        if (typeof func == "function") {
+                            resolve(func.call(window.vue, this.options, ...args));
+                        }
                     }
                 }
             } else {
                 reject(hook + '生命周期不存在！');
+                console.error(hook + '生命周期不存在！');
             }
         })
-    },
+    };
     //新插件插入
-    extend: (hook, func) => {
-        let h = eval("plugins." + hook);
-        if (typeof h == "function") {
-            if (typeof func == "function")
-                h.prototype.func = func;
-            else
-                console.error(func + '不存在！')
+    this.extend = (hook, name, func) => {
+        if (name && typeof name == "string") {
+            let h = eval("plugins." + hook);
+            if (typeof h == "function") {
+                if (typeof func == "function") {
+                    h.prototype[name] = func;
+                } else
+                    console.error(name + '函数不存在！')
+            } else {
+                console.error(hook + '生命周期不存在！')
+            }
         } else {
-            console.error(hook + '生命周期不存在！')
+            console.error('没有命名接口')
         }
-    },
+
+    };
     //安装插件
-    install: (plugin = {}) => {
+    this.install = (plugin = {}) => {
         let script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = plugin.url;
-        script.id = plugin.id;
+        script.src = plugin.url + "?v=" + plugin.version;
+        script.id = 'plugin-script-' + plugin.id;
         script.dataset.name = plugin.name;
         document.body.appendChild(script);
-    },
+    };
     //初始化插件
-    init: (array) => {
+    this.init = (array) => {
+        this.localOption(array);
         array.forEach(element => {
             if (element.status) {
-                plugins.install(element);
+                this.install(element);
             }
         });
     }
@@ -91,7 +128,7 @@ var plugins = {
 /**
  * 界面初始化
  */
-plugins.start = function () {
+plugins.start = function() {
     this.name = "start";
 
 }
@@ -99,12 +136,27 @@ plugins.start = function () {
 /**
  * 路由跳转前
  */
-plugins.beforeEach = function (args) {
+plugins.beforeEach = function(args) {
 
+
+}
+
+/**
+ * 路由跳转后
+ */
+plugins.afterEach = function(args) {
+
+
+}
+
+/**
+ * 自动保存后
+ */
+plugins.saved = function(data) {
 
 }
 
 // exports.install = function (Vue, opt) {
 //     Vue.prototype.$plugins = plugins;
 // }
-export default plugins;
+export default new plugins;

@@ -2,20 +2,18 @@
 <template>
     <div class="navbar" id="navbar" :style="{'width':width}">
         <div class="toolBar">
-            <el-button class="el-icon-s-fold" @click="Triggle" v-if="isTriggle &&!isMobie" plain></el-button>
-            <el-button class="el-icon-s-unfold" @click="Triggle" v-if="!isTriggle &&!isMobie" plain></el-button>
-            <el-button class="el-icon-view" @click="editMode(0)" v-if="mode != 0" plain></el-button>
-            <el-button class="el-icon-edit" @click="editMode(1)" v-if="mode == 0" plain></el-button>
-            <el-button plain @click="editMode(2)" v-if="!isMobie">MD</el-button>
-            <el-button
-                :class="note.mark?'el-icon-star-on':'el-icon-star-off'"
-                @click="markNote(note)"
-                plain
-            ></el-button>
-            <el-button class="el-icon-camera-solid" @click="screenShot" plain></el-button>
-            <el-button class="el-icon-full-screen" @click="fullScreen" plain></el-button>
-            <el-button @click="isShow=true" plain>Aa</el-button>
-            <el-button class="el-icon-delete" aria-hidden="true" @click="delNote(note)" plain></el-button>
+            <p style="padding: 0px 10px;">
+                <el-button class="el-icon-s-fold" @click="Triggle" v-if="isTriggle &&!isMobie" plain></el-button>
+                <el-button class="el-icon-s-unfold" @click="Triggle" v-if="!isTriggle &&!isMobie" plain></el-button>
+                <el-button class="el-icon-view" @click="editMode(0)" v-if="mode != 0" plain></el-button>
+                <el-button class="el-icon-edit" @click="editMode(1)" v-if="mode == 0" plain></el-button>
+                <el-button plain @click="editMode(2)" v-if="!isMobie">MD</el-button>
+                <el-button :class="note.mark?'el-icon-star-on':'el-icon-star-off'" @click="markNote(note)" plain></el-button>
+                <el-button class="el-icon-camera-solid" @click="screenShot" plain></el-button>
+                <el-button class="el-icon-full-screen" @click="fullScreen" plain></el-button>
+                <el-button @click="isShow=true" plain>Aa</el-button>
+                <el-button class="el-icon-delete" aria-hidden="true" @click="delNote(note)" plain></el-button>
+            </p>
         </div>
         <FontDialog :isShow="isShow" @close="isShow=false"></FontDialog>
     </div>
@@ -44,7 +42,7 @@ export default {
             return this.$store.state.isMobie;
         },
     },
-    created() {
+    updated() {
         if (!this.isMobie) {
             if (document.documentElement.clientWidth > 978) {
                 this.width = "auto";
@@ -100,53 +98,46 @@ export default {
     },
 };
 </script>
-<style lang='css' scoped>
+<style lang="scss" scoped>
 .navbar {
     height: 65px;
     line-height: 65px;
     margin: 15px 0px;
-    padding: 0px 50px;
     display: flex;
     box-sizing: border-box;
-}
+    padding: 0px 40px;
 
-.navbar .toolBar {
-    height: 100%;
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-}
+    .toolBar {
+        height: 100%;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        align-items: center;
 
-.navbar .toolBar::-webkit-scrollbar {
-    display: none;
-}
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
 
-.navbar .toolBar {
-    display: flex;
-    align-items: center;
-}
+    button:hover,
+    button:focus,
+    .active {
+        border-color: $theme-color;
+        color: $theme-color;
+        outline: 0;
+    }
 
-.navbar button:hover,
-.navbar button:focus,
-.active {
-    border-color: #2dbe60;
-    color: #2dbe60;
-    outline: 0;
-}
+    button {
+        box-sizing: border-box;
+        font-size: 1em;
+        border: none;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
 
-.navbar button {
-    box-sizing: border-box;
-    font-size: 1em;
-    border: none;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
-}
-
-.navbar button:hover {
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.1);
-}
-
-.el-button + .el-button {
-    margin-left: 20px;
+        &:hover {
+            box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.1);
+        }
+    }
 }
 </style>

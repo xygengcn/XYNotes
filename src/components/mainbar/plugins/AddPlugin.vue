@@ -1,8 +1,6 @@
 <template>
     <div class="addPlugin">
-        <div class="addItem">
-            <el-button @click="dialogFormVisible = true;">添加插件</el-button>
-        </div>
+        <i class="el-icon-plus addBtn" @click="dialogFormVisible = true"></i>
         <el-dialog title="新增插件" :visible.sync="dialogFormVisible">
             <el-form :model="plugin">
                 <el-form-item label="插件ID" label-width="100">
@@ -25,8 +23,8 @@
                 </el-form-item>
                 <el-form-item label="插件状态" label-width="100">
                     <el-select v-model="plugin.status" placeholder="是否开启">
-                        <el-option label="开启" :value="true"></el-option>
-                        <el-option label="关闭" :value="false"></el-option>
+                        <el-option label="开启" value="true"></el-option>
+                        <el-option label="关闭" value="false"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="插件描述" label-width="100">
@@ -34,7 +32,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible =false">取 消</el-button>
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
                 <el-button type="primary" @click="addItem">确认</el-button>
             </div>
         </el-dialog>
@@ -54,6 +52,7 @@ export default {
                 version: "0.0.1",
                 intro: "",
                 status: "false",
+                options: {},
             },
         };
     },
@@ -74,26 +73,5 @@ export default {
 <style scoped>
 .el-select {
     width: 100%;
-}
-
-.addItem {
-    position: absolute;
-    margin: 0px auto;
-    bottom: 15px;
-    left: 0;
-    right: 0;
-    line-height: 30px;
-    font-size: 1.5em;
-    text-align: center;
-}
-
-.addItem button {
-    color: #fff;
-    background-color: #2dbe60;
-    border-color: #2dbe60;
-}
-
-.addItem button:hover {
-    opacity: 0.8;
 }
 </style>

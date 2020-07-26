@@ -7,12 +7,7 @@
             </small>
         </span>
         <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-                v-for="(item,index) in sorts"
-                :icon="isSort(item)?'el-icon-check':'el-icon-minus'"
-                :command="item"
-                :key="index"
-            >{{item["value"]}}</el-dropdown-item>
+            <el-dropdown-item v-for="(item,index) in sorts" :icon="isSort(item)?'el-icon-check':'el-icon-minus'" :command="item" :key="index">{{item["value"]}}</el-dropdown-item>
         </el-dropdown-menu>
     </el-dropdown>
 </template>
@@ -66,7 +61,7 @@ export default {
         order(sortkey) {
             this.$store.commit("setOrder", sortkey);
             this.$store.commit("setNotes", { notes: this.notes, sortkey });
-            this.$store.dispatch("configSave");
+            this.$store.dispatch("SAVE_DATA_ITEM", "configs");
         },
     },
 };

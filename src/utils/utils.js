@@ -1,29 +1,36 @@
 var utils = {}
 
-utils.getTime = function (timestamp, format) {
+utils.time = function (timestamp, format = "yyyy-MM-dd HH:mm:ss") {
+    if (!timestamp) return new Date().getTime();
     var date = timestamp ? new Date(timestamp) : new Date();
-    var timeStamp = new Date().getTime();
     var year = String(date.getFullYear()).padStart(4, "0"); //获取当前年份
     var month = String(date.getMonth() + 1).padStart(2, "0"); //获取当前月份
-    var day = String(date.getDate()).padStart(2, "0"); //获取当前日
-    var weekday = date.getDay(); //获取当前星期几
+    var day = String(date.getDate()).padStart(2, "0"); //获取当前日 
+    var weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+    var weekday = weekdays[date.getDay()]; //获取当前星期几
     var hour = String(date.getHours()).padStart(2, "0"); //获取小时
     var minute = String(date.getMinutes()).padStart(2, "0"); //获取分钟
     var second = date.getSeconds().toString().padStart(2, "0"); //获取秒
-    switch (format) {
-        case 'yyy-MM-dd HH:mm:ss':
-            return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-            break;
-        case 'yyy-MM-dd':
-            return year + "-" + month + "-" + day;
-            break;
-        case 'HH:mm:ss':
-            return hour + ":" + minute + ":" + second;
-            break;
-        default:
-            return timeStamp;
-            break;
-    }
+    return format.replace("yyyy", year).replace("MM", month).replace("dd", day).replace("HH", hour).replace("mm", minute).replace("ss", second).replace("day", weekday);
+}
+utils.os = function () {
+    var ua = navigator.userAgent,
+        isWindowsPhone = /(?:Windows Phone)/.test(ua),
+        isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
+        isAndroid = /(?:Android)/.test(ua),
+        isFireFox = /(?:Firefox)/.test(ua),
+        isChrome = /(?:Chrome|CriOS)/.test(ua),
+        isTablet = /(?:iPad|PlayBook)/.test(ua) || (isAndroid && !/(?:Mobile)/.test(ua)) || (isFireFox && /(?:Tablet)/.test(ua)),
+        isPhone = /(?:iPhone)/.test(ua) && !isTablet,
+        isPc = !isPhone && !isAndroid && !isSymbian,
+        isMobie = isTablet || isPhone || isAndroid || isSymbian;
+    return {
+        isTablet: isTablet,
+        isPhone: isPhone,
+        isAndroid: isAndroid,
+        isPc: isPc,
+        isMobie: isMobie
+    };
 }
 utils.timeToDate = function (dateTimeStamp) {
     var minute = 1000 * 60; //把分，时，天，周，半个月，一个月用毫秒表示

@@ -3,7 +3,7 @@
     <div class="note item" :class="{'itemActive':data === note}">
         <div class="title">{{data.title}}</div>
         <div class="itemTime">
-            <span>{{$utils.timeToDate(data.updated)}}</span>
+            <span>{{$utils.time(data.updated)}}</span>
         </div>
         <div class="itemContent">
             <small>{{data.text}}</small>
@@ -12,11 +12,7 @@
             </div>
         </div>
         <div class="itemTool" v-if="!isMobie">
-            <i
-                :class="data.mark?'el-icon-star-on':'el-icon-star-off'"
-                :title="data.mark?'取消标记':'标记'"
-                @click="markNote(data)"
-            ></i>
+            <i :class="data.mark?'el-icon-star-on':'el-icon-star-off'" :title="data.mark?'取消标记':'标记'" @click="markNote(data)"></i>
             <i class="el-icon-delete" aria-hidden="true" title="删除笔记" @click="delNote(data)"></i>
         </div>
     </div>
@@ -71,7 +67,7 @@ export default {
     },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .item {
     box-sizing: border-box;
     padding: 20px 24px;
@@ -80,86 +76,76 @@ export default {
     position: relative;
     color: #333;
     cursor: pointer;
-}
 
-.item:hover,
-.itemActive {
-    border-color: #2dbe60;
-}
+    &:hover,
+    .itemActive {
+        border-color: $theme-color;
+        & i {
+            color: #2dbe60;
+        }
+    }
 
-.item:hover i {
-    color: #2dbe60;
-}
+    .itemTool {
+        text-align: center;
+        margin: 20px 24px;
+        color: #fff;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        height: 30px;
+        line-height: 30px;
 
-.item .itemTool {
-    text-align: center;
-    margin: 20px 24px;
-    color: #fff;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    height: 30px;
-    line-height: 30px;
-}
+        i {
+            margin: 0px 5px;
+            font-size: 20px;
+        }
+    }
 
-.item .itemTool i {
-    margin: 0px 5px;
-    font-size: 20px;
-}
-
-.item .title {
-    font-family: gotham, helvetica, arial, sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    height: 30px;
-    margin-bottom: 5px;
-    max-height: 40px;
-    overflow: hidden;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-wrap: break-word;
-    line-height: 30px;
-    width: 200px;
-}
-
-.item .itemContent {
-    display: flex;
-}
-
-.item .itemContent small {
-    flex: 1;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-}
-
-.item .itemContent .itemContent-cover {
-    position: relative;
-    box-sizing: border-box;
-    width: 80px;
-    overflow: hidden;
-    margin-left: 15px;
-    max-height: 80px;
-}
-
-.item .itemContent .itemContent-cover img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-left: 0;
-    transform: translate(-50%, -50%);
-    height: 100%;
-}
-
-.item .itemContent,
-.itemTime {
-    color: #878787;
-}
-
-.item .itemTime {
-    margin-bottom: 10px;
-    font-size: 10px;
+    .title {
+        font-size: 18px;
+        font-weight: 400;
+        height: 30px;
+        margin-bottom: 5px;
+        max-height: 40px;
+        overflow: hidden;
+        overflow-wrap: break-word;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: break-word;
+        line-height: 30px;
+        width: 200px;
+    }
+    .itemContent {
+        display: flex;
+        color: #878787;
+        small {
+            flex: 1;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+        .itemContent-cover {
+            position: relative;
+            box-sizing: border-box;
+            width: 80px;
+            overflow: hidden;
+            margin-left: 15px;
+            max-height: 80px;
+            img {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: 0;
+                transform: translate(-50%, -50%);
+                height: 100%;
+            }
+        }
+    }
+    .itemTime {
+        color: #878787;
+        margin-bottom: 10px;
+        font-size: 12px;
+    }
 }
 </style>
