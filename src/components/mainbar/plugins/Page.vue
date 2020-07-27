@@ -15,9 +15,6 @@
                     <el-button type="success" @click="save(data)">保存配置</el-button>
                 </li>
             </ul>
-            <div class="btn">
-                <el-button type="danger" @click="unintall(data)">卸载</el-button>
-            </div>
         </div>
     </page>
 </template>
@@ -39,25 +36,6 @@ export default {
                 message: "保存成功",
                 type: "success",
             });
-        },
-        unintall(plugin) {
-            this.$confirm("卸载插件将会重载环境，是否继续？", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                type: "danger",
-            })
-                .then(() => {
-                    this.$store.dispatch("PLUGIN_INSTALL_UNSTALL", plugin);
-                    this.$router.push("/plugins");
-                    this.$utils.reload();
-                })
-                .catch((err) => {
-                    console.log(err);
-                    this.$message({
-                        type: "info",
-                        message: "已取消卸载",
-                    });
-                });
         },
     },
     computed: {

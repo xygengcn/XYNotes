@@ -1,23 +1,15 @@
 {
     "status": "success",
     "user": "xygengcn",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "plugins": [{
         "id": "test",
         "name": "测试",
         "author": "xygengcn",
-        "version": "1.0.0",
+        "store": "web",
+        "version": "1.0.4",
         "url": "./test.js",
-        "status": true,
-        "intro": "xy笔记测试插件库专用第一款插件，功能暂时为打开问候语，未来会开放更多权限开发插件，完成笔记本更多功能。",
-        "options": {}
-    }, {
-        "id": "test2",
-        "name": "测试",
-        "author": "xygengcn",
-        "version": "1.0.0",
-        "url": "./test.js",
-        "status": true,
+        "status": false,
         "intro": "xy笔记测试插件库专用第一款插件，功能暂时为打开问候语，未来会开放更多权限开发插件，完成笔记本更多功能。",
         "options": {}
     }],

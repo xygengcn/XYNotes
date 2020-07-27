@@ -1,18 +1,32 @@
 <template>
     <div class="plugin item noselect">
-        <div class="title">
-            <span>{{ data.name }}</span>
-            <em class="tag">{{ data.version }}</em>
+        <div class="itemHeader">
+            <div class="title">
+                <span>{{ data.name }}</span>
+                <em class="tag">{{ data.version }}</em>
+            </div>
+            <el-tag type="success" size="mini" v-if="!data.status">
+                <span>未安装</span>
+            </el-tag>
+            <el-tag type="primary" size="mini" v-if="data.status">
+                <span>已安装</span>
+            </el-tag>
         </div>
         <div class="itemContent">
             <small>{{ data.intro }}</small>
         </div>
         <div class="itemTool">
             <p class="author">{{ data.author }}</p>
-            <el-tag type="success" size="mini" v-if="!data.status" @click="install(data)">
-                <span>安装</span>
-            </el-tag>
-            <i class="el-icon-setting" v-if="data.status" @click="to(data.id)"></i>
+            <el-dropdown trigger="click" @command="handle">
+                <span class="el-dropdown-link">
+                    <i class="el-icon-setting btn-setting"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="install">{{!data.status?"安装":"卸载"}}</el-dropdown-item>
+                    <el-dropdown-item command="more" v-if="data.status && !isEmptyObj(data.options)">详细</el-dropdown-item>
+                    <el-dropdown-item command="remove">删除</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
     </div>
 </template>
@@ -21,19 +35,27 @@
 export default {
     props: ["data"],
     methods: {
-        to(id) {
-            if (this.$store.state.isMobie) {
-                this.$router.push({
-                    path: `/m/plugins/${id}`,
-                });
-            } else {
-                this.$router.push({
-                    path: `/plugins/${id}`,
-                });
+        handle(command) {
+            if (command == "remove") {
+                this.$store.commit("DELETE_PLUGIN", this.data);
+            }
+            if (command == "more") {
+                if (this.$store.state.isMobie) {
+                    this.$router.push({
+                        path: `/m/plugins/${this.data.id}`,
+                    });
+                } else {
+                    this.$router.push({
+                        path: `/plugins/${this.data.id}`,
+                    });
+                }
+            }
+            if (command == "install") {
+                this.install(this.data);
             }
         },
         install(plugin) {
-            this.$confirm("安装插件将会重载环境，是否继续？", "提示", {
+            this.$confirm("改变插件状态将会重载环境，是否继续？", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "info",
@@ -49,11 +71,17 @@ export default {
                     });
                 });
         },
+        isEmptyObj(obj) {
+            for (var key in obj) {
+                if ({}.hasOwnProperty.call(obj, key)) return false;
+            }
+            return true;
+        },
     },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .item {
     box-sizing: border-box;
     padding: 15px 24px;
@@ -62,64 +90,52 @@ export default {
     position: relative;
     color: #333;
     cursor: pointer;
-}
 
-.item .title .tag {
-    font-style: normal;
-    color: #adacac;
-    font-size: 14px;
-    margin-left: 10px;
-}
+    &:hover {
+        border-color: $theme-color;
+    }
+    .itemHeader {
+        display: flex;
+        justify-content: space-between;
+        .title .tag {
+            font-style: normal;
+            color: #adacac;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+    }
 
-.item .itemHeader {
-    font-family: gotham, helvetica, arial, sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    height: 30px;
-    margin-bottom: 5px;
-    max-height: 40px;
-    overflow: hidden;
-    overflow-wrap: break-word;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-wrap: break-word;
-    line-height: 30px;
-    width: 200px;
-}
+    .itemContent {
+        margin: 15px 0px;
+        color: #878787;
+        overflow: hidden;
 
-.item .itemContent {
-    margin: 15px 0px;
-    color: #878787;
-    overflow: hidden;
-}
+        small {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+    }
+    .itemTool {
+        display: flex;
+        align-items: center;
+        margin: 10px 0px 0px;
 
-.item .itemContent small {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-}
-
-.item .itemTool {
-    display: flex;
-    align-items: center;
-    margin: 10px 0px 0px;
-}
-
-.item .itemTool i {
-    color: #878787;
-}
-.item .itemTool .author {
-    flex: 1;
-    font-weight: 600;
-    font-size: 14px;
-    height: 20px;
-    line-height: 20px;
-    color: #878787;
-    margin: 0px;
-}
-
-.item:hover {
-    border-color: #2dbe60;
+        i.btn-setting {
+            color: #878787;
+            font-size: 18px;
+            margin: 0px 10px;
+        }
+        .author {
+            flex: 1;
+            font-weight: 600;
+            font-size: 14px;
+            height: 20px;
+            line-height: 20px;
+            color: #878787;
+            margin: 0px;
+        }
+    }
 }
 </style>

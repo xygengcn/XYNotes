@@ -162,6 +162,25 @@ utils.isMobie = function() {
 utils.reload = function() {
     window.location.reload(true);
 }
+utils.versionCompare = function(a, b) {
+    a = a.split(".");
+    b = b.split(".");
+    if (a.length > b.length) {
+        return true;
+    } else if (a.length < b.length) {
+        return false;
+    } else {
+        for (let key in a) {
+            if (a[key] > b[key]) {
+                return true;
+            }
+            if (a[key] < b[key]) {
+                return false;
+            }
+        }
+        return false;
+    }
+}
 exports.install = function(Vue, opt) {
     Vue.prototype.$utils = utils;
 }

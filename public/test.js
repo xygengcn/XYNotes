@@ -11,7 +11,7 @@ var option = {
         label: "接口地址",
         value: "localhost"
     },
-    //type: "post"
+    type: "post"
 }
 $_plugins.option(option).extend("start", "hello", function() {});
 $_plugins.extend("start", "hellos", function(e) {

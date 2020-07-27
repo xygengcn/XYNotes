@@ -71,7 +71,7 @@ export default new Vuex.Store({
             });
         },
         init(content) {
-            let keys = ['configs', 'fonts', 'plugins'];
+            let keys = ['configs', 'fonts'];
             keys.forEach((item) => {
                 let key = "XYNOTES" + item.toUpperCase()
                 if (localStorage.getItem(key)) {
@@ -83,6 +83,7 @@ export default new Vuex.Store({
                     localStorage.setItem(key, JSON.stringify(content.state.data[item]));
                 }
             })
+            content.commit("SET_PLUGINS", defaultData.plugins);
             content.commit("SET_DATA_ITEM", {
                 key: "version",
                 value: sysConfig.version
