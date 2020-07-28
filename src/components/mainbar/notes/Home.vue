@@ -41,22 +41,21 @@ export default {
     },
     computed: {
         data() {
-            let notes =
-                this.$store.state.data.notes ||
-                [].filter((item) => {
-                    if (
-                        item.title.includes(this.searchkey) ||
-                        item.text.includes(this.searchkey)
-                    ) {
-                        return item;
-                    }
-                });
-            return notes;
+            let notes = this.$store.state.data.notes || [];
+            return notes.filter((item) => {
+                if (
+                    item.title.includes(this.searchkey) ||
+                    item.text.includes(this.searchkey)
+                ) {
+                    return true;
+                }
+                return false;
+            });
         },
     },
     methods: {
         setActive(item) {
-            this.$store.commit("setActive", item);
+            this.$store.commit("SET_NOTE_ACTIVE", item);
             if (this.$store.state.isMobie) {
                 this.$router.push("/m/note");
             }

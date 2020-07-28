@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         setActive(item) {
-            this.$store.commit("setActive", item);
+            this.$store.commit("SET_NOTE_ACTIVE", item);
             if (this.$store.state.isMobie) {
                 this.$router.push("/m/note");
             }

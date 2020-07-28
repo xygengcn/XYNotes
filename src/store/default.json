@@ -7,8 +7,8 @@
         "name": "测试",
         "author": "xygengcn",
         "store": "web",
-        "version": "1.0.4",
-        "url": "./test.js",
+        "version": "1.0.0",
+        "url": "./plugins/test.js",
         "status": false,
         "intro": "xy笔记测试插件库专用第一款插件，功能暂时为打开问候语，未来会开放更多权限开发插件，完成笔记本更多功能。",
         "options": {}
@@ -18,9 +18,9 @@
         "isWebStorage": false,
         "isDark": false,
         "sortKey": {
-            "key": "created",
-            "order": "asc",
-            "value": "创建时间（最早优先）"
+            "key": "updated",
+            "order": "desc",
+            "value": "更新时间（最晚优先）"
         }
     },
     "fonts": {

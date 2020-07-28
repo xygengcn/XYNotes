@@ -1,5 +1,8 @@
+$isMobie :false;
+
 .mobie .wrap {
     flex-direction: column-reverse;
+    $isMobie: true;
 
     #sidebar {
         display: flex;
@@ -78,8 +81,13 @@
         justify-content: space-between;
     }
 
+}
+
+@media screen and (max-width: 600px) {
+
     .el-message-box,
     .el-dialog {
         width: 80% !important;
+
     }
 }

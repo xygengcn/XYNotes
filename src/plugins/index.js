@@ -5,11 +5,13 @@
 var plugins = function() {
     this.options = {};
     this.localOptions = {};
+    //读取本地配置
     this.localOption = (plugins) => {
         for (let item of plugins) {
             this.localOptions[item.id] = item.options;
         }
     };
+    //获取插入配置
     this.option = (options) => {
         if (options.id) {
             this.options[options.id] = this.options[options.id] || {};
@@ -74,7 +76,7 @@ var plugins = function() {
                     if (!obj.hasOwnProperty(funcName) && funcName != "constructor") {
                         let func = eval("obj." + funcName);
                         if (typeof func == "function") {
-                            resolve(func.call(window.vue, this.options, ...args));
+                            resolve(func.call(window.vue, this.options[funcName] || {}, ...args));
                         }
                     }
                 }
@@ -118,6 +120,43 @@ var plugins = function() {
                 this.install(element);
             }
         });
+    };
+    //数据处理
+    this.handle = (array = []) => {
+        let versionCompare = function(a, b) {
+            a = a.split(".");
+            b = b.split(".");
+            if (a.length > b.length) {
+                return true;
+            } else if (a.length < b.length) {
+                return false;
+            } else {
+                for (let key in a) {
+                    if (a[key] > b[key]) {
+                        return true;
+                    }
+                    if (a[key] < b[key]) {
+                        return false;
+                    }
+                }
+                return false;
+            }
+        }
+        for (let i = 0; i < array.length - 1; i++) {
+            for (let j = i + 1; j < array.length; j++) {
+                if (array[i].id == array[j].id && versionCompare(array[i].version, array[j].version)) {
+                    array[i].options = JSON.parse(JSON.stringify(array[j].options));
+                    array[i].status = array[j].status;
+                    array.splice(j--, 1);
+                }
+                if (array[i].id == array[j].id && !versionCompare(array[i].version, array[j].version)) {
+                    array[j].options = JSON.parse(JSON.stringify(array[i].options));
+                    array[j].status = array[i].status;
+                    array.splice(i--, 1);
+                }
+            }
+        }
+        return array;
     }
 };
 

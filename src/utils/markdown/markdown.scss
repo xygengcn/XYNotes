@@ -1,0 +1,109 @@
+  /* markdown样式 */
+
+  .marked {
+      color: #383838;
+
+      a {
+          color: #0069d6;
+
+          :hover {
+              outline: none;
+              text-decoration: none;
+          }
+      }
+
+      img {
+          width: 100%;
+          max-height: 500px;
+          margin: 10px 0px;
+          object-fit: cover;
+          border: 1px solid #eee;
+
+          @media screen and (min-width:600px) {
+              width: 800px;
+          }
+      }
+
+      p>code,
+      span>code,
+      li>code {
+          margin: 0px 5px;
+          border: 1px solid #ddd;
+          background: #f6f6f6;
+          padding: 3px;
+          border-radius: 3px;
+          font-size: 14px;
+          color: #dc9696;
+      }
+
+      ul,
+      ol {
+          padding: 0;
+          margin: 0;
+      }
+
+      ul li {
+          list-style-type: disc;
+      }
+
+      ol li {
+          list-style-type: decimal;
+      }
+
+      li {
+          padding: 0;
+          margin-left: 20px;
+      }
+
+      .li-checkbox {
+          margin: 0;
+
+          input {
+              -webkit-appearance: checkbox;
+          }
+      }
+
+
+      blockquote {
+          color: #666;
+          border-left: 4px solid #ddd;
+          padding: 4px 15px;
+          margin-left: 0;
+          background-color: #f5f5f5;
+          margin: 10px 0px;
+
+          p {
+              margin: 0px;
+          }
+      }
+
+      .dark & blockquote {
+          border-color: #4e4e4e;
+          background-color: #333333;
+      }
+
+      pre {
+          width: 100%;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          background: #333;
+          padding: 10px 30px;
+          color: #ccc;
+          box-sizing: border-box;
+      }
+
+      /* 表格 */
+      table {
+          width: 100%;
+
+          &,
+          & tr th,
+          & tr td {
+              border: 1px solid #8a8a8a;
+              margin: 0;
+              padding: 0px 10px;
+              /* 合并边框 */
+              border-collapse: collapse;
+          }
+      }
+  }

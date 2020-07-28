@@ -60,7 +60,7 @@ export default {
         addItem() {
             console.log(this.plugin);
             this.dialogFormVisible = false;
-            this.$store.commit("addPlugin", this.plugin);
+            this.$store.commit("ADD_PLUGIN", this.plugin);
             this.$store.dispatch("SAVE_DATA_ITEM", "plugins");
             this.$message({
                 message: "插件添加成功，刷新后生效",

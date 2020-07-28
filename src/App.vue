@@ -17,7 +17,7 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch("init");
+        this.$store.dispatch("START_INIT");
         this.$plugins.init(this.plugins);
     },
 };

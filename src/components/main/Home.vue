@@ -1,34 +1,17 @@
 <!-- 显示面板 -->
 <template>
     <div id="mainHome">
-        <navbar
-            @editMode="editMode"
-            @fullScreen="fullScreen =!fullScreen"
-            @Triggle="Triggle"
-            @screenShot="screenShot"
-        ></navbar>
+        <navbar @editMode="editMode" @fullScreen="fullScreen =!fullScreen" @Triggle="Triggle" @screenShot="screenShot"></navbar>
         <div class="mainContent" :class="{fullScreen:fullScreen}">
             <EditTextarea v-if="mode==1 || mode ==2" class="panel" id="EditTextarea"></EditTextarea>
-            <ViewTextarea
-                v-if="mode==0 || mode ==2"
-                class="panel"
-                ref="ViewTextarea"
-                id="ViewTextarea"
-                :activeNoteText="note"
-            ></ViewTextarea>
+            <ViewTextarea v-if="mode==0 || mode ==2" class="panel" ref="ViewTextarea" id="ViewTextarea" :activeNoteText="note"></ViewTextarea>
             <div class="closeFullScreen" v-if="fullScreen" @click="fullScreen =false">
                 <el-tooltip effect="dark" content="关闭全屏" placement="top">
                     <i class="el-icon-circle-close"></i>
                 </el-tooltip>
             </div>
         </div>
-        <el-dialog
-            :visible.sync="imgShareDialog"
-            width="70%"
-            center
-            :modal-append-to-body="false"
-            custom-class="imgShareDialog"
-        >
+        <el-dialog :visible.sync="imgShareDialog" width="70%" center :modal-append-to-body="false" custom-class="imgShareDialog">
             <span slot="title">
                 <i class="note-camera"></i>笔记截图分享
             </span>
@@ -95,9 +78,9 @@ export default {
                 useCORS: true,
                 scale: 2,
             };
-            this.$store.commit("setLoading", true);
+            this.$store.commit("SET_LOADING", true);
             html2canvas(this.$refs.ViewTextarea.$el, option).then((canvas) => {
-                this.$store.commit("setLoading", false);
+                this.$store.commit("SET_LOADING", false);
                 this.imgShareUrl = canvas.toDataURL("image/png");
                 this.imgShareDownload = this.$utils.base64ImgtoFile(
                     this.imgShareUrl,

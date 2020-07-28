@@ -29,13 +29,13 @@ export default {
                 type: "warning",
             })
                 .then(() => {
-                    this.$store.commit("delNote", item);
+                    this.$store.dispatch("DELETE_NOTE", item);
                     this.$message({
                         type: "success",
                         message: "删除成功!",
                     });
                 })
-                .catch(() => {
+                .catch((e) => {
                     this.$message({
                         type: "info",
                         message: "已取消删除",
@@ -43,7 +43,7 @@ export default {
                 });
         },
         markNote(item) {
-            this.$store.commit("markNote", item);
+            this.$store.commit("SET_NOTE_MARK", item);
         },
     },
     computed: {

@@ -10,10 +10,6 @@ var defaultData = require("./default.json");
 const isMobie = navigator.userAgent.match(
     /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
 ) ? true : false;
-
-
-
-
 export default new Vuex.Store({
     state: {
         data: defaultData,
@@ -25,9 +21,8 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        ...note,
+        ...note.mutations,
         ...plugin.mutations,
-
         SET_DATA_ITEM(state, {
             key,
             value
@@ -35,42 +30,35 @@ export default new Vuex.Store({
             state.data[key] = value
         },
         //修改加载状态
-        setLoading(state, status, text = "拼命加载中") {
+        SET_LOADING(state, status, text = "拼命加载中") {
             state.loading.status = status;
             state.loading.text = text;
         },
-
         //设置排序
-        setOrder(state, order) {
+        SET_ORDER(state, order) {
             state.data.configs.sortKey = order;
         }
 
     },
     actions: {
-        ...plugin.action,
+        ...note.actions,
+        ...plugin.actions,
+        //保存data数据部分
         SAVE_DATA_ITEM(content, key) {
             localStorage.setItem("XYNOTES" + key.toUpperCase(), JSON.stringify(content.state.data[key]));
         },
-        del(content, note) {
-            let configs = content.state.data.configs;
-            storage.del(configs.isLocalStorage, configs.isWebStorage, note, content.state.data.notes);
-        },
-        save(content) {
-            let configs = content.state.data.configs;
-            content.commit("setNotes");
-            storage.save(configs.isLocalStorage, configs.isWebStorage, content.state.note, content.state.data.notes);
-        },
         //恢复数据
-        recover(content, data) {
-            content.commit('setLoading', true);
+        BACKUP_RECOVER(content, data) {
+            content.commit('SET_LOADING', true);
             storage.recover(data.notes).then(() => {
-                content.commit("setData", data);
+                content.commit("SET_DATA_ALL", data);
                 content.dispatch("SAVE_DATA_ITEM", "configs");
                 content.dispatch("SAVE_DATA_ITEM", "fonts");
-                content.commit('setLoading', false);
+                content.commit('SET_LOADING', false);
             });
         },
-        init(content) {
+        //初始化操作
+        START_INIT(content) {
             let keys = ['configs', 'fonts'];
             keys.forEach((item) => {
                 let key = "XYNOTES" + item.toUpperCase()
@@ -91,7 +79,10 @@ export default new Vuex.Store({
             return new Promise((resolve) => {
                 if (content.state.data.configs.isLocalStorage) {
                     storage.init(content.state.data.notes).then(res => {
-                        content.commit("setNotes", res);
+                        content.commit("SET_NOTE_ALL", {
+                            notes: res,
+                            isfirst: true
+                        });
                         resolve();
                     })
                 }

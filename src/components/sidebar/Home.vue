@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         addNote() {
-            this.$store.commit("addNote");
+            this.$store.commit("ADD_NOTE");
         },
     },
 };

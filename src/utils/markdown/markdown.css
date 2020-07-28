@@ -1,17 +1,21 @@
   /* markdown样式 */
 
-  .marked{
+  .marked {
       color: #383838;
   }
-  .marked a{
+
+  .marked a {
       color: #0069d6;
   }
-  .marked a:hover{
+
+  .marked a:hover {
       outline: none;
       text-decoration: none;
   }
-  .marked img{
-    max-width: 100%;
+
+  .marked img {
+      max-width: 100%;
+      margin: 10px 10px;
   }
 
   .marked p>code,
@@ -31,10 +35,12 @@
       padding: 0;
       margin: 0;
   }
-  .marked ul li{
-    list-style-type: disc;
+
+  .marked ul li {
+      list-style-type: disc;
   }
-  .marked ol li{
+
+  .marked ol li {
       list-style-type: decimal;
   }
 
@@ -47,8 +53,8 @@
       margin: 0;
   }
 
-  .marked .li-checkbox input{
-    -webkit-appearance: checkbox;
+  .marked .li-checkbox input {
+      -webkit-appearance: checkbox;
   }
 
   .marked blockquote {
@@ -59,10 +65,26 @@
       background-color: #f5f5f5;
       margin: 10px 0px;
   }
+
   .dark .marked blockquote {
-    border-color:#4e4e4e;
-    background-color: #333333;
-}
+      border-color: #4e4e4e;
+      background-color: #333333;
+  }
+
+  /* 表格 */
+  .marked table {
+      width: 100%;
+  }
+
+  .marked table,
+  .marked table tr th,
+  .marked table tr td {
+      border: 1px solid #8a8a8a;
+      margin: 0;
+      padding: 0px 10px;
+      /* 合并边框 */
+      border-collapse: collapse;
+  }
 
   .marked blockquote p {
       margin: 0px;

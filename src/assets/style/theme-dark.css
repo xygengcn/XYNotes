@@ -3,7 +3,7 @@
 .dark #sidebar .sideBtn {
     background-color: #333 !important;
     border-color: #333 !important;
-    color: #858585;
+    color: #858585 !important;
 }
 
 .dark #sidebar .sideBtn {
@@ -64,7 +64,9 @@
 
 .dark #EditTextarea input,
 .dark #EditTextarea .EditArea,
+.dark #ViewTextarea,
 .dark #mainHome .tag {
+    border-color: #1E1E1E;
     background-color: #1E1E1E !important;
 }
 

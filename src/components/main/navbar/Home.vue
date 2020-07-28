@@ -60,7 +60,7 @@ export default {
                 type: "warning",
             })
                 .then(() => {
-                    this.$store.commit("delNote", item);
+                    this.$store.dispatch("DELETE_NOTE", item);
                     if (this.isMobie) {
                         this.$router.go(-1);
                     }
@@ -81,7 +81,7 @@ export default {
             this.$emit("editMode", mode);
         },
         markNote(item) {
-            this.$store.commit("markNote", item);
+            this.$store.commit("SET_NOTE_MARK", item);
         },
         fullScreen() {
             this.$emit("fullScreen", this.isFullScreen);

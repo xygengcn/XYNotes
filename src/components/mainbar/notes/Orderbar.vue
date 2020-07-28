@@ -49,8 +49,8 @@ export default {
         },
         //排序记录
         order(sortkey) {
-            this.$store.commit("setOrder", sortkey);
-            this.$store.commit("setNotes");
+            this.$store.commit("SET_ORDER", sortkey);
+            this.$store.commit("SET_NOTE_ALL");
             this.$store.dispatch("SAVE_DATA_ITEM", "configs");
         },
     },

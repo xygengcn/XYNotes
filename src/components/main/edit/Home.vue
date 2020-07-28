@@ -51,13 +51,13 @@ export default {
         //更新标题
         editTitle: function (e) {
             var text = e.target.value;
-            this.$store.commit("setTitle", text);
+            this.$store.commit("SET_NOTE_TITLE", text);
             this.editTime();
             this.saveToSql();
         },
         //更新时间
         editTime: function () {
-            this.$store.commit("setTime", this.$utils.time());
+            this.$store.commit("SET_NOTE_TIME", this.$utils.time());
         },
         //无操作5s自动操作
         autoSave: function (e) {
@@ -73,20 +73,19 @@ export default {
         //保存
         save(e) {
             var text = e.target.value;
-            this.$store.commit("setText", text);
+            this.$store.commit("SET_NOTE_TEXT", text);
             this.string = markdown(text);
-            this.$store.commit("setHtml", this.string);
+            this.$store.commit("SET_NOTE_HTML", this.string);
             this.editTime();
-            this.$store.commit("removeNote");
+            this.$store.commit("CLEAN_BLANK_NOTE");
         },
         //保存到本地或者数据库
         saveToSql() {
             clearTimeout(this.autosave);
             this.isSave = true;
             if (this.$store.state.data.configs.isLocalStorage) {
-                this.$store.dispatch("save");
+                this.$store.dispatch("SAVE_TO_LOCAL");
             }
-
             console.log(
                 "自动保存成功———" +
                     this.$utils.time(new Date(), "yyyy-MM-dd HH:mm:ss")

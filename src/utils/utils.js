@@ -6,7 +6,7 @@ utils.time = function(timestamp, format = "yyyy-MM-dd HH:mm:ss") {
     var year = String(date.getFullYear()).padStart(4, "0"); //获取当前年份
     var month = String(date.getMonth() + 1).padStart(2, "0"); //获取当前月份
     var day = String(date.getDate()).padStart(2, "0"); //获取当前日 
-    var weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+    var weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
     var weekday = weekdays[date.getDay()]; //获取当前星期几
     var hour = String(date.getHours()).padStart(2, "0"); //获取小时
     var minute = String(date.getMinutes()).padStart(2, "0"); //获取分钟

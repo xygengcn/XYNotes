@@ -29,6 +29,6 @@ new Vue({
     render: h => h(App),
     created() {
         window.vue = this;
-        window.$_plugins = plugins;
+        window.$plugins = plugins;
     }
 }, ).$mount('#app')
