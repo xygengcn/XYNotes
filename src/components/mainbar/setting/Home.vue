@@ -40,10 +40,7 @@
                         <el-button size="mini" @click="about">关于</el-button>
                     </li>
                 </ul>
-                <div class="version">
-                    Copyright &copy; 2020 Version {{ version }} By
-                    <el-link href="https://github.com/xygengcn/XYNotes" target="_blank" :underline="false" class="github">XYGENGCN</el-link>
-                </div>
+
             </div>
         </page>
     </div>
@@ -60,7 +57,7 @@ export default {
     },
     methods: {
         about() {
-            window.open("https://xygeng.cn/post/294.html");
+            this.$router.push({ path: "/about" });
         },
         //保存配置
         saveConfig() {
@@ -173,18 +170,5 @@ li label {
     left: 0;
     cursor: pointer;
     filter: alpha(opacity=0);
-}
-
-.version {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    margin: 10px 0px 20px;
-    font-size: 12px;
-    text-align: center;
-}
-.version .github {
-    font-size: 12px;
-    color: #878787;
 }
 </style>

@@ -3,7 +3,7 @@
     <div id="sidebar">
         <router-link to="/" v-if="!isMoibe">
             <div id="logo">
-                <img class="img" :src="logo" alt="logo" />
+                <img class="img" src="@/assets/logo.png" alt="logo" />
             </div>
         </router-link>
         <div class="toolbar">
@@ -38,11 +38,6 @@
 <script>
 export default {
     computed: {
-        logo() {
-            return this.$store.state.data.configs.isDark
-                ? require("@/assets/logo-dark.png")
-                : require("@/assets/logo.png");
-        },
         isMoibe() {
             return this.$store.state.isMobie;
         },

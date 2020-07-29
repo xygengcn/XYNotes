@@ -21,6 +21,9 @@ const routes = [{
             path: 'setting',
             component: () => import('@/components/mainbar/setting/Home')
         }, {
+            path: 'about',
+            component: () => import('@/components/mainbar/setting/about/Home')
+        }, {
             path: 'plugins',
             component: () => import('@/components/mainbar/plugins/Home')
         }, {
@@ -47,6 +50,9 @@ const routes = [{
             }, {
                 path: 'setting',
                 component: () => import('@/components/mainbar/setting/Home')
+            }, {
+                path: 'about',
+                component: () => import('@/components/mainbar/setting/about/Home')
             }, {
                 path: 'plugins',
                 component: () => import('@/components/mainbar/plugins/Home')
