@@ -6,7 +6,7 @@
             <span>{{$utils.timeToDate(data.updated)}}</span>
         </div>
         <div class="itemContent">
-            <small>{{data.text}}</small>
+            <small>{{ data.password?"********加密********":data.text}}</small>
             <div class="itemContent-cover" v-if="cover">
                 <img :src="cover[2]" :alt="cover[1]" />
             </div>
@@ -57,12 +57,6 @@ export default {
             let reg = /!\[(.*?)\]\((.*?)\)/;
             let result = this.data.text.match(reg);
             return result;
-        },
-    },
-    filters: {
-        subInfor: function (value) {
-            if (value.length && value.length < 50) return value;
-            else return value.substring(0, 50) + "...";
         },
     },
 };

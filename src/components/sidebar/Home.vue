@@ -9,7 +9,7 @@
         <div class="toolbar">
             <router-link to="/">
                 <div class="sideBtn" @click="addNote">
-                    <i class="el-icon-plus" aria-hidden="true"></i>
+                    <i class="el-icon-edit-outline" aria-hidden="true"></i>
                 </div>
             </router-link>
             <router-link to="/">

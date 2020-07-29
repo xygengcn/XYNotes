@@ -32,6 +32,8 @@ export default {
                 mark: false,
                 share: false,
                 reminded: '',
+                store: "local",
+                password: "",
                 created: new Date().getTime(),
                 updated: new Date().getTime()
             };

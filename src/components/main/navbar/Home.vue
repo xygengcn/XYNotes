@@ -7,7 +7,8 @@
                 <el-button class="el-icon-s-unfold" @click="Triggle" v-if="!isTriggle &&!isMobie" plain></el-button>
                 <el-button class="el-icon-view" @click="editMode(0)" v-if="mode != 0" plain></el-button>
                 <el-button class="el-icon-edit" @click="editMode(1)" v-if="mode == 0" plain></el-button>
-                <el-button plain @click="editMode(2)" v-if="!isMobie">MD</el-button>
+                <el-button @click="editMode(2)" v-if="!isMobie" plain>MD</el-button>
+                <el-button class="el-icon-unlock" plain></el-button>
                 <el-button :class="note.mark?'el-icon-star-on':'el-icon-star-off'" @click="markNote(note)" plain></el-button>
                 <el-button class="el-icon-camera-solid" @click="screenShot" plain></el-button>
                 <el-button class="el-icon-full-screen" @click="fullScreen" plain></el-button>
