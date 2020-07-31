@@ -36,7 +36,7 @@ export default {
         line-height: 60px;
         color: #878787;
         box-sizing: border-box;
-        border-bottom: 1px solid #d9d9d9;
+        border-bottom: 1px solid #ccc;
         .left i {
             margin-right: 10px;
             color: #878787;

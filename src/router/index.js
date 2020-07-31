@@ -28,9 +28,9 @@ const routes = [{
             component: () => import('@/components/mainbar/plugins/Home')
         }, {
             path: 'plugins/:id',
-            component: () => import('@/components/mainbar/plugins/Page')
+            component: () => import('@/components/mainbar/plugins/Option')
         }, {
-            path: 'plugins/:id/:name',
+            path: 'plugins/:id/:pageID',
             component: () => import('@/components/mainbar/plugins/Page')
         }]
     },
@@ -58,9 +58,9 @@ const routes = [{
                 component: () => import('@/components/mainbar/plugins/Home')
             }, {
                 path: 'plugins/:id',
-                component: () => import('@/components/mainbar/plugins/Page')
+                component: () => import('@/components/mainbar/plugins/Option')
             }, {
-                path: 'plugins/:id/:name',
+                path: 'plugins/:id/:pageID',
                 component: () => import('@/components/mainbar/plugins/Page')
             }
         ]

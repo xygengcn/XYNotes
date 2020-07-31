@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import page from "@/components/mainbar/common/Page";
+import page from "@/components/mainbar/components/Page";
 import plugin from "@/components/mainbar/plugins/Plugin";
 import addPlugin from "@/components/mainbar/plugins/AddPlugin";
 export default {

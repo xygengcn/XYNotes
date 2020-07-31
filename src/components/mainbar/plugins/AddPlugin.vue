@@ -1,7 +1,7 @@
 <template>
     <div class="addPlugin">
-        <i class="el-icon-plus addBtn" @click="dialogFormVisible = true"></i>
-        <el-dialog title="新增插件" :visible.sync="dialogFormVisible">
+        <i class="el-icon-plus addBtn" @click="isAddPluginDialog = true"></i>
+        <el-dialog title="新增插件" :visible.sync="isAddPluginDialog">
             <el-form :model="plugin">
                 <el-form-item label="插件ID" label-width="100">
                     <el-input v-model="plugin.id" autocomplete="off"></el-input>
@@ -32,7 +32,7 @@
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button @click="isAddPluginDialog = false">取 消</el-button>
                 <el-button type="primary" @click="addItem">确认</el-button>
             </div>
         </el-dialog>
@@ -43,7 +43,7 @@
 export default {
     data() {
         return {
-            dialogFormVisible: false,
+            isAddPluginDialog: false,
             plugin: {
                 id: "",
                 name: "",
@@ -53,13 +53,14 @@ export default {
                 intro: "",
                 status: false,
                 options: {},
+                pages: {},
             },
         };
     },
     methods: {
         addItem() {
             console.log(this.plugin);
-            this.dialogFormVisible = false;
+            this.isAddPluginDialog = false;
             this.$store.commit("ADD_PLUGIN", this.plugin);
             this.$store.dispatch("SAVE_DATA_ITEM", "plugins");
             this.$message({

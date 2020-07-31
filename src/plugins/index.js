@@ -12,26 +12,25 @@ var plugins = function() {
         }
     };
     //获取插入配置
-    this.option = (options) => {
-        if (options.id) {
-            this.options[options.id] = this.options[options.id] || {};
-            this.localOptions[options.id] = this.localOptions[options.id] || {};
-            for (let key in options) {
-                if (key == "id" || typeof options[key] == "object") {
-                    this.localOptions[options.id][key] = this.localOptions[options.id][key] || null;
-                    this.options[options.id][key] = this.localOptions[options.id][key] || options[key]
+    this.option = (plugins) => {
+        if (plugins.id) {
+            this.options[plugins.id] = this.options[plugins.id] || {};
+            this.options[plugins.id]["options"] = this.options[plugins.id]["options"] || {};
+            this.localOptions[plugins.id] = this.localOptions[plugins.id] || {};
+            for (let key in plugins.options) {
+                if (typeof plugins.options[key] == "object") {
+                    this.localOptions[plugins.id][key] = this.localOptions[plugins.id][key] || null;
+                    this.options[plugins.id]["options"][key] = this.localOptions[plugins.id][key] || plugins.options[key]
                 }
-                if (key != "id" && typeof options[key] == "string") {
-                    this.options[options.id][key] = this.options[options.id][key] || {};
-                    this.localOptions[options.id][key] = this.localOptions[options.id][key] || {};
-                    this.options[options.id][key].label = this.localOptions[options.id][key].label || key;
-                    this.options[options.id][key].value = this.localOptions[options.id][key].value || options[key];
+                if (typeof plugins.options[key] == "string") {
+                    this.options[plugins.id]["options"][key] = this.options[plugins.id][key] || {};
+                    this.localOptions[plugins.id][key] = this.localOptions[plugins.id][key] || {};
+                    this.options[plugins.id]["options"][key].label = this.localOptions[plugins.id][key].label || key;
+                    this.options[plugins.id]["options"][key].value = this.localOptions[plugins.id][key].value || plugins.options[key];
                 }
-
             }
-            //this.options[options.id] = Object.assign(this.options[options.id] || {}, options);
+            this.options[plugins.id].pages = plugins.pages ? plugins.pages : {};
         }
-
         return this;
     };
     this.css = (css) => {
@@ -45,25 +44,30 @@ var plugins = function() {
         }
         document.querySelector('head').appendChild(style);
     };
-    this.html = (el, arr) => {
+    this.html = (arr) => {
         var keys = ["childs", "element", "data"];
-        arr.forEach(item => {
-            var element = document.createElement(item.element);
-            for (let key in item) {
-                if (keys.indexOf(key) == -1) {
-                    element[key] = item[key];
-                }
-                if (key == "data") {
-                    for (let dataKey in item[key]) {
-                        element["data-" + dataKey] = item[key][dataKey];
+        let el = document.createElement("div");
+        let create = (el, arr) => {
+            arr.forEach(item => {
+                var element = document.createElement(item.element);
+                for (let key in item) {
+                    if (keys.indexOf(key) == -1) {
+                        element[key] = item[key];
+                    }
+                    if (key == "data") {
+                        for (let dataKey in item[key]) {
+                            element["data-" + dataKey] = item[key][dataKey];
+                        }
                     }
                 }
-            }
-            if (item.childs) {
-                this.html(element, item.childs)
-            }
-            el.appendChild(element);
-        });
+                if (item.childs) {
+                    create(element, item.childs)
+                }
+                el.appendChild(element);
+            });
+        }
+        create(el, arr);
+        return el.innerHTML;
     };
     //接口
     this.hook = (hook, args = []) => {
@@ -76,7 +80,7 @@ var plugins = function() {
                     if (!obj.hasOwnProperty(funcName) && funcName != "constructor") {
                         let func = eval("obj." + funcName);
                         if (typeof func == "function") {
-                            resolve(func.call(window.vue, this.options[funcName] || {}, ...args));
+                            resolve(func.call(window.vue, this.options[funcName].options || {}, ...args));
                         }
                     }
                 }
@@ -195,7 +199,10 @@ plugins.saved = function(data) {
 
 }
 
-// exports.install = function (Vue, opt) {
-//     Vue.prototype.$plugins = plugins;
-// }
+/**
+ * 进入自定义页面后
+ */
+plugins.enterPage = function(data) {
+
+}
 export default new plugins;

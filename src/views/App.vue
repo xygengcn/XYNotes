@@ -2,7 +2,7 @@
 <template>
     <div class="wrap" v-loading="loading.status" :element-loading-text="loading.text" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <sidebar></sidebar>
-        <transition tag="div" appear>
+        <transition>
             <mainbar v-if="isTriggle"></mainbar>
         </transition>
         <mainWap @Triggle="Triggle" v-if="!isMobie"></mainWap>
@@ -51,7 +51,6 @@ export default {
     overflow: hidden;
     display: flex;
 }
-
 .v-enter,
 .v-leave-to {
     opacity: 0;

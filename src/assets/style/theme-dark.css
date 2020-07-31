@@ -32,7 +32,7 @@
 }
 
 .dark #mainbarHome .setting li,
-.dark .main-wrap>.title,
+.dark .main-wrap>.header,
 .dark .SearchBar,
 .dark .ListHeader {
     border-color: #333333 !important;
@@ -48,7 +48,7 @@
 }
 
 .dark #mainHome,
-.dark #viewHome {
+.dark #screenArea {
     background-color: #1E1E1E;
 }
 

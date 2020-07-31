@@ -8,31 +8,42 @@
                 <el-button class="el-icon-view" @click="editMode(0)" v-if="mode != 0" plain></el-button>
                 <el-button class="el-icon-edit" @click="editMode(1)" v-if="mode == 0" plain></el-button>
                 <el-button @click="editMode(2)" v-if="!isMobie" plain>MD</el-button>
-                <el-button class="el-icon-unlock" plain></el-button>
+                <el-button class="el-icon-unlock" v-if="!note.password" @click="lock()" plain></el-button>
+                <el-button class="el-icon-lock" v-if="note.password" @click="lock()" plain></el-button>
                 <el-button :class="note.mark?'el-icon-star-on':'el-icon-star-off'" @click="markNote(note)" plain></el-button>
                 <el-button class="el-icon-camera-solid" @click="screenShot" plain></el-button>
                 <el-button class="el-icon-full-screen" @click="fullScreen" plain></el-button>
-                <el-button @click="isShow=true" plain>Aa</el-button>
+                <el-button @click="isShowFontDialog=true" plain>Aa</el-button>
                 <el-button class="el-icon-delete" aria-hidden="true" @click="delNote(note)" plain></el-button>
             </p>
         </div>
-        <FontDialog :isShow="isShow" @close="isShow=false"></FontDialog>
+        <FontDialog :isShow="isShowFontDialog" @close="isShowFontDialog=false"></FontDialog>
+        <screenShot :img="img" @close="isShowScreenShotDialog =false" :isShow="isShowScreenShotDialog"></screenShot>
     </div>
 </template>
 
 <script>
 import FontDialog from "@/components/main/navbar/FontDialog";
+import screenShot from "@/components/main/navbar/ScreenShotDialog";
+import html2canvas from "@/utils/html2canvas";
 export default {
     props: ["isFullScreen"],
     components: {
         FontDialog,
+        screenShot,
     },
     data() {
         return {
             mode: 0,
             isTriggle: true,
-            isShow: false,
+            isShowFontDialog: false,
+            isShowScreenShotDialog: false,
             width: "100%",
+            img: {
+                url: "",
+                download: "",
+                name: "",
+            },
         };
     },
     computed: {
@@ -53,6 +64,30 @@ export default {
         }
     },
     methods: {
+        //修改密码
+        lock() {
+            this.$prompt("请输入密码", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                inputType: "password",
+                inputValue: this.note.password,
+            })
+                .then(({ value }) => {
+                    this.$store.commit("SET_NOTE_PASSWORD", value);
+                    this.$message({
+                        type: "success",
+                        message: "修改成功",
+                    });
+                })
+                .catch((err) => {
+                    this.$message({
+                        type: "info",
+                        message: err,
+                        duration: 500,
+                    });
+                });
+        },
+        //删除
         delNote(item) {
             this.$confirm("是否删除笔记?", "提示", {
                 confirmButtonText: "删除",
@@ -77,13 +112,16 @@ export default {
                     });
                 });
         },
+        //切换编辑
         editMode(mode) {
             this.mode = mode;
             this.$emit("editMode", mode);
         },
+        //标记
         markNote(item) {
             this.$store.commit("SET_NOTE_MARK", item);
         },
+        //全屏
         fullScreen() {
             this.$emit("fullScreen", this.isFullScreen);
         },
@@ -94,7 +132,35 @@ export default {
         },
         //截图
         screenShot() {
-            this.$emit("screenShot");
+            if (this.mode == 0) {
+                this.HtmlToImage();
+            } else {
+                this.$notify({
+                    title: "编辑模式不可截图分享",
+                    type: "warning",
+                });
+            }
+        },
+        //生成图片
+        HtmlToImage() {
+            let el = document.querySelector("#screenArea");
+            var option = {
+                useCORS: true,
+                scale: 2,
+            };
+            this.$store.commit("SET_LOADING", true);
+
+            html2canvas(el, option).then((canvas) => {
+                this.$store.commit("SET_LOADING", false);
+                this.img.url = canvas.toDataURL("image/png");
+                this.img.download = this.$utils.base64ImgtoFile(
+                    this.img.url,
+                    this.note.title
+                );
+                this.img.name = this.img.download.name;
+                this.img.download = this.$utils.dataToUrl(this.img.download);
+                this.isShowScreenShotDialog = true;
+            });
         },
     },
 };

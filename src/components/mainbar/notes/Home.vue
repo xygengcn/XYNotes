@@ -27,7 +27,7 @@
     </div>
 </template>
 <script>
-import Note from "@/components/mainbar/common/Note";
+import Note from "@/components/mainbar/components/Note";
 import order from "@/components/mainbar/notes/Orderbar";
 export default {
     components: {

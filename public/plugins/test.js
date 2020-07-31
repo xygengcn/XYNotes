@@ -5,31 +5,61 @@
 // $_plugins.extend("afterEach", "hello", function(to, from) {
 
 // });
+
+
+var data = [{
+    element: "ul",
+    childs: [{
+        element: "li",
+        innerText: "hah",
+    }, {
+        element: "li",
+        innerText: "hah",
+    }, {
+        element: "li",
+        innerText: "hah",
+    }, {
+        element: "li",
+        innerText: "hah",
+    }]
+}]
+
 var option = {
     id: "test",
-    name: {
-        label: "名称",
-        value: "XY笔记"
+    options: {
+        name: {
+            label: "名称",
+            value: "XY笔记"
+        },
+        title: "hah",
+        id: {
+            label: "ID",
+            value: "1234"
+        }
+    },
+    pages: {
+        test: {
+            name: "测试",
+            html: "<h2>1234</h2>"
+        },
+        test2: {
+            name: "测试2",
+            html: "滚啊"
+        }
     }
 }
+
 $plugins.option(option).extend("start", "test", function(option) {
-    this.$notify({
-        title: '你好',
-        message: option.name.value,
-        type: 'success'
-    });
+    console.log(1);
+    // this.$notify({
+    //     title: '你好',
+    //     message: option.name.value,
+    //     type: 'success'
+    // });
 })
-$plugins.extend("start", "sync", function(e) {
-    let notes = [{
-        "nid": 1574844708303,
-        "title": "网络笔记本",
-        "text": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。",
-        "html": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。",
-        "share": false,
-        "mark": false,
-        "reminded": "",
-        "created": 1574844788303,
-        "updated": 1574844708302
-    }]
-    this.$store.commit("setNotes", notes);
+$plugins.extend("enterPage", "test", function(option, page) {
+    page("test2", "<h2>haha</h2>");
+})
+$plugins.extend("saved", "test", function(option, note) {
+    console.log(1);
 })

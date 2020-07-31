@@ -7,9 +7,10 @@ Vue.use(Vuex)
 import storage from './data/data';
 const sysConfig = require("../../package.json");
 var defaultData = require("./default.json");
-const isMobie = navigator.userAgent.match(
-    /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-) ? true : false;
+var isMobie = false;
+if (document.body.clientWidth < 1024) {
+    isMobie = true;
+}
 export default new Vuex.Store({
     state: {
         data: defaultData,
@@ -18,7 +19,8 @@ export default new Vuex.Store({
         loading: { //加载状态
             status: false,
             text: "拼命加载中"
-        }
+        },
+        history: []
     },
     mutations: {
         ...note.mutations,

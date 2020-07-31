@@ -22,9 +22,10 @@
                     <i class="el-icon-setting btn-setting"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="install">{{!data.status?"安装":"卸载"}}</el-dropdown-item>
-                    <el-dropdown-item command="more" v-if="data.status && !isEmptyObj(data.options)">详细</el-dropdown-item>
-                    <el-dropdown-item command="remove">删除</el-dropdown-item>
+                    <el-dropdown-item :command="beforeHandleCommand('more')" v-if="data.status && !isEmptyObj(data.options)">配置</el-dropdown-item>
+                    <el-dropdown-item v-for="(item,key) in pages" :key="key" :command="beforeHandleCommand('to',key)">{{item.name||key}}</el-dropdown-item>
+                    <el-dropdown-item :command="beforeHandleCommand('install')" :divided="true">{{!data.status?"安装":"卸载"}}</el-dropdown-item>
+                    <el-dropdown-item :command="beforeHandleCommand('remove')">删除</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -36,23 +37,34 @@ export default {
     props: ["data"],
     methods: {
         handle(command) {
-            if (command == "remove") {
-                this.$store.commit("DELETE_PLUGIN", this.data);
+            switch (command.command) {
+                case "remove":
+                    this.$store.commit("DELETE_PLUGIN", this.data);
+                    break;
+                case "install":
+                    this.install(this.data);
+                    break;
+                case "more":
+                    if (this.isMobie) {
+                        this.$router.push({
+                            path: `/m/plugins/${this.data.id}`,
+                        });
+                    } else {
+                        this.$router.push({
+                            path: `/plugins/${this.data.id}`,
+                        });
+                    }
+                    break;
+                case "to":
+                    this.to(command.params);
+                    break;
             }
-            if (command == "more") {
-                if (this.$store.state.isMobie) {
-                    this.$router.push({
-                        path: `/m/plugins/${this.data.id}`,
-                    });
-                } else {
-                    this.$router.push({
-                        path: `/plugins/${this.data.id}`,
-                    });
-                }
-            }
-            if (command == "install") {
-                this.install(this.data);
-            }
+        },
+        beforeHandleCommand(method, params) {
+            return {
+                params: params,
+                command: method,
+            };
         },
         install(plugin) {
             this.$confirm("改变插件状态将会重载环境，是否继续？", "提示", {
@@ -76,6 +88,26 @@ export default {
                 if ({}.hasOwnProperty.call(obj, key)) return false;
             }
             return true;
+        },
+        to(name) {
+            if (this.isMobie) {
+                this.$router.push({
+                    path: `/m/plugins/${this.data.id}/${name}`,
+                });
+            } else {
+                this.$router.push({
+                    path: `/plugins/${this.data.id}/${name}`,
+                });
+            }
+        },
+    },
+    computed: {
+        isMobie() {
+            return this.$store.state.isMobie;
+        },
+        pages() {
+            let plugin = this.$plugins.options[this.data.id] || {};
+            return plugin.pages || {};
         },
     },
 };

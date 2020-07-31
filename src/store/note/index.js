@@ -22,6 +22,11 @@ export default {
             item.mark = !item.mark;
             this.dispatch("SAVE_TO_LOCAL", item);
         },
+        //加密
+        SET_NOTE_PASSWORD(state, password) {
+            state.note.password = password;
+            this.dispatch("SAVE_TO_LOCAL", state.note);
+        },
         //添加笔记
         ADD_NOTE(state) {
             var temp = {
@@ -94,7 +99,11 @@ export default {
             if (data.isfirst) {
                 this.commit("SET_NOTE_ACTIVE", state.data.notes[0])
             }
+        },
+        ADD_NOTE_HISTORY(state, id) {
 
+            state.history.push(id);
+            state.history = Array.from(new Set(state.history));
         }
     },
     actions: {

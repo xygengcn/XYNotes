@@ -13,7 +13,7 @@
                 </div>
             </router-link>
             <router-link to="/">
-                <div class="sideBtn" :class="{active:$route.path=='/' || $route.path=='/m/' }">
+                <div class="sideBtn" :class="{active:$route.path=='/' || $route.path=='/m/' || $route.path=='/note'}">
                     <i class="el-icon-s-order" aria-hidden="true"></i>
                 </div>
             </router-link>

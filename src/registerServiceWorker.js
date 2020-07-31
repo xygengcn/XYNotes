@@ -1,39 +1,38 @@
 /* eslint-disable no-console */
 
-import { register } from 'register-service-worker'
+import {
+    register
+} from 'register-service-worker'
 import Vue from 'vue';
 let v = new Vue();
 if (process.env.NODE_ENV === 'production') {
-  register(`${process.env.BASE_URL}service-worker.js`, {
-    ready () {
-      console.log(
-        'App is being served from cache by a service worker.\n' +
-        'For more details, visit https://goo.gl/AFskqB'
-      )
-    },
-    registered () {
-      console.log('Service worker has been registered.');
-    },
-    cached () {
-      console.log('Content has been cached for offline use.')
-    },
-    updatefound () {
-      console.log('New content is downloading.')
-    },
-    updated () {
-      console.log('New content is available; please refresh.')
-      v.$notify.info({
-        title: '更新提示',
-        message: 'XY笔记有新版了，请刷新后使用！',
-        duration: 0
-      });
-      // window.location.reload(true);
-    },
-    offline () {
-      console.log('No internet connection found. App is running in offline mode.')
-    },
-    error (error) {
-      console.error('Error during service worker registration:', error)
-    }
-  })
+    register(`${process.env.BASE_URL}service-worker.js`, {
+        ready() {
+            console.log('正在加载离线缓存...')
+        },
+        registered() {
+            console.log('程序已加载，正常使用');
+        },
+        cached() {
+            console.log('已脱机缓存')
+        },
+        updatefound() {
+            console.log('正在官网加载新版本...')
+        },
+        updated() {
+            console.log('新版已准备好，请刷新后使用！')
+            v.$notify.info({
+                title: 'XY笔记有新版了!',
+                message: '请刷新后使用！出现错误重载配置即可恢复！',
+                duration: 0
+            });
+            // window.location.reload(true);
+        },
+        offline() {
+            console.log('应用程序正在脱机模式下运行...')
+        },
+        error(error) {
+            console.error('注册时出错：', error)
+        }
+    })
 }

@@ -1,15 +1,13 @@
 <!-- 浏览模式 -->
 <template>
-    <div class="viewHome" id="viewHome" ref="viewHome">
-        <div class="ViewHeader">
-            <div class="title" v-text="activeNoteText.title"></div>
-        </div>
-        <div class="ViewContain" @dblclick="dblclick">
-            <div
-                class="ViewArea marked"
-                v-html="activeNoteText.html"
-                :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"
-            ></div>
+    <div class="viewHome">
+        <div id="screenArea">
+            <div class="ViewHeader">
+                <div class="title" v-text="activeNoteText.title"></div>
+            </div>
+            <div class="ViewContain" @dblclick="dblclick">
+                <div class="ViewArea marked" v-html="activeNoteText.html" :style="{'font-size':font.size+'px','line-height':font.lineHeight+'em'}"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -33,8 +31,7 @@ export default {
 .viewHome {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    box-sizing: border-box;
+    overflow: auto;
 }
 
 .ViewHeader {

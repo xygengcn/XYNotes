@@ -6,7 +6,7 @@
             <span>{{$utils.timeToDate(data.updated)}}</span>
         </div>
         <div class="itemContent">
-            <small>{{ data.password?"********加密********":data.text}}</small>
+            <small>{{intro}}</small>
             <div class="itemContent-cover" v-if="cover">
                 <img :src="cover[2]" :alt="cover[1]" />
             </div>
@@ -57,6 +57,18 @@ export default {
             let reg = /!\[(.*?)\]\((.*?)\)/;
             let result = this.data.text.match(reg);
             return result;
+        },
+        history() {
+            return this.$store.state.history;
+        },
+        intro() {
+            let isRead = this.history.find((item) => {
+                return item == this.data.nid;
+            });
+            if (isRead ? true : false || !this.data.password) {
+                return this.data.text;
+            }
+            return "********加密********";
         },
     },
 };

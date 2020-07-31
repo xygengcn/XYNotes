@@ -28,7 +28,7 @@
                         <el-button type="info" size="mini" @click="localBackup">备份</el-button>
                     </li>
                     <li>
-                        <label>重置设置</label>
+                        <label>重载配置</label>
                         <el-button type="danger" size="mini" @click="recover">重置</el-button>
                     </li>
                     <li>
@@ -46,7 +46,7 @@
     </div>
 </template>
 <script>
-import page from "@/components/mainbar/common/Page";
+import page from "@/components/mainbar/components/Page";
 import storage from "@/store/data/data";
 export default {
     components: {
@@ -57,7 +57,15 @@ export default {
     },
     methods: {
         about() {
-            this.$router.push({ path: "/about" });
+            if (this.$store.state.isMobie) {
+                this.$router.push({
+                    path: "/m/about",
+                });
+            } else {
+                this.$router.push({
+                    path: "/about",
+                });
+            }
         },
         //保存配置
         saveConfig() {
@@ -91,7 +99,7 @@ export default {
         },
         //重置配置
         recover() {
-            this.$confirm("重置配置！", "提示", {
+            this.$confirm("重载配置，可修复部分问题！", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning",

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import page from "@/components/mainbar/common/Page";
+import page from "@/components/mainbar/components/Page";
 export default {
     components: {
         page,
