@@ -165,6 +165,7 @@ export default {
                     console.error(err);
                 });
         },
+        //插入图片
         insertImg() {
             this.isContextMenu = false;
             this.$prompt("图片地址", "插入图片", {

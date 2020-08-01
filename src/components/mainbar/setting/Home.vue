@@ -106,7 +106,8 @@ export default {
             })
                 .then(() => {
                     localStorage.removeItem("XYNOTESCONFIGS");
-                    localStorage.removeItem("XYNOTESFONT");
+                    localStorage.removeItem("XYNOTESFONTS");
+                    localStorage.removeItem("XYNOTESPLUGINS");
                     this.$message({
                         type: "success",
                         message: "恢复成功!",

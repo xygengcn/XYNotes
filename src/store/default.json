@@ -8,7 +8,7 @@
         "author": "xygengcn",
         "store": "web",
         "version": "1.0.0",
-        "url": "./plugins/test.js",
+        "url": "./plugins/test2.js",
         "status": false,
         "intro": "xy笔记测试插件库专用第一款插件，功能暂时为打开问候语，未来会开放更多权限开发插件，完成笔记本更多功能。",
         "options": {},

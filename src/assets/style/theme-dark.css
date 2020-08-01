@@ -1,13 +1,22 @@
-.dark,
-.dark #sidebar,
-.dark #sidebar .sideBtn {
+.dark {
+    background-color: #252526;
+}
+
+.dark #sidebar {
     background-color: #333 !important;
     border-color: #333 !important;
     color: #858585 !important;
 }
 
+
+.dark.mobie .wrap #sidebar::after {
+    box-shadow: 0px -3px 4px 0px #222222;
+}
+
 .dark #sidebar .sideBtn {
     background-color: #252526 !important;
+    border-color: #333 !important;
+    color: #858585 !important;
 }
 
 /* 笔记列表 */

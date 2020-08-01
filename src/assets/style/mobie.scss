@@ -9,6 +9,25 @@ $isMobie :false;
         flex-direction: row;
         height: 73px !important;
         width: 100% !important;
+        border: none;
+        padding: 20px 15px 15px;
+        border-radius: 25% 25% 0 0;
+
+        &::after {
+            content: " ";
+            z-index: -2;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: -1px;
+            left: 0;
+            border-radius: 25% 25% 0 0;
+            box-shadow: 0px -3px 4px 0px #e1e1e1;
+        }
+
+        .sideBtn {
+            margin-bottom: 20px;
+        }
     }
 
     #mainbarHome {
@@ -74,11 +93,17 @@ $isMobie :false;
     }
 
     .toolbar {
-        padding: 0px 10px;
+
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
+        @media screen and (min-width:370px) {
+            & {
+                padding: 0px 10px;
+            }
+        }
     }
 
 }

@@ -21,8 +21,9 @@ export default {
         },
     },
     methods: {
+        //双击编辑
         dblclick() {
-            console.log(0);
+            this.$emit("editMode", 1);
         },
     },
 };

@@ -1,6 +1,4 @@
-## 插件接口文档V2.0.0
-
-新版本插件开发，与旧版本1.0.0的原理一样，主要在1.0.0的版本上修改创建插件形式，类似于vue模板的export部分，以对象的函数形式插入自定义函数，同时把options和pages配置传入，避免每个hook都需要插入插件id。
+# 插件接口文档V1.0.0
 
 ## 插件内置原理
 
@@ -66,39 +64,59 @@ plugins.hook("beforeEach", [to, from]);
 //就会执行新建插件的beforeEach()函数
 ```
 
+
+
 ## 创建插件教程
 
 ### 使用教程
 
 为了自定义拓展笔记本功能，例如实现网络同步化，开发本地插件，开发更多功能，支持XYNotes-1.2.0以上版本。
 
-#### 
+#### 简单运用
 
 ##### 接口
 
-> 插件id需与程序新建插件id保持一致
-
 ```js
-$plugins.extend(`plugin配置`)
+$plugins.extend(hook接口, 插件id, 自定义函数);
 ```
 
-
-
-##### plugin配置格式
-
-| 属性     | 类型          | 名称           | 说明                               |
-| -------- | ------------- | -------------- | ---------------------------------- |
-| id       | string        | 插件id         | 必填                               |
-| options  | string/object | 插件自定义配置 | 选填，配置页面可修改，具体看实例   |
-| pages    | object        | 插件自定义页面 | 选填，点击设置即可看到，具体看实例 |
-| Hook接口 | function      | 自定义         | 详细看Hook接口文档                 |
-
-
-
-##### 配置实例
+##### 实例
 
 ```js
-var plugin = {
+$plugins.extend("start", "hello",function(){
+    console.log("hello world");//程序启动后打印hello world
+    console.log(this); //this指向vue
+});
+```
+
+#### 高级运用
+
+##### 接口
+
+> option的id， 插件id，界面新建的id，三者需保持一致
+
+```js
+$plugins.option(`option自定义配置`).extend(`hook接口`, `插件id`, `自定义函数`);//配置格式如下
+```
+
+##### option配置格式
+
+> 配置自定义，可以定义两种方式，对象类型和字符串类型
+
+
+
+| 属性    | 类型          | 名称           | 说明                               |
+| ------- | ------------- | -------------- | ---------------------------------- |
+| id      | string        | 插件id         | 必填                               |
+| options | string/object | 插件自定义配置 | 选填，配置页面可修改，具体看实例   |
+| pages   | object        | 插件自定义页面 | 选填，点击设置即可看到，具体看实例 |
+
+
+
+配置实例
+
+```js
+var option = {
      id: "test",//必备属性，对应插件的id一致，不一致无法获取配置
      options:{
         //下面配置自定义，可以定义两种方式，对象类型和字符串类型
@@ -113,12 +131,7 @@ var plugin = {
             name:"测试",
             html："<h1>测试自定义页面</h1>"
         }
-    },
-    start(options) {
-        console.log(options);//获取最新的options
-        console.log(this);//vue对象
-    },
-    ...//更多接口看下列Hook列表
+    }
 }
 ```
 
@@ -126,37 +139,32 @@ var plugin = {
 
 ##### 代码实例
 
+> 复杂运用比简单运用添加了配置可用户自定义，其他一样
+
 ```js
-$plugins.extend({
-    id: "test",
-    options: {
-        name: {
-            label: "名称",
-            value: "XY笔记"
+var option = {
+     id: "test",//必备属性，对应插件的id一致，不一致无法获取配置
+     options:{
+        //下面配置自定义，可以定义两种方式，对象类型和字符串类型
+        api: {
+            label: "接口地址",//配置界面显示名称
+            value: "localhost"//默认值
         },
-        title: "hah",
-        id: {
-            label: "ID",
-            value: "1234"
+        type: "post"//默认值，名称与label相同
+     },
+    pages:{
+        test:{//页面id
+            name:"测试",
+            html："<h1>测试自定义页面</h1>"
         }
-    },
-    pages: {
-        test: {
-            name: "测试",
-            html: "<h2>1234</h2>"
-        },
-        test2: {
-            name: "测试2",
-            html: "滚啊"
-        }
-    },
-    start(e) {
-        console.log(e);
-        console.log(this);
-    },
-    enterPage(op, page) {
-        page("test", "真的吗")
-    },
+    }
+}
+$plugins.option(option).extend("start", "test", function(option) {
+    this.$notify({
+        title: '你好',
+        message: option.name.value,
+        type: 'success'
+    });
 })
 ```
 

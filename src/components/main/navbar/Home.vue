@@ -3,18 +3,18 @@
     <div class="navbar" id="navbar" :style="{'width':width}">
         <div class="toolBar">
             <p style="padding: 0px 10px;">
-                <el-button class="el-icon-s-fold" @click="Triggle" v-if="isTriggle &&!isMobie" plain></el-button>
-                <el-button class="el-icon-s-unfold" @click="Triggle" v-if="!isTriggle &&!isMobie" plain></el-button>
-                <el-button class="el-icon-view" @click="editMode(0)" v-if="mode != 0" plain></el-button>
-                <el-button class="el-icon-edit" @click="editMode(1)" v-if="mode == 0" plain></el-button>
-                <el-button @click="editMode(2)" v-if="!isMobie" plain>MD</el-button>
-                <el-button class="el-icon-unlock" v-if="!note.password" @click="lock()" plain></el-button>
-                <el-button class="el-icon-lock" v-if="note.password" @click="lock()" plain></el-button>
-                <el-button :class="note.mark?'el-icon-star-on':'el-icon-star-off'" @click="markNote(note)" plain></el-button>
-                <el-button class="el-icon-camera-solid" @click="screenShot" plain></el-button>
-                <el-button class="el-icon-full-screen" @click="fullScreen" plain></el-button>
-                <el-button @click="isShowFontDialog=true" plain>Aa</el-button>
-                <el-button class="el-icon-delete" aria-hidden="true" @click="delNote(note)" plain></el-button>
+                <el-button class="el-icon-s-fold" @click="Triggle" v-if="isTriggle &&!isMobie" title="侧收" plain></el-button>
+                <el-button class="el-icon-s-unfold" @click="Triggle" v-if="!isTriggle &&!isMobie" title="侧展" plain></el-button>
+                <el-button class="el-icon-view" @click="editMode(0)" v-if="mode != 0" title="预览模式" plain></el-button>
+                <el-button class="el-icon-edit" @click="editMode(1)" v-if="mode == 0" title="编辑模式" plain></el-button>
+                <el-button @click="editMode(2)" v-if="!isMobie" title="双屏模式" plain>MD</el-button>
+                <el-button class="el-icon-unlock" v-if="!note.password" @click="lock()" title="未加密" plain></el-button>
+                <el-button class="el-icon-lock" v-if="note.password" @click="lock()" title="已加密" plain></el-button>
+                <el-button :class="note.mark?'el-icon-star-on':'el-icon-star-off'" @click="markNote(note)" title="标记" plain></el-button>
+                <el-button class="el-icon-camera-solid" @click="screenShot" title="截屏" plain></el-button>
+                <el-button class="el-icon-full-screen" @click="fullScreen" title="全屏" plain></el-button>
+                <el-button @click="isShowFontDialog=true" title="字体" plain>Aa</el-button>
+                <el-button class="el-icon-delete" aria-hidden="true" @click="delNote(note)" title="删除" plain></el-button>
             </p>
         </div>
         <FontDialog :isShow="isShowFontDialog" @close="isShowFontDialog=false"></FontDialog>
@@ -27,14 +27,13 @@ import FontDialog from "@/components/main/navbar/FontDialog";
 import screenShot from "@/components/main/navbar/ScreenShotDialog";
 import html2canvas from "@/utils/html2canvas";
 export default {
-    props: ["isFullScreen"],
+    props: ["isFullScreen", "mode"],
     components: {
         FontDialog,
         screenShot,
     },
     data() {
         return {
-            mode: 0,
             isTriggle: true,
             isShowFontDialog: false,
             isShowScreenShotDialog: false,
@@ -114,7 +113,6 @@ export default {
         },
         //切换编辑
         editMode(mode) {
-            this.mode = mode;
             this.$emit("editMode", mode);
         },
         //标记

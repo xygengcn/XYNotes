@@ -1,9 +1,9 @@
 <template>
     <div class="main">
-        <navbar @editMode="editMode" @fullScreen="fullScreen =!fullScreen" @Triggle="Triggle"></navbar>
+        <navbar @editMode="editMode" @fullScreen="fullScreen =!fullScreen" @Triggle="Triggle" :mode="mode"></navbar>
         <div class="mainContent" :class="{fullScreen:fullScreen}">
             <EditTextarea v-if="mode==1 || mode ==2" class="panel" id="EditTextarea"></EditTextarea>
-            <ViewTextarea v-if="mode==0 || mode ==2" class="panel" id="ViewTextarea" :activeNoteText="note"></ViewTextarea>
+            <ViewTextarea v-if="mode==0 || mode ==2" class="panel" id="ViewTextarea" :activeNoteText="note" @editMode="editMode"></ViewTextarea>
             <div class="closeFullScreen" v-if="fullScreen" @click="fullScreen =false">
                 <el-tooltip effect="dark" content="关闭全屏" placement="top">
                     <i class="el-icon-circle-close"></i>

@@ -1,7 +1,7 @@
 /**
  * xy笔记插件拓展
  * 需要将window.vue指向vue对象
- * 版本v2.0.0
+ * 版本v1.0.0
  */
 var plugins = function() {
     this.options = {};
@@ -92,24 +92,21 @@ var plugins = function() {
         })
     };
     //新插件插入
-    this.extend = (plugin) => {
-        if (plugin.id && typeof plugin.id == "string") {
-            this.option(plugin);
-            //plugins[plugin.id] = plugin;
-            var plugin_prototype = Object.getOwnPropertyNames(plugin);
-            plugin_prototype.forEach(item => {
-                if (typeof plugin[item] == "function") {
-                    let h = eval("plugins." + item);
-                    if (typeof h == "function") {
-                        h.prototype[plugin.id] = plugin[item];
-                    } else {
-                        console.log(item + '生命周期不存在！')
-                    }
-                }
-            })
+    this.extend = (hook, name, func) => {
+        if (name && typeof name == "string") {
+            let h = eval("plugins." + hook);
+            if (typeof h == "function") {
+                if (typeof func == "function") {
+                    h.prototype[name] = func;
+                } else
+                    console.error(name + '函数不存在！')
+            } else {
+                console.error(hook + '生命周期不存在！')
+            }
         } else {
-            console.error('没有命名插件')
+            console.error('没有命名接口')
         }
+
     };
     //安装插件
     this.install = (plugin = {}) => {

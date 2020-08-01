@@ -6,9 +6,9 @@
                 <img class="img" src="@/assets/logo.png" alt="logo" />
             </div>
         </router-link>
-        <div class="toolbar">
+        <div class="toolbar border">
             <router-link to="/">
-                <div class="sideBtn" @click="addNote">
+                <div class="sideBtn center" @click="addNote">
                     <i class="el-icon-edit-outline" aria-hidden="true"></i>
                 </div>
             </router-link>
@@ -83,6 +83,7 @@ export default {
         text-align: center;
         cursor: pointer;
         -webkit-app-region: no-drag;
+        position: relative;
 
         i {
             height: 36px;
