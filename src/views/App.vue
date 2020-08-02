@@ -38,9 +38,6 @@ export default {
             this.isTriggle = is;
         },
     },
-    beforeCreate() {
-        this.$plugins.hook("start");
-    },
 };
 </script>
 <style scoped>

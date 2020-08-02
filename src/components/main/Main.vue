@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <navbar @editMode="editMode" @fullScreen="fullScreen =!fullScreen" @Triggle="Triggle" :mode="mode"></navbar>
-        <div class="mainContent" :class="{fullScreen:fullScreen}">
+        <div class="mainContent" :class="{fullScreen:fullScreen,'md':mode==2}">
             <EditTextarea v-if="mode==1 || mode ==2" class="panel" id="EditTextarea"></EditTextarea>
             <ViewTextarea v-if="mode==0 || mode ==2" class="panel" id="ViewTextarea" :activeNoteText="note" @editMode="editMode"></ViewTextarea>
             <div class="closeFullScreen" v-if="fullScreen" @click="fullScreen =false">

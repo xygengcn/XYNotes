@@ -23,6 +23,7 @@ export default {
     methods: {
         //双击编辑
         dblclick() {
+            console.log("编辑模式");
             this.$emit("editMode", 1);
         },
     },

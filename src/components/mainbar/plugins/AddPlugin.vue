@@ -59,7 +59,6 @@ export default {
     },
     methods: {
         addItem() {
-            console.log(this.plugin);
             this.isAddPluginDialog = false;
             this.$store.commit("ADD_PLUGIN", this.plugin);
             this.$store.dispatch("SAVE_DATA_ITEM", "plugins");

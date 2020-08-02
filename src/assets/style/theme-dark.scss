@@ -1,0 +1,157 @@
+//全局
+
+$dark-bg-color:#252526 !important;
+
+$dark-color:#858585 !important;
+
+$dark-theme-color:$theme-color !important;
+
+//侧栏菜单
+
+$dark-sidebar-bg-color:#333 !important;
+
+//主菜单
+
+$dark-mainbar-bg-color:#252526 !important;
+
+$dark-item-box-shadow:3px 4px 10px 0px #1f1f1f;
+
+$dark-item-border-color:#333 !important;
+
+$dark-item-title-color:#ccc !important;
+
+//主页面
+
+$dark-main-bg-color:#1E1E1E !important;
+
+
+.dark {
+    background-color: $dark-bg-color;
+    color: $dark-color;
+
+    #sidebar {
+        background-color: $dark-sidebar-bg-color;
+        border-color: $dark-sidebar-bg-color;
+
+        .sideBtn {
+            background-color: $dark-bg-color;
+            border-color: $dark-sidebar-bg-color;
+            color: $dark-color;
+
+            &:hover,
+            &.active {
+                color: $dark-theme-color;
+                border-color: $dark-theme-color;
+            }
+        }
+
+        .footer #console {
+            .el-drawer {
+                background-color: $dark-bg-color;
+                border-color: $dark-main-bg-color;
+
+                .el-drawer__body {
+                    background-color: $dark-main-bg-color;
+                    border-color: $dark-item-border-color;
+                }
+
+            }
+        }
+
+    }
+
+    #mainbarHome {
+        background-color: $dark-mainbar-bg-color;
+        border-color: $dark-mainbar-bg-color;
+
+        .ListView {
+
+            .SearchBar,
+            .ListHeader {
+                border-color: $dark-item-border-color;
+            }
+
+            .SearchBar input {
+                color: $dark-color;
+                border-color: $dark-item-border-color;
+            }
+        }
+
+        .main-wrap {
+            &>.header {
+                border-color: $dark-item-border-color;
+            }
+        }
+
+        .setting li {
+            border-color: $dark-item-border-color;
+        }
+
+        .item {
+            border-color: #333 #252526 !important;
+
+            &:hover,
+            &.itemActive {
+                border-color: $dark-theme-color;
+            }
+
+            .title {
+                color: $dark-item-title-color;
+            }
+
+            .itemTool {
+                color: $dark-bg-color;
+            }
+        }
+
+    }
+
+    #mainHome {
+        background-color: $dark-main-bg-color;
+
+        .navbar button {
+            background: $dark-sidebar-bg-color;
+            color: $dark-item-title-color;
+            border-color: $dark-main-bg-color;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        #EditTextarea input,
+        #EditTextarea,
+        #ViewTextarea,
+        .tag {
+            background-color: $dark-main-bg-color;
+            border-color: $dark-main-bg-color;
+            background-color: $dark-main-bg-color;
+        }
+
+        .EditArea,
+        .ViewArea {
+            color: $dark-item-title-color;
+            border-color: $dark-item-border-color;
+            background-color: $dark-main-bg-color;
+        }
+
+        #screenArea {
+            background-color: $dark-main-bg-color;
+        }
+    }
+
+    ::-webkit-scrollbar {
+
+        background-color: $dark-main-bg-color;
+
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: $dark-main-bg-color;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #151515;
+    }
+
+}

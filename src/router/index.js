@@ -74,7 +74,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const isMobie = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+    var isMobie = false;
+    if (document.body.clientWidth < 1024) {
+        isMobie = true;
+    }
     if (isMobie) {
         if (to.path.substring(0, 3) == '/m/' || to.path == "/m") {
             next();

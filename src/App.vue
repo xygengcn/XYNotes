@@ -17,8 +17,14 @@ export default {
         },
     },
     created() {
+        this.$store.commit("SET_LOADING_Tips", true, "正在加载插件");
         this.$store.dispatch("START_INIT");
-        this.$plugins.init(this.plugins);
+        console.debug("开始加载插件环境");
+        this.$plugins.init(this.plugins).then(() => {
+            this.$store.commit("SET_LOADING_Tips", false);
+            this.$plugins.hook("start");
+            console.success("插件成功加载完成");
+        });
     },
 };
 </script>

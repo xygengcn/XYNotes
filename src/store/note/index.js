@@ -26,6 +26,7 @@ export default {
         SET_NOTE_PASSWORD(state, password) {
             state.note.password = password;
             this.dispatch("SAVE_TO_LOCAL", state.note);
+            console.success("笔记《" + state.note.title + "》已修改密码");
         },
         //添加笔记
         ADD_NOTE(state) {
@@ -101,7 +102,6 @@ export default {
             }
         },
         ADD_NOTE_HISTORY(state, id) {
-
             state.history.push(id);
             state.history = Array.from(new Set(state.history));
         }
@@ -111,11 +111,13 @@ export default {
             content.commit("DELETE_NOTE", note);
             let configs = content.state.data.configs;
             storage.del(configs.isLocalStorage, configs.isWebStorage, note, content.state.data.notes);
+            console.success("笔记《" + note.title + "》删除成功");
         },
         SAVE_TO_LOCAL(content, note = content.state.note) {
             let configs = content.state.data.configs;
             content.commit("SET_NOTE_ALL");
             storage.save(configs.isLocalStorage, configs.isWebStorage, note, content.state.data.notes);
+            console.success("已自动保存笔记《" + note.title + "》");
         },
     }
 

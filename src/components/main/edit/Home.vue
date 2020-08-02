@@ -86,11 +86,6 @@ export default {
             if (this.$store.state.data.configs.isLocalStorage) {
                 this.$store.dispatch("SAVE_TO_LOCAL");
             }
-            console.log(
-                "自动保存成功———" +
-                    this.$utils.time(new Date(), "yyyy-MM-dd HH:mm:ss")
-            );
-
             /**
              * 自动保存Hook
              */
@@ -242,6 +237,13 @@ export default {
         height: 100%;
         padding-left: 50px;
         box-sizing: border-box;
+
+        .fullScreen & {
+            padding: 0px 50px;
+        }
+        .fullScreen.md & {
+            padding-left: 50px;
+        }
 
         /* 正文 */
         .EditArea {

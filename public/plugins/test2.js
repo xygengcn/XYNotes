@@ -8,13 +8,9 @@ $plugins.extend({
         }
     },
     pages: {
-        test: {
+        text: {
             name: "测试",
-            html: "<h2>测试页面</h2>"
-        },
-        test2: {
-            name: "测试2",
-            html: "<h2>测试页面2</h2>"
+            html: "<h3>都说测试了，还点进来</h3>"
         }
     },
     start(option) {

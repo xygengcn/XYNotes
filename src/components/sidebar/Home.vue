@@ -1,12 +1,15 @@
 <!-- 左侧菜单 -->
 <template>
     <div id="sidebar">
-        <router-link to="/" v-if="!isMoibe">
-            <div id="logo">
-                <img class="img" src="@/assets/logo.png" alt="logo" />
-            </div>
-        </router-link>
-        <div class="toolbar border">
+        <div class="logo" v-if="!isMobie">
+            <router-link to="/">
+                <div id="logo">
+                    <img class="img" src="@/assets/img/logo.png" alt="logo" />
+                </div>
+            </router-link>
+        </div>
+
+        <div class="toolbar">
             <router-link to="/">
                 <div class="sideBtn center" @click="addNote">
                     <i class="el-icon-edit-outline" aria-hidden="true"></i>
@@ -33,13 +36,38 @@
                 </div>
             </router-link>
         </div>
+        <div class="footer" v-if="!isMobie">
+            <div class="loading" v-if="loadingTips.status">
+                <el-tooltip class="item" effect="dark" :content="loadingTips.text" placement="top">
+                    <i class="el-icon-loading"></i>
+                </el-tooltip>
+            </div>
+            <div class="console">
+                <el-tooltip class="item" effect="dark" content="控制台" placement="top">
+                    <i class="el-icon-more" @click="isShow =true"></i>
+                </el-tooltip>
+                <console :isShow="isShow" @close="isShow =false"></console>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+import console from "./Console";
 export default {
+    components: {
+        console,
+    },
+    data() {
+        return {
+            isShow: false,
+        };
+    },
     computed: {
-        isMoibe() {
+        isMobie() {
             return this.$store.state.isMobie;
+        },
+        loadingTips() {
+            return this.$store.state.loadingTips;
         },
     },
     methods: {
@@ -52,6 +80,9 @@ export default {
 
 <style lang="scss" scoped>
 #sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 73px;
     height: 100%;
     position: relative;
@@ -61,7 +92,7 @@ export default {
     -webkit-app-region: drag;
     padding: 15px;
 
-    #logo {
+    .logo {
         width: 36px;
         height: 100px;
         text-align: center;
@@ -71,30 +102,55 @@ export default {
             font-size: 2em;
         }
     }
-
-    .sideBtn {
-        width: 36px;
-        height: 36px;
-        margin-bottom: 30px;
-        border-radius: 18px;
-        background-color: #fff;
-        color: $theme-color;
-        border: #eee 1px solid;
-        text-align: center;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        position: relative;
-
-        i {
+    .toolbar {
+        flex: 1;
+        .sideBtn {
+            width: 36px;
             height: 36px;
-            line-height: 36px;
-            font-size: 1.5em;
-        }
+            margin-bottom: 30px;
+            border-radius: 18px;
+            background-color: #fff;
+            color: $theme-color;
+            border: #eee 1px solid;
+            text-align: center;
+            cursor: pointer;
+            -webkit-app-region: no-drag;
+            position: relative;
 
-        &:hover,
-        &.active {
-            background-color: $theme-color;
-            color: #fff;
+            i {
+                height: 36px;
+                line-height: 36px;
+                font-size: 1.5em;
+            }
+
+            &:hover,
+            &.active {
+                background-color: $theme-color;
+                color: #fff;
+            }
+        }
+    }
+
+    .footer {
+        text-align: center;
+        .loading {
+            margin-bottom: 20px;
+            cursor: pointer;
+            i {
+                width: 36px;
+                height: 36px;
+                line-height: 36px;
+                font-size: 2em;
+            }
+        }
+        .console {
+            cursor: pointer;
+            i {
+                width: 36px;
+                height: 36px;
+                line-height: 36px;
+                font-size: 1.5em;
+            }
         }
     }
 }

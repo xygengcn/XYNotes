@@ -1,4 +1,4 @@
-var JSQL = function (dbName) {
+var JSQL = function(dbName) {
     this.dbName = dbName;
     this.storeName = "";
     this.v = 1;
@@ -65,11 +65,11 @@ var JSQL = function (dbName) {
                     result = store.add(data);
                 }
                 result.onsuccess = e => {
-                    console.log("添加数据成功");
+                    console.success("数据库新建并初始化成功");
                     resolve(e);
                 };
                 result.onerror = e => {
-                    console.log("添加数据失败");
+                    console.error("数据库添加数据失败");
                     reject(e);
                 };
             }
@@ -114,10 +114,10 @@ var JSQL = function (dbName) {
                 var request = db.transaction(this.storeName, "readonly").objectStore(this.storeName).index(index).get(value);
             else
                 var request = db.transaction(this.storeName, "readonly").objectStore(this.storeName).get(index);
-            request.onerror = function (e) {
+            request.onerror = function(e) {
                 reject(e);
             };
-            request.onsuccess = function (e) {
+            request.onsuccess = function(e) {
                 var result = e.target.result === undefined ? [] : e.target.result;
                 resolve(result);
             };
@@ -125,35 +125,35 @@ var JSQL = function (dbName) {
     }
     //删除
     this.delete = (index) => {
-        var db = this.db;
-        return new Promise((resolve, reject) => {
-            var result = db.transaction(this.storeName, "readwrite").objectStore(this.storeName).delete(index);
-            result.onsuccess = e => {
-                console.log("删除事务成功", e);
-                if (result.result) {
-                    resolve(result.result);
-                }
-            };
-            result.onerror = e => {
-                console.log("删除事务失败", e);
-                reject(e);
-            };
-        })
-    },
-    //删除数据库
-    this.deleteDB = () => {
-        return new Promise((resolve, reject) => {
-            var result = this.indexedDB.deleteDatabase(this.dbName); 
-            result.onsuccess = e => {
-                console.log("删除成功", e);
+            var db = this.db;
+            return new Promise((resolve, reject) => {
+                var result = db.transaction(this.storeName, "readwrite").objectStore(this.storeName).delete(index);
+                result.onsuccess = e => {
+                    console.success("删除事务成功", e);
+                    if (result.result) {
+                        resolve(result.result);
+                    }
+                };
+                result.onerror = e => {
+                    console.error("删除事务失败", e);
+                    reject(e);
+                };
+            })
+        },
+        //删除数据库
+        this.deleteDB = () => {
+            return new Promise((resolve, reject) => {
+                var result = this.indexedDB.deleteDatabase(this.dbName);
+                result.onsuccess = e => {
+                    console.success("数据库删除成功", e);
                     resolve(e);
-            };
-            result.onerror = e => {
-                console.log("删除失败", e);
-                reject(e);
-            };
-        })
-    }
+                };
+                result.onerror = e => {
+                    console.error("数据库删除失败", e);
+                    reject(e);
+                };
+            })
+        }
 
 
 }

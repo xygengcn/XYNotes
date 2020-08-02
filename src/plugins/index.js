@@ -1,8 +1,9 @@
 /**
  * xy笔记插件拓展
- * 需要将window.vue指向vue对象
  * 版本v2.0.0
  */
+import Vue from "vue";
+var vue = new Vue();
 var plugins = function() {
     this.options = {};
     this.localOptions = {};
@@ -73,29 +74,25 @@ var plugins = function() {
     //接口
     this.hook = (hook, args = []) => {
         let h = eval("plugins." + hook);
-        return new Promise((resolve, reject) => {
-            if (typeof h == "function") {
-                var funcArray = Object.getOwnPropertyNames(h.prototype);
-                var obj = new h(...args);
-                for (var funcName of funcArray) {
-                    if (!obj.hasOwnProperty(funcName) && funcName != "constructor") {
-                        let func = eval("obj." + funcName);
-                        if (typeof func == "function") {
-                            resolve(func.call(window.vue, this.options[funcName].options || {}, ...args));
-                        }
+        if (typeof h == "function") {
+            var funcArray = Object.getOwnPropertyNames(h.prototype);
+            var obj = new h(...args);
+            for (var funcName of funcArray) {
+                if (!obj.hasOwnProperty(funcName) && funcName != "constructor") {
+                    let func = eval("obj." + funcName);
+                    if (typeof func == "function") {
+                        func.call(vue, this.options[funcName].options || {}, ...args);
                     }
                 }
-            } else {
-                reject(hook + '生命周期不存在！');
-                console.error(hook + '生命周期不存在！');
             }
-        })
+        } else {
+            console.error("插件：" + hook + '生命周期不存在！');
+        }
     };
     //新插件插入
     this.extend = (plugin) => {
         if (plugin.id && typeof plugin.id == "string") {
             this.option(plugin);
-            //plugins[plugin.id] = plugin;
             var plugin_prototype = Object.getOwnPropertyNames(plugin);
             plugin_prototype.forEach(item => {
                 if (typeof plugin[item] == "function") {
@@ -103,31 +100,51 @@ var plugins = function() {
                     if (typeof h == "function") {
                         h.prototype[plugin.id] = plugin[item];
                     } else {
-                        console.log(item + '生命周期不存在！')
+                        console.error("插件：" + item + '生命周期不存在！')
                     }
                 }
             })
         } else {
-            console.error('没有命名插件')
+            console.error("插件：没有命名插件")
         }
     };
     //安装插件
     this.install = (plugin = {}) => {
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = plugin.url + "?v=" + plugin.version;
-        script.id = 'plugin-script-' + plugin.id;
-        script.dataset.name = plugin.name;
-        document.body.appendChild(script);
+        return new Promise(resolve => {
+            let script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.async = 'async';
+            script.src = plugin.url + "?v=" + plugin.version;
+            script.id = 'plugin-script-' + plugin.id;
+            script.dataset.name = plugin.name;
+            document.body.appendChild(script);
+            if (script.readyState) { //IE
+                script.onreadystatechange = function() {
+                    if (script.readyState == 'complete' || script.readyState == 'loaded') {
+                        script.onreadystatechange = null;
+                        resolve();
+                    }
+                }
+            } else { //非IE
+                script.onload = function() {
+                    resolve();
+                }
+            }
+        })
+
     };
     //初始化插件
     this.init = (array) => {
         this.localOption(array);
-        array.forEach(element => {
-            if (element.status) {
-                this.install(element);
-            }
-        });
+        return new Promise((resolve) => {
+            Promise.all(array.map((element) => {
+                if (element.status) {
+                    return this.install(element)
+                }
+            })).then(() => {
+                resolve();
+            })
+        })
     };
     //数据处理
     this.handle = (array = []) => {

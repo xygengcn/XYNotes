@@ -1,5 +1,5 @@
 <template>
-    <page :title="data.name || pageID" :icon="'el-icon-s-grid'" class="plugin">
+    <page v-if="data" :title="data.name || pageID" :icon="'el-icon-s-grid'" class="plugin">
         <div slot="body" v-html="html || data.html" class="body"></div>
     </page>
 </template>
@@ -17,15 +17,21 @@ export default {
             return this.$route.params.pageID;
         },
         data() {
-            return this.$plugins.options[this.$route.params.id]["pages"][
-                this.pageID
-            ];
+            let plugin = this.$plugins.options[this.$route.params.id] || {};
+            plugin["pages"] = plugin["pages"] || {};
+            return plugin["pages"][this.pageID];
         },
     },
     components: {
         page,
     },
     methods: {},
+    beforeCreate() {
+        if (!this.data) {
+            this.$router.push("/plugins");
+            return true;
+        }
+    },
     beforeMount() {
         this.$plugins.hook("enterPage", [
             (pageID, obj) => {

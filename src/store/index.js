@@ -16,11 +16,18 @@ export default new Vuex.Store({
         data: defaultData,
         note: defaultData.notes[0],
         isMobie: isMobie, //判断移动设备
-        loading: { //加载状态
+        //全屏加载状态
+        loading: {
             status: false,
             text: "拼命加载中"
         },
-        history: []
+        //异步加载状态
+        loadingTips: {
+            status: false,
+            text: "拼命加载中"
+        },
+        history: [], //浏览记录
+        logs: [] //日志
     },
     mutations: {
         ...note.mutations,
@@ -36,9 +43,26 @@ export default new Vuex.Store({
             state.loading.status = status;
             state.loading.text = text;
         },
+        //插件加载状态
+        SET_LOADING_Tips(state, status, text = "拼命加载中") {
+            state.loadingTips.status = status;
+            state.loadingTips.text = text;
+
+        },
         //设置排序
         SET_ORDER(state, order) {
             state.data.configs.sortKey = order;
+        },
+        ADD_LOGS(state, {
+            msg,
+            type
+        }) {
+            state.logs.unshift({
+                time: new Date().getTime(),
+                msg,
+                type
+            });
+
         }
 
     },
@@ -57,6 +81,7 @@ export default new Vuex.Store({
                 content.dispatch("SAVE_DATA_ITEM", "configs");
                 content.dispatch("SAVE_DATA_ITEM", "fonts");
                 content.commit('SET_LOADING', false);
+                console.success("数据恢复成功");
             });
         },
         //初始化操作
@@ -85,6 +110,7 @@ export default new Vuex.Store({
                             notes: res,
                             isfirst: true
                         });
+                        console.success("数据初始化成功");
                         resolve();
                     })
                 }
