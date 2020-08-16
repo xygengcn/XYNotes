@@ -14,7 +14,7 @@ if (document.body.clientWidth < 1024) {
 export default new Vuex.Store({
     state: {
         data: defaultData,
-        note: defaultData.notes[0],
+        note: null,
         isMobie: isMobie, //判断移动设备
         //全屏加载状态
         loading: {
@@ -26,8 +26,10 @@ export default new Vuex.Store({
             status: false,
             text: "拼命加载中"
         },
-        history: [], //浏览记录
-        logs: [] //日志
+        notesRead: [], //浏览记录
+        logs: [], //日志
+        notesBak: [], //备份初始化笔记,
+        notesDiff: [] //记录有变化的笔记
     },
     mutations: {
         ...note.mutations,
@@ -53,6 +55,7 @@ export default new Vuex.Store({
         SET_ORDER(state, order) {
             state.data.configs.sortKey = order;
         },
+        //添加日志
         ADD_LOGS(state, {
             msg,
             type
@@ -106,10 +109,7 @@ export default new Vuex.Store({
             return new Promise((resolve) => {
                 if (content.state.data.configs.isLocalStorage) {
                     storage.init(content.state.data.notes).then(res => {
-                        content.commit("SET_NOTE_ALL", {
-                            notes: res,
-                            isfirst: true
-                        });
+                        content.commit("SET_NOTE_ALL", res);
                         console.success("数据初始化成功");
                         resolve();
                     })

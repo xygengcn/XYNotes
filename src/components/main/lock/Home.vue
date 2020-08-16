@@ -23,7 +23,7 @@ export default {
     methods: {
         submitForm() {
             if (this.password == this.note.password) {
-                this.$store.commit("ADD_NOTE_HISTORY", this.note.nid);
+                this.$store.commit("ADD_NOTE_READ", this.note.nid);
                 this.$message({
                     message: "已解锁",
                     type: "success",

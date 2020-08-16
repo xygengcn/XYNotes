@@ -59,7 +59,7 @@ export default {
             return result;
         },
         history() {
-            return this.$store.state.history;
+            return this.$store.state.notesRead;
         },
         intro() {
             let isRead = this.history.find((item) => {

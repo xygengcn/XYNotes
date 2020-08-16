@@ -44,7 +44,7 @@ new Vue({
             console.oldLog(...arguments);
             store.commit("ADD_LOGS", {
                 msg: str,
-                type: "log"
+                type: "Log"
             });
         }
         console.info = function(str) {

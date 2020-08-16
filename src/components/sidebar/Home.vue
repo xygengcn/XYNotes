@@ -20,6 +20,13 @@
                     <i class="el-icon-s-order" aria-hidden="true"></i>
                 </div>
             </router-link>
+            <router-link to="/diff" v-if="!isMobie">
+                <div class="sideBtn" :class="{active:$route.path=='/diff'}">
+                    <el-badge :value="0" type="primary" :hidden="true">
+                        <i class="el-icon-document-copy" aria-hidden="true"></i>
+                    </el-badge>
+                </div>
+            </router-link>
             <router-link to="/mark">
                 <div class="sideBtn" :class="{active:$route.path=='/mark'|| $route.path=='/m/mark'}">
                     <i class="el-icon-star-on" aria-hidden="true"></i>
@@ -120,7 +127,8 @@ export default {
             i {
                 height: 36px;
                 line-height: 36px;
-                font-size: 1.5em;
+                font-size: 1.3em;
+                font-weight: 700;
             }
 
             &:hover,
@@ -153,5 +161,10 @@ export default {
             }
         }
     }
+}
+</style>
+<style lang="scss">
+.sidebar .el-badge__content {
+    border: none;
 }
 </style>

@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import FontDialog from "@/components/main/navbar/FontDialog";
-import screenShot from "@/components/main/navbar/ScreenShotDialog";
+import FontDialog from "@/components/main/main/navbar/FontDialog";
+import screenShot from "@/components/main/main/navbar/ScreenShotDialog";
 import html2canvas from "@/utils/html2canvas";
 export default {
     props: ["isFullScreen", "mode"],

@@ -13,9 +13,9 @@
     </div>
 </template>
 <script>
-import navbar from "@/components/main/navbar/Home";
-import EditTextarea from "@/components/main/edit/Home";
-import ViewTextarea from "@/components/main/view/Home";
+import navbar from "@/components/main/main/navbar/Home";
+import EditTextarea from "@/components/main/main/edit/Home";
+import ViewTextarea from "@/components/main/main/view/Home";
 export default {
     components: {
         navbar,
@@ -42,7 +42,7 @@ export default {
         },
     },
     mounted() {
-        this.$store.commit("ADD_NOTE_HISTORY", this.note.nid);
+        this.$store.commit("ADD_NOTE_READ", this.note.nid);
     },
 };
 </script>

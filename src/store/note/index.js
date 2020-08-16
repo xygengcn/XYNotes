@@ -79,10 +79,7 @@ export default {
             state.data = data;
         },
         //设置所有笔记
-        SET_NOTE_ALL(state, data = {
-            notes: state.data.notes,
-            isfirst: false
-        }) {
+        SET_NOTE_ALL(state, data = state.data.notes) {
             var sortkey = state.data.configs.sortKey
             //排序
             let compare = () => {
@@ -96,14 +93,11 @@ export default {
                     }
                 };
             };
-            state.data.notes = data.notes.sort(compare());
-            if (data.isfirst) {
-                this.commit("SET_NOTE_ACTIVE", state.data.notes[0])
-            }
+            state.data.notes = data.sort(compare());
         },
-        ADD_NOTE_HISTORY(state, id) {
-            state.history.push(id);
-            state.history = Array.from(new Set(state.history));
+        ADD_NOTE_READ(state, id) {
+            state.notesRead.push(id);
+            state.notesRead = Array.from(new Set(state.notesRead));
         }
     },
     actions: {
