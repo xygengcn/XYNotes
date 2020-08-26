@@ -1,6 +1,9 @@
 <template>
-    <page v-if="data" :title="data.name || pageID" :icon="'el-icon-s-grid'" class="plugin">
+    <page v-if="data" :title="data.name ||data.id" :icon="'el-icon-s-grid'" class="page">
         <div slot="body" v-html="html || data.html" class="body"></div>
+        <div slot="footer" class="footer">
+            <span @click="back()">返回列表</span>
+        </div>
     </page>
 </template>
 
@@ -13,24 +16,17 @@ export default {
         };
     },
     computed: {
-        pageID() {
-            return this.$route.params.pageID;
-        },
         data() {
-            let plugin = this.$plugins.options[this.$route.params.id] || {};
-            plugin["pages"] = plugin["pages"] || {};
-            return plugin["pages"][this.pageID];
+            return this.$store.state.plugins.page;
         },
     },
     components: {
         page,
     },
-    methods: {},
-    beforeCreate() {
-        if (!this.data) {
-            this.$router.push("/plugins");
-            return true;
-        }
+    methods: {
+        back() {
+            this.$store.commit("SET_PLUGINS_COMPONENT", "home");
+        },
     },
     beforeMount() {
         this.$plugins.hook("enterPage", [
@@ -49,8 +45,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.body {
-    width: 100%;
-    position: relative;
+.page {
+    .body {
+        width: 100%;
+        position: relative;
+    }
+    .footer {
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+    }
 }
 </style>

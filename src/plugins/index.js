@@ -3,8 +3,10 @@
  * 版本v2.0.0
  */
 import Vue from "vue";
+import store from "../store";
 var vue = new Vue();
 var plugins = function() {
+    this.pages = {};
     this.options = {};
     this.localOptions = {};
     //读取本地配置
@@ -31,7 +33,10 @@ var plugins = function() {
                     this.options[plugins.id]["options"][key].value = this.localOptions[plugins.id][key].value || plugins.options[key];
                 }
             }
-            this.options[plugins.id].pages = plugins.pages ? plugins.pages : {};
+            store.commit("ADD_PLUGINS_Page", {
+                id: plugins.id,
+                page: plugins.pages || {}
+            });
         }
         return this;
     };

@@ -1,71 +1,79 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-import plugins from "@/plugins/index.js";
+import plugins from "@/plugins/index.js"
 
 Vue.use(VueRouter)
 
 const routes = [{
         path: '/',
-        component: () => import('@/views/App'),
+        component: () => import('@/pages/desktop/'),
         children: [{
             path: '/',
-            component: () => import('@/components/mainbar/notes/Home')
+            name: "desktop-home",
+            component: () => import('@/components/mainbar/notes/')
+
         }, {
             path: 'note',
-            component: () => import('@/components/mainbar/notes/Home')
+            name: "desktop-note",
+            component: () => import('@/components/mainbar/notes/')
         }, {
             path: 'diff',
-            component: () => import('@/components/mainbar/diff/Home')
+            name: "desktop-diff",
+            component: () => import('@/components/mainbar/diff/')
         }, {
             path: 'mark',
-            component: () => import('@/components/mainbar/mark/Home')
+            name: "desktop-mark",
+            component: () => import('@/components/mainbar/mark/')
         }, {
             path: 'setting',
-            component: () => import('@/components/mainbar/setting/Home')
+            name: "desktop-setting",
+            component: () => import('@/components/mainbar/setting/')
         }, {
             path: 'about',
-            component: () => import('@/components/mainbar/setting/about/Home')
+            name: "desktop-about",
+            component: () => import('@/components/mainbar/setting/about/')
         }, {
             path: 'plugins',
-            component: () => import('@/components/mainbar/plugins/Home')
-        }, {
-            path: 'plugins/:id',
-            component: () => import('@/components/mainbar/plugins/Option')
-        }, {
-            path: 'plugins/:id/:pageID',
-            component: () => import('@/components/mainbar/plugins/Page')
+            name: "desktop-plugins",
+            component: () => import('@/components/mainbar/plugins/')
         }]
     },
     {
         path: '/m',
-        component: () => import('@/views/App'),
+        component: () => import('@/pages/mobie'),
         children: [{
-                path: '/',
-                component: () => import('@/components/mainbar/notes/Home')
-            }, {
                 path: 'note',
-                component: () => import('@/components/main/Home')
+                name: "mobie-note",
+                component: () => import('@/pages/mobie/note')
             },
             {
-                path: 'mark',
-                component: () => import('@/components/mainbar/mark/Home')
-            }, {
-                path: 'setting',
-                component: () => import('@/components/mainbar/setting/Home')
-            }, {
-                path: 'about',
-                component: () => import('@/components/mainbar/setting/about/Home')
-            }, {
-                path: 'plugins',
-                component: () => import('@/components/mainbar/plugins/Home')
-            }, {
-                path: 'plugins/:id',
-                component: () => import('@/components/mainbar/plugins/Option')
-            }, {
-                path: 'plugins/:id/:pageID',
-                component: () => import('@/components/mainbar/plugins/Page')
+                path: '/',
+                component: () => import('@/pages/mobie/page/'),
+                children: [{
+                        path: '/',
+                        name: "mobie-home",
+                        component: () => import('@/components/mainbar/notes/')
+                    }, {
+                        path: 'mark',
+                        name: "mobie-mark",
+                        component: () => import('@/components/mainbar/mark/')
+                    }, {
+                        path: 'setting',
+                        name: "mobie-setting",
+                        component: () => import('@/components/mainbar/setting/')
+                    },
+                    {
+                        path: 'about',
+                        name: "mobie-about",
+                        component: () => import('@/components/mainbar/setting/about/')
+                    }, {
+                        path: 'plugins',
+                        name: "mobie-plugins",
+                        component: () => import('@/components/mainbar/plugins/')
+                    }
+                ]
             }
+
         ]
     }
 ]
@@ -82,27 +90,22 @@ router.beforeEach((to, from, next) => {
         isMobie = true;
     }
     if (isMobie) {
-        if (to.path.substring(0, 3) == '/m/' || to.path == "/m") {
+        if (to.name.indexOf('desktop') == -1) {
             next();
         } else {
             next({
-                path: '/m' + to.fullPath
+                name: to.name.replace('desktop', 'mobie')
             });
         }
     } else {
-        if (to.path != "/m" && to.path.substring(0, 3) != '/m/') {
+        if (to.name.indexOf('mobie') == -1) {
             next();
         } else {
-            if (to.path == "/m" && to.path == "/m/") {
-                next({
-                    path: '/'
-                })
-            } else {
-                next({
-                    path: to.fullPath.substr(2, to.fullPath.length)
-                });
-            }
+            next({
+                name: to.name.replace('mobie', 'desktop')
+            });
         }
+
     }
     plugins.hook("beforeEach", [to, from]);
 

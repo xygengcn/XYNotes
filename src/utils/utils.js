@@ -162,6 +162,9 @@ utils.isMobie = function() {
 utils.reload = function() {
     window.location.reload(true);
 }
+utils.redirect = function(href = "/") {
+    window.location.href = href;
+}
 utils.versionCompare = function(a, b) {
     a = a.split(".");
     b = b.split(".");
@@ -180,6 +183,11 @@ utils.versionCompare = function(a, b) {
         }
         return false;
     }
+}
+utils.getKebabCase = (str) => {
+    return str.replace(/[A-Z]/g, function(i) {
+        return '-' + i.toLowerCase();
+    })
 }
 exports.install = function(Vue, opt) {
     Vue.prototype.$utils = utils;

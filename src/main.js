@@ -8,7 +8,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import "@/assets/style/master.css";
 import "@/assets/style/theme-dark.scss";
-import "@/assets/style/mobie.scss";
+//import "@/assets/style/mobie.scss";
 
 import plugins from "@/plugins/index.js";
 

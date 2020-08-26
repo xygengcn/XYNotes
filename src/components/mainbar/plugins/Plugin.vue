@@ -45,15 +45,8 @@ export default {
                     this.install(this.data);
                     break;
                 case "more":
-                    if (this.isMobie) {
-                        this.$router.push({
-                            path: `/m/plugins/${this.data.id}`,
-                        });
-                    } else {
-                        this.$router.push({
-                            path: `/plugins/${this.data.id}`,
-                        });
-                    }
+                    this.$store.commit("SET_PLUGIN", this.data);
+                    this.$store.commit("SET_PLUGINS_COMPONENT", "options");
                     break;
                 case "to":
                     this.to(command.params);
@@ -74,7 +67,7 @@ export default {
             })
                 .then(() => {
                     this.$store.dispatch("PLUGIN_INSTALL_UNSTALL", plugin);
-                    this.$utils.reload();
+                    this.$utils.redirect();
                 })
                 .catch(() => {
                     this.$message({
@@ -90,15 +83,11 @@ export default {
             return true;
         },
         to(name) {
-            if (this.isMobie) {
-                this.$router.push({
-                    path: `/m/plugins/${this.data.id}/${name}`,
-                });
-            } else {
-                this.$router.push({
-                    path: `/plugins/${this.data.id}/${name}`,
-                });
-            }
+            this.$store.commit("SET_PLUGINS_PAGE", {
+                id: name,
+                ...this.pages[name],
+            });
+            this.$store.commit("SET_PLUGINS_COMPONENT", "page");
         },
     },
     computed: {
@@ -106,8 +95,7 @@ export default {
             return this.$store.state.isMobie;
         },
         pages() {
-            let plugin = this.$plugins.options[this.data.id] || {};
-            return plugin.pages || {};
+            return this.$store.state.plugins.pages[this.data.id] || {};
         },
     },
 };
@@ -118,7 +106,7 @@ export default {
     box-sizing: border-box;
     padding: 15px 24px;
     border: 1px solid transparent;
-    border-bottom: 1px solid #d9d9d9;
+    border-bottom: $border-default;
     position: relative;
     color: #333;
     cursor: pointer;

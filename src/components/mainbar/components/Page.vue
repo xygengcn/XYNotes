@@ -1,7 +1,7 @@
 <!-- 中间栏模板 -->
 <template>
-    <div class="main-wrap">
-        <div class="header">
+    <div class="mainbar-page">
+        <div class="mainbar-page-header">
             <div class="left">
                 <i :class="icon"></i><span>{{ title }}</span>
             </div>
@@ -9,8 +9,13 @@
                 <slot name="header-right"></slot>
             </div>
         </div>
-        <div class="main-wrap-container">
-            <slot name="body"></slot>
+        <div class="mainbar-page-container">
+            <div class="mainbar-page-container-body">
+                <slot name="body"></slot>
+            </div>
+        </div>
+        <div class="mainbar-page-footer">
+            <slot name="footer"></slot>
         </div>
     </div>
 </template>
@@ -20,14 +25,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.main-wrap {
+.mainbar-page {
     color: #878787;
     display: flex;
     flex-direction: column;
     height: 100%;
     box-sizing: border-box;
 
-    .header {
+    .mainbar-page-header {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -36,7 +41,7 @@ export default {
         line-height: 60px;
         color: #878787;
         box-sizing: border-box;
-        border-bottom: 1px solid #ccc;
+        border-bottom: $border-default;
         .left i {
             margin-right: 10px;
             color: #878787;
@@ -47,12 +52,19 @@ export default {
             font-size: 18px;
         }
     }
-    .main-wrap-container {
+    .mainbar-page-container {
+        flex: 1;
         height: 100%;
         box-sizing: border-box;
-        overflow: auto;
-        padding-bottom: 60px;
+        padding-bottom: 50px;
         position: relative;
+        .mainbar-page-container-body {
+            height: 100%;
+            overflow: auto;
+        }
+    }
+    .main-page-footer {
+        height: 50px;
     }
 }
 </style>

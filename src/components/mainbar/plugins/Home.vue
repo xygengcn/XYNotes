@@ -1,3 +1,4 @@
+<!-- 插件列表 -->
 <template>
     <div id="plugins">
         <page :title="'插件库'" :icon="'el-icon-s-grid'">
@@ -16,7 +17,7 @@
 
 <script>
 import page from "@/components/mainbar/components/Page";
-import plugin from "@/components/mainbar/plugins/Plugin";
+import plugin from "@/components/mainbar/plugins/plugin";
 import addPlugin from "@/components/mainbar/plugins/AddPlugin";
 export default {
     components: {

@@ -8,11 +8,10 @@
         "author": "xygengcn",
         "store": "web",
         "version": "1.0.0",
-        "url": "./plugins/test2.js",
+        "url": "./plugins/test.js",
         "status": false,
         "intro": "xy笔记测试插件库专用第一款插件，功能暂时为打开问候语，未来会开放更多权限开发插件，完成笔记本更多功能。",
-        "options": {},
-        "pages": {}
+        "options": null
     }],
     "configs": {
         "isLocalStorage": true,
@@ -25,8 +24,18 @@
         }
     },
     "fonts": {
-        "size": "14",
-        "lineHeight": "1.5"
+        "title": {
+            "fontSize": "28",
+            "fontWeight": "normal",
+            "color": "#2dbe60"
+        },
+        "content": {
+            "fontSize": "14",
+            "fontWeight": "normal",
+            "lineHeight": "1.5",
+            "color": "#383838",
+            "textAlign": "inherit"
+        }
     },
     "notes": [{
             "nid": 1574844708303,

@@ -1,10 +1,16 @@
 <template>
-    <div id="app" :class="{'mobie':isMobie,'dark':isDark}">
+    <div id="app" :class="{'dark':isDark}" v-loading="loading.status" :element-loading-text="loading.text" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <router-view></router-view>
     </div>
 </template>
 <script>
+import { Loading } from "element-ui";
 export default {
+    data() {
+        return {
+            isLoading: false,
+        };
+    },
     computed: {
         isMobie() {
             return this.$store.state.isMobie;
@@ -14,6 +20,9 @@ export default {
         },
         plugins() {
             return this.$store.state.data.plugins;
+        },
+        loading() {
+            return this.$store.state.loading;
         },
     },
     created() {

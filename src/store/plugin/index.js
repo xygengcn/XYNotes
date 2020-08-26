@@ -1,10 +1,15 @@
 export default {
     mutations: {
+        //设置页面
+        SET_PLUGINS_COMPONENT(state, component) {
+            state.plugins.component = component
+        },
         //添加插件
         ADD_PLUGIN(state, plugin) {
             state.data.plugins.push(plugin);
             this.dispatch("SAVE_DATA_ITEM", "plugins");
         },
+        //安装
         SET_PLUGIN_STATUS(state, plugin) {
             plugin.status = !plugin.status;
         },
@@ -19,10 +24,27 @@ export default {
             localStorage.setItem("XYNOTESPLUGINS", JSON.stringify(state.data.plugins));
             console.success("已成功删除插件：" + plugin.id);
         },
+        //保存配置
         SET_PLUGINS(state) {
             let plugins = JSON.parse(localStorage.getItem("XYNOTESPLUGINS")) || [];
             plugins = plugins.concat(state.data.plugins);
             state.data.plugins = $plugins.handle(plugins);
+        },
+        //当前编辑插件
+        SET_PLUGIN(state, plugin) {
+            state.plugins.plugin = plugin;
+
+        },
+        //进入页面
+        SET_PLUGINS_PAGE(state, page) {
+            state.plugins.page = page;
+        },
+        //页面加入缓存
+        ADD_PLUGINS_Page(state, {
+            id,
+            page
+        }) {
+            state.plugins.pages[id] = page;
         }
     },
     actions: {
