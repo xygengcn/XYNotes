@@ -2,6 +2,8 @@
 
 XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。
 
+有什么问题可以[点击链接加入群聊【XY可解方程】](https://jq.qq.com/?_wv=1027&k=WNQ1ZfmQ)
+
 网站使用：https://notes.xygeng.cn/#/
 
 ## 功能：
