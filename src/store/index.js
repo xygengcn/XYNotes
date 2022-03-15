@@ -30,7 +30,6 @@ export default new Vuex.Store({
         notesRead: [], //浏览记录
         logs: [], //日志
         notesBak: [], //备份初始化笔记,
-        notesDiff: [], //记录有变化的笔记
         plugins: {
             component: "home",
             plugin: {},

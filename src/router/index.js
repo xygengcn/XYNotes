@@ -17,10 +17,6 @@ const routes = [{
             name: "desktop-note",
             component: () => import('@/components/mainbar/notes/')
         }, {
-            path: 'diff',
-            name: "desktop-diff",
-            component: () => import('@/components/mainbar/diff/')
-        }, {
             path: 'mark',
             name: "desktop-mark",
             component: () => import('@/components/mainbar/mark/')

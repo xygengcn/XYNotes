@@ -28,11 +28,6 @@ export default {
                     icon: "el-icon-s-order",
                 },
                 {
-                    path: "/diff",
-                    name: "desktop-diff",
-                    icon: "el-icon-document-copy",
-                },
-                {
                     path: "/mark",
                     name: "desktop-mark",
                     icon: "el-icon-star-on",
