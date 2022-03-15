@@ -13,7 +13,7 @@
     </page>
 </template>
 <script>
-import page from "@/components/mainbar/components/Page";
+import page from "@/components/mainbar/components/page";
 import text from "@/components/mainbar/setting/about/updata.js";
 import markdown from "@/utils/markdown/markdown";
 export default {

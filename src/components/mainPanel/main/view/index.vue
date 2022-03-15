@@ -98,6 +98,8 @@ export default {
                 line-height: 1.5em;
                 padding: 15px 0px 50px 0px;
                 overflow: auto;
+
+                
             }
         }
     }

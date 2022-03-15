@@ -10,8 +10,8 @@
     </page>
 </template>
 <script>
-import page from "@/components/mainbar/components/Page";
-import Note from "@/components/mainbar/components/Note";
+import page from "@/components/mainbar/components/page";
+import Note from "@/components/mainbar/components/note";
 export default {
     components: {
         Note,

@@ -40,8 +40,8 @@ export default {
     }
     .dialog-body {
         max-height: 40vh;
-        overflow: hidden;
         border: 1px solid $theme-color;
+        overflow: auto;
         .downloadImg {
             width: 100%;
             margin: 0px auto;

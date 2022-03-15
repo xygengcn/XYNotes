@@ -3,16 +3,16 @@
     <div id="sidebar">
         <logo class="logo"></logo>
         <sidebar-list class="sidebar-list" :data="menu"></sidebar-list>
-        <console class="console"></console>
+        <console-panel class="console"></console-panel>
     </div>
 </template>
 
 <script>
 import logo from "@/components/sidebar/logo";
 import sidebarList from "@/components/sidebar/sidebar-list";
-import console from "@/components/sidebar/console";
+import consolePanel from "@/components/sidebar/panel";
 export default {
-    components: { sidebarList, logo, console },
+    components: { sidebarList, logo,consolePanel },
     data() {
         return {
             menu: [

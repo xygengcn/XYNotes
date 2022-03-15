@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import page from "@/components/mainbar/components/Page";
+import page from "@/components/mainbar/components/page";
 export default {
     components: {
         page,

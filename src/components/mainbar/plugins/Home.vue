@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import page from "@/components/mainbar/components/Page";
+import page from "@/components/mainbar/components/page";
 import plugin from "@/components/mainbar/plugins/plugin";
-import addPlugin from "@/components/mainbar/plugins/AddPlugin";
+import addPlugin from "@/components/mainbar/plugins/addPlugin";
 export default {
     components: {
         page,
