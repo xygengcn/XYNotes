@@ -1,0 +1,36 @@
+.note-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &-header {
+    text-align: center;
+    font-size: 12px;
+    color: #878787;
+    padding: 20px 0px;
+  }
+  &-title {
+    margin-bottom: 10px;
+    position: relative;
+    .input {
+      font-size: 1.75em;
+      font-weight: 600;
+      padding-bottom: 0.3em;
+      border-bottom: 0.5px solid #eaecef;
+      position: relative;
+      &::after {
+        content: '标题';
+        position: absolute;
+        font-size: 0.5rem;
+        font-weight: normal;
+        color: rgba(88, 96, 105, 0.36);
+        right: 0px;
+        top: 0;
+      }
+    }
+  }
+  &-content {
+    flex: 1;
+    overflow: hidden;
+  }
+}

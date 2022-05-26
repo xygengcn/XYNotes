@@ -1,0 +1,19 @@
+@import '@/components/common/icon/index.scss';
+.icon-nav-menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: #fff;
+  border: var(--border-default-size) solid var(--border-default-color);
+  border-radius: 50%;
+  cursor: pointer;
+  color: #515151;
+  &.active,
+  &:hover {
+    background-color: var(--theme-default-color);
+    border-color: var(--theme-default-color);
+    color: #fff;
+  }
+}

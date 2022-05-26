@@ -1,63 +1,13 @@
-{
-    "status": "success",
-    "user": "xygengcn",
-    "version": "1.2.0",
-    "plugins": [{
-        "id": "test",
-        "name": "测试",
-        "author": "xygengcn",
-        "store": "web",
-        "version": "1.0.0",
-        "url": "./plugins/test.js",
-        "status": false,
-        "intro": "xy笔记测试插件库专用第一款插件，功能暂时为打开问候语，未来会开放更多权限开发插件，完成笔记本更多功能。",
-        "options": null
-    }],
-    "configs": {
-        "isLocalStorage": true,
-        "isWebStorage": false,
-        "isDark": false,
-        "sortKey": {
-            "key": "updated",
-            "order": "desc",
-            "value": "更新时间（最晚优先）"
-        }
-    },
-    "fonts": {
-        "title": {
-            "fontSize": "28",
-            "fontWeight": "normal",
-            "color": "#2dbe60"
-        },
-        "content": {
-            "fontSize": "14",
-            "fontWeight": "normal",
-            "lineHeight": "1.5",
-            "color": "#383838",
-            "textAlign": "inherit"
-        }
-    },
-    "notes": [{
-            "nid": 1574844708303,
-            "title": "XY笔记本",
-            "text": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。",
-            "html": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，默认支持markdown语法，存储本地隐私安全，支持截图分享等。",
-            "share": false,
-            "mark": false,
-            "reminded": "",
-            "created": 1574844788303,
-            "updated": 1574844708302
-        },
-        {
-            "nid": 1574844708310,
-            "title": "示例",
-            "text": "这里也有一些内容在这里呢!",
-            "html": "这里也有一些内容在这里呢!",
-            "mark": true,
-            "share": false,
-            "reminded": "",
-            "created": 1574848708310,
-            "updated": 1574844708302
-        }
-    ]
-}
+[
+  {
+    "nid": "b1abcdbc-4142-420b-b24b-2676d8ddc799",
+    "title": "XY笔记3.0",
+    "text": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，数据存储本地浏览器不上传网络，默认支持markdown语法，支持图标数学等语法，支持即时渲染，支持截图分享等。\n\n> 旧版提示：旧版数据迁移到3.0版本，进去[2.0版本](https://notes.xygeng.cn/v2)，点击设置，点击数据升级，确认。\n",
+    "updatedAt": 1653485793275,
+    "intro": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，数据存储本地浏览器",
+    "createdAt": 1653408879707,
+    "status": 1,
+    "author": "",
+    "origin": ""
+  }
+]

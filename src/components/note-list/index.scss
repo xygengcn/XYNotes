@@ -1,0 +1,10 @@
+.note-list {
+  height: 100%;
+  overflow: auto;
+  padding: 10px;
+  &-content {
+    & > div {
+      content-visibility: auto;
+    }
+  }
+}

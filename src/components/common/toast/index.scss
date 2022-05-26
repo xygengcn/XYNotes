@@ -1,0 +1,19 @@
+.toast {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  max-width: 200px;
+  padding: 10px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+  opacity: 0.9;
+  text-align: justify;
+  word-break: break-all;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,25 @@
+{
+  "vetur.validation.template": false,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescriptreact", "vue", "typescript"],
+  "eslint.format.enable": true,
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "eslint.autoFixOnSave": true
+  },
+  "eslint.workingDirectories": [
+    ".eslintrc.js",
+    {
+      "mode": "auto"
+    }
+  ]
+}

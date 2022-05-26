@@ -1,0 +1,31 @@
+@import './animation.scss';
+
+:root {
+  // 笔记风格
+  --note-item-hover-color: rgb(245, 245, 245);
+  --note-item-active-color: #eee;
+
+  // 边框
+  --border-default-color: #eee;
+
+  // 边框大小
+  --border-default-size: 0.5px;
+
+  // 字体
+  --font-default-color: #878787;
+
+  // 主题
+  --theme-default-color: #515151;
+
+  // light
+  --theme-light-color: #878787;
+
+  // 移动端图标
+  --mobile-icon-color: #f3bb41;
+}
+
+// 移动端
+.mobile {
+  --note-item-hover-color: white;
+  --note-item-active-color: white;
+}

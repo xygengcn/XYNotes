@@ -1,0 +1,16 @@
+// 省略
+@mixin line($num) {
+  @if ($num==1) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+  } @else {
+    -webkit-line-clamp: $num;
+    display: -webkit-box;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+  }
+}

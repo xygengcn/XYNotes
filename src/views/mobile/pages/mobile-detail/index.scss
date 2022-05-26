@@ -1,0 +1,38 @@
+.mobile-detail {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &-content {
+    flex: 1;
+    overflow: hidden;
+    padding: 0px 5px;
+    .note-editor-header {
+      padding: 10px 0px;
+    }
+    .note-editor-title {
+      margin-bottom: 5px;
+      .input {
+        font-size: 1.2em;
+      }
+    }
+  }
+  &-footer {
+    height: 60px;
+    display: flex;
+    &-list {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      &-item {
+        min-width: 80px;
+        display: flex;
+        justify-content: center;
+        color: var(--mobile-icon-color);
+      }
+    }
+  }
+}

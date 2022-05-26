@@ -1,0 +1,22 @@
+.desktop-side-container-list-search {
+  height: 60px;
+  padding: 10px 20px;
+  display: inline-flex;
+  width: 100%;
+  border-bottom: var(--border-default-size) solid var(--border-default-color);
+  input {
+    height: 36px;
+    line-height: 36px;
+    padding: 0px 10px;
+    border-radius: 18px;
+    flex: 1;
+    border: var(--border-default-size) solid var(--border-default-color);
+    &:focus {
+      outline: none;
+      border: var(--border-default-size) solid var(--border-default-color);
+    }
+    &::-webkit-input-placeholder {
+      color: var(--font-default-color);
+    }
+  }
+}
