@@ -10,9 +10,14 @@ export * from './lib';
 interface EditorProps {
   value?: string;
   type?: 'editor' | 'preview';
+  // 文本发生变化
   onchange?: (value: string) => void;
+  // 开始创建
   onCreated?: (controller: EditorController) => void;
-  onMounted?: (controller: EditorController) => void; // 等after
+  // 挂在结束
+  onMounted?: (controller: EditorController) => void;
+  // 字数发生变化
+  onCounter?: (length: number) => void;
 }
 @Component({
   name: 'Editor',
@@ -93,11 +98,14 @@ export default class Editor extends VueComponent<EditorProps> {
         },
         onCreated: (controler) => {
           this.editorLoading = true;
-          this.$emit('Created', controler);
+          this.$emit('created', controler);
         },
         onMounted: (controler) => {
           this.editorLoading = false;
-          this.$emit('Mounted', controler);
+          this.$emit('mounted', controler);
+        },
+        onCounter: (count) => {
+          this.$emit('counter', count);
         },
       });
     }

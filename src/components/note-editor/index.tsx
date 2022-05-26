@@ -22,6 +22,11 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
   @Ref() private readonly titleRef!: HTMLDivElement;
 
   /**
+   * 字数
+   */
+  private textLength: number = 0;
+
+  /**
    * 最大长度
    */
 
@@ -83,6 +88,7 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
       <div class="note-editor">
         <div class="note-editor-header">
           <span class="note-editor-header__time">{TimeFormat(this.note.updatedAt, 'yyyy年MM月dd HH:mm')}</span>
+          {!!this.textLength && <span class="note-editor-header__count">统计: {this.textLength}</span>}
         </div>
         <div class="note-editor-title" ref="titleRef" style={this.style}>
           <div class="note-editor-title-content" style={{ maxWidth: NoteEditor.maxWidth + 'px' }}>
@@ -90,7 +96,14 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
           </div>
         </div>
         <div class="note-editor-content">
-          <Editor value={this.note?.text || ''} ref="editor" onchange={this.handleChangeValue} />
+          <Editor
+            value={this.note?.text || ''}
+            ref="editor"
+            onchange={this.handleChangeValue}
+            onCounter={(count) => {
+              this.textLength = count;
+            }}
+          />
         </div>
       </div>
     );

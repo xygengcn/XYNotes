@@ -8,10 +8,20 @@ export interface EditorControllerOptions extends IOptions {
     pin?: boolean;
     disable?: boolean;
   };
+  // 文本变化
   onChange?: (value: string) => void;
+
+  // 开始创建
   onCreated?: (controller: EditorController) => void;
-  onMounted?: (controller: EditorController) => void; // 等同after
-  onUpdated?: (controller: EditorController, mutation: MutationRecord) => void; // 编辑器内部dom发生改变
+
+  // 等同after
+  onMounted?: (controller: EditorController) => void;
+
+  // 编辑器内部dom发生改变
+  onUpdated?: (controller: EditorController, mutation: MutationRecord) => void;
+
+  // 字数发生变化
+  onCounter?: (length: number) => void;
 }
 
 export class EditorController extends Vditor {
@@ -31,6 +41,13 @@ export class EditorController extends Vditor {
   constructor(el: string | HTMLDivElement, options: EditorControllerOptions) {
     super(el, {
       ...options,
+      // 字数
+      counter: {
+        enable: !!options.onCounter,
+        after(count) {
+          options.onCounter?.(count);
+        },
+      },
       input: (value: string) => {
         options.input?.(value);
         this.onChange(value, options);
