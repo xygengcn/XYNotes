@@ -14,7 +14,7 @@ export interface EditorControllerOptions extends IOptions {
   onUpdated?: (controller: EditorController, mutation: MutationRecord) => void; // 编辑器内部dom发生改变
 }
 
-export default class EditorController extends Vditor {
+export class EditorController extends Vditor {
   // 输入计时器
   private inputToChangeTimeOut: number | null = null;
 
@@ -28,7 +28,7 @@ export default class EditorController extends Vditor {
   public isMounted = false;
 
   // 初始化
-  constructor(el: string, options: EditorControllerOptions) {
+  constructor(el: string | HTMLDivElement, options: EditorControllerOptions) {
     super(el, {
       ...options,
       input: (value: string) => {
@@ -107,14 +107,14 @@ export default class EditorController extends Vditor {
    * 节点更新
    * @param options
    */
-  private onUpdated(el: string, options: EditorControllerOptions): void {
+  private onUpdated(el: string | HTMLDivElement, options: EditorControllerOptions): void {
     if (options.onUpdated) {
       this.editorObserver = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           options.onUpdated?.(this, mutation);
         });
       });
-      const dom = document.getElementById(el);
+      const dom = typeof el === 'string' ? document.getElementById(el) : el;
       dom &&
         this.editorObserver.observe(dom, {
           attributes: true,

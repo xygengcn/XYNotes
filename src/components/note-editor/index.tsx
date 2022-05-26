@@ -1,5 +1,4 @@
-import Editor from '@/components/common/editor';
-import EditorController from '@/services/editor';
+import Editor, { EditorController } from '@/components/common/editor';
 import { Note } from '@/services/note';
 import { VueComponent } from '@/shims-vue';
 import { getDeviceType, TimeFormat } from 'js-lark';

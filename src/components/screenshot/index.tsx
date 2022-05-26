@@ -1,4 +1,3 @@
-import EditorController from '@/services/editor';
 import { Note } from '@/services/note';
 import { VueComponent } from '@/shims-vue';
 import { VNode } from 'vue';
@@ -10,6 +9,7 @@ import Dialog from '../common/dialog';
 import { downloadFile } from '@/utils/file';
 import { copyText } from '@/utils';
 import Toast from '../common/toast';
+import Editor from '../common/editor';
 
 interface IScreenshotProps {
   width?: string;
@@ -21,16 +21,31 @@ interface IScreenshotProps {
   name: 'Screenshot',
 })
 export class Screenshot extends VueComponent<IScreenshotProps> {
+  /**
+   * 菜单
+   */
   @Prop({ default: () => ['md', 'image', 'copyText', 'copyImage'] })
   private readonly menu!: string[];
+
+  /**
+   * 长宽
+   */
   @Prop({ default: '65%' }) private readonly width!: string;
   @Prop({ default: '80%' }) private readonly height!: string;
-  @Ref() private readonly refScreenshotPreview!: HTMLDivElement;
+
+  /**
+   * 编辑器
+   */
+  @Ref() private readonly refScreenshotPreview!: Editor;
+
+  /**
+   * 弹窗
+   */
   @Ref() private readonly refDialog!: Dialog;
   /**
    * 当前笔记
    */
-  private note!: Note | null;
+  private note: Note | null = null;
 
   /**
    * 加载
@@ -42,34 +57,8 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
    * @param note
    */
   public show(note: Note): void {
-    this.refDialog.show();
     this.note = note;
-    this.loading = true;
-    this.$nextTick(() => {
-      const dom = document.querySelector('#screenshotPreview') as HTMLDivElement;
-      if (dom) {
-        EditorController.preview(dom, this.note?.text || '', {
-          mode: 'dark',
-          hljs: {
-            style: 'native',
-          },
-          after: () => {
-            this.loading = false;
-          },
-        });
-      } else {
-        this.close();
-      }
-    });
-  }
-
-  /**
-   * 关闭
-   */
-  private close(): void {
-    this.note = null;
-    this.loading = false;
-    this.refDialog.close();
+    this.refDialog.show();
   }
 
   /**
@@ -78,7 +67,7 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
   private handleClickScreenshot(): Promise<any> {
     this.loading = true;
     // 生成截图
-    return screenshot(this.refScreenshotPreview, this.note?.title).then(() => {
+    return screenshot(this.refScreenshotPreview.editorContent, this.note?.title).then(() => {
       this.loading = false;
     });
   }
@@ -90,7 +79,7 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
   private handleClickCopyImage() {
     this.loading = true;
     // 生成截图
-    return screenshotCopy(this.refScreenshotPreview).then(() => {
+    return screenshotCopy(this.refScreenshotPreview.editorContent).then(() => {
       this.loading = false;
     });
   }
@@ -118,7 +107,7 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
             <span>{this.note?.title}</span>
           </div>
           <div class="screenshot-content-preview">
-            <div id="screenshotPreview" ref="refScreenshotPreview"></div>
+            <Editor ref="refScreenshotPreview" value={this.note?.text || ''} type="preview" />
           </div>
           <div class="screenshot-content-bottom">
             {this.menu.includes('md') && (

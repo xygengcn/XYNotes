@@ -5,10 +5,8 @@
   overflow: overlay;
   &-content {
     width: 100%;
-    height: 100%;
     overflow: auto;
     border: none;
-
     // vditor样式修改
     &.vditor {
       border: none;
