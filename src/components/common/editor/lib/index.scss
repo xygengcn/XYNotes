@@ -1,9 +1,16 @@
 .vditor {
+  &-ir {
+    // 链接
+    &__link {
+      color: #007aff;
+    }
+  }
   &-task {
-    input[type="checkbox"] {
+    // 修改单选框
+    input[type='checkbox'] {
       -webkit-appearance: none;
       outline: none;
-      font-family: "iconfont" !important;
+      font-family: 'iconfont' !important;
       font-size: 16px;
       font-style: normal;
       -webkit-font-smoothing: antialiased;
@@ -12,14 +19,14 @@
       margin: 0 0.2em 0.25em -2em;
 
       &::before {
-        content: "\e8bb";
+        content: '\e8bb';
         font-size: 20px;
         position: relative;
         right: -0.25em;
         color: rgb(190, 190, 190);
       }
       &:checked::before {
-        content: "\e607";
+        content: '\e607';
         font-size: 20px;
         position: relative;
         right: -0.25em;

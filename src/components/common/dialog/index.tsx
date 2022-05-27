@@ -6,6 +6,7 @@ import './index.scss';
 interface IDailogProps {
   width?: string;
   height?: string;
+  onclose?: () => void;
 }
 
 @Component

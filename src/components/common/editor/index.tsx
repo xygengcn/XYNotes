@@ -36,7 +36,7 @@ export default class Editor extends VueComponent<EditorProps> {
   @Watch('value', { immediate: true })
   watchValuePreview() {
     // 预览
-    if (this.type === 'preview') {
+    if (this.type === 'preview' && this.editorContent) {
       EditorController.preview(this.editorContent, this.value || '', {
         mode: 'dark',
         hljs: {

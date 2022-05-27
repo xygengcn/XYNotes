@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 1498139 */
-  src: url('iconfont.woff2?t=1653476141911') format('woff2'),
-       url('iconfont.woff?t=1653476141911') format('woff'),
-       url('iconfont.ttf?t=1653476141911') format('truetype');
+  src: url('iconfont.woff2?t=1653579076811') format('woff2'),
+       url('iconfont.woff?t=1653579076811') format('woff'),
+       url('iconfont.ttf?t=1653579076811') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,26 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.note-nav-share:before {
+  content: "\e618";
+}
+
+.note-nav-branch:before {
+  content: "\e60c";
+}
+
+.note-tip-error:before {
+  content: "\e609";
+}
+
+.note-tip-warn:before {
+  content: "\e60a";
+}
+
+.note-tip-success:before {
+  content: "\e60b";
 }
 
 .note-mobile-add:before {
@@ -23,10 +43,6 @@
 
 .note-todo-check:before {
   content: "\e8bb";
-}
-
-.note-nav-share:before {
-  content: "\e660";
 }
 
 .note-nav-delete:before {

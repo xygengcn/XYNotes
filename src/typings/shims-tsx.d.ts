@@ -1,6 +1,12 @@
 import Vue, { VNode } from 'vue';
-
+import Confirm from '@/components/common/comfirm';
 declare global {
+  interface Window {
+    $ui: {
+      toast: Toast;
+      confirm: typeof Confirm;
+    };
+  }
   namespace JSX {
     interface Element extends VNode {}
 

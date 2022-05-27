@@ -11,7 +11,7 @@ interface IIconProps {
 @Component
 export default class Icon extends VueComponent<IIconProps> {
   @Prop() private readonly type!: string;
-  @Prop({ default: 16, type: Number || String }) private readonly size!: number;
+  @Prop({ default: 16 }) private readonly size!: number | string;
 
   /**
    * 大小

@@ -64,6 +64,9 @@ export const useNotesStore = defineStore('notes', {
         return result;
       });
     },
+    saveNoteListToDatabse(notes: INote[]) {
+      return apiEvent.apiSaveOrUpdateNotes(notes);
+    },
     /**
      * 同步笔记列表
      * @returns
@@ -74,6 +77,7 @@ export const useNotesStore = defineStore('notes', {
           return this.setNoteList(list);
         }
         this.setNoteList(defaultJson);
+        this.saveNoteListToDatabse(defaultJson);
       });
     },
   },

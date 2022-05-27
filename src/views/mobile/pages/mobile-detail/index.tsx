@@ -36,9 +36,17 @@ export default class MobileDetail extends VueComponent<IMobileHomeProps> {
    * 删除
    */
   private handleClickDelete() {
-    const store = useNotesStore();
-    this.note && store.deleteNote(this.note);
-    this.$router.back();
+    window.$ui.confirm({
+      type: 'warn',
+      width: 250,
+      content: '确定删除这个笔记吗？',
+      onSubmit: (context) => {
+        const store = useNotesStore();
+        this.note && store.deleteNote(this.note);
+        context.close();
+        this.$router.back();
+      },
+    });
   }
   public render(): VNode {
     return (

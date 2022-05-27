@@ -1,0 +1,61 @@
+.confirm {
+  .dialog-content {
+    display: flex;
+    flex-direction: column;
+  }
+  &-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 500;
+    border-bottom: var(--border-default-size) solid var(--border-default-color);
+
+    i {
+      margin-right: 6px;
+      &.note-tip {
+        &-error {
+          color: #f56c6c;
+        }
+        &-warn {
+          color: #e6a23c;
+        }
+        &-success {
+          color: #67c23a;
+        }
+      }
+    }
+  }
+
+  &-content {
+    flex: 1;
+    padding: 10px 20px;
+  }
+  &-footer {
+    padding: 8px 20px;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      padding: 7px 15px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border: var(--border-default-size) solid var(--theme-light-color);
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    &-submit {
+      background-color: var(--theme-default-color);
+      color: #eee;
+    }
+
+    &-cancel {
+      background-color: #fff;
+      margin-left: 15px;
+    }
+  }
+}

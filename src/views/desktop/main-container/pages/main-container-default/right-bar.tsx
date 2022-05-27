@@ -31,7 +31,15 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
         icon: 'nav-delete',
         visible: !!this.note,
         action: () => {
-          this.note && store.deleteNote(this.note);
+          window.$ui.confirm({
+            type: 'warn',
+            width: 300,
+            content: '确定删除这个笔记吗？',
+            onSubmit: (context) => {
+              this.note && store.deleteNote(this.note);
+              context.close();
+            },
+          });
         },
       },
     ];
@@ -45,7 +53,7 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
               <IconNavMenu
                 width={30}
                 height={30}
-                size={14}
+                size={18}
                 type={menu.icon}
                 nativeOnclick={() => {
                   menu.action();
