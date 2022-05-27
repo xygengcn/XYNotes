@@ -3,29 +3,13 @@
  */
 
 import DBDatabaseModule from './dbdabase';
+import { DBDatabaseEvent, IDatabaseModules } from './type';
 
 export interface IDatabaseOptions {
   name: string;
   version: number;
   modules: IDatabaseModules[];
-}
-
-/**
- * 列属性
- */
-export interface IDatabaseModulesColumn {
-  name: string;
-  index?: string;
-  attributes?: {
-    multiEntry?: boolean;
-    unique?: boolean;
-  };
-}
-
-export interface IDatabaseModules {
-  name: string;
-  primary: string;
-  columns: Array<IDatabaseModulesColumn>;
+  event?: DBDatabaseEvent;
 }
 
 export default class Database {
@@ -41,9 +25,13 @@ export default class Database {
   // 数据库句柄
   private database!: IDBDatabase;
 
+  // 数据库事件
+  private databaseEvent: DBDatabaseEvent;
+
   constructor(options: IDatabaseOptions) {
     this.databaseName = options.name;
     this.databaseVersion = options.version;
+    this.databaseEvent = options.event;
     if (!window.indexedDB) {
       throw new Error('浏览器不支持indexedDB');
     } else {
@@ -121,7 +109,7 @@ export default class Database {
     return this.connectDatabase()
       .then((database) => {
         const databaseStore = database.transaction(moduleName, 'readwrite').objectStore(moduleName);
-        return new DBDatabaseModule(databaseStore, this.databaseModules[moduleName]);
+        return new DBDatabaseModule(databaseStore, this.databaseModules[moduleName], this.databaseEvent);
       })
       .catch((e) => {
         return Promise.reject(new Error(`数据库未定义${moduleName}: ${e}`));
@@ -132,7 +120,7 @@ export default class Database {
    * 删库
    * @returns
    */
-  public destroy(): IDBOpenDBRequest {
+  public drop(): IDBOpenDBRequest {
     return indexedDB.deleteDatabase(this.databaseName);
   }
 }
