@@ -38,6 +38,8 @@ export class EditorController extends Vditor {
   // 初始化
   constructor(el: string | HTMLDivElement, options: EditorControllerOptions) {
     super(el, {
+      // 关闭所有的菜单
+      toolbar: [],
       ...options,
       // 字数
       counter: {
