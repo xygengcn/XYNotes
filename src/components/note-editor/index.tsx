@@ -1,6 +1,7 @@
 import Editor, { EditorController } from '@/components/common/editor';
 import { Note } from '@/services/note';
 import { VueComponent } from '@/shims-vue';
+import { debounceMap } from '@/utils/debounce-throttle';
 import { getDeviceType, TimeFormat } from 'js-lark';
 import { VNode } from 'vue';
 import { Component, Prop, Ref, Watch } from 'vue-property-decorator';
@@ -22,6 +23,11 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
   @Ref() private readonly titleRef!: HTMLDivElement;
 
   /**
+   * 节流事件
+   */
+  private debounce: Function;
+
+  /**
    * 字数
    */
   private textLength: number = 0;
@@ -29,19 +35,21 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
   /**
    * 最大长度
    */
-
   private static maxWidth = 2048;
 
-  /**
-   * 选中的id
-   */
-  get activeNoteId(): string {
-    return this.note?.nid || '';
-  }
-
-  @Watch('activeNoteId')
-  watchActiveNodeId(): void {
+  @Watch('note.nid', { immediate: true })
+  watchActiveNodeId(id): void {
     this.editor?.editorController?.setValue(this.note?.text || '');
+    // 防抖
+    this.debounce = debounceMap(
+      id,
+      (note: Note) => {
+        if (id === note.nid) {
+          note?.save();
+        }
+      },
+      5000
+    );
   }
 
   /**
@@ -72,7 +80,10 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
    * @param value
    */
   private handleChangeValue(value: string): void {
-    this.note?.save({ text: value });
+    if (value) {
+      this.note?.set({ text: value });
+      this.debounce(this.note);
+    }
   }
 
   /**
@@ -80,7 +91,10 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
    * @param title
    */
   private handleChangeTitle(title: string): void {
-    this.note?.save({ title });
+    if (title) {
+      this.note?.set({ title });
+      this.debounce(this.note);
+    }
   }
 
   public render(): VNode {
@@ -97,9 +111,10 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
         </div>
         <div class="note-editor-content">
           <Editor
-            value={this.note?.text || ''}
+            value={this.note.text || ''}
+            index={this.note.nid}
             ref="editor"
-            onchange={this.handleChangeValue}
+            onChange={this.handleChangeValue}
             onCounter={(count) => {
               this.textLength = count;
             }}
@@ -107,5 +122,9 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
         </div>
       </div>
     );
+  }
+
+  public beforeDestroy() {
+    this.debounce = null;
   }
 }

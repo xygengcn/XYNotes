@@ -11,7 +11,7 @@ class ApiEvent extends ApiBridge {
   // 拉取笔记数据
   apiFetchNoteListData(): Promise<INote[]> {
     return database.module('notes').then((model) => {
-      return model.findAll<INote[]>().then((list) => {
+      return model.findAll<INote>().then((list) => {
         return list;
       });
     });

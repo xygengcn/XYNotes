@@ -46,7 +46,7 @@ export default class NoteList extends VueComponent<INoteListProps> {
   }
 
   /**
-   * 滚动
+   * 滚动, 主动置顶
    * @param e
    */
   private handleScroll(e: Event): void {

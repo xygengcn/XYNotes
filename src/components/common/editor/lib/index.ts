@@ -3,6 +3,7 @@ import Vditor from 'vditor';
 import 'vditor/dist/index.css';
 import './index.scss';
 export interface EditorControllerOptions extends IOptions {
+  // 导航栏配置
   toolbarConfig?: {
     hide?: boolean;
     pin?: boolean;
@@ -25,9 +26,6 @@ export interface EditorControllerOptions extends IOptions {
 }
 
 export class EditorController extends Vditor {
-  // 输入计时器
-  private inputToChangeTimeOut: number | null = null;
-
   // 缓存写入值
   private cacheValue = '';
 
@@ -162,19 +160,12 @@ export class EditorController extends Vditor {
    * @param options
    */
   private onChange(value: string, options: EditorControllerOptions): void {
-    if (this.inputToChangeTimeOut) {
-      clearTimeout(this.inputToChangeTimeOut);
-    }
-    this.inputToChangeTimeOut = window.setTimeout(() => {
-      options.onChange?.(value);
-    }, 600);
+    options.onChange?.(value);
   }
 
   // 销毁
   public destroy(): void {
     super.destroy();
-    this.inputToChangeTimeOut && clearTimeout(this.inputToChangeTimeOut);
-    this.inputToChangeTimeOut = null;
     this.editorObserver?.disconnect();
     this.editorObserver = null;
   }

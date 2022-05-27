@@ -1,6 +1,12 @@
 /**
  * 笔记所有字段
  */
+export enum INoteStatus {
+  draft = 0, // 草稿状态
+  saving = 0.5, // 正在保存
+  normal = 1, // 保存状态
+  sync = 2, // 同步状态
+}
 export interface INote {
   // 笔记id
   nid: string;
@@ -15,7 +21,7 @@ export interface INote {
   // 简要信息
   intro: string;
   // 笔记状态
-  status: number;
+  status: INoteStatus;
   // 笔记来源
   origin: string;
   // 笔记作者

@@ -8,6 +8,7 @@ interface IInputProps {
   value?: string | number;
   oninput?: (value: string) => void;
   onchange?: (value: string) => void;
+  onblur?: (e: Event) => void;
 }
 
 @Component
@@ -29,6 +30,15 @@ export default class Input extends VueComponent<IInputProps> {
   }
 
   /**
+   * 失去焦点
+   * @param e
+   */
+  private handleBlur(e: Event) {
+    this.inputTimeOut && clearTimeout(this.inputTimeOut);
+    this.$emit('blur', e);
+  }
+
+  /**
    * 500ms延迟
    *
    * @param e
@@ -37,7 +47,7 @@ export default class Input extends VueComponent<IInputProps> {
     if (this.inputTimeOut) {
       clearTimeout(this.inputTimeOut);
     }
-    this.inputTimeOut = setTimeout(() => {
+    this.inputTimeOut = window.setTimeout(() => {
       this.$emit('change', (e.target as HTMLInputElement).value);
       this.inputTimeOut && clearTimeout(this.inputTimeOut);
     }, 500);
@@ -47,9 +57,13 @@ export default class Input extends VueComponent<IInputProps> {
     return (
       <div class="input">
         <div class="input-content">
-          <input type="text" value={this.value} oninput={this.handleInput} />
+          <input type="text" value={this.value} oninput={this.handleInput} onblur={this.handleBlur} />
         </div>
       </div>
     );
+  }
+
+  public beforeDestroy() {
+    this.inputTimeOut && clearTimeout(this.inputTimeOut);
   }
 }

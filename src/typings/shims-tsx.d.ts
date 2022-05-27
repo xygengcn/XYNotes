@@ -2,6 +2,7 @@ import Vue, { VNode } from 'vue';
 import Confirm from '@/components/common/comfirm';
 declare global {
   interface Window {
+    debounceMap: Map;
     $ui: {
       toast: Toast;
       confirm: typeof Confirm;

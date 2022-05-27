@@ -8,10 +8,17 @@ import Loading from '../loading';
 export * from './lib';
 
 interface EditorProps {
+  // 文本
   value?: string;
+  // 编辑还预览
   type?: 'editor' | 'preview';
-  // 文本发生变化
-  onchange?: (value: string) => void;
+  // 延迟
+  delay?: number;
+  // 索引
+  index?: string | number;
+
+  // 文本发生变化,延时
+  onChange?: (value: string) => void;
   // 开始创建
   onCreated?: (controller: EditorController) => void;
   // 挂在结束
@@ -25,6 +32,9 @@ interface EditorProps {
 export default class Editor extends VueComponent<EditorProps> {
   // 值
   @Prop({ default: '' }) private readonly value!: string;
+
+  // 值
+  @Prop({ default: 0 }) private readonly index: string | number;
 
   // 类型
   @Prop({ default: 'editor' }) private readonly type: 'editor' | 'preview';
@@ -61,7 +71,7 @@ export default class Editor extends VueComponent<EditorProps> {
 
   public render(): VNode {
     return (
-      <div class="editor">
+      <div class="editor" index={this.index}>
         <div ref="editorContent" class="editor-content"></div>
         {this.editorLoading && (
           <div class="editor-loading">
@@ -111,8 +121,7 @@ export default class Editor extends VueComponent<EditorProps> {
     }
   }
 
-  // 销毁
-  public destroyed(): void {
+  public beforeDestroy() {
     this.editorController?.destroy();
   }
 }

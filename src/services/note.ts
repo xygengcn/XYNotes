@@ -1,5 +1,5 @@
 import { uuid } from 'js-lark';
-import { INote } from '@/typings/note';
+import { INote, INoteStatus } from '@/typings/note';
 import apiEvent from '@/api';
 
 export class Note implements INote {
@@ -22,7 +22,7 @@ export class Note implements INote {
   public intro: string = '';
 
   // 笔记状态
-  public status: number;
+  public status: INoteStatus;
   // 笔记来源
   public origin: string;
   // 笔记作者
@@ -39,23 +39,46 @@ export class Note implements INote {
         intro: '这里也有一些内容在这里呢！',
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime(),
+        status: 1,
       });
     }
+  }
+
+  /**
+   * 设置值
+   * @param note
+   */
+  public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
+    // 截取前50作简要信息
+    Object.assign(this, {
+      ...note,
+      status: 0,
+      intro: note?.text?.trim()?.slice(0, 50) || this.intro,
+      updatedAt: new Date().getTime(),
+    });
   }
   /**
    * 保存
    * @param note
    * @returns
    */
-  public save(note: Partial<Exclude<INote, 'updatedAt'>>): Promise<void> {
-    // 截取前80作简要信息
-    Object.assign(this, {
-      ...note,
-      intro: note.text?.trim().slice(0, 50),
-      updatedAt: new Date().getTime(),
-    });
-    const noteDetail = JSON.parse(JSON.stringify(this));
-    return apiEvent.apiSaveOrUpdateNotes([noteDetail]);
+  public async save(): Promise<void> {
+    // 草稿状态才保存
+    if (this.status === INoteStatus.draft) {
+      // 保存中
+      this.status = INoteStatus.saving;
+      const noteDetail = JSON.parse(JSON.stringify(this));
+      return apiEvent
+        .apiSaveOrUpdateNotes([{ ...noteDetail, status: 1 }])
+        .then((result) => {
+          this.status = 1;
+          return result;
+        })
+        .catch(() => {
+          // 返回草稿状态
+          this.status = INoteStatus.draft;
+        });
+    }
   }
 
   /**
