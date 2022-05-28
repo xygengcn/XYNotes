@@ -1,8 +1,10 @@
 import { uuid } from 'js-lark';
-import { INote, INoteStatus } from '@/typings/note';
+import { INote, INoteAttachment, INoteStatus, INoteType } from '@/typings/note';
 import apiEvent from '@/api';
 
 export class Note implements INote {
+  // 笔记类型
+  public type: INoteType = INoteType.text;
   // 笔记id
   public nid!: string;
 
@@ -22,11 +24,16 @@ export class Note implements INote {
   public intro: string = '';
 
   // 笔记状态
-  public status: INoteStatus;
+  public status: INoteStatus = 0;
   // 笔记来源
-  public origin: string;
+  public origin: string = '';
   // 笔记作者
-  public author: string;
+  public author: string = '';
+  // 排序
+  public order: number = 0;
+
+  // 笔记附件
+  public attachment: Array<INoteAttachment> = [];
 
   constructor(note?: INote) {
     if (note) {
@@ -39,7 +46,6 @@ export class Note implements INote {
         intro: '这里也有一些内容在这里呢！',
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime(),
-        status: 1,
       });
     }
   }
