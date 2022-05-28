@@ -1,7 +1,7 @@
 import Icon from '@/components/common/icon';
 import Loading from '@/components/common/loading';
 import NoteEditor from '@/components/note-editor';
-import showScreenshotDialog from '@/components/screenshot';
+import showShareNoteDialog from '@/components/note-share';
 import { Note } from '@/services/note';
 import { VueComponent } from '@/shims-vue';
 import { useNotesStore } from '@/store/notes.store';
@@ -25,7 +25,7 @@ export default class MobileDetail extends VueComponent<IMobileHomeProps> {
    */
   private handleClickShare() {
     this.note &&
-      showScreenshotDialog(this.note, {
+      showShareNoteDialog(this.note, {
         width: '90%',
         height: '60%',
         menu: ['md', 'image'],

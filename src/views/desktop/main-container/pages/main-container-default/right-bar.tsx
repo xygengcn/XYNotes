@@ -2,7 +2,7 @@ import { Note } from '@/services/note';
 import { VueComponent } from '@/shims-vue';
 import { VNode } from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import showScreenshotDialog from '@/components/screenshot';
+import showShareNoteDialog from '@/components/note-share';
 import './index.scss';
 import { useNotesStore } from '@/store/notes.store';
 import IconNavMenu from '@/components/icon-nav-menu';
@@ -23,7 +23,7 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
         icon: 'nav-share',
         visible: !!this.note,
         action: () => {
-          this.note && showScreenshotDialog(this.note);
+          this.note && showShareNoteDialog(this.note);
         },
       },
       {

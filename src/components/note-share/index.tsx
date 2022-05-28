@@ -8,7 +8,6 @@ import Loading from '../common/loading';
 import Dialog from '../common/dialog';
 import { downloadFile } from '@/utils/file';
 import { copyText } from '@/utils';
-import Toast from '../common/toast';
 import Editor from '../common/editor';
 
 interface IScreenshotProps {
@@ -24,7 +23,7 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
   /**
    * 菜单
    */
-  @Prop({ default: () => ['md', 'image', 'copyText', 'copyImage'] })
+  @Prop({ default: () => ['md', 'image', 'copyText', 'copyImage', 'copyJson'] })
   private readonly menu!: string[];
 
   /**
@@ -64,7 +63,7 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
   /**
    * 下载
    */
-  private handleClickScreenshot(): Promise<any> {
+  private handleClickDownalodScreenshot(): Promise<any> {
     this.loading = true;
     // 生成截图
     return screenshot(this.refScreenshotPreview.editorContent, this.note?.title).then(() => {
@@ -81,6 +80,7 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
     // 生成截图
     return screenshotCopy(this.refScreenshotPreview.editorContent).then(() => {
       this.loading = false;
+      window.$ui.toast('复制图片成功');
     });
   }
 
@@ -96,20 +96,28 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
    */
   private handleClickCopyText() {
     copyText(this.note?.text || '');
-    Toast('复制成功');
+    window.$ui.toast('复制文本成功');
+  }
+
+  /**
+   * 复制数据结构
+   */
+  private handleClickCopyJson() {
+    copyText(JSON.stringify(this.note) || '');
+    window.$ui.toast('复制数据成功');
   }
 
   public render(): VNode {
     return (
-      <Dialog width={this.width} height={this.height} ref="refDialog" class="screenshot-dialog">
-        <div class="screenshot-content">
-          <div class="screenshot-content-top">
+      <Dialog width={this.width} height={this.height} ref="refDialog" class="note-share-dialog">
+        <div class="note-share-content">
+          <div class="note-share-content-top">
             <span>{this.note?.title}</span>
           </div>
-          <div class="screenshot-content-preview">
+          <div class="note-share-content-preview">
             <Editor ref="refScreenshotPreview" value={this.note?.text || ''} type="preview" />
           </div>
-          <div class="screenshot-content-bottom">
+          <div class="note-share-content-bottom">
             {this.menu.includes('md') && (
               <span class="button" onclick={this.handleClickDownloadMarkdown}>
                 Markdown
@@ -126,7 +134,7 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
               </span>
             )}
             {this.menu.includes('image') && (
-              <span class="button" onclick={this.handleClickScreenshot}>
+              <span class="button" onclick={this.handleClickDownalodScreenshot}>
                 下载图片
               </span>
             )}
@@ -135,9 +143,19 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
                 复制图片
               </span>
             )}
+            {this.menu.includes('copyJson') && (
+              <span
+                class="button"
+                vDebounce={() => {
+                  this.handleClickCopyJson();
+                }}
+              >
+                复制数据
+              </span>
+            )}
           </div>
           {this.loading && (
-            <div class="screenshot-content-loading">
+            <div class="note-share-content-loading">
               <Loading text="加载中" />
             </div>
           )}
@@ -147,9 +165,9 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
   }
 }
 
-let screenshotInstance: Screenshot | null = null;
-export default function showScreenshotDialog(note: Note, propsData: IScreenshotProps = {}): Screenshot {
-  if (!screenshotInstance) {
+let noteShareDialogInstance: Screenshot | null = null;
+export default function showShareNoteDialog(note: Note, propsData: IScreenshotProps = {}): Screenshot {
+  if (!noteShareDialogInstance) {
     const panel = document.querySelector('#Screenshot');
     if (panel) {
       document.removeChild(panel);
@@ -157,8 +175,8 @@ export default function showScreenshotDialog(note: Note, propsData: IScreenshotP
     const el = document.createElement('div');
     el.id = 'Screenshot';
     document.body.appendChild(el);
-    screenshotInstance = new Screenshot({ propsData }).$mount(el);
+    noteShareDialogInstance = new Screenshot({ propsData }).$mount(el);
   }
-  screenshotInstance.show(note);
-  return screenshotInstance;
+  noteShareDialogInstance.show(note);
+  return noteShareDialogInstance;
 }
