@@ -3,7 +3,6 @@ import { createVuePlugin as vue } from 'vite-plugin-vue2';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath } from 'url';
 import { VitePWA } from 'vite-plugin-pwa';
-import path from 'path';
 export default defineConfig({
   plugins: [vue(), vueJsx(), VitePWA({ minify: true })],
   resolve: {

@@ -1,4 +1,4 @@
-import Database from '@/services/database';
+import Database from 'ts-database';
 
 // 数据库
 const database = new Database({

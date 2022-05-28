@@ -2742,6 +2742,11 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
+ts-database@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/ts-database/-/ts-database-0.0.2.tgz#8fa792cdfc2fde40791c519cf85d136119e7811c"
+  integrity sha512-kp+XnsBP4nGjcWtUHG7MdH2O5KiBWc33KusbMoOVqHmrHGD77o7fVo6acEgtfoyTQQJW+RKtTObtAtVzs4rDtA==
+
 type-fest@^0.16.0:
   version "0.16.0"
   resolved "https://registry.npmjs.org/type-fest/-/type-fest-0.16.0.tgz#3240b891a78b0deae910dbeb86553e552a148860"
