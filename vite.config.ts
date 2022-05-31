@@ -3,8 +3,10 @@ import { createVuePlugin as vue } from 'vite-plugin-vue2';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath } from 'url';
 import { VitePWA } from 'vite-plugin-pwa';
+import manifestJson from './mainifest';
 export default defineConfig({
-  plugins: [vue(), vueJsx(), VitePWA()],
+  base: '/',
+  plugins: [vue(), vueJsx(), VitePWA({ base: '/', manifest: manifestJson as any })],
   resolve: {
     alias: [
       {

@@ -1,5 +1,12 @@
 /* eslint-disable no-console */
 import { register } from 'register-service-worker';
+function unregister() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.ready.then((registration) => {
+      registration.unregister();
+    });
+  }
+}
 if (process.env.NODE_ENV === 'production') {
   register(`sw.js`, {
     ready() {
@@ -21,6 +28,7 @@ if (process.env.NODE_ENV === 'production') {
       console.log('应用程序正在脱机模式下运行...');
     },
     error(error) {
+      unregister();
       console.error('注册时出错：', error);
     },
   });
