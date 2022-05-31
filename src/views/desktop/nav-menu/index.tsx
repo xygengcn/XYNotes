@@ -35,7 +35,7 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
       {
         title: '设置',
         icon: 'nav-setting',
-        visible: false,
+        visible: true,
         name: 'desktop-setting',
         path: '/setting',
       },

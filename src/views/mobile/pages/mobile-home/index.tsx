@@ -1,6 +1,8 @@
+import Drawer from '@/components/common/drawer';
 import Icon from '@/components/common/icon';
 import NoteList from '@/components/note-list';
 import { Note } from '@/services/note';
+import { syncDataByV2 } from '@/services/note.action';
 import { VueComponent } from '@/shims-vue';
 import { useConfigsStore } from '@/store/config.store';
 import { useNotesStore } from '@/store/notes.store';
@@ -12,6 +14,8 @@ interface IMobileHomeProps {}
 
 @Component
 export default class MobileHome extends VueComponent<IMobileHomeProps> {
+  // 抽屉
+  private visibleMoreDrawer: boolean = false;
   /**
    * 排序类型
    */
@@ -73,8 +77,13 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
           <div class="mobile-home-header-search">
             <input type="text" vModel={this.keyword} class="mobile-home-header-search__input" placeholder="搜索" />
           </div>
-          <div class="mobile-home-header-add" onclick={this.handleClickAdd}>
-            <Icon type="mobile-add" size="2em"></Icon>
+          <div
+            class="mobile-home-header-more"
+            onclick={() => {
+              this.visibleMoreDrawer = true;
+            }}
+          >
+            <Icon type="mobile-more" size="2em"></Icon>
           </div>
         </div>
         <div class="mobile-home-content">
@@ -86,8 +95,32 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
           />
         </div>
         <div class="mobile-home-footer">
-          <div class="mobile-home-footer-content">{store.noteListCount}个笔记</div>
+          <div class="mobile-home-footer-content">
+            <span>{store.noteListCount}个笔记</span>
+            <span class="mobile-home-footer-content-add" onclick={this.handleClickAdd}>
+              <Icon type="mobile-add" size="2em"></Icon>
+            </span>
+          </div>
         </div>
+
+        <Drawer
+          visible={this.visibleMoreDrawer}
+          onclose={() => {
+            this.visibleMoreDrawer = false;
+          }}
+        >
+          <div class="mobile-home-more">
+            <div class="mobile-home-more-header">操作</div>
+            <div class="mobile-home-more-content">
+              <div class="mobile-home-more-content-item">
+                <span class="mobile-home-more-content-item-left">数据迁移</span>
+                <span class="mobile-home-more-content-item-right">
+                  <Icon onclick={syncDataByV2} type="data-transfer" size="1.2em"></Icon>
+                </span>
+              </div>
+            </div>
+          </div>
+        </Drawer>
       </div>
     );
   }

@@ -28,7 +28,7 @@ const routes: Array<RouteConfig> = [
         path: 'setting',
         name: 'desktop-setting',
         components: {
-          side: () => import('@/views/desktop/side-container/pages/side-container-list'),
+          side: () => import('@/views/desktop/side-container/pages/side-container-setting'),
           main: () => import('@/views/desktop/main-container/pages/main-container-default'),
         },
         meta: {
@@ -39,6 +39,10 @@ const routes: Array<RouteConfig> = [
     meta: {
       device: 'desktop',
     },
+  },
+  {
+    path: '/v2',
+    redirect: '/',
   },
   {
     path: '/m',

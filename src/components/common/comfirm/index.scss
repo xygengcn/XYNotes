@@ -1,8 +1,4 @@
 .confirm {
-  .dialog-content {
-    display: flex;
-    flex-direction: column;
-  }
   &-header {
     display: flex;
     align-items: center;
@@ -15,18 +11,19 @@
       margin-right: 6px;
       &.note-tip {
         &-error {
-          color: #f56c6c;
+          color: var(--theme-error-color);
         }
         &-warn {
-          color: #e6a23c;
+          color: var(--theme-warn-color);
         }
         &-success {
-          color: #67c23a;
+          color: var(--theme-success-color);
         }
       }
     }
   }
 
+  // 主体
   &-content {
     flex: 1;
     padding: 10px 20px;

@@ -24,9 +24,8 @@
         border-radius: 8px;
       }
     }
-    &-add {
+    &-more {
       display: flex;
-      width: 20px;
       align-items: center;
       color: var(--mobile-icon-color);
       margin-left: 5px;
@@ -36,6 +35,7 @@
   &-content {
     flex: 1;
     overflow: hidden;
+
     &-list {
       padding: 15px;
       position: relative;
@@ -50,17 +50,54 @@
   }
 
   &-footer {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top: var(--border-default-size) solid var(--border-default-color);
+    width: 100%;
+    padding-bottom: 10px;
+    border-top: 1px solid var(--border-default-color);
     * {
       user-select: none;
     }
     &-content {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--theme-light-color);
       font-size: 12px;
+      position: relative;
+
+      &-add {
+        position: absolute;
+        right: 15px;
+        color: var(--mobile-icon-color);
+      }
+    }
+  }
+
+  // 抽屉
+  &-more {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    &-header {
+      padding: 10px 15px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    &-content {
+      padding: 15px 15px 20px;
+      background-color: #f6f6f6;
+      flex: 1;
+      font-size: 14px;
+      &-item {
+        background-color: #fff;
+        padding: 10px 15px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        &-left {
+          flex: 1;
+        }
+      }
     }
   }
 }

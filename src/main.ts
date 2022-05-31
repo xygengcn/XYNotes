@@ -8,6 +8,7 @@ import vDebounce from './directive/debounce';
 import './utils/keydown';
 import Toast from '@/components/common/toast';
 import Confirm from './components/common/comfirm';
+import './registerServiceWorker';
 
 window.$ui = {
   toast: Toast,

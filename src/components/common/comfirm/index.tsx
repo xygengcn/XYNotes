@@ -69,7 +69,7 @@ class ConfirmComponent extends VueComponent<IConfirmProps> {
   public render(): VNode {
     return (
       <Dialog
-        class="comfrim"
+        class="comfirm"
         ref="context"
         width={`${this.options?.width || 380}px`}
         height={`${this.options?.height || 150}px`}

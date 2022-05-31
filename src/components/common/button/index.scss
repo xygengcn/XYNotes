@@ -1,0 +1,40 @@
+.button {
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+  &-default {
+    background-color: var(--theme-default-color);
+  }
+  &-error {
+    background-color: var(--theme-error-color);
+  }
+  &-warn {
+    background-color: var(--theme-warn-color);
+  }
+  &-success {
+    background-color: var(--theme-success-color);
+  }
+
+  &-size-min {
+    font-size: 12px;
+    padding: 4px 8px;
+    min-width: 48px;
+  }
+
+  &-size-default {
+    font-size: 14px;
+    padding: 6px 10px;
+    min-width: 48px;
+  }
+
+  &-size-max {
+    font-size: 16px;
+    padding: 8px 16px;
+    min-width: 64px;
+  }
+}

@@ -67,6 +67,11 @@ export const useNotesStore = defineStore('notes', {
     saveNoteListToDatabse(notes: INote[]) {
       return apiEvent.apiSaveOrUpdateNotes(notes);
     },
+    // 初始化默认数据
+    saveDefaultData() {
+      this.setNoteList(defaultJson);
+      this.saveNoteListToDatabse(defaultJson);
+    },
     /**
      * 同步笔记列表
      * @returns
@@ -76,8 +81,7 @@ export const useNotesStore = defineStore('notes', {
         if (list?.length) {
           return this.setNoteList(list);
         }
-        this.setNoteList(defaultJson);
-        this.saveNoteListToDatabse(defaultJson);
+        this.saveDefaultData();
       });
     },
   },
