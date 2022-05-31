@@ -12,24 +12,35 @@
       outline: none;
       font-family: 'iconfont' !important;
       font-size: 16px;
+      width: 20px;
+      height: 20px;
       font-style: normal;
+      line-height: 20px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       cursor: pointer;
       margin: 0 0.2em 0.25em -2em;
+      position: relative;
+      overflow: hidden;
+      border: none;
+      background-color: transparent;
 
       &::before {
+        border: none;
+        background-color: transparent;
         content: '\e8bb';
         font-size: 20px;
         position: relative;
-        right: -0.25em;
         color: rgb(190, 190, 190);
       }
       &:checked::before {
+        border: none;
+        background-color: transparent;
+        width: 20px;
+        height: 20px;
         content: '\e607';
         font-size: 20px;
         position: relative;
-        right: -0.25em;
         color: rgb(243, 187, 65);
       }
     }
