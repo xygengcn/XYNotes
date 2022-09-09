@@ -3,10 +3,10 @@ export default {
   short_name: '笔记',
   start_url: '/',
   display: 'standalone',
-  background_color: '#333',
+  background_color: '#ffffff',
   description: '一款懒人笔记',
   orientation: 'portrait-primary',
-  theme_color: '#333',
+  theme_color: '#ffffff',
   icons: [
     {
       src: './img/logo-32.png',
