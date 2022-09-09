@@ -1,4 +1,10 @@
 .vditor {
+  // 列表
+
+  pre > ul {
+    padding-left: 0;
+  }
+
   &-ir {
     // 链接
     &__link {
@@ -8,8 +14,12 @@
 
   // 任务列表
   &-task {
+    line-height: 20px;
+    display: flex;
+
     // 修改单选框
     input[type='checkbox'] {
+      display: block;
       -webkit-appearance: none;
       outline: none;
       font-family: 'iconfont' !important;
@@ -21,19 +31,23 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       cursor: pointer;
-      margin: 0 0.2em 0.25em -2em;
+      margin: 0;
       position: relative;
-      overflow: hidden;
       border: none;
       background-color: transparent;
+      margin-right: 0.25em;
 
       &::before {
+        width: 20px;
+        height: 20px;
         border: none;
         background-color: transparent;
         content: '\e8bb';
         font-size: 20px;
         position: relative;
         color: rgb(190, 190, 190);
+        display: inline-flex;
+        align-items: center;
       }
       &:checked::before {
         border: none;
@@ -44,6 +58,8 @@
         font-size: 20px;
         position: relative;
         color: rgb(243, 187, 65);
+        display: inline-flex;
+        align-items: center;
       }
     }
   }
