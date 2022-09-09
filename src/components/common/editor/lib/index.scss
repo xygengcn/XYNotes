@@ -1,10 +1,4 @@
 .vditor {
-  // 列表
-
-  pre > ul {
-    padding-left: 0;
-  }
-
   &-ir {
     // 链接
     &__link {
@@ -15,7 +9,7 @@
   // 任务列表
   &-task {
     line-height: 20px;
-    display: flex;
+    position: relative;
 
     // 修改单选框
     input[type='checkbox'] {
@@ -32,10 +26,10 @@
       -moz-osx-font-smoothing: grayscale;
       cursor: pointer;
       margin: 0;
-      position: relative;
+      position: absolute;
       border: none;
       background-color: transparent;
-      margin-right: 0.25em;
+      left: -25px;
 
       &::before {
         width: 20px;
