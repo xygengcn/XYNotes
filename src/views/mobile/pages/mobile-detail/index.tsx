@@ -28,7 +28,7 @@ export default class MobileDetail extends VueComponent<IMobileHomeProps> {
       showShareNoteDialog(this.note, {
         width: '90%',
         height: '60%',
-        menu: ['md', 'image'],
+        menu: ['image'],
       });
   }
 
@@ -63,10 +63,10 @@ export default class MobileDetail extends VueComponent<IMobileHomeProps> {
         <div class="mobile-detail-footer">
           <div class="mobile-detail-footer-list">
             <div class="mobile-detail-footer-list-item">
-              <Icon type="nav-share" size={20} nativeOnclick={this.handleClickShare}></Icon>
+              <Icon type="item-preview" size={20} nativeOnclick={this.handleClickShare}></Icon>
             </div>
             <div class="mobile-detail-footer-list-item">
-              <Icon type="nav-delete" size={20} nativeOnclick={this.handleClickDelete}></Icon>
+              <Icon type="item-delete" size={20} nativeOnclick={this.handleClickDelete}></Icon>
             </div>
           </div>
         </div>

@@ -40,20 +40,19 @@
       align-items: center;
       padding: 10px 0px;
       flex-wrap: wrap;
-      .button {
-        display: inline-block;
+      .iconfont {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
         background: #fff;
         border: var(--border-default-size) solid #dcdfe6;
         transition: 0.1s;
-        font-weight: 500;
-        padding: 8px 15px;
-        margin-bottom: 10px;
-        font-size: 14px;
-        border-radius: 8px;
         text-align: center;
         color: var(--font-default-color);
         cursor: pointer;
-        min-width: 88px;
+        width: 36px;
+        height: 36px;
         &:hover {
           color: #fff;
           background-color: var(--theme-default-color);
@@ -61,8 +60,8 @@
         }
       }
 
-      .button + .button {
-        margin-left: 10px;
+      .iconfont + .iconfont {
+        margin-left: 20px;
       }
     }
 

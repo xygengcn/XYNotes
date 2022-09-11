@@ -132,7 +132,7 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
                           this.handleDeleteNote(props.item);
                         }}
                       >
-                        <Icon type="nav-delete"> </Icon>
+                        <Icon type="item-delete"> </Icon>
                       </div>
                     </div>
                   );

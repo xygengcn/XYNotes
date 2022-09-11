@@ -6,9 +6,8 @@ import './index.scss';
 import { screenshot, screenshotCopy } from '@/utils/image';
 import Loading from '../common/loading';
 import Dialog from '../common/dialog';
-import { downloadFile } from '@/utils/file';
-import { copyText } from '@/utils';
 import Editor from '../common/editor';
+import Icon from '../common/icon';
 
 interface IScreenshotProps {
   width?: string;
@@ -84,29 +83,6 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
     });
   }
 
-  /**
-   * markdown下载
-   */
-  private handleClickDownloadMarkdown() {
-    downloadFile(this.note?.text || '', `${this.note?.title || 'XYNote'}.md`);
-  }
-
-  /**
-   * 复制文本
-   */
-  private handleClickCopyText() {
-    copyText(this.note?.text || '');
-    window.$ui.toast('复制文本成功');
-  }
-
-  /**
-   * 复制数据结构
-   */
-  private handleClickCopyJson() {
-    copyText(JSON.stringify(this.note) || '');
-    window.$ui.toast('复制数据成功');
-  }
-
   public render(): VNode {
     return (
       <Dialog width={this.width} height={this.height} ref="refDialog" class="note-share-dialog">
@@ -118,40 +94,9 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
             <Editor ref="refScreenshotPreview" value={this.note?.text || ''} type="preview" />
           </div>
           <div class="note-share-content-bottom">
-            {this.menu.includes('md') && (
-              <span class="button" onclick={this.handleClickDownloadMarkdown}>
-                Markdown
-              </span>
-            )}
-            {this.menu.includes('copyText') && (
-              <span
-                class="button"
-                vDebounce={() => {
-                  this.handleClickCopyText();
-                }}
-              >
-                复制文本
-              </span>
-            )}
+            {this.menu.includes('copyImage') && <Icon type="item-copy" onclick={this.handleClickCopyImage}></Icon>}
             {this.menu.includes('image') && (
-              <span class="button" onclick={this.handleClickDownalodScreenshot}>
-                下载图片
-              </span>
-            )}
-            {this.menu.includes('copyImage') && (
-              <span class="button" onclick={this.handleClickCopyImage}>
-                复制图片
-              </span>
-            )}
-            {this.menu.includes('copyJson') && (
-              <span
-                class="button"
-                vDebounce={() => {
-                  this.handleClickCopyJson();
-                }}
-              >
-                复制数据
-              </span>
+              <Icon type="item-pic-download" onclick={this.handleClickDownalodScreenshot}></Icon>
             )}
           </div>
           {this.loading && (
