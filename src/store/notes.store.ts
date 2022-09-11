@@ -9,6 +9,7 @@ export const useNotesStore = defineStore('notes', {
     // 当前选中笔记，当前编辑笔记
     activeNoteId: '' as string,
     notesList: [] as Note[],
+    recycleList: [] as Note[],
   }),
   getters: {
     // 当前笔记
@@ -57,12 +58,23 @@ export const useNotesStore = defineStore('notes', {
       if (this.activeNoteId !== nid) {
         this.activeNoteId = '';
       }
-      this.notesList = this.notesList.filter((item) => {
-        return item.nid !== nid;
-      });
+      const index = this.notesList.findIndex((item) => item.nid === nid);
+
+      const find = this.notesList.splice(index, 1);
+
+      find && this.recycleList.push(find[0]);
     },
     saveNoteListToDatabse(notes: INote[]) {
       return apiEvent.apiSaveOrUpdateNotes(notes);
+    },
+
+    /**
+     * 恢复数据
+     * @param note
+     */
+    recovery(note: Note) {
+      this.recycleList = this.recycleList.filter((item) => item.nid !== note.nid);
+      this.notesList.push(note);
     },
     // 初始化默认数据
     saveDefaultData() {

@@ -33,6 +33,14 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
         path: '/',
       },
       {
+        title: '回收',
+        icon: 'nav-recycle',
+        name: 'desktop-recycle',
+        visible: true,
+        path: '/recycle',
+        size: 18,
+      },
+      {
         title: '设置',
         icon: 'nav-setting',
         visible: true,

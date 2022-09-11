@@ -15,6 +15,7 @@ export interface IdesktopNavMenuItem {
   action?: (menu: IdesktopNavMenuItem) => void;
   path?: string;
   visible: boolean;
+  size?: number;
 }
 
 @Component({ name: 'DesktopNavMenuItem' })
@@ -45,7 +46,7 @@ export default class DesktopNavMenuItem extends VueComponent<IDesktopNavMenuItem
           <IconNavMenu
             width={30}
             height={30}
-            size={14}
+            size={this.menu.size || 14}
             type={this.menu.icon}
             active={this.menu.name === this.activeNavMenu}
             nativeOnclick={this.handleClickNavMenu}

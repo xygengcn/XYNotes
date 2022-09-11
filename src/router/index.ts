@@ -35,6 +35,17 @@ const routes: Array<RouteConfig> = [
           device: 'desktop',
         },
       },
+      {
+        path: 'recycle',
+        name: 'desktop-recycle',
+        components: {
+          side: () => import('@/views/desktop/side-container/pages/side-container-recycle'),
+          main: () => import('@/views/desktop/main-container/pages/main-container-default'),
+        },
+        meta: {
+          device: 'desktop',
+        },
+      },
     ],
     meta: {
       device: 'desktop',
