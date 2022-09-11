@@ -7,6 +7,7 @@ import { VueComponent } from '@/shims-vue';
 import { useConfigsStore } from '@/store/config.store';
 import { useNotesStore } from '@/store/notes.store';
 import { NoteListSortType } from '@/typings/enum/note';
+import { debounce } from '@/utils/debounce-throttle';
 import { VNode } from 'vue';
 import { Component } from 'vue-property-decorator';
 import { SwipeList } from 'vue-swipe-actions';
@@ -86,13 +87,29 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
     });
   }
 
+  /**
+   * 搜索
+   * @returns
+   */
+  private handleInput() {
+    return debounce((e: PointerEvent) => {
+      const target = e.target as HTMLInputElement;
+      this.keyword = target.value.trimStart();
+    });
+  }
+
   public render(): VNode {
     const store = useNotesStore();
     return (
       <div class="mobile-home">
         <div class="mobile-home-header">
           <div class="mobile-home-header-search">
-            <input type="text" vModel={this.keyword} class="mobile-home-header-search__input" placeholder="搜索" />
+            <input
+              type="text"
+              onInput={this.handleInput()}
+              class="mobile-home-header-search__input"
+              placeholder="搜索"
+            />
           </div>
           <div
             class="mobile-home-header-more"

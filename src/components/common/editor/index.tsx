@@ -59,6 +59,11 @@ export default class Editor extends VueComponent<EditorProps> {
     }
   }
 
+  @Watch('id')
+  watchId() {
+    this.editorController?.blur();
+  }
+
   /**
    * 编辑器控制器
    */
