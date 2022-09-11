@@ -35,19 +35,41 @@
   &-content {
     flex: 1;
     overflow: hidden;
-
+    // 列表
     &-list {
-      padding: 15px;
       position: relative;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-      & > div {
+      height: 100%;
+      overflow: auto;
+      padding: 15px;
+
+      // 列表
+      &-scroll {
         background-color: #fff;
         border-radius: 8px;
+        overflow: hidden;
+        transform: rotate(0deg); // 解决移动端border-radius不隐藏的问题
+
+        .note-item {
+          border-top: var(--border-default-size) solid var(--border-default-color);
+        }
+
+        // 右滑菜单
+        &-right {
+          &-delete {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 100%;
+            color: #fff;
+            background-color: var(--note-item-swipe-delete);
+          }
+        }
       }
     }
   }
+
+  // 底部
 
   &-footer {
     width: 100%;
@@ -75,6 +97,7 @@
 
   // 抽屉
   &-more {
+    width: 100%;
     min-height: 150px;
     display: flex;
     flex-direction: column;

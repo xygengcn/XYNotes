@@ -2917,6 +2917,11 @@ vue-router@^3.5.4:
   resolved "https://registry.npmjs.org/vue-router/-/vue-router-3.5.4.tgz#c453c0b36bc75554de066fefc3f2a9c3212aca70"
   integrity sha512-x+/DLAJZv2mcQ7glH2oV9ze8uPwcI+H+GgTgTmb5I55bCgY3+vXWIsqbYUzbBSZnwFHEJku4eoaH/x98veyymQ==
 
+vue-swipe-actions@^2.0.0-beta.20:
+  version "2.0.0-beta.20"
+  resolved "https://registry.npmjs.org/vue-swipe-actions/-/vue-swipe-actions-2.0.0-beta.20.tgz#1d758e55a2449c71f62617c8dc4c1c3a18bcedd4"
+  integrity sha512-gcHO9EKF+sS2P1JdMqi1PhATD24IFyUldMa9trDBHg+mq+3SRXAL8OZgeVmLd79Eu9rLhbavzj1CJQ7EGbKhjg==
+
 vue-template-babel-compiler@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/vue-template-babel-compiler/-/vue-template-babel-compiler-1.2.0.tgz#f77126886e868f64d2acefe5c0ecfd9c323bf943"

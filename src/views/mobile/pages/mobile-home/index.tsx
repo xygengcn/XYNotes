@@ -1,6 +1,6 @@
 import Drawer from '@/components/common/drawer';
 import Icon from '@/components/common/icon';
-import NoteList from '@/components/note-list';
+import NoteItem from '@/components/note-item';
 import { Note } from '@/services/note';
 import { syncDataByV2 } from '@/services/note.action';
 import { VueComponent } from '@/shims-vue';
@@ -9,6 +9,8 @@ import { useNotesStore } from '@/store/notes.store';
 import { NoteListSortType } from '@/typings/enum/note';
 import { VNode } from 'vue';
 import { Component } from 'vue-property-decorator';
+import { SwipeList } from 'vue-swipe-actions';
+import 'vue-swipe-actions/dist/vue-swipe-actions.css';
 import './index.scss';
 interface IMobileHomeProps {}
 
@@ -69,6 +71,22 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
     store.addNote();
   }
 
+  /**
+   * 删除
+   */
+  private handleDeleteNote(note: Note) {
+    const store = useNotesStore();
+    window.$ui.confirm({
+      type: 'warn',
+      width: 300,
+      content: '确定删除这个笔记吗？',
+      onSubmit: (context) => {
+        note && store.deleteNote(note);
+        context.close();
+      },
+    });
+  }
+
   public render(): VNode {
     const store = useNotesStore();
     return (
@@ -87,12 +105,41 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
           </div>
         </div>
         <div class="mobile-home-content">
-          <NoteList
-            keyword={this.keyword}
-            noteList={this.noteList}
-            class="mobile-home-content-list"
-            onselect={this.handleClickItem}
-          />
+          <div class="mobile-home-content-list">
+            <SwipeList
+              ref="swipeList"
+              class="mobile-home-content-list-scroll"
+              items={this.noteList}
+              item-key="id"
+              scopedSlots={{
+                default: (props) => {
+                  return (
+                    <NoteItem
+                      class="mobile-home-content-list-scroll-item"
+                      note={props.item}
+                      sortIndex={props.index}
+                      onselect={this.handleClickItem}
+                      keyword={this.keyword}
+                    ></NoteItem>
+                  );
+                },
+                right: (props) => {
+                  return (
+                    <div class="mobile-home-content-list-scroll-right">
+                      <div
+                        class="mobile-home-content-list-scroll-right-delete"
+                        onclick={() => {
+                          this.handleDeleteNote(props.item);
+                        }}
+                      >
+                        <Icon type="nav-delete"> </Icon>
+                      </div>
+                    </div>
+                  );
+                },
+              }}
+            />
+          </div>
         </div>
         <div class="mobile-home-footer">
           <div class="mobile-home-footer-content">

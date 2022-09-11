@@ -2,11 +2,11 @@ import { VueComponent } from '@/shims-vue';
 import { VNode } from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import './index.scss';
-import NoteList from '@/components/note-list';
 import { NoteListSortType } from '@/typings/enum/note';
 import { Note } from '@/services/note';
 import { useNotesStore } from '@/store/notes.store';
 import { useConfigsStore } from '@/store/config.store';
+import NoteItem from '@/components/note-item';
 interface IDesktopSideContainerListContentProps {
   keyword?: string;
 }
@@ -45,13 +45,39 @@ export default class DesktopSideContainerListContent extends VueComponent<IDeskt
     const store = useNotesStore();
     store.setActiveNoteId(note.nid);
   }
+
+  // 显示数量
+  private listLimit = 20;
+
   public render(): VNode {
     return (
       <div class="desktop-side-container-list-content">
-        <div class="desktop-side-container-list-content-list">
-          <NoteList noteList={this.noteList} keyword={this.keyword} onselect={this.handleSelectItem}></NoteList>
+        <div class="desktop-side-container-list-content-list" onscroll={this.handleScroll}>
+          {this.noteList.slice(0, this.listLimit).map((note, index) => {
+            return (
+              <NoteItem
+                note={note}
+                key={note.nid}
+                sortIndex={index}
+                keyword={this.keyword}
+                onselect={this.handleSelectItem}
+              />
+            );
+          })}
         </div>
       </div>
     );
+  }
+
+  /**
+   * 滚动, 主动置顶
+   * @param e
+   */
+  private handleScroll(e: Event): void {
+    const target = e.target as HTMLDivElement;
+    if (target && target.scrollTop + target.clientHeight + 30 >= target.scrollHeight) {
+      this.listLimit += 10;
+      this.listLimit = Math.max(this.noteList.length, this.listLimit);
+    }
   }
 }

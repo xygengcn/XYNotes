@@ -1,9 +1,9 @@
 import { debounce } from '@/utils/debounce-throttle';
-import { VNode } from 'vue';
+import Vue, { VNode } from 'vue';
 
 export default {
-  install(Vue) {
-    Vue.directive('debounce', {
+  install(vue: typeof Vue) {
+    vue.directive('debounce', {
       bind: (el: Element, binding, vnode: VNode) => {
         const fn = debounce(binding.value);
         el.addEventListener('click', fn);

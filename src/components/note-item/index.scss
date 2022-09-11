@@ -10,7 +10,7 @@
   }
 
   b {
-    color: #2dbe60;
+    color: var(--theme-text-highlight);
   }
 
   &:hover {
@@ -34,6 +34,7 @@
     font-weight: 400;
     display: flex;
     width: 100%;
+    align-items: center;
 
     &__time {
       color: var(--theme-default-color);
