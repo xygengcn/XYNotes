@@ -77,8 +77,8 @@ export default class DesktopSideContainerListContent extends VueComponent<IDeskt
   }
 
   private handleContextmenu(event: PointerEvent & { path: Array<HTMLElement> }) {
-    const el = event.path.find((el) => el.dataset.index);
-    const note = el && el.dataset.index && this.noteList?.[el.dataset.index];
+    const el = event?.path.find((el) => el?.dataset?.index);
+    const note = el?.dataset?.index && this.noteList?.[el.dataset.index];
     if (note) {
       contextmenu(event, [{ lable: '删除', key: 'delete' }], (key) => {
         switch (key) {

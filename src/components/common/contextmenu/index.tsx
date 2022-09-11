@@ -128,5 +128,5 @@ export default function contextmenu<T extends string>(
 
 export function contextmenuHide() {
   contextMenuInstance?.close();
-  contextMenuInstance.$off('select');
+  contextMenuInstance?.$off('select');
 }
