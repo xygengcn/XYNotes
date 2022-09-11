@@ -49,7 +49,7 @@
         overflow: hidden;
         transform: rotate(0deg); // 解决移动端border-radius不隐藏的问题
 
-        .note-item {
+        .swipeout-list-item + .swipeout-list-item {
           border-top: var(--border-default-size) solid var(--border-default-color);
         }
 
