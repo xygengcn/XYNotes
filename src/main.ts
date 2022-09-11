@@ -17,6 +17,7 @@ window.$ui = {
 
 Vue.use(vDebounce);
 Vue.use(VueCompositionApi);
+
 const pinia = createPinia();
 
 Vue.use(PiniaVuePlugin);

@@ -1,6 +1,7 @@
 import { VNode } from 'vue';
 import { Component } from 'vue-property-decorator';
 import './app.scss';
+import { contextmenuHide } from './components/common/contextmenu';
 import { VueComponent } from './shims-vue';
 
 interface AppProps {}
@@ -13,9 +14,8 @@ export default class App extends VueComponent<AppProps> {
    * @param e
    */
   private handleContextMenu(e: Event) {
-    if (process.env.NODE_ENV !== 'development') {
-      e.preventDefault();
-    }
+    contextmenuHide();
+    e.preventDefault();
   }
   public render(): VNode {
     return (

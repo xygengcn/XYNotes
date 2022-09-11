@@ -41,8 +41,7 @@ export default class MobileDetail extends VueComponent<IMobileHomeProps> {
       width: 250,
       content: '确定删除这个笔记吗？',
       onSubmit: (context) => {
-        const store = useNotesStore();
-        this.note && store.deleteNote(this.note);
+        this.note?.delete();
         context.close();
         this.$router.back();
       },

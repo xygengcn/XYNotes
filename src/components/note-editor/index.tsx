@@ -112,7 +112,7 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
         <div class="note-editor-content">
           <Editor
             value={this.note.text || ''}
-            index={this.note.nid}
+            id={this.note.nid}
             ref="editor"
             onChange={this.handleChangeValue}
             onCounter={(count) => {

@@ -1,3 +1,4 @@
+import { useNotesStore } from '@/store/notes.store';
 import { uuid } from 'js-lark';
 import { INote, INoteAttachment, INoteStatus, INoteType } from '@/typings/note';
 import apiEvent from '@/api';
@@ -91,7 +92,10 @@ export class Note implements INote {
    * 删除笔记
    */
   public delete(): Promise<any> {
+    const store = useNotesStore();
     const noteDetail = JSON.parse(JSON.stringify(this));
-    return apiEvent.apiDeleteNote(noteDetail);
+    return apiEvent.apiDeleteNote(noteDetail).then(() => {
+      store.deleteNote(this.nid);
+    });
   }
 }

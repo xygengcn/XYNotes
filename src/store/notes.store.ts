@@ -53,15 +53,12 @@ export const useNotesStore = defineStore('notes', {
      * @param note
      * @returns
      */
-    async deleteNote(note: Note): Promise<any> {
-      return note.delete().then((result) => {
-        if (this.activeNoteId !== note.nid) {
-          this.activeNoteId = '';
-        }
-        this.notesList = this.notesList.filter((item) => {
-          return item.nid !== note.nid;
-        });
-        return result;
+    async deleteNote(nid: string): Promise<any> {
+      if (this.activeNoteId !== nid) {
+        this.activeNoteId = '';
+      }
+      this.notesList = this.notesList.filter((item) => {
+        return item.nid !== nid;
       });
     },
     saveNoteListToDatabse(notes: INote[]) {

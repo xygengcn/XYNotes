@@ -5,8 +5,10 @@
     height: 100%;
     overflow: auto;
     padding: 10px;
-    & > div {
+    &-item {
+      width: 100%;
       content-visibility: auto;
+      overflow: hidden;
     }
   }
 }

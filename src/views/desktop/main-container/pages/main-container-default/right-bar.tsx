@@ -4,7 +4,6 @@ import { VNode } from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 import showShareNoteDialog from '@/components/note-share';
 import './index.scss';
-import { useNotesStore } from '@/store/notes.store';
 import IconNavMenu from '@/components/icon-nav-menu';
 import { downloadFile } from '@/utils/file';
 import { copyText } from '@/utils';
@@ -18,7 +17,6 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
   @Prop() private readonly note: Note;
 
   private get menuList() {
-    const store = useNotesStore();
     return [
       {
         title: '预览',
@@ -57,7 +55,7 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
             width: 300,
             content: '确定删除这个笔记吗？',
             onSubmit: (context) => {
-              this.note && store.deleteNote(this.note);
+              this.note?.delete();
               context.close();
             },
           });

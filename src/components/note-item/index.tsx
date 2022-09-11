@@ -47,7 +47,7 @@ export default class NoteItem extends VueComponent<INoteItemProps> {
   public render(h: CreateElement): VNode {
     return (
       <div
-        class={['note-item', 'note-item-index' + this.sortIndex, { active: this.activeNote?.nid === this.note?.nid }]}
+        class={['note-item', 'note-item-index-' + this.sortIndex, { active: this.activeNote?.nid === this.note?.nid }]}
         ref="noteRef"
         onclick={this.handleClickSelect}
       >

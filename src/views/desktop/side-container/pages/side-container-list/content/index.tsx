@@ -7,6 +7,7 @@ import { Note } from '@/services/note';
 import { useNotesStore } from '@/store/notes.store';
 import { useConfigsStore } from '@/store/config.store';
 import NoteItem from '@/components/note-item';
+import contextmenu from '@/components/common/contextmenu';
 interface IDesktopSideContainerListContentProps {
   keyword?: string;
 }
@@ -23,7 +24,7 @@ export default class DesktopSideContainerListContent extends VueComponent<IDeskt
     return store.noteListSort?.value || NoteListSortType.updated;
   }
   // 笔记列表
-  private get noteList() {
+  private get noteList(): Note[] {
     const store = useNotesStore();
     return store.notesList
       .filter((note) => {
@@ -52,21 +53,49 @@ export default class DesktopSideContainerListContent extends VueComponent<IDeskt
   public render(): VNode {
     return (
       <div class="desktop-side-container-list-content">
-        <div class="desktop-side-container-list-content-list" onscroll={this.handleScroll}>
+        <div
+          class="desktop-side-container-list-content-list"
+          onscroll={this.handleScroll}
+          oncontextmenu={this.handleContextmenu}
+        >
           {this.noteList.slice(0, this.listLimit).map((note, index) => {
             return (
-              <NoteItem
-                note={note}
-                key={note.nid}
-                sortIndex={index}
-                keyword={this.keyword}
-                onselect={this.handleSelectItem}
-              />
+              <div class="desktop-side-container-list-content-list-item" data-index={index}>
+                <NoteItem
+                  note={note}
+                  key={note.nid}
+                  sortIndex={index}
+                  keyword={this.keyword}
+                  onselect={this.handleSelectItem}
+                />
+              </div>
             );
           })}
         </div>
       </div>
     );
+  }
+
+  private handleContextmenu(event: PointerEvent & { path: Array<HTMLElement> }) {
+    const el = event.path.find((el) => el.dataset.index);
+    const note = el && el.dataset.index && this.noteList?.[el.dataset.index];
+    if (note) {
+      contextmenu(event, [{ lable: '删除', key: 'delete' }], (key) => {
+        switch (key) {
+          case 'delete':
+            window.$ui.confirm({
+              type: 'warn',
+              width: 250,
+              content: '确定删除这个笔记吗？',
+              onSubmit: (context) => {
+                note?.delete();
+                context.close();
+              },
+            });
+            break;
+        }
+      });
+    }
   }
 
   /**

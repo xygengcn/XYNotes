@@ -15,7 +15,7 @@ interface EditorProps {
   // 延迟
   delay?: number;
   // 索引
-  index?: string | number;
+  id?: string | number;
 
   // 文本发生变化,延时
   onChange?: (value: string) => void;
@@ -34,7 +34,7 @@ export default class Editor extends VueComponent<EditorProps> {
   @Prop({ default: '' }) private readonly value!: string;
 
   // 值
-  @Prop({ default: 0 }) private readonly index: string | number;
+  @Prop({ default: 0 }) private readonly id: string | number;
 
   // 类型
   @Prop({ default: 'editor' }) private readonly type: 'editor' | 'preview';
@@ -71,7 +71,7 @@ export default class Editor extends VueComponent<EditorProps> {
 
   public render(): VNode {
     return (
-      <div class="editor" index={this.index}>
+      <div class="editor" data-id={this.id}>
         <div ref="editorContent" class="editor-content"></div>
         {this.editorLoading && (
           <div class="editor-loading">

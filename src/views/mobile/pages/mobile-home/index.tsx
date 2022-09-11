@@ -75,13 +75,12 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
    * 删除
    */
   private handleDeleteNote(note: Note) {
-    const store = useNotesStore();
     window.$ui.confirm({
       type: 'warn',
       width: 300,
       content: '确定删除这个笔记吗？',
       onSubmit: (context) => {
-        note && store.deleteNote(note);
+        note?.delete();
         context.close();
       },
     });
