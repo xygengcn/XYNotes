@@ -63,7 +63,9 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
             })}
           </div>
         </div>
-        <div class="desktop-nav-menu-bottom"></div>
+        <div class="desktop-nav-menu-bottom">
+          <div class="desktop-nav-menu-bottom-version">V{__APP_VERSION__}</div>
+        </div>
       </div>
     );
   }

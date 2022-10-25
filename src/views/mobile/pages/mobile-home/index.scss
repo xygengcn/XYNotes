@@ -122,5 +122,14 @@
         }
       }
     }
+
+    &-footer {
+      color: var(--theme-light-color);
+      font-size: 10px;
+      background-color: #f6f6f6;
+      text-align: center;
+      height: 30px;
+      line-height: 30px;
+    }
   }
 }

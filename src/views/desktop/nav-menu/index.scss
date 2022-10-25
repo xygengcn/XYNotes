@@ -2,6 +2,9 @@
   width: 72px;
   border-right: var(--border-default-size) solid var(--border-default-color);
   background-color: #f8f8f8;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 
   &-top {
     height: 100px;
@@ -15,6 +18,7 @@
   }
 
   &-content {
+    flex: 1;
     &-list {
       display: flex;
       flex-direction: column;
@@ -26,6 +30,16 @@
           height: 70px;
         }
       }
+    }
+  }
+
+  &-bottom {
+    &-version {
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--font-default-color);
     }
   }
 }

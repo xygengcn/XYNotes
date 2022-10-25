@@ -182,6 +182,7 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
                 </span>
               </div>
             </div>
+            <div class="mobile-home-more-footer">Version {__APP_VERSION__}</div>
           </div>
         </Drawer>
       </div>

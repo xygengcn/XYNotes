@@ -15,7 +15,9 @@ export default class App extends VueComponent<AppProps> {
    */
   private handleContextMenu(e: Event) {
     contextmenuHide();
-    e.preventDefault();
+    if (process.env.NODE_ENV === 'production') {
+      e.preventDefault();
+    }
   }
   public render(): VNode {
     return (

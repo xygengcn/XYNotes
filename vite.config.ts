@@ -4,8 +4,17 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath } from 'url';
 import { VitePWA } from 'vite-plugin-pwa';
 import manifestJson from './mainifest';
+import packageConfig from './package.json';
+import path from 'path';
+
+const appVersion = packageConfig.version;
+
 export default defineConfig({
   base: '/',
+  build: {
+    outDir: path.join(__dirname, 'dist', appVersion),
+    emptyOutDir: true,
+  },
   plugins: [vue(), vueJsx(), VitePWA({ base: '/', manifest: manifestJson as any })],
   resolve: {
     alias: [
@@ -21,5 +30,8 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
+  },
+  define: {
+    __APP_VERSION__: JSON.stringify(appVersion),
   },
 });
