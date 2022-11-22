@@ -94,9 +94,19 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
             <Editor ref="refScreenshotPreview" value={this.note?.text || ''} type="preview" />
           </div>
           <div class="note-share-content-bottom">
-            {this.menu.includes('copyImage') && <Icon type="item-copy" onclick={this.handleClickCopyImage}></Icon>}
+            {this.menu.includes('copyImage') && (
+              <Icon
+                type="item-copy"
+                onclick={this.handleClickCopyImage}
+                v-tippy={{ placement: 'top', content: '复制' }}
+              ></Icon>
+            )}
             {this.menu.includes('image') && (
-              <Icon type="item-pic-download" onclick={this.handleClickDownalodScreenshot}></Icon>
+              <Icon
+                type="item-pic-download"
+                onclick={this.handleClickDownalodScreenshot}
+                v-tippy={{ placement: 'top', content: '下载' }}
+              ></Icon>
             )}
           </div>
           {this.loading && (

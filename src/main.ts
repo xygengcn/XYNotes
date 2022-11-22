@@ -9,6 +9,11 @@ import './utils/keydown';
 import Toast from '@/components/common/toast';
 import Confirm from './components/common/comfirm';
 import './registerServiceWorker';
+import VueTippy, { TippyComponent } from 'vue-tippy';
+
+Vue.use(VueTippy);
+
+Vue.component('tippy', TippyComponent);
 
 window.$ui = {
   toast: Toast,

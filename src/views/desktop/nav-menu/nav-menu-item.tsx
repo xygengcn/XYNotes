@@ -44,6 +44,7 @@ export default class DesktopNavMenuItem extends VueComponent<IDesktopNavMenuItem
       <div class="desktop-nav-menu-content-list-item">
         <div class="desktop-nav-menu-content-list-item-content">
           <IconNavMenu
+            v-tippy={{ placement: 'right', content: this.menu.title }}
             width={30}
             height={30}
             size={this.menu.size || 14}

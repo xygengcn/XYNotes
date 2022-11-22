@@ -38,7 +38,7 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
         },
       },
       {
-        title: 'JSON',
+        title: 'JSON下载',
         icon: 'item-json-download',
         visible: !!this.note,
         action: () => {
@@ -68,7 +68,10 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
       <div class="desktop-main-container-default-content-right">
         {this.menuList.map((menu) => {
           return (
-            <div class="desktop-main-container-default-content-right-menu">
+            <div
+              class="desktop-main-container-default-content-right-menu"
+              v-tippy={{ placement: 'left', content: menu.title }}
+            >
               <IconNavMenu
                 width={30}
                 height={30}
