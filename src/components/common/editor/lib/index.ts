@@ -37,7 +37,9 @@ export class EditorController extends Vditor {
 
   // 初始化
   constructor(el: string | HTMLDivElement, options: EditorControllerOptions) {
-    super(el, {
+    const dom = typeof el === 'string' ? document.getElementById(el) : el;
+
+    super(dom, {
       // 关闭所有的菜单
       toolbar: [],
       ...options,
@@ -54,9 +56,11 @@ export class EditorController extends Vditor {
       },
       after: () => {
         options.after?.();
-        options.onMounted?.(this);
+        this.onUpdated(dom, options);
+        if (!this.isMounted) {
+          options.onMounted?.(this);
+        }
         this.onMounted(options);
-        this.onUpdated(el, options);
       },
     });
     options.onCreated?.(this);
@@ -90,7 +94,7 @@ export class EditorController extends Vditor {
    * @param markdown
    * @param clearStack
    */
-  public setValue(markdown: string, clearStack?: boolean): void {
+  public setValue(markdown: string, clearStack: boolean = true): void {
     if (!this.isMounted) {
       this.cacheValue = markdown;
     } else {
@@ -124,16 +128,18 @@ export class EditorController extends Vditor {
    * 节点更新
    * @param options
    */
-  private onUpdated(el: string | HTMLDivElement, options: EditorControllerOptions): void {
+  private onUpdated(el: HTMLElement, options: EditorControllerOptions): void {
     if (options.onUpdated) {
       this.editorObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          options.onUpdated?.(this, mutation);
-        });
+        // 非初始化
+        if (this.isMounted) {
+          mutations.forEach((mutation) => {
+            options.onUpdated?.(this, mutation);
+          });
+        }
       });
-      const dom = typeof el === 'string' ? document.getElementById(el) : el;
-      dom &&
-        this.editorObserver.observe(dom, {
+      el &&
+        this.editorObserver.observe(el, {
           attributes: true,
           childList: true,
           characterData: true,

@@ -53,7 +53,7 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
           note?.save();
         }
       },
-      5000
+      3000
     );
   }
 

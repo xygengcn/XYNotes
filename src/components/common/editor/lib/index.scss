@@ -4,6 +4,10 @@
     &__link {
       color: #007aff;
     }
+
+    p {
+      margin-bottom: 5px;
+    }
   }
 
   // 任务列表
@@ -14,7 +18,7 @@
     // 修改单选框
     input[type='checkbox'] {
       display: block;
-      -webkit-appearance: none;
+      appearance: none;
       outline: none;
       font-family: 'iconfont' !important;
       font-size: 16px;

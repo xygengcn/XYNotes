@@ -61,7 +61,12 @@ export default class Editor extends VueComponent<EditorProps> {
 
   @Watch('id')
   watchId() {
-    this.editorController?.blur();
+    this.editorLoading = true;
+    this.$nextTick(() => {
+      this.editorController?.blur();
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+    });
   }
 
   /**
@@ -77,7 +82,7 @@ export default class Editor extends VueComponent<EditorProps> {
   public render(): VNode {
     return (
       <div class="editor" data-id={this.id}>
-        <div ref="editorContent" class="editor-content"></div>
+        <div ref="editorContent" class="editor-content" tabindex="1"></div>
         {this.editorLoading && (
           <div class="editor-loading">
             <Loading text="加载中" />
@@ -114,6 +119,10 @@ export default class Editor extends VueComponent<EditorProps> {
         onCreated: (controler) => {
           this.editorLoading = true;
           this.$emit('created', controler);
+        },
+        onUpdated: (controler) => {
+          this.editorLoading = false;
+          this.$emit('updated', controler);
         },
         onMounted: (controler) => {
           this.editorLoading = false;

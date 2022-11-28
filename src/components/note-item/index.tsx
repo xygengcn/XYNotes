@@ -41,7 +41,7 @@ export default class NoteItem extends VueComponent<INoteItemProps> {
    * 点击
    */
   @Emit('select')
-  private handleClickSelect() {
+  private handleClickSelect(event: PointerEvent) {
     return this.note;
   }
   public render(h: CreateElement): VNode {
