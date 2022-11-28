@@ -1,5 +1,5 @@
 import Vue, { VNode } from 'vue';
-import Confirm from '@/components/common/comfirm';
+import Confirm from '@/components/common/confirm';
 declare global {
   interface Window {
     debounceMap: Map;

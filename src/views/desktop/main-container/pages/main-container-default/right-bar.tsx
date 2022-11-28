@@ -7,6 +7,7 @@ import './index.scss';
 import IconNavMenu from '@/components/icon-nav-menu';
 import { downloadFile } from '@/utils/file';
 import { copyText } from '@/utils';
+import showParseFormatClearDialog from '@/components/parse-format-clear';
 
 interface IDesktopMainContainerDefaultRightProps {
   note: Note;
@@ -43,6 +44,14 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
         visible: !!this.note,
         action: () => {
           this.note && downloadFile(JSON.stringify(this.note) || '', `${this.note?.title || 'XYNote'}.json`);
+        },
+      },
+      {
+        title: '格式刷',
+        icon: 'item-clear',
+        visible: true,
+        action: () => {
+          showParseFormatClearDialog();
         },
       },
       {

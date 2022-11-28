@@ -7,7 +7,7 @@ import VueCompositionApi from '@vue/composition-api';
 import vDebounce from './directive/debounce';
 import './utils/keydown';
 import Toast from '@/components/common/toast';
-import Confirm from './components/common/comfirm';
+import Confirm from './components/common/confirm';
 import './registerServiceWorker';
 import VueTippy, { TippyComponent } from 'vue-tippy';
 

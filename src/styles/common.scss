@@ -4,3 +4,7 @@ input {
   -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
   -webkit-appearance: none; // 去掉Ios默认的样式
 }
+
+* {
+  user-select: none;
+}

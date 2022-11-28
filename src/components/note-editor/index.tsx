@@ -1,4 +1,5 @@
 import Editor, { EditorController } from '@/components/common/editor';
+import noteEventBus from '@/event-bus';
 import { Note } from '@/services/note';
 import { VueComponent } from '@/shims-vue';
 import { debounceMap } from '@/utils/debounce-throttle';
@@ -37,8 +38,12 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
    */
   private static maxWidth = 2048;
 
+  /**
+   * 监听日记发生变化
+   * @param id
+   */
   @Watch('note.nid', { immediate: true })
-  watchActiveNodeId(id): void {
+  watchActiveNodeId(id: string): void {
     this.editor?.editorController?.setValue(this.note?.text || '');
     // 防抖
     this.debounce = debounceMap(
@@ -122,6 +127,12 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
         </div>
       </div>
     );
+  }
+
+  public created(): void {
+    noteEventBus.on('insert', (text) => {
+      text?.trim() && this.editor?.editorController?.insertValue(text);
+    });
   }
 
   public beforeDestroy() {

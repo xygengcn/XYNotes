@@ -1,4 +1,7 @@
 .confirm {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   &-header {
     display: flex;
     align-items: center;
@@ -28,9 +31,10 @@
     flex: 1;
     padding: 10px 20px;
     font-size: 14px;
+    overflow: auto;
   }
   &-footer {
-    padding: 8px 20px;
+    padding: 10px 20px;
     display: flex;
     justify-content: flex-end;
 

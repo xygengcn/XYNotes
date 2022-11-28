@@ -10,12 +10,12 @@ interface IConfirmProps {
   type?: 'warn' | 'success' | 'error';
   // 主体
   content: string;
-  // 标题
-  title?: string;
   // 长度
   width?: number;
   // 高度
   height?: number;
+  // 标题
+  title?: string;
   // 确认回调
   onSubmit?: (context: ConfirmComponent) => void;
   // 取消回调
@@ -30,6 +30,15 @@ class ConfirmComponent extends VueComponent<IConfirmProps> {
    * 配置
    */
   private options: IConfirmProps = null;
+
+  /**
+   * 样式
+   */
+  private get customStyle(): Partial<CSSStyleDeclaration> {
+    const style = {};
+    Object.assign(style, { height: `${this.options?.height || 150}px`, width: `${this.options?.width || 300}px` });
+    return style;
+  }
 
   /**
    * 显示
@@ -68,12 +77,7 @@ class ConfirmComponent extends VueComponent<IConfirmProps> {
   }
   public render(): VNode {
     return (
-      <Dialog
-        class="comfirm"
-        ref="context"
-        width={`${this.options?.width || 380}px`}
-        height={`${this.options?.height || 150}px`}
-      >
+      <Dialog customClass="confirm" ref="context" customStyle={this.customStyle}>
         <div class="confirm-header">
           {this.options?.type && <Icon type={`tip-${this.options.type}`} size={18} />}
           {this.options?.title || '提示'}

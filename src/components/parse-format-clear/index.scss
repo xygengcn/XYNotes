@@ -1,4 +1,4 @@
-.note-share {
+.parse-format-clear {
   // 弹窗
   &-dialog {
     .dialog-content {
@@ -6,12 +6,12 @@
     }
   }
 
-  // 主体
   &-content {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 10px;
     &-top {
       display: inline-flex;
       width: 100%;
@@ -22,14 +22,17 @@
       font-weight: bold;
     }
 
-    &-preview {
+    &-textarea {
+      width: 100%;
       flex: 1;
-      overflow: auto;
-      .editor {
-        &-content {
-          padding: 10px 1em;
-          font-size: 14px;
-        }
+      border: 1px solid #eee;
+      textarea {
+        border: none;
+        width: 100%;
+        height: 100%;
+        resize: none;
+        outline: none;
+        padding: 15px;
       }
     }
 
@@ -60,15 +63,6 @@
           border-color: var(--theme-default-color);
         }
       }
-    }
-
-    &-loading {
-      background-color: #ffffffc2;
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 100%;
-      height: 100%;
     }
   }
 }
