@@ -72,7 +72,7 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
       >
         <div class="parse-format-clear-content">
           <div class="parse-format-clear-content-textarea">
-            <textarea vModel={this.text} id="" cols="30" rows="10"></textarea>
+            <textarea vModel={this.text} id="" cols="30" rows="10" placeholder="粘贴需要清理格式的文本"></textarea>
           </div>
 
           <div class="parse-format-clear-content-bottom">
