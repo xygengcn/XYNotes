@@ -182,7 +182,11 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
                 </span>
               </div>
             </div>
-            <div class="mobile-home-more-footer">Version {__APP_VERSION__}</div>
+            <div class="mobile-home-more-footer">
+              <a href="https://github.com/xygengcn/XYNotes" target="_blank">
+                Version {__APP_VERSION__} 此项目开源于XY笔记
+              </a>
+            </div>
           </div>
         </Drawer>
       </div>

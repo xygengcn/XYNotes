@@ -64,7 +64,11 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
           </div>
         </div>
         <div class="desktop-nav-menu-bottom">
-          <div class="desktop-nav-menu-bottom-version">V{__APP_VERSION__}</div>
+          <div class="desktop-nav-menu-bottom-version" v-tippy={{ placement: 'right', content: '此项目开源于XY笔记' }}>
+            <a href="https://github.com/xygengcn/XYNotes" target="_blank">
+              V{__APP_VERSION__}
+            </a>
+          </div>
         </div>
       </div>
     );

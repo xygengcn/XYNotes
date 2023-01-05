@@ -1,4 +1,8 @@
 .desktop-side-container-setting {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
   &-header {
     width: 100%;
     display: flex;
@@ -13,6 +17,7 @@
     }
   }
   &-content {
+    flex: 1;
     &-item {
       width: 100%;
       display: flex;
@@ -25,6 +30,17 @@
       &-left {
         flex: 1;
       }
+    }
+  }
+  &-footer {
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    a {
+      text-decoration: none;
+      outline: none;
+      font-size: 10px;
+      color: var(--theme-light-color);
     }
   }
 }

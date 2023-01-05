@@ -29,6 +29,11 @@ export default class DesktopSideContainerList extends VueComponent<IDesktopSideC
             </span>
           </div>
         </div>
+        <div class="desktop-side-container-setting-footer">
+          <a href="https://github.com/xygengcn/XYNotes" target="_blank">
+            Version {__APP_VERSION__} 此项目开源于XY笔记
+          </a>
+        </div>
       </div>
     );
   }
