@@ -3,18 +3,33 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 8px;
+  border-radius: 6px;
   max-width: 200px;
   padding: 10px;
   background: #333;
   color: #fff;
   font-size: 14px;
   z-index: 99999;
-  opacity: 0.9;
   text-align: justify;
   word-break: break-all;
   word-wrap: break-word;
   display: flex;
   flex-direction: column;
+  opacity: 0;
   align-items: center;
+  animation-name: toastShow;
+  animation-duration: 3s;
+}
+@keyframes toastShow {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }

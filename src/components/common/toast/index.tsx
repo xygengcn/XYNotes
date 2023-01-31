@@ -19,11 +19,13 @@ class ToastComponent extends VueComponent<IToastProps> {
   }
 }
 
-export default function Toast(text: string): void {
+function Toast(text: string): void {
   const instance = new ToastComponent({ propsData: { text } });
   instance.$mount();
   document.body.appendChild(instance.$el);
   setTimeout(() => {
     document.body.removeChild(instance.$el);
-  }, 800);
+  }, 3000);
 }
+
+export default Toast;
