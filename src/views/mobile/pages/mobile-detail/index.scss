@@ -13,9 +13,12 @@
       padding: 10px 0px;
     }
     .note-editor-title {
-      margin-bottom: 5px;
+      padding: 5px 0px;
       .input {
-        font-size: 1.2em;
+        padding-bottom: 6px;
+        &-content-inner {
+          font-size: 1.2em;
+        }
       }
     }
   }

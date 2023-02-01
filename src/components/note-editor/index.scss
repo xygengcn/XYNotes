@@ -17,14 +17,17 @@
     }
   }
   &-title {
-    margin-bottom: 10px;
     position: relative;
     .input {
-      font-size: 1.75em;
-      font-weight: 600;
       padding-bottom: 0.3em;
       border-bottom: 0.5px solid var(--border-default-color);
       position: relative;
+      &-content {
+        &-inner {
+          font-size: 1.75em;
+          font-weight: 600;
+        }
+      }
       &::after {
         content: '标题';
         position: absolute;
@@ -39,5 +42,9 @@
   &-content {
     flex: 1;
     overflow: hidden;
+  }
+
+  &-footer {
+    height: 1em;
   }
 }

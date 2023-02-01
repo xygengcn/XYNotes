@@ -57,7 +57,13 @@ export default class Input extends VueComponent<IInputProps> {
     return (
       <div class="input">
         <div class="input-content">
-          <input type="text" value={this.value} oninput={this.handleInput} onblur={this.handleBlur} />
+          <input
+            class="input-content-inner"
+            type="text"
+            value={this.value}
+            oninput={this.handleInput}
+            onblur={this.handleBlur}
+          />
         </div>
       </div>
     );

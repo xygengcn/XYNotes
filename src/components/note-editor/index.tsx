@@ -125,6 +125,7 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
             }}
           />
         </div>
+        <div class="note-editor-footer"></div>
       </div>
     );
   }

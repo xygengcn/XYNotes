@@ -3,6 +3,17 @@
   height: 100%;
   position: relative;
   overflow: overlay;
+
+  // 预览
+  &-preview {
+    pre {
+      code.hljs {
+        max-height: max-content !important;
+      }
+    }
+  }
+
+  // 主体
   &-content {
     width: 100%;
     min-height: 100%;
