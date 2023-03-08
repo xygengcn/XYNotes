@@ -64,6 +64,12 @@ export const useNotesStore = defineStore('notes', {
 
       find && this.recycleList.push(find[0]);
     },
+
+    /**
+     * 保存到数据库
+     * @param notes
+     * @returns
+     */
     saveNoteListToDatabse(notes: INote[]) {
       return apiEvent.apiSaveOrUpdateNotes(notes);
     },

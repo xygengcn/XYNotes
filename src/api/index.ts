@@ -7,7 +7,7 @@ import ApiBridge from './api.bridge';
  * 事件继承，所有数据处理都经过这里
  */
 
-class ApiEvent extends ApiBridge {
+class ApiEvent implements ApiBridge {
   // 拉取笔记数据
   apiFetchNoteListData(): Promise<INote[]> {
     return database.module('notes').then((model) => {

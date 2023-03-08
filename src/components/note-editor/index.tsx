@@ -131,12 +131,13 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
   }
 
   public created(): void {
-    noteEventBus.on('insert', (text) => {
+    const fn = (text) => {
       text?.trim() && this.editor?.editorController?.insertValue(text);
+    };
+    noteEventBus.on('insert', fn);
+    this.$once('hook:beforeDestroy', () => {
+      noteEventBus.off('insert', fn);
+      this.debounce = null;
     });
-  }
-
-  public beforeDestroy() {
-    this.debounce = null;
   }
 }
