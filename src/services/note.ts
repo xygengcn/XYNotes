@@ -1,7 +1,6 @@
-import { useNotesStore } from '@/store/notes.store';
+import middlewareHook from '@/middlewares';
 import { uuid } from 'js-lark';
 import { INote, INoteAttachment, INoteStatus, INoteType } from '@/typings/note';
-import apiEvent from '@/api';
 
 export class Note implements INote {
   // 笔记类型
@@ -75,8 +74,9 @@ export class Note implements INote {
       // 保存中
       this.status = INoteStatus.saving;
       const noteDetail = JSON.parse(JSON.stringify(this));
-      return apiEvent
-        .apiSaveOrUpdateNotes([{ ...noteDetail, status: 1 }])
+
+      return middlewareHook
+        .registerMiddleware('saveNote', [{ ...noteDetail, status: 1 }])
         .then((result) => {
           this.status = 1;
           return result;
@@ -92,10 +92,7 @@ export class Note implements INote {
    * 删除笔记
    */
   public delete(): Promise<any> {
-    const store = useNotesStore();
     const noteDetail = JSON.parse(JSON.stringify(this));
-    return apiEvent.apiDeleteNote(noteDetail).then(() => {
-      store.deleteNote(this.nid);
-    });
+    return middlewareHook.registerMiddleware('deleteNote', noteDetail);
   }
 }

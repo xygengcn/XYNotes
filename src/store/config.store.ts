@@ -1,7 +1,7 @@
-import { debounce } from '@/utils/debounce-throttle';
-import apiEvent from '@/api';
-import { IConfigs, IConfigsColunm, INoteListSort } from '@/typings/config';
+import middlewareHook from '@/middlewares';
+import { IConfigsColunm, INoteListSort } from '@/typings/config';
 import { NoteListSortType } from '@/typings/enum/note';
+import { debounce } from '@/utils/debounce-throttle';
 import { defineStore } from 'pinia';
 
 // 最大值
@@ -12,8 +12,8 @@ export const SideContainerMinWidth = 250;
 
 // 防抖保存左侧长度
 const debounceSaveSideContainerMaxWidth = debounce((width) => {
-  const store = useConfigsStore();
-  store.saveConfigs({ sideContainerWidth: width });
+  console.info('[config] 保存左侧长度配置', width);
+  middlewareHook.registerMiddleware('saveConfig', { sideContainerWidth: width });
 });
 
 export const useConfigsStore = defineStore('configs', {
@@ -41,30 +41,15 @@ export const useConfigsStore = defineStore('configs', {
         value: NoteListSortType.updated,
         label: '更新时间',
       };
-      this.saveConfigs({ noteListSort: this.noteListSort });
+      console.info('[config] 保存排序配置', { noteListSort: this.noteListSort });
+      return middlewareHook.registerMiddleware('saveConfig', { noteListSort: this.noteListSort });
     },
-    /**
-     * 配置保存
-     * @param configs
-     */
-    saveConfigs(configs: Partial<IConfigs>): Promise<void> {
-      const configsColums: IConfigsColunm[] = Object.entries(configs).map(([key, value]) => {
-        return {
-          key,
-          value,
-        };
-      });
-      return apiEvent.apiSaveOrUpdateConfigs(configsColums);
-    },
-
     /**
      * 配置初始化
      */
-    syncConfigs(): Promise<void> {
-      return apiEvent.apiFetchConfigsData().then((configs: IConfigsColunm[]) => {
-        configs.forEach(({ key, value }) => {
-          Object.assign(this, { [key]: value });
-        });
+    syncConfigs(configs: IConfigsColunm[]) {
+      configs.forEach(({ key, value }) => {
+        Object.assign(this, { [key]: value });
       });
     },
   },

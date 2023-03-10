@@ -67,7 +67,7 @@ export function copyText(text: string): Promise<any> {
  * @returns
  */
 export function compose(middlewares: Array<Function>) {
-  return function (arg: any) {
+  return function (...args: any) {
     return dispatch(0);
     function dispatch(i: number) {
       let fn = middlewares[i];
@@ -76,9 +76,9 @@ export function compose(middlewares: Array<Function>) {
       }
 
       return Promise.resolve(
-        fn(arg, function next() {
+        fn(function next() {
           return dispatch(i + 1);
-        })
+        }, ...args)
       );
     }
   };

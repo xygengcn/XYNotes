@@ -7,12 +7,17 @@ import { Note } from '@/services/note';
 import { useNotesStore } from '@/store/notes.store';
 import { useConfigsStore } from '@/store/config.store';
 import NoteItem from '@/components/note-item';
-import contextmenu from '@/components/common/contextmenu';
+import vContextMenu from '@/directive/contextmenu';
 interface IDesktopSideContainerListContentProps {
   keyword?: string;
 }
 
-@Component
+@Component({
+  name: 'DesktopSideContainerListContent',
+  directives: {
+    contextmenu: vContextMenu,
+  },
+})
 export default class DesktopSideContainerListContent extends VueComponent<IDesktopSideContainerListContentProps> {
   @Prop() private readonly keyword!: string;
 
@@ -56,11 +61,16 @@ export default class DesktopSideContainerListContent extends VueComponent<IDeskt
         <div
           class="desktop-side-container-list-content-list"
           onscroll={this.handleScroll}
-          oncontextmenu={this.handleContextmenu}
+          vContextmenu={{
+            menu: [{ label: '删除', value: 'delete' }],
+            onSelect: (value, index) => {
+              this.handleContextmenu(value, index);
+            },
+          }}
         >
           {this.noteList.slice(0, this.listLimit).map((note, index) => {
             return (
-              <div class="desktop-side-container-list-content-list-item" data-index={index}>
+              <div class="desktop-side-container-list-content-list-item" data-index={note.nid}>
                 <NoteItem
                   note={note}
                   key={note.nid}
@@ -76,25 +86,28 @@ export default class DesktopSideContainerListContent extends VueComponent<IDeskt
     );
   }
 
-  private handleContextmenu(event: PointerEvent & { path: Array<HTMLElement> }) {
-    const el = event?.path.find((el) => el?.dataset?.index);
-    const note = el?.dataset?.index && this.noteList?.[el.dataset.index];
+  /**
+   * 右键
+   * @param cmdKey
+   * @param index
+   */
+  private handleContextmenu(cmdKey: string, index: string) {
+    const note = index && this.noteList.find((n) => n.nid === index);
+    console.log('[contextmenu] 右键笔记', cmdKey, index, note);
     if (note) {
-      contextmenu(event, [{ lable: '删除', key: 'delete' }], (key) => {
-        switch (key) {
-          case 'delete':
-            window.$ui.confirm({
-              type: 'warn',
-              width: 250,
-              content: '确定删除这个笔记吗？',
-              onSubmit: (context) => {
-                note?.delete();
-                context.close();
-              },
-            });
-            break;
-        }
-      });
+      switch (cmdKey) {
+        case 'delete':
+          window.$ui.confirm({
+            type: 'warn',
+            width: 250,
+            content: '确定删除这个笔记吗？',
+            onSubmit: (context) => {
+              note.delete();
+              context.close();
+            },
+          });
+          break;
+      }
     }
   }
 

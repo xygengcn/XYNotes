@@ -3,22 +3,16 @@ import { Component, Emit } from 'vue-property-decorator';
 import './index.scss';
 import { VueComponent } from '@/shims-vue';
 import vClickOutside from 'vue-click-outside';
+import { ContextMenuItem } from '@/typings/contextmenu';
 
-interface IContextMenuItem<T extends string = string> {
-  lable: string;
-  key: T;
-}
-
-interface IContextMenuProps {
-  menu: Array<IContextMenuItem>;
-}
+interface IContextMenuProps {}
 @Component({
   name: 'ContextMenu',
   directives: {
     clickOutside: vClickOutside,
   },
 })
-class ContextMenu extends VueComponent<IContextMenuProps> {
+export class ContextMenu extends VueComponent<IContextMenuProps> {
   /**
    * 是否显示
    */
@@ -27,23 +21,20 @@ class ContextMenu extends VueComponent<IContextMenuProps> {
   /**
    * 菜单
    */
-  private menuList: Array<IContextMenuItem> = [];
+  private menuList: Array<ContextMenuItem> = [];
 
-  private position: {
-    top?: string;
-    left?: string;
-  } = {};
+  private index: string;
 
   /**
    * 显示
    */
-  public show(event: PointerEvent, menu: Array<IContextMenuItem>): void {
+  public show(options: { left: number; top: number; menu: Array<ContextMenuItem>; index: string }): void {
     this.visible = true;
-    this.position = {
-      left: event.pageX + 'px',
-      top: event.pageY + 'px',
-    };
-    this.menuList = menu;
+    // 位置定义
+    (this.$refs.contextmenu as HTMLDivElement).style.left = options.left + 'px';
+    (this.$refs.contextmenu as HTMLDivElement).style.top = options.top + 'px';
+    this.menuList = options.menu;
+    this.index = options.index;
   }
 
   /**
@@ -63,23 +54,19 @@ class ContextMenu extends VueComponent<IContextMenuProps> {
     const target = e.target as HTMLDivElement;
     e.stopPropagation();
     e.preventDefault();
-    target.dataset.key && this.$emit('select', target.dataset.key);
+    target.dataset.key && this.$emit('select', target.dataset.key, this.index);
   }
 
   public render(): VNode {
     return (
       <transition name="fade">
-        <div
-          class="contextmenu"
-          style={{ display: this.visible ? 'block' : 'none', ...(this.position || {}) }}
-          vClickOutside={this.close}
-        >
+        <div class="contextmenu" ref="contextmenu" v-show={this.visible} vClickOutside={this.close}>
           <transition name="zoom">
             <div class="contextmenu-content" onclick={this.handleClick}>
               {this.menuList.map((item) => {
                 return (
-                  <div class="contextmenu-content-item" key={item.key} data-key={item.key}>
-                    {item.lable}
+                  <div class="contextmenu-content-item" key={item.value} data-key={item.value}>
+                    {item.label}
                   </div>
                 );
               })}
@@ -89,44 +76,4 @@ class ContextMenu extends VueComponent<IContextMenuProps> {
       </transition>
     );
   }
-}
-
-let contextMenuInstance: ContextMenu | null = null;
-export default function contextmenu<T extends string>(
-  event: PointerEvent,
-  menu: Array<IContextMenuItem<T>>,
-  select: (e: T) => void
-): ContextMenu {
-  if (event && menu.length) {
-    event.stopPropagation();
-    event.preventDefault();
-    if (!contextMenuInstance) {
-      const panel = document.querySelector('#contextMenu');
-      if (panel) {
-        document.removeChild(panel);
-      }
-      const el = document.createElement('div');
-      el.id = 'contextMenu';
-      document.body.appendChild(el);
-      contextMenuInstance = new ContextMenu().$mount(el);
-    }
-    contextMenuInstance.show(event, menu);
-    // 移除以前的事件
-    contextMenuInstance.$off('select');
-    if (select && typeof select === 'function') {
-      select &&
-        contextMenuInstance.$on('select', (key) => {
-          select(key);
-          contextMenuInstance.$off('select');
-        });
-    }
-
-    return contextMenuInstance;
-  }
-  return null;
-}
-
-export function contextmenuHide() {
-  contextMenuInstance?.close();
-  contextMenuInstance?.$off('select');
 }

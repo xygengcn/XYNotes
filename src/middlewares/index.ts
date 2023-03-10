@@ -9,20 +9,19 @@ class Middleware {
   /**
    * 中间件集合
    */
-  private middlewareMap: Map<keyof IMiddlewareEvent, { hook: Function; middlewares: IMiddlewareFunction[] }> =
-    new Map();
+  private middlewareMap: Map<
+    keyof IMiddlewareEvent,
+    { hook: Function; middlewares: IMiddlewareFunction<keyof IMiddlewareEvent, any>[] }
+  > = new Map();
 
   /**
    * 使用插件
    * @param event
    */
-  public useMiddleware<T extends keyof IMiddlewareEvent>(
-    event: T,
-    middleware: IMiddlewareFunction<Parameters<IMiddlewareEvent[T]>>
-  ) {
+  public useMiddleware<T extends keyof IMiddlewareEvent>(event: T, middleware: IMiddlewareFunction<T>) {
     if (typeof middleware !== 'function') throw new TypeError('middleware must be a function!');
     const hookMiddleware = this.middlewareMap.get(event);
-    const middlewares: IMiddlewareFunction[] = hookMiddleware?.middlewares || [];
+    const middlewares: IMiddlewareFunction<T>[] = hookMiddleware?.middlewares || [];
     middlewares.push(middleware);
     const hook = compose(middlewares);
     this.middlewareMap.set(event, { middlewares, hook });
@@ -37,12 +36,12 @@ class Middleware {
    */
   public async registerMiddleware<T extends keyof IMiddlewareEvent>(
     event: T,
-    ...params: Parameters<IMiddlewareEvent[T]>
-  ): Promise<void> {
-    console.info('[hook]', event);
+    ...args: Parameters<IMiddlewareEvent[T]>
+  ): Promise<any> {
+    console.info('[hook]', event, { args });
     const middleware = this.middlewareMap.get(event);
     if (middleware?.hook) {
-      return await middleware.hook.apply(undefined, params);
+      return await middleware.hook.apply(undefined, args);
     }
     return Promise.resolve();
   }

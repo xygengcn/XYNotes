@@ -1,4 +1,4 @@
-import apiEvent from '@/api';
+import middlewareHook from '@/middlewares';
 import { Note } from '@/services/note';
 import { INote } from '@/typings/note';
 import { defineStore } from 'pinia';
@@ -71,7 +71,7 @@ export const useNotesStore = defineStore('notes', {
      * @returns
      */
     saveNoteListToDatabse(notes: INote[]) {
-      return apiEvent.apiSaveOrUpdateNotes(notes);
+      return middlewareHook.registerMiddleware('saveNote', notes);
     },
 
     /**
@@ -86,18 +86,6 @@ export const useNotesStore = defineStore('notes', {
     saveDefaultData() {
       this.setNoteList(defaultJson);
       this.saveNoteListToDatabse(defaultJson);
-    },
-    /**
-     * 同步笔记列表
-     * @returns
-     */
-    syncDatabaseToStore() {
-      return apiEvent.apiFetchNoteListData().then((list) => {
-        if (list?.length) {
-          return this.setNoteList(list);
-        }
-        this.saveDefaultData();
-      });
     },
   },
 });

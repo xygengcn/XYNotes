@@ -10,7 +10,9 @@ import Confirm from './components/common/confirm';
 import './registerServiceWorker';
 import VueTippy, { TippyComponent } from 'vue-tippy';
 import middlewareHook from './middlewares';
-import perloadMiddleware from './middlewares/preload.middleware';
+import perloadDefaultMiddleware from './middlewares/preload.middleware';
+import { configSaveDefautlMiddleware } from './middlewares/config.middleware';
+import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from './middlewares/note.middleware';
 
 // 提示指令注册
 Vue.use(VueTippy);
@@ -32,7 +34,13 @@ Vue.use(VueCompositionApi);
 const pinia = createPinia();
 
 // 注册中间件
-middlewareHook.useMiddleware('load', perloadMiddleware());
+middlewareHook.useMiddleware('load', perloadDefaultMiddleware());
+
+middlewareHook.useMiddleware('saveConfig', configSaveDefautlMiddleware());
+
+middlewareHook.useMiddleware('saveNote', saveNoteDefaultMiddleware());
+
+middlewareHook.useMiddleware('deleteNote', deleteNoteDefaultMiddleware());
 
 // 注册pinia
 Vue.use(PiniaVuePlugin);

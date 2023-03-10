@@ -4,6 +4,8 @@ import { VNode } from 'vue';
 import { Component } from 'vue-property-decorator';
 import './index.scss';
 import { syncDataByV2 } from '@/services/note.action';
+import database from '@/database';
+import { downloadFile } from '@/utils/file';
 interface IDesktopSideContainerListProps {}
 
 @Component({ name: 'DesktopSideContainerList' })
@@ -12,6 +14,14 @@ export default class DesktopSideContainerList extends VueComponent<IDesktopSideC
   private handleV2Data() {
     syncDataByV2();
   }
+
+  // 数据备份
+  private handleBackup() {
+    database.backup().then((result) => {
+      downloadFile(JSON.stringify(result), 'database.json');
+    });
+  }
+
   public render(): VNode {
     return (
       <div class="desktop-side-container-setting">
@@ -25,6 +35,14 @@ export default class DesktopSideContainerList extends VueComponent<IDesktopSideC
             <span class="desktop-side-container-setting-content-item-right">
               <Button size="min" onclick={this.handleV2Data}>
                 迁移
+              </Button>
+            </span>
+          </div>
+          <div class="desktop-side-container-setting-content-item">
+            <span class="desktop-side-container-setting-content-item-left">数据备份</span>
+            <span class="desktop-side-container-setting-content-item-right">
+              <Button size="min" onclick={this.handleBackup}>
+                备份
               </Button>
             </span>
           </div>
