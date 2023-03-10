@@ -20,3 +20,29 @@ export function downloadFile(content: string, filename: string): void {
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
   return download(URL.createObjectURL(blob), filename);
 }
+
+/**
+ * 读取json
+ */
+export function jsonFileReader() {
+  return new Promise((resolve, reject) => {
+    const dom = document.createElement('input');
+    dom.type = 'file';
+    dom.accept = '.json';
+    dom.click();
+    dom.onchange = (event) => {
+      if (dom.files.length) {
+        const file = dom.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+          const data = JSON.parse(reader.result.toString());
+          resolve(data);
+        };
+        reader.readAsText(file);
+        reader.onerror = (e) => {
+          reject(e);
+        };
+      }
+    };
+  });
+}
