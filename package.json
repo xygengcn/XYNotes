@@ -14,7 +14,8 @@
   "scripts": {
     "dev": "vite --port=8080 --mode development",
     "build": "vite build  --mode production",
-    "start": "vite preview"
+    "start": "vite preview",
+    "husky": "husky install"
   },
   "dependencies": {
     "@vue/composition-api": "^1.6.2",
@@ -30,7 +31,10 @@
     "vue-tippy": "v4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "@vitejs/plugin-vue-jsx": "^1.3.10",
+    "husky": "^8.0.3",
     "prettier": "^2.6.2",
     "rollup-plugin-visualizer": "^5.8.3",
     "sass": "^1.52.1",
