@@ -35,16 +35,7 @@ export default class DesktopSideContainerList extends VueComponent<IDesktopSideC
         <div class="desktop-side-container-setting-header">
           <h3>设置</h3>
         </div>
-
         <div class="desktop-side-container-setting-content">
-          <div class="desktop-side-container-setting-content-item">
-            <span class="desktop-side-container-setting-content-item-left">数据迁移</span>
-            <span class="desktop-side-container-setting-content-item-right">
-              <Button size="min" onclick={this.handleV2Data}>
-                迁移
-              </Button>
-            </span>
-          </div>
           <div class="desktop-side-container-setting-content-item">
             <span class="desktop-side-container-setting-content-item-left">数据备份</span>
             <span class="desktop-side-container-setting-content-item-right">
@@ -58,6 +49,14 @@ export default class DesktopSideContainerList extends VueComponent<IDesktopSideC
             <span class="desktop-side-container-setting-content-item-right">
               <Button size="min" onclick={this.handleRecovery}>
                 恢复
+              </Button>
+            </span>
+          </div>
+          <div class="desktop-side-container-setting-content-item">
+            <span class="desktop-side-container-setting-content-item-left">数据迁移</span>
+            <span class="desktop-side-container-setting-content-item-right">
+              <Button size="min" onclick={this.handleV2Data}>
+                迁移
               </Button>
             </span>
           </div>
