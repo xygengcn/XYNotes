@@ -1,3 +1,4 @@
+import AppView from '@/components/router-view';
 import { VueComponent } from '@/shims-vue';
 import { VNode } from 'vue';
 import { Component } from 'vue-property-decorator';
@@ -9,7 +10,7 @@ export default class Mobile extends VueComponent<IMobileProps> {
   public render(): VNode {
     return (
       <div class="mobile">
-        <router-view></router-view>
+        <AppView />
       </div>
     );
   }

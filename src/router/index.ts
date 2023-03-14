@@ -62,6 +62,7 @@ const routes: Array<RouteConfig> = [
         meta: {
           keepAlive: true, // 需要被缓存
           device: 'mobile',
+          index: 0,
         },
       },
       {
@@ -70,6 +71,7 @@ const routes: Array<RouteConfig> = [
         component: () => import('@/views/mobile/pages/mobile-detail'),
         meta: {
           device: 'mobile',
+          index: 1,
         },
       },
     ],
