@@ -6,6 +6,7 @@ import './index.scss';
 import { syncDataByV2 } from '@/services/note.action';
 import database from '@/database';
 import { downloadFile, jsonFileReader } from '@/utils/file';
+import { useConfigsStore } from '@/store/config.store';
 interface IDesktopSideContainerListProps {}
 
 @Component({ name: 'DesktopSideContainerList' })
@@ -17,16 +18,32 @@ export default class DesktopSideContainerList extends VueComponent<IDesktopSideC
 
   // 数据备份
   private handleBackup() {
-    database.backup().then((result) => {
-      downloadFile(JSON.stringify(result), 'database.json');
-    });
+    console.error('[backup]', '数据备份');
+    database
+      .backup()
+      .then((database) => {
+        const configs = useConfigsStore();
+        const backupData = {
+          version: configs.version,
+          database,
+        };
+        downloadFile(JSON.stringify(backupData), 'database.json');
+      })
+      .catch((e) => {
+        console.error('[backup]', e);
+      });
   }
 
-  // 数据备份
+  // 数据恢复
   private handleRecovery() {
-    jsonFileReader().then((result: any) => {
-      database.recovery(result);
-    });
+    console.log('[recovery] 数据恢复');
+    return jsonFileReader()
+      .then((backupData: any) => {
+        database.recovery(backupData.database);
+      })
+      .catch((e) => {
+        console.error('[recovery]', e);
+      });
   }
 
   public render(): VNode {

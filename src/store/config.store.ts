@@ -18,6 +18,9 @@ const debounceSaveSideContainerMaxWidth = debounce((width) => {
 
 export const useConfigsStore = defineStore('configs', {
   state: () => ({
+    // 版本
+    version: __APP_VERSION__,
+    // 宽度
     sideContainerWidth: 300,
     // 排序
     noteListSort: {
