@@ -10,7 +10,7 @@ interface AppViewProps {
 
 @Component
 export default class AppView extends VueComponent<AppViewProps> {
-  @Prop({ default: String }) private name: string;
+  @Prop({ default: 'default' }) private name: string;
   private transitionName = '';
 
   @Watch('$route')

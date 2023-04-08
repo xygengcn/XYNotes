@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === 'production') {
     },
     updatefound() {
       console.log('正在官网加载新版本...');
+      window.$ui?.toast('新版已准备好，请刷新后使用！');
     },
     updated() {
       console.log('新版已准备好，请刷新后使用！');

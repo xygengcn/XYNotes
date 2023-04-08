@@ -14,6 +14,10 @@ import perloadDefaultMiddleware from './middlewares/preload.middleware';
 import { configSaveDefautlMiddleware } from './middlewares/config.middleware';
 import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from './middlewares/note.middleware';
 
+if (process.env.NODE_ENV === 'development') {
+  Vue.config.devtools = true;
+}
+
 // 提示指令注册
 Vue.use(VueTippy);
 Vue.component('tippy', TippyComponent);

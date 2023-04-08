@@ -1,6 +1,6 @@
 {
   "name": "xynotes",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "XY笔记本是XY博客新尝试的一个轻量级的本地笔记本，是一款基于vue框架的笔记本，数据存储本地浏览器，默认支持markdown语法，支持图标数学等语法，支持即时渲染，支持截图分享等。",
   "keywords": [
     "vue2",
@@ -27,7 +27,7 @@
     "vditor": "^3.8.15",
     "vue": "2.6.14",
     "vue-click-outside": "^1.1.0",
-    "vue-router": "^3.5.4",
+    "vue-router": "3.5.4",
     "vue-tippy": "v4"
   },
   "devDependencies": {
