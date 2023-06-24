@@ -8,7 +8,13 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "eslint.validate": ["javascript", "javascriptreact", "typescriptreact", "vue", "typescript"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescriptreact",
+    "vue",
+    "typescript"
+  ],
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,

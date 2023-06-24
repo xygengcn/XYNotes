@@ -26,7 +26,40 @@ export default defineConfig({
     }) as PluginOption,
     vue(),
     vueJsx(),
-    VitePWA({ base: '/', manifest: manifestJson as any }),
+    VitePWA({
+      base: '/',
+      manifest: manifestJson as any,
+      registerType: 'autoUpdate',
+      workbox: {
+        cacheId: 'notes-xygengcn-cache',
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.origin === 'https://notes.xygeng.cn',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'notes-xygengcn',
+              cacheableResponse: {
+                statuses: [200],
+              },
+            },
+          },
+          {
+            urlPattern: /.*\.[js|json].*/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'notes-xygengcn-js',
+              expiration: {
+                maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
+                maxAgeSeconds: 30 * 24 * 60 * 60,
+              },
+              cacheableResponse: {
+                statuses: [200],
+              },
+            },
+          },
+        ],
+      },
+    }),
   ],
   resolve: {
     alias: [
