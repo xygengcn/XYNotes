@@ -7,6 +7,7 @@ import { syncDataByV2 } from '@/services/note.action';
 import database from '@/database';
 import { downloadFile, jsonFileReader } from '@/utils/file';
 import { useConfigsStore } from '@/store/config.store';
+import middlewareHook from '@/middlewares';
 interface IDesktopSideContainerListProps {}
 
 @Component({ name: 'DesktopSideContainerList' })
@@ -39,9 +40,13 @@ export default class DesktopSideContainerList extends VueComponent<IDesktopSideC
     console.log('[recovery] 数据恢复');
     return jsonFileReader()
       .then((backupData: any) => {
-        database.recovery(backupData.database);
+        database.recovery(backupData.database).then(() => {
+          window.$ui.toast('数据恢复恢复成功');
+          middlewareHook.registerMiddleware('recovery');
+        });
       })
       .catch((e) => {
+        window.$ui.toast('数据恢复失败');
         console.error('[recovery]', e);
       });
   }

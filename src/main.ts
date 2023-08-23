@@ -46,6 +46,8 @@ middlewareHook.useMiddleware('saveNote', saveNoteDefaultMiddleware());
 
 middlewareHook.useMiddleware('deleteNote', deleteNoteDefaultMiddleware());
 
+middlewareHook.useMiddleware('recovery', perloadDefaultMiddleware());
+
 // 注册pinia
 Vue.use(PiniaVuePlugin);
 

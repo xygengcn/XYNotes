@@ -44,12 +44,12 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: /.*\.[js|json].*/,
+            urlPattern: /.*\.[js|json|css].*/,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'notes-xygengcn-js',
               expiration: {
-                maxEntries: 30, // 最多缓存30个，超过的按照LRU原则删除
+                maxEntries: 50, // 最多缓存30个，超过的按照LRU原则删除
                 maxAgeSeconds: 30 * 24 * 60 * 60,
               },
               cacheableResponse: {
@@ -58,6 +58,7 @@ export default defineConfig({
             },
           },
         ],
+        globPatterns: ['**/*.{js,css,html,png,jpg,svg,json}'],
       },
     }),
   ],

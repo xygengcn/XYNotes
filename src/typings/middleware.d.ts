@@ -19,6 +19,9 @@ export interface IMiddlewareEvent {
 
   // 保存配置
   saveConfig: (configs: Partial<IConfigs>) => void;
+
+  // 数据恢复
+  recovery: () => void;
 }
 
 /**
