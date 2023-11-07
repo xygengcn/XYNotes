@@ -2,7 +2,7 @@ import { VNode } from 'vue';
 import { Component, Prop, Ref, Watch } from 'vue-property-decorator';
 import './index.scss';
 import { VueComponent } from '@/shims-vue';
-import { EditorController } from './lib';
+import { EditorController, VDITOR_CDN } from './lib';
 import Loading from '../loading';
 
 export * from './lib';
@@ -52,6 +52,7 @@ export default class Editor extends VueComponent<EditorProps> {
         hljs: {
           style: 'native',
         },
+        cdn: VDITOR_CDN,
         after: () => {
           this.editorLoading = false;
         },
@@ -100,9 +101,6 @@ export default class Editor extends VueComponent<EditorProps> {
     if (this.type === 'editor') {
       this.editorController = new EditorController(this.editorContent, {
         width: '100%',
-        toolbarConfig: {
-          disable: true,
-        },
         preview: {
           maxWidth: 2048,
           hljs: {

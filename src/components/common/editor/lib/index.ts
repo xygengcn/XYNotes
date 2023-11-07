@@ -1,14 +1,14 @@
 import { CSSStyleDisplay } from '@/typings/enum/global';
-import Vditor from 'vditor';
-import 'vditor/dist/index.css';
+import Vditor from 'vditor-lite';
+import 'vditor-lite/dist/index.css';
 import './index.scss';
+
+/**
+ * cdn 地址
+ */
+export const VDITOR_CDN = 'https://cdn.bootcdn.net/ajax/libs/vditor/3.9.5';
+
 export interface EditorControllerOptions extends IOptions {
-  // 导航栏配置
-  toolbarConfig?: {
-    hide?: boolean;
-    pin?: boolean;
-    disable?: boolean;
-  };
   // 文本变化
   onChange?: (value: string) => void;
 
@@ -40,9 +40,8 @@ export class EditorController extends Vditor {
     const dom = typeof el === 'string' ? document.getElementById(el) : el;
 
     super(dom, {
-      // 关闭所有的菜单
-      toolbar: [],
       ...options,
+      cdn: VDITOR_CDN,
       // 字数
       counter: {
         enable: !!options.onCounter,
@@ -103,28 +102,6 @@ export class EditorController extends Vditor {
   }
 
   /**
-   * 工具栏开关
-   */
-  public toolbalToggle(show?: boolean): IVditor {
-    if (typeof show === 'boolean') {
-      if (this.vditor.toolbar?.element) {
-        if (show) {
-          this.vditor.toolbar.element.style.display = CSSStyleDisplay.block;
-        } else {
-          this.vditor.toolbar.element.style.display = CSSStyleDisplay.none;
-        }
-      }
-    } else if (this.vditor.toolbar?.element) {
-      if (this.vditor.toolbar.element.style.display === CSSStyleDisplay.none) {
-        this.vditor.toolbar.element.style.display = CSSStyleDisplay.block;
-      } else {
-        this.vditor.toolbar.element.style.display = CSSStyleDisplay.none;
-      }
-    }
-    return this.vditor;
-  }
-
-  /**
    * 节点更新
    * @param options
    */
@@ -156,9 +133,6 @@ export class EditorController extends Vditor {
     if (this.cacheValue) {
       this.setValue(this.cacheValue);
       this.cacheValue = '';
-    }
-    if (options.toolbarConfig?.disable) {
-      this.toolbalToggle(false);
     }
   }
 
