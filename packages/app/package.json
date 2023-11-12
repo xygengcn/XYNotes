@@ -1,0 +1,21 @@
+{
+  "name": "@xynotes/tauri",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "icon": "tauri icon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@xynotes/web": "workspace:^",
+    "@tauri-apps/cli": "^1.5.0"
+  },
+  "tauri": {
+    "appPath": "./tauri"
+  }
+}

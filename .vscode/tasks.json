@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run-App",
+            "type": "shell",
+            "command": "yarn dev",
+            "options": {
+                "cwd": "${workspaceFolder}/packages/app/"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run-Web",
+            "type": "shell",
+            "command": "yarn dev",
+            "options": {
+                "cwd": "${workspaceFolder}/packages/web/"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build-App",
+            "type": "shell",
+            "command": "pnpm build",
+            "options": {
+                "cwd": "${workspaceFolder}/packages/app/"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build-Web",
+            "type": "shell",
+            "command": "pnpm build",
+            "options": {
+                "cwd": "${workspaceFolder}/packages/web/"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

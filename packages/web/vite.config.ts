@@ -13,14 +13,14 @@ const appVersion = packageConfig.version;
 export default defineConfig({
   base: '/',
   build: {
-    outDir: path.join(__dirname, 'dist', appVersion),
+    outDir: 'dist',
     emptyOutDir: true,
   },
   plugins: [
     // 数据分析
     visualizer({
       filename: path.join(__dirname, 'dist', 'stats.html'),
-      open: true, //注意这里要设置为true，否则无效
+      open: false, //注意这里要设置为true，否则无效
       gzipSize: true,
       brotliSize: true,
     }) as PluginOption,
