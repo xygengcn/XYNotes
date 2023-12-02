@@ -3,3 +3,20 @@
   display: inline-block;
   font-style: normal;
 }
+
+.note {
+  &-close-window {
+    color: #fc4546;
+    cursor: pointer;
+  }
+
+  &-minus-window {
+    color: #fcb024;
+    cursor: pointer;
+  }
+
+  &-max-window {
+    color: #29c332;
+    cursor: pointer;
+  }
+}

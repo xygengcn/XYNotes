@@ -83,30 +83,44 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
     });
   }
 
+  /**
+   * 关闭事件
+   */
+  private handleClose() {
+    this.loading = false;
+  }
   public render(): VNode {
     return (
-      <Dialog width={this.width} height={this.height} ref="refDialog" class="note-share-dialog">
+      <Dialog
+        width={this.width}
+        height={this.height}
+        ref="refDialog"
+        class="note-share-dialog"
+        title={this.note?.title}
+        onclose={this.handleClose}
+      >
         <div class="note-share-content">
-          <div class="note-share-content-top">
-            <span>{this.note?.title}</span>
-          </div>
           <div class="note-share-content-preview">
             <Editor ref="refScreenshotPreview" value={this.note?.text || ''} type="preview" />
           </div>
           <div class="note-share-content-bottom">
             {this.menu.includes('copyImage') && (
-              <Icon
-                type="item-copy"
-                onclick={this.handleClickCopyImage}
-                v-tippy={{ placement: 'top', content: '复制' }}
-              ></Icon>
+              <span class="note-share-content-bottom-item">
+                <Icon
+                  type="item-copy"
+                  onclick={this.handleClickCopyImage}
+                  v-tippy={{ placement: 'top', content: '复制' }}
+                ></Icon>
+              </span>
             )}
             {this.menu.includes('image') && (
-              <Icon
-                type="item-pic-download"
-                onclick={this.handleClickDownalodScreenshot}
-                v-tippy={{ placement: 'top', content: '下载' }}
-              ></Icon>
+              <span class="note-share-content-bottom-item">
+                <Icon
+                  type="item-pic-download"
+                  onclick={this.handleClickDownalodScreenshot}
+                  v-tippy={{ placement: 'top', content: '下载' }}
+                ></Icon>
+              </span>
             )}
           </div>
           {this.loading && (

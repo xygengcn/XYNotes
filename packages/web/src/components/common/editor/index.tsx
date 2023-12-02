@@ -42,22 +42,34 @@ export default class Editor extends VueComponent<EditorProps> {
   // 节点
   @Ref('editorContent') public readonly editorContent: HTMLDivElement;
 
+  /**
+   * 编辑器控制器
+   */
+  public editorController!: EditorController;
+
+  /**
+   * 编辑器加载
+   */
+  private editorLoading = true;
+
   // 监听变化
   @Watch('value', { immediate: true })
   watchValuePreview() {
     // 预览
-    if (this.type === 'preview' && this.editorContent) {
-      EditorController.preview(this.editorContent, this.value || '', {
-        mode: 'dark',
-        hljs: {
-          style: 'native',
-        },
-        cdn: VDITOR_CDN,
-        after: () => {
-          this.editorLoading = false;
-        },
-      });
-    }
+    this.$nextTick(() => {
+      if (this.type === 'preview' && this.editorContent) {
+        EditorController.preview(this.editorContent, this.value || '', {
+          mode: 'dark',
+          hljs: {
+            style: 'native',
+          },
+          cdn: VDITOR_CDN,
+          after: () => {
+            this.editorLoading = false;
+          },
+        });
+      }
+    });
   }
 
   @Watch('id')
@@ -69,16 +81,6 @@ export default class Editor extends VueComponent<EditorProps> {
       selection.removeAllRanges();
     });
   }
-
-  /**
-   * 编辑器控制器
-   */
-  public editorController!: EditorController;
-
-  /**
-   * 编辑器加载
-   */
-  private editorLoading = true;
 
   public render(): VNode {
     return (

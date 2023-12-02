@@ -14,44 +14,46 @@
     "allowlist": {
       "all": false,
       "window": {
-        "all": true,
+        "all": false,
         "center": true,
-        "close": false,
-        "create": false,
-        "hide": true,
-        "maximize": false,
-        "minimize": false,
-        "print": false,
-        "requestUserAttention": false,
-        "setAlwaysOnTop": false,
-        "setClosable": false,
-        "setContentProtected": false,
-        "setCursorGrab": false,
-        "setCursorIcon": false,
-        "setCursorPosition": false,
-        "setCursorVisible": false,
-        "setDecorations": false,
-        "setFocus": false,
-        "setFullscreen": false,
-        "setIcon": false,
-        "setIgnoreCursorEvents": false,
-        "setMaxSize": false,
-        "setMaximizable": false,
-        "setMinSize": false,
-        "setMinimizable": false,
-        "setPosition": false,
-        "setResizable": false,
-        "setSize": false,
-        "setSkipTaskbar": false,
-        "setTitle": false,
+        "maximize": true,
+        "minimize": true,
+        "setClosable": true,
+        "setFullscreen": true,
+        "setMinSize": true,
+        "setMinimizable": true,
         "show": true,
-        "startDragging": true,
-        "unmaximize": false,
-        "unminimize": false
+        "startDragging": true
       },
       "shell": {
         "all": false,
         "open": true
+      },
+      "app": {
+        "all": false,
+        "hide": true,
+        "show": true
+      },
+      "dialog": {
+        "all": false,
+        "ask": false,
+        "confirm": false,
+        "message": false,
+        "open": false,
+        "save": true
+      },
+      "fs": {
+        "all": false,
+        "copyFile": false,
+        "createDir": false,
+        "exists": false,
+        "readDir": false,
+        "readFile": false,
+        "removeDir": false,
+        "removeFile": false,
+        "renameFile": false,
+        "scope": [],
+        "writeFile": true
       }
     },
     "bundle": {
@@ -73,12 +75,15 @@
     "windows": [
       {
         "fullscreen": false,
+        "alwaysOnTop": false,
         "resizable": true,
         "title": "XY笔记",
         "width": 1200,
-        "height": 700,
-        "decorations": true,
-        "transparent": false
+        "height": 750,
+        "minWidth": 900,
+        "minHeight": 600,
+        "decorations": false,
+        "transparent": true
       }
     ]
   }

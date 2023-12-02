@@ -1,3 +1,4 @@
+import './preload';
 import Vue from 'vue';
 import App from './App';
 import { createPinia, PiniaVuePlugin } from 'pinia';
@@ -14,8 +15,10 @@ import perloadDefaultMiddleware from './middlewares/preload.middleware';
 import { configSaveDefautlMiddleware } from './middlewares/config.middleware';
 import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from './middlewares/note.middleware';
 
+// @ts-ignore
 if (process.env.NODE_ENV === 'development') {
   Vue.config.devtools = true;
+  window.__TAURI__ && window.openDevtools();
 }
 
 // 提示指令注册
