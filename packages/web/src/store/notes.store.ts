@@ -29,9 +29,10 @@ export const useNotesStore = defineStore('notes', {
     /**
      * 增加笔记
      */
-    addNote(): void {
+    addNote(): Note {
       const note = new Note();
       this.notesList.unshift(note);
+      return note;
     },
     /**
      * 设置当前笔记

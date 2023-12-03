@@ -7,6 +7,7 @@ import './index.scss';
 import DesktopMainContainer from './main-container';
 import DesktopNavMenu from './nav-menu';
 import DesktopSideContainer from './side-container';
+import { findParentWithNodrag } from '@/utils';
 
 interface IDesktopProps {}
 
@@ -66,7 +67,8 @@ export default class Desktop extends VueComponent<IDesktopProps> {
   created(): void {
     if (window.__TAURI__) {
       document.addEventListener('mousedown', async (e) => {
-        if ((e.target as HTMLElement).dataset?.['nodrag'] === 'false' || !(e.target as HTMLElement).dataset) {
+        const drag = findParentWithNodrag(e.target as HTMLElement);
+        if (drag === 'true' || drag === true) {
           return;
         }
         await appWindow.startDragging();

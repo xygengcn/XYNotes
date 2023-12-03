@@ -1,11 +1,11 @@
 import './preload';
+import './shortcut';
 import Vue from 'vue';
 import App from './App';
 import { createPinia, PiniaVuePlugin } from 'pinia';
 import router from './router';
 import VueCompositionApi from '@vue/composition-api';
 import vDebounce from './directive/debounce';
-import './utils/keydown';
 import Toast from '@/components/common/toast';
 import Confirm from './components/common/confirm';
 import './registerServiceWorker';

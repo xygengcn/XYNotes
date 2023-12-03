@@ -1,14 +1,14 @@
 {
   "build": {
     "beforeDevCommand": "",
-    "beforeBuildCommand": "",
+    "beforeBuildCommand": "cd ../web && pnpm build",
     "devPath": "http://localhost:8080",
     "distDir": "../node_modules/@xynotes/web/dist",
     "withGlobalTauri": false
   },
   "package": {
     "productName": "XY笔记",
-    "version": "0.0.0"
+    "version": "4.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -59,7 +59,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.quarkit.dev",
+      "identifier": "com.xynotes.dev",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -74,6 +74,7 @@
     "macOSPrivateApi": true,
     "windows": [
       {
+        "label": "main",
         "fullscreen": false,
         "alwaysOnTop": false,
         "resizable": true,

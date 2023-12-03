@@ -55,7 +55,7 @@ export default class Input extends VueComponent<IInputProps> {
 
   public render(): VNode {
     return (
-      <div class="input">
+      <div class="input" data-nodrag>
         <div class="input-content">
           <input
             class="input-content-inner"

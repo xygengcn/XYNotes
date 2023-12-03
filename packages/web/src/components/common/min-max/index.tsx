@@ -49,9 +49,9 @@ export default class MinMax extends VueComponent<IMinMaxProps> {
   public render(): VNode {
     return (
       <div class={{ 'min-max': true, visiable: !this.isFullScrean }} vShow={window.__TAURI__}>
-        <Icon type="close-window" size={14} onclick={this.handleCloseWindow}></Icon>
-        <Icon type="minus-window" size={14} onclick={this.handleMinWindow}></Icon>
-        <Icon type="max-window" size={14} onclick={this.handleMaxWindow}></Icon>
+        <Icon type="close-window" size={13} onclick={this.handleCloseWindow}></Icon>
+        <Icon type="minus-window" size={13} onclick={this.handleMinWindow}></Icon>
+        <Icon type="max-window" size={13} onclick={this.handleMaxWindow}></Icon>
       </div>
     );
   }

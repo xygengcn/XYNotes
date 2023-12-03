@@ -43,7 +43,7 @@ export default class Icon extends VueComponent<IIconProps> {
         class={['iconfont', `note-${this.type}`]}
         style={this.iconStyle}
         onclick={this.handleClick}
-        data-nodrag={this.draggable}
+        data-nodrag={!this.draggable}
       ></i>
     );
   }

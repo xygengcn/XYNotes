@@ -76,7 +76,7 @@ export default class Editor extends VueComponent<EditorProps> {
   watchId() {
     this.editorLoading = true;
     this.$nextTick(() => {
-      this.editorController?.blur();
+      this.editorController?.focus();
       const selection = window.getSelection();
       selection.removeAllRanges();
     });
@@ -84,7 +84,7 @@ export default class Editor extends VueComponent<EditorProps> {
 
   public render(): VNode {
     return (
-      <div class={{ editor: true, 'editor-preview': this.type === 'preview' }} data-id={this.id}>
+      <div class={{ editor: true, 'editor-preview': this.type === 'preview' }} data-id={this.id} data-nodrag>
         <div ref="editorContent" class="editor-content" tabindex="1"></div>
         {this.editorLoading && (
           <div class="editor-loading">

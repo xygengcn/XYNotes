@@ -1,10 +1,10 @@
 [package]
-name = "quarkit"
-version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+name = "xynotes"
+version = "4.0.0"
+description = "一个轻量级的本地笔记本"
+authors = ["xygengcn"]
 license = ""
-repository = ""
+repository = "https://github.com/xygengcn/XYNotes"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
