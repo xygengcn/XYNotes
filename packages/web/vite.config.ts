@@ -28,6 +28,7 @@ export default defineConfig({
     vueJsx(),
     VitePWA({
       base: '/',
+      devOptions: { enabled: true },
       manifest: manifestJson as any,
       registerType: 'autoUpdate',
       workbox: {
@@ -58,7 +59,7 @@ export default defineConfig({
             },
           },
         ],
-        globPatterns: ['**/*.{js,css,html,png,jpg,svg,json}'],
+        globPatterns: ['**/*.{js,css,html,png,jpg,svg,json}', 'https://cdn.bootcdn.net/ajax/libs/vditor/**/*'],
       },
     }),
   ],
