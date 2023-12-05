@@ -36,15 +36,12 @@
     "rollup-plugin-visualizer": "^5.8.3",
     "sass": "^1.52.1",
     "typescript": "^4.6.4",
-    "vite": "3.1.8",
+    "vite": "5.0.5",
     "vite-plugin-pwa": "^0.12.0",
-    "vite-plugin-vue2": "2.0.0",
+    "vite-plugin-vue2": "2.0.3",
     "vue-class-component": "7.2.6",
     "vue-property-decorator": "9.1.2",
     "vue-swipe-actions": "^2.0.0-beta.20",
     "vue-template-compiler": "2.6.14"
-  },
-  "peerDependencies": {
-    "@vue/babel-helper-vue-jsx-merge-props": "1.2.1"
   }
 }

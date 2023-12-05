@@ -60,6 +60,10 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
     this.text = '';
   }
 
+  private handleInput(e) {
+    this.text = e.target.value;
+  }
+
   public render(): VNode {
     return (
       <Dialog
@@ -72,7 +76,14 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
       >
         <div class="parse-format-clear-content">
           <div class="parse-format-clear-content-textarea">
-            <textarea vModel={this.text} id="" cols="30" rows="10" placeholder="粘贴需要清理格式的文本"></textarea>
+            <textarea
+              value={this.text}
+              id=""
+              cols="30"
+              rows="10"
+              placeholder="粘贴需要清理格式的文本"
+              onInput={this.handleInput}
+            ></textarea>
           </div>
 
           <div class="parse-format-clear-content-bottom">
