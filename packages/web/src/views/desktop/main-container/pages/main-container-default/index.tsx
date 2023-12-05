@@ -32,7 +32,7 @@ export default class DesktopMainContainerDefault extends VueComponent<IDesktopMa
           </div>
         ) : (
           <div class="desktop-main-container-default__default">
-            <Icon type="logo" size={200}></Icon>
+            <Icon type="logo" size={200} draggable></Icon>
           </div>
         )}
       </div>

@@ -1,16 +1,18 @@
+import logo from '@/assets/images/logo/logo.png';
+import MinMax from '@/components/common/min-max';
 import { VueComponent } from '@/shims-vue';
+import { useNotesStore } from '@/store/notes.store';
 import { VNode } from 'vue';
 import { Component } from 'vue-property-decorator';
 import './index.scss';
 import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
-import { useNotesStore } from '@/store/notes.store';
-import logo from '@/assets/images/logo/logo.png';
+
 interface IDesktopNavMenuProps {}
 
 @Component({ name: 'DesktopNavMenu' })
 export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
   // 左侧菜单长度
-  public static DESKTOP_NAV_MENU_WIDTH = 60;
+  public static DESKTOP_NAV_MENU_WIDTH = 64;
 
   // 左侧菜单
   private get desktopNavMenuList(): IdesktopNavMenuItem[] {
@@ -54,7 +56,12 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
     return (
       <div class="desktop-nav-menu" style={{ width: `${DesktopNavMenu.DESKTOP_NAV_MENU_WIDTH}px` }}>
         <div class="desktop-nav-menu-top">
-          <img src={logo} alt="" class="desktop-nav-menu-top-logo" />
+          <div class="desktop-nav-menu-top-opts">
+            <MinMax></MinMax>
+          </div>
+          <div class="desktop-nav-menu-top-logo">
+            <img src={logo} alt="" />
+          </div>
         </div>
         <div class="desktop-nav-menu-content">
           <div class="desktop-nav-menu-content-list">

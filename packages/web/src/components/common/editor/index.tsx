@@ -42,34 +42,6 @@ export default class Editor extends VueComponent<EditorProps> {
   // 节点
   @Ref('editorContent') public readonly editorContent: HTMLDivElement;
 
-  // 监听变化
-  @Watch('value', { immediate: true })
-  watchValuePreview() {
-    // 预览
-    if (this.type === 'preview' && this.editorContent) {
-      EditorController.preview(this.editorContent, this.value || '', {
-        mode: 'dark',
-        hljs: {
-          style: 'native',
-        },
-        cdn: VDITOR_CDN,
-        after: () => {
-          this.editorLoading = false;
-        },
-      });
-    }
-  }
-
-  @Watch('id')
-  watchId() {
-    this.editorLoading = true;
-    this.$nextTick(() => {
-      this.editorController?.blur();
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-    });
-  }
-
   /**
    * 编辑器控制器
    */
@@ -80,9 +52,39 @@ export default class Editor extends VueComponent<EditorProps> {
    */
   private editorLoading = true;
 
+  // 监听变化
+  @Watch('value', { immediate: true })
+  watchValuePreview() {
+    // 预览
+    this.$nextTick(() => {
+      if (this.type === 'preview' && this.editorContent) {
+        EditorController.preview(this.editorContent, this.value || '', {
+          mode: 'dark',
+          hljs: {
+            style: 'native',
+          },
+          cdn: VDITOR_CDN,
+          after: () => {
+            this.editorLoading = false;
+          },
+        });
+      }
+    });
+  }
+
+  @Watch('id')
+  watchId() {
+    this.editorLoading = true;
+    this.$nextTick(() => {
+      this.editorController?.focus();
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+    });
+  }
+
   public render(): VNode {
     return (
-      <div class={{ editor: true, 'editor-preview': this.type === 'preview' }} data-id={this.id}>
+      <div class={{ editor: true, 'editor-preview': this.type === 'preview' }} data-id={this.id} data-nodrag>
         <div ref="editorContent" class="editor-content" tabindex="1"></div>
         {this.editorLoading && (
           <div class="editor-loading">

@@ -1,6 +1,8 @@
 import html2canvas from 'html2canvas';
 import { copy } from '.';
 import { download } from './file';
+import { writeBinaryFile } from '@tauri-apps/api/fs';
+import { save } from '@tauri-apps/api/dialog';
 
 /**
  * 生成图片下载
@@ -14,8 +16,16 @@ export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<an
       allowTaint: true, // 跨域
       useCORS: true, // 跨域
       scale: 2,
-    }).then((canvas) => {
+    }).then(async (canvas) => {
       const image = canvas.toDataURL('image/png'); // 导出图片
+      // 兼容客户端
+      if (window.__TAURI__) {
+        const path = await save({
+          title: filename,
+          defaultPath: filename + '.png',
+        });
+        return writeBinaryFile(path, await fetch(image).then((res) => res.arrayBuffer()));
+      }
       download(image, filename + '.png');
     });
   }

@@ -1,0 +1,56 @@
+.min-max {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 5px;
+  visibility: hidden;
+  cursor: pointer;
+  &.visiable {
+    visibility: visible;
+  }
+
+  // 按钮
+  .note {
+    &-close-window {
+      color: #fc4546;
+      &::after {
+        background-color: #fc4546;
+      }
+    }
+
+    &-minus-window {
+      color: #fcb024;
+      &::after {
+        background-color: #fcb024;
+      }
+    }
+
+    &-max-window {
+      color: #29c332;
+      &::after {
+        background-color: #29c332;
+      }
+    }
+  }
+
+  // 变色
+  &:hover {
+    .iconfont::after {
+      background-color: #333;
+    }
+  }
+
+  .iconfont {
+    position: relative;
+    z-index: 0;
+    &::after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      z-index: -1;
+    }
+  }
+}

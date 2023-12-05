@@ -1,5 +1,5 @@
 .desktop-nav-menu {
-  width: 72px;
+  width: 64px;
   border-right: var(--border-default-size) solid var(--border-default-color);
   background-color: #f8f8f8;
   display: flex;
@@ -7,13 +7,15 @@
   flex-direction: column;
 
   &-top {
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     &-logo {
-      width: 36px;
-      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+      img {
+        width: 36px;
+        height: 36px;
+      }
     }
   }
 

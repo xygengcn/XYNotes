@@ -23,8 +23,14 @@ export default class DesktopSideContainerListSearch extends VueComponent<IDeskto
 
   public render(): VNode {
     return (
-      <div class="desktop-side-container-list-search">
-        <input type="text" placeholder="搜索笔记" value={this.keyword} onInput={this.handleInput()} />
+      <div class="desktop-side-container-list-search" data-nodrag>
+        <input
+          type="text"
+          placeholder="搜索笔记"
+          value={this.keyword}
+          onInput={this.handleInput()}
+          id="desktopSideContainerListSearch"
+        />
       </div>
     );
   }

@@ -76,16 +76,20 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
           </div>
 
           <div class="parse-format-clear-content-bottom">
-            <Icon
-              type="item-copy"
-              onclick={this.handleClickCopy}
-              v-tippy={{ placement: 'top', content: '复制' }}
-            ></Icon>
-            <Icon
-              type="item-text-insert"
-              onclick={this.handleInsertEditor}
-              v-tippy={{ placement: 'top', content: '插入' }}
-            ></Icon>
+            <span>
+              <Icon
+                type="item-copy"
+                onclick={this.handleClickCopy}
+                v-tippy={{ placement: 'top', content: '复制' }}
+              ></Icon>
+            </span>
+            <span>
+              <Icon
+                type="item-text-insert"
+                onclick={this.handleInsertEditor}
+                v-tippy={{ placement: 'top', content: '插入' }}
+              ></Icon>
+            </span>
           </div>
         </div>
       </Dialog>

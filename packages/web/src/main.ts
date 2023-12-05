@@ -1,10 +1,11 @@
+import './preload';
+import './shortcut';
 import Vue from 'vue';
 import App from './App';
 import { createPinia, PiniaVuePlugin } from 'pinia';
 import router from './router';
 import VueCompositionApi from '@vue/composition-api';
 import vDebounce from './directive/debounce';
-import './utils/keydown';
 import Toast from '@/components/common/toast';
 import Confirm from './components/common/confirm';
 import './registerServiceWorker';
@@ -14,8 +15,10 @@ import perloadDefaultMiddleware from './middlewares/preload.middleware';
 import { configSaveDefautlMiddleware } from './middlewares/config.middleware';
 import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from './middlewares/note.middleware';
 
+// @ts-ignore
 if (process.env.NODE_ENV === 'development') {
   Vue.config.devtools = true;
+  window.__TAURI__ && window.openDevtools();
 }
 
 // 提示指令注册

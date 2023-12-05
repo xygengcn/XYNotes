@@ -1,11 +1,14 @@
 import { VueComponent } from '@/shims-vue';
+import { SideContainerMaxWidth, SideContainerMinWidth, useConfigsStore } from '@/store/config.store';
+import { appWindow } from '@tauri-apps/api/window';
 import { VNode } from 'vue';
 import { Component, Ref } from 'vue-property-decorator';
-import DesktopNavMenu from './nav-menu';
 import './index.scss';
-import DesktopSideContainer from './side-container';
 import DesktopMainContainer from './main-container';
-import { SideContainerMaxWidth, SideContainerMinWidth, useConfigsStore } from '@/store/config.store';
+import DesktopNavMenu from './nav-menu';
+import DesktopSideContainer from './side-container';
+import { findParentWithNodrag } from '@/utils';
+
 interface IDesktopProps {}
 
 @Component
@@ -60,5 +63,16 @@ export default class Desktop extends VueComponent<IDesktopProps> {
         document.ontouchmove = null;
       };
     });
+  }
+  created(): void {
+    if (window.__TAURI__) {
+      document.addEventListener('mousedown', async (e) => {
+        const drag = findParentWithNodrag(e.target as HTMLElement);
+        if (drag === 'true' || drag === true) {
+          return;
+        }
+        await appWindow.startDragging();
+      });
+    }
   }
 }
