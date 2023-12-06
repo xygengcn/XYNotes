@@ -1,30 +1,35 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { defineComponent } from 'vue';
 import './index.scss';
-interface IDesktopSideContainerProps {
-  width?: number;
-  maxWidth?: number;
-  minWidth?: number;
-}
 
-@Component
-export default class DesktopSideContainer extends VueComponent<IDesktopSideContainerProps> {
-  @Prop({ default: 250 }) private readonly width!: number;
-  @Prop({ default: 500 }) private readonly maxWidth!: number;
-  @Prop({ default: 250 }) private readonly minWidth!: number;
-  public render(): VNode {
-    return (
+const DesktopSideContainer = defineComponent({
+  props: {
+    width: {
+      type: Number,
+      default: 250
+    },
+    maxWidth: {
+      type: Number,
+      default: 500
+    },
+    minWidth: {
+      type: Number,
+      default: 250
+    }
+  },
+  setup(props) {
+    return () => (
       <div
         class="desktop-side-container"
         style={{
-          width: this.width + 'px',
-          minWidth: this.minWidth + 'px',
-          maxWidth: this.maxWidth + 'px',
+          width: props.width + 'px',
+          minWidth: props.minWidth + 'px',
+          maxWidth: props.maxWidth + 'px'
         }}
       >
         <router-view name="side" />
       </div>
     );
   }
-}
+});
+
+export default DesktopSideContainer;

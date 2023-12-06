@@ -1,14 +1,7 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig, RawLocation } from 'vue-router';
+import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router';
 import { getDeviceType } from 'js-lark';
-// 解决同个路由点击多次报错
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function (location: RawLocation) {
-  return (originalPush.call(this, location) as any).catch((e: any) => e);
-};
-Vue.use(VueRouter);
 
-const routes: Array<RouteConfig> = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: () => import('../views/desktop'),
@@ -81,9 +74,9 @@ const routes: Array<RouteConfig> = [
   },
 ];
 
-const router = new VueRouter({
+const router = createRouter({
   routes,
-  mode: 'hash',
+  history: createWebHashHistory(),
 });
 router.beforeEach((to, from, next) => {
   if (to.meta?.device == 'desktop') {

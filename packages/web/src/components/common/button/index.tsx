@@ -1,27 +1,38 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Emit, Prop } from 'vue-property-decorator';
+import { PropType } from 'vue';
+
+import { defineComponent } from 'vue';
 import './index.scss';
-
-interface IButtonProps {
-  type?: 'warn' | 'error' | 'default' | 'success';
-  size?: 'min' | 'max' | 'default';
-  onclick?: (e: PointerEvent) => void;
-}
-
-@Component
-export default class Button extends VueComponent<IButtonProps> {
-  @Prop({ default: 'default' }) private readonly type!: string;
-  @Prop({ default: 'default' }) private readonly size!: string;
-
-  @Emit('click')
-  private handleClick() {}
-
-  public render(): VNode {
-    return (
-      <button class={['button', `button-${this.type}`, `button-size-${this.size}`]} onclick={this.handleClick}>
-        {this.$slots.default}
+/**
+ * 图标组件
+ */
+const Button = defineComponent({
+  name: 'Button',
+  props: {
+    icon: {
+      type: String as PropType<'warn' | 'error' | 'default' | 'success'>,
+      required: false,
+      default: 'default',
+    },
+    size: {
+      type: String as PropType<'min' | 'max' | 'default'>,
+      default: 'default',
+      required: false,
+    },
+  },
+  emits: ['click'],
+  setup(props, { emit, slots }) {
+    /**
+     * 点击事件
+     * @param e
+     */
+    const handleClick = (e: Event) => {
+      emit('click', e);
+    };
+    return () => (
+      <button class={['button', `button-${props.size}`, `button-size-${props.size}`]} onClick={handleClick}>
+        {slots.default?.()}
       </button>
     );
-  }
-}
+  },
+});
+export default Button;

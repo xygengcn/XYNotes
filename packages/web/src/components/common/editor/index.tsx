@@ -1,91 +1,141 @@
-import { VNode } from 'vue';
-import { Component, Prop, Ref, Watch } from 'vue-property-decorator';
-import './index.scss';
-import { VueComponent } from '@/shims-vue';
-import { EditorController, VDITOR_CDN } from './lib';
+import { PropType, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import Loading from '../loading';
-
+import './index.scss';
+import { EditorController, VDITOR_CDN } from './lib';
 export * from './lib';
 
-interface EditorProps {
-  // 文本
-  value?: string;
-  // 编辑还预览
-  type?: 'editor' | 'preview';
-  // 延迟
-  delay?: number;
-  // 索引
-  id?: string | number;
+const Editor = defineComponent({
+  props: {
+    value: {
+      type: String,
+      required: true,
+      default: ''
+    },
+    // 编辑还预览
+    type: {
+      type: String as PropType<'editor' | 'preview'>,
+      default: 'editor'
+    },
 
-  // 文本发生变化,延时
-  onChange?: (value: string) => void;
-  // 开始创建
-  onCreated?: (controller: EditorController) => void;
-  // 挂在结束
-  onMounted?: (controller: EditorController) => void;
-  // 字数发生变化
-  onCounter?: (length: number) => void;
-}
-@Component({
-  name: 'Editor',
-})
-export default class Editor extends VueComponent<EditorProps> {
-  // 值
-  @Prop({ default: '' }) private readonly value!: string;
+    delay: {
+      type: Number
+    },
 
-  // 值
-  @Prop({ default: 0 }) private readonly id: string | number;
+    id: {
+      type: String
+    }
+  },
+  emits: {
+    // 文本发生变化,延时
+    change: (value: string) => {},
+    // 开始创建
+    created: (controller: EditorController) => {},
+    // 挂在结束
+    mounted: (controller: EditorController) => {},
+    // 字数发生变化
+    counter: (length: number) => {},
 
-  // 类型
-  @Prop({ default: 'editor' }) private readonly type: 'editor' | 'preview';
+    updated: (controller: EditorController) => {}
+  },
+  setup(props, context) {
+    /**
+     * 编辑器控制器
+     */
+    let editorController!: EditorController;
 
-  // 节点
-  @Ref('editorContent') public readonly editorContent: HTMLDivElement;
+    /**
+     * 编辑器加载
+     */
+    const editorLoading = ref<boolean>(true);
 
-  /**
-   * 编辑器控制器
-   */
-  public editorController!: EditorController;
+    const refEditorContent = ref<HTMLDivElement>();
 
-  /**
-   * 编辑器加载
-   */
-  public editorLoading = true;
+    /**
+     * 监听id
+     */
+    watch(
+      () => props.id,
+      () => {
+        editorLoading.value = true;
+        nextTick(() => {
+          editorController?.focus();
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+        });
+      }
+    );
 
-  // 监听变化
-  @Watch('value', { immediate: true })
-  watchValuePreview() {
-    // 预览
-    this.$nextTick(() => {
-      if (this.type === 'preview' && this.editorContent) {
-        EditorController.preview(this.editorContent, this.value || '', {
-          mode: 'dark',
-          hljs: {
-            style: 'native',
+    watch(
+      () => props.value,
+      () => {
+        // 预览
+        nextTick(() => {
+          if (props.type === 'preview' && refEditorContent.value) {
+            EditorController.preview(refEditorContent.value, props.value || '', {
+              mode: 'dark',
+              hljs: {
+                style: 'native'
+              },
+              cdn: VDITOR_CDN,
+              after: () => {
+                editorLoading.value = false;
+              }
+            });
+          }
+        });
+      },
+      { immediate: true }
+    );
+
+    onBeforeUnmount(() => {
+      editorController.destroy();
+    });
+
+    onMounted(() => {
+      // 编辑
+      if (props.type === 'editor') {
+        editorController = new EditorController(refEditorContent.value, {
+          width: '100%',
+          preview: {
+            maxWidth: 2048,
+            hljs: {
+              style: 'native'
+            }
           },
-          cdn: VDITOR_CDN,
-          after: () => {
-            this.editorLoading = false;
+          cache: {
+            enable: false
           },
+          value: props.value,
+          onChange: (value) => {
+            context.emit('change', value);
+          },
+          onCreated: (controler) => {
+            editorLoading.value = true;
+            context.emit('created', controler);
+          },
+          onUpdated: (controler) => {
+            editorLoading.value = false;
+            context.emit('updated', controler);
+          },
+          onMounted: (controler) => {
+            editorLoading.value = false;
+            context.emit('mounted', controler);
+          },
+          onCounter: (count) => {
+            context.emit('counter', count);
+          }
         });
       }
     });
-  }
-
-  @Watch('id')
-  watchId() {
-    this.editorLoading = true;
-    this.$nextTick(() => {
-      this.editorController?.focus();
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-    });
-  }
-
-  public render(): VNode {
+    return {
+      editorLoading,
+      refEditorContent
+    };
+  },
+  render() {
     return (
       <div class={{ editor: true, 'editor-preview': this.type === 'preview' }} data-id={this.id} data-nodrag>
-        <div ref="editorContent" class="editor-content" tabindex="1"></div>
+        <div ref="refEditorContent" class="editor-content" tabindex="1"></div>
         {this.editorLoading && (
           <div class="editor-loading">
             <Loading text="加载中" />
@@ -94,48 +144,6 @@ export default class Editor extends VueComponent<EditorProps> {
       </div>
     );
   }
+});
 
-  /**
-   * 初始化一个编辑器
-   */
-  public mounted(): void {
-    // 编辑
-    if (this.type === 'editor') {
-      this.editorController = new EditorController(this.editorContent, {
-        width: '100%',
-        preview: {
-          maxWidth: 2048,
-          hljs: {
-            style: 'native',
-          },
-        },
-        cache: {
-          enable: false,
-        },
-        value: this.value,
-        onChange: (value) => {
-          this.$emit('change', value);
-        },
-        onCreated: (controler) => {
-          this.editorLoading = true;
-          this.$emit('created', controler);
-        },
-        onUpdated: (controler) => {
-          this.editorLoading = false;
-          this.$emit('updated', controler);
-        },
-        onMounted: (controler) => {
-          this.editorLoading = false;
-          this.$emit('mounted', controler);
-        },
-        onCounter: (count) => {
-          this.$emit('counter', count);
-        },
-      });
-    }
-  }
-
-  public beforeDestroy() {
-    this.editorController?.destroy();
-  }
-}
+export default Editor;

@@ -1,32 +1,31 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Prop, Watch } from 'vue-property-decorator';
-import { Route } from 'vue-router';
+import { Transition, defineComponent, ref, watch } from 'vue';
+import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
 import './index.scss';
 
-interface AppViewProps {
-  name?: string;
-}
-
-@Component
-export default class AppView extends VueComponent<AppViewProps> {
-  @Prop({ default: 'default' }) private name: string;
-  private transitionName = '';
-
-  @Watch('$route')
-  watchRouter(to: Route, from: Route) {
-    if (to.meta.index > from.meta.index) {
-      //设置动画名称
-      this.transitionName = 'slide-left';
-    } else {
-      this.transitionName = 'slide-right';
+const AppView = defineComponent({
+  props: {
+    name: {
+      type: String,
+      default: 'default'
     }
-  }
-  public render(): VNode {
+  },
+  setup(props) {
+    const transitionName = ref('');
+    const route = useRoute();
+    watch(route, (to: RouteLocationNormalizedLoaded, from: RouteLocationNormalizedLoaded) => {
+      if (to.meta.index > from.meta.index) {
+        //设置动画名称
+        transitionName.value = 'slide-left';
+      } else {
+        transitionName.value = 'slide-right';
+      }
+    });
     return (
-      <transition name={this.transitionName}>
-        <router-view name={this.name}></router-view>
-      </transition>
+      <Transition name={transitionName.value}>
+        <router-view name={props.name}></router-view>
+      </Transition>
     );
   }
-}
+});
+
+export default AppView;

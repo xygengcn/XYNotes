@@ -1,129 +1,115 @@
 import { Note } from '@/services/note';
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Prop, Ref } from 'vue-property-decorator';
-import './index.scss';
 import { screenshot, screenshotCopy } from '@/utils/image';
-import Loading from '../common/loading';
+import { PropType, createApp, defineComponent, ref } from 'vue';
 import Dialog from '../common/dialog';
 import Editor from '../common/editor';
 import Icon from '../common/icon';
+import Loading from '../common/loading';
+import './index.scss';
 
 interface IScreenshotProps {
   width?: string;
   height?: string;
   menu?: string[];
 }
+const Screenshot = defineComponent({
+  props: {
+    note: {
+      type: Object as PropType<Note>,
+      required: true
+    },
+    width: {
+      type: String,
+      default: '65%'
+    },
+    height: {
+      type: String,
+      default: '80%'
+    },
+    menu: {
+      type: Array as PropType<string[]>,
+      default: () => ['md', 'image', 'copyText', 'copyImage', 'copyJson']
+    }
+  },
+  setup(props) {
+    /**
+     * 加载
+     */
+    const loading = ref(false);
 
-@Component({
-  name: 'Screenshot',
-})
-export class Screenshot extends VueComponent<IScreenshotProps> {
-  /**
-   * 菜单
-   */
-  @Prop({ default: () => ['md', 'image', 'copyText', 'copyImage', 'copyJson'] })
-  private readonly menu!: string[];
+    /**
+     * 弹窗
+     */
+    const refDialog = ref<typeof Dialog>();
+    /**
+     * 编辑器
+     */
+    const refScreenshotPreview = ref<typeof Editor>();
 
-  /**
-   * 长宽
-   */
-  @Prop({ default: '65%' }) private readonly width!: string;
-  @Prop({ default: '80%' }) private readonly height!: string;
+    /**
+     * 下载
+     */
+    const handleClickDownalodScreenshot = () => {
+      loading.value = true;
+      // 生成截图
+      return screenshot(refScreenshotPreview.value.editorContent, props.note.title).then(() => {
+        loading.value = false;
+      });
+    };
 
-  /**
-   * 编辑器
-   */
-  @Ref() private readonly refScreenshotPreview!: Editor;
+    /**
+     * 复制图片
+     * @returns
+     */
+    const handleClickCopyImage = () => {
+      loading.value = true;
+      // 生成截图
+      return screenshotCopy(refScreenshotPreview.value.editorContent).then(() => {
+        loading.value = false;
+        window.$ui.toast('复制图片成功');
+      });
+    };
 
-  /**
-   * 弹窗
-   */
-  @Ref() private readonly refDialog!: Dialog;
-  /**
-   * 当前笔记
-   */
-  private note: Note | null = null;
-
-  /**
-   * 加载
-   */
-  private loading = false;
-
-  /**
-   * 显示
-   * @param note
-   */
-  public show(note: Note): void {
-    this.note = note;
-    this.refDialog.show();
-  }
-
-  /**
-   * 下载
-   */
-  private handleClickDownalodScreenshot(): Promise<any> {
-    this.loading = true;
-    // 生成截图
-    return screenshot(this.refScreenshotPreview.editorContent, this.note?.title).then(() => {
-      this.loading = false;
-    });
-  }
-
-  /**
-   * 复制图片
-   * @returns
-   */
-  private handleClickCopyImage() {
-    this.loading = true;
-    // 生成截图
-    return screenshotCopy(this.refScreenshotPreview.editorContent).then(() => {
-      this.loading = false;
-      window.$ui.toast('复制图片成功');
-    });
-  }
-
-  /**
-   * 关闭事件
-   */
-  private handleClose() {
-    this.loading = false;
-  }
-  public render(): VNode {
-    return (
+    /**
+     * 关闭事件
+     */
+    const handleClose = () => {
+      loading.value = false;
+    };
+    return () => (
       <Dialog
-        width={this.width}
-        height={this.height}
-        ref="refDialog"
+        width={props.width}
+        height={props.height}
+        ref={refDialog}
         class="note-share-dialog"
-        title={this.note?.title}
-        onclose={this.handleClose}
+        title={props.note.title}
+        onclose={handleClose}
       >
         <div class="note-share-content">
           <div class="note-share-content-preview">
-            <Editor ref="refScreenshotPreview" value={this.note?.text || ''} type="preview" />
+            <Editor ref={refScreenshotPreview} value={props.note.text || ''} type="preview" />
           </div>
           <div class="note-share-content-bottom">
-            {this.menu.includes('copyImage') && (
+            {props.menu.includes('copyImage') && (
               <span class="note-share-content-bottom-item">
                 <Icon
                   type="item-copy"
-                  onclick={this.handleClickCopyImage}
+                  onclick={handleClickCopyImage}
                   v-tippy={{ placement: 'top', content: '复制' }}
                 ></Icon>
               </span>
             )}
-            {this.menu.includes('image') && (
+            {props.menu.includes('image') && (
               <span class="note-share-content-bottom-item">
                 <Icon
                   type="item-pic-download"
-                  onclick={this.handleClickDownalodScreenshot}
+                  onclick={handleClickDownalodScreenshot}
                   v-tippy={{ placement: 'top', content: '下载' }}
                 ></Icon>
               </span>
             )}
           </div>
-          {this.loading && (
+          {loading.value && (
             <div class="note-share-content-loading">
               <Loading text="加载中" />
             </div>
@@ -132,20 +118,23 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
       </Dialog>
     );
   }
-}
+});
 
-let noteShareDialogInstance: Screenshot | null = null;
-export default function showShareNoteDialog(note: Note, propsData: IScreenshotProps = {}): Screenshot {
-  if (!noteShareDialogInstance) {
-    const panel = document.querySelector('#Screenshot');
-    if (panel) {
-      document.removeChild(panel);
-    }
-    const el = document.createElement('div');
-    el.id = 'Screenshot';
-    document.body.appendChild(el);
-    noteShareDialogInstance = new Screenshot({ propsData }).$mount(el);
+export default function showShareNoteDialog(note: Note, options: IScreenshotProps = {}) {
+  const instance = document.querySelector('#screenshot');
+  if (instance) {
+    document.body.removeChild(instance);
   }
-  noteShareDialogInstance.show(note);
-  return noteShareDialogInstance;
+  const el = document.createElement('div');
+  el.id = 'screenshot';
+  document.body.appendChild(el);
+  const app = createApp(Screenshot, {
+    note,
+    ...options,
+    onClose() {
+      app.unmount();
+      el && document.body.removeChild(el);
+    }
+  });
+  app.mount(el);
 }

@@ -1,37 +1,35 @@
-import { VueComponent } from '@/shims-vue';
 import { debounce } from '@/utils/debounce-throttle';
-import { VNode } from 'vue';
-import { Component, VModel } from 'vue-property-decorator';
+import { defineComponent } from 'vue';
 import './index.scss';
-interface IDesktopSideContainerListProps {}
 
-@Component
-export default class DesktopSideContainerListSearch extends VueComponent<IDesktopSideContainerListProps> {
-  @VModel() private readonly keyword!: string;
-
-  /**
-   * 搜索
-   * @param e
-   * @returns
-   */
-  private handleInput() {
-    return debounce((e: PointerEvent) => {
-      const target = e.target as HTMLInputElement;
-      this.$emit('input', target.value);
-    });
-  }
-
-  public render(): VNode {
-    return (
+const DesktopSideContainerListSearch = defineComponent({
+  props: {
+    value: String
+  },
+  setup(props, context) {
+    /**
+     * 搜索
+     * @param e
+     * @returns
+     */
+    const handleInput = () => {
+      return debounce((e: PointerEvent) => {
+        const target = e.target as HTMLInputElement;
+        context.emit('input', target.value);
+      });
+    };
+    return () => (
       <div class="desktop-side-container-list-search" data-nodrag>
         <input
           type="text"
           placeholder="搜索笔记"
-          value={this.keyword}
-          onInput={this.handleInput()}
+          value={props.value}
+          onInput={handleInput}
           id="desktopSideContainerListSearch"
         />
       </div>
     );
   }
-}
+});
+
+export default DesktopSideContainerListSearch;

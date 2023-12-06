@@ -1,17 +1,14 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component } from 'vue-property-decorator';
+import { defineComponent } from 'vue';
 import './index.scss';
 
-interface IDesktopMainContainerProps {}
-
-@Component
-export default class DesktopMainContainer extends VueComponent<IDesktopMainContainerProps> {
-  public render(): VNode {
-    return (
+const DesktopMainContainer = defineComponent({
+  setup() {
+    return () => (
       <div class="desktop-main-container">
         <router-view name="main" />
       </div>
     );
   }
-}
+});
+
+export default DesktopMainContainer;

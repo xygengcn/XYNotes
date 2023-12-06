@@ -1,50 +1,47 @@
-import { Note } from '@/services/note';
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
-import showShareNoteDialog from '@/components/note-share';
-import './index.scss';
 import IconNavMenu from '@/components/icon-nav-menu';
-import { downloadFile } from '@/utils/file';
-import { copyText } from '@/utils';
+import showShareNoteDialog from '@/components/note-share';
 import showParseFormatClearDialog from '@/components/parse-format-clear';
+import { Note } from '@/services/note';
+import { copyText } from '@/utils';
+import { downloadFile } from '@/utils/file';
+import { PropType, defineComponent } from 'vue';
+import './index.scss';
 
-interface IDesktopMainContainerDefaultRightProps {
-  note: Note;
-}
-
-@Component
-export default class DesktopMainContainerDefaultRight extends VueComponent<IDesktopMainContainerDefaultRightProps> {
-  @Prop() private readonly note: Note;
-
-  private get menuList() {
-    return [
+const DesktopMainContainerDefaultRight = defineComponent({
+  props: {
+    note: {
+      type: Object as PropType<Note>,
+      required: true
+    }
+  },
+  setup(props) {
+    const menuList = [
       {
         title: '预览',
         icon: 'item-preview',
-        visible: !!this.note,
+        visible: true,
         action: () => {
-          this.note && showShareNoteDialog(this.note);
-        },
+          props.note && showShareNoteDialog(props.note);
+        }
       },
       {
         title: '复制',
         icon: 'item-copy',
-        visible: !!this.note,
+        visible: true,
         action: () => {
-          if (this.note?.text) {
-            copyText(this.note?.text || '');
+          if (props.note.text) {
+            copyText(props.note.text || '');
             window.$ui.toast('复制文本成功');
           }
-        },
+        }
       },
       {
         title: 'JSON下载',
         icon: 'item-json-download',
-        visible: !!this.note,
+        visible: true,
         action: () => {
-          this.note && downloadFile(JSON.stringify(this.note) || '', `${this.note?.title || 'XYNote'}.json`);
-        },
+          props.note && downloadFile(JSON.stringify(props.note) || '', `${props.note.title || 'XYNote'}.json`);
+        }
       },
       {
         title: '格式刷',
@@ -52,30 +49,29 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
         visible: true,
         action: () => {
           showParseFormatClearDialog();
-        },
+        }
       },
       {
         title: '删除',
         icon: 'item-delete',
-        visible: !!this.note,
+        visible: true,
         action: () => {
-          window.$ui.confirm({
-            type: 'warn',
-            width: 300,
-            content: '确定删除这个笔记吗？',
-            onSubmit: (context) => {
-              this.note?.delete();
-              context.close();
-            },
-          });
-        },
-      },
+          props.note &&
+            window.$ui.confirm({
+              type: 'warn',
+              width: 300,
+              content: '确定删除这个笔记吗？',
+              onSubmit: () => {
+                props.note.delete();
+              }
+            });
+        }
+      }
     ];
-  }
-  public render(): VNode {
-    return (
+
+    return () => (
       <div class="desktop-main-container-default-content-right">
-        {this.menuList.map((menu) => {
+        {menuList.map((menu) => {
           return (
             <div
               class="desktop-main-container-default-content-right-menu"
@@ -96,4 +92,6 @@ export default class DesktopMainContainerDefaultRight extends VueComponent<IDesk
       </div>
     );
   }
-}
+});
+
+export default DesktopMainContainerDefaultRight;

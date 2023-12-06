@@ -1,16 +1,14 @@
 import { debounce } from '@/utils/debounce-throttle';
-import Vue, { VNode } from 'vue';
+import { App } from 'vue';
 
-export default {
-  install(vue: typeof Vue) {
-    vue.directive('debounce', {
-      bind: (el: Element, binding, vnode: VNode) => {
-        const fn = debounce(binding.value);
-        el.addEventListener('click', fn);
-        vnode.context.$once('hook:beforeDestroy', () => {
-          el.removeEventListener('click', fn);
-        });
-      },
-    });
-  },
-};
+export default function VueDebounce(app: App) {
+  app.directive('debounce', {
+    mounted: (el, binding, vnode) => {
+      el.debounceFn = debounce(binding.value);
+      el.addEventListener('click', el.debounceFn);
+    },
+    beforeUnmount(el) {
+      el.debounceFn && el.removeEventListener('click', el.debounceFn);
+    }
+  });
+}

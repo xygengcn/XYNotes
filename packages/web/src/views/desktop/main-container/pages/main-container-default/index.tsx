@@ -1,34 +1,27 @@
 import Icon from '@/components/common/icon';
 import NoteEditor from '@/components/note-editor';
-import { Note } from '@/services/note';
-import { VueComponent } from '@/shims-vue';
 import { useNotesStore } from '@/store/notes.store';
-import { VNode } from 'vue';
-import { Component } from 'vue-property-decorator';
+import { computed, defineComponent } from 'vue';
 import './index.scss';
 import DesktopMainContainerDefaultRight from './right-bar';
 
-interface IDesktopMainContainerProps {}
-
-@Component
-export default class DesktopMainContainerDefault extends VueComponent<IDesktopMainContainerProps> {
-  /**
-   * 当前选中笔记
-   */
-  private get activeNote(): Note | undefined {
+const DesktopMainContainerDefault = defineComponent({
+  setup() {
     const store = useNotesStore();
-    return store.activeNote;
-  }
-
-  public render(): VNode {
-    return (
+    /**
+     * 当前选中笔记
+     */
+    const activeNote = computed(() => {
+      return store.activeNote;
+    });
+    return () => (
       <div class="desktop-main-container-default">
-        {this.activeNote ? (
+        {activeNote.value ? (
           <div class="desktop-main-container-default-content">
             <div class="desktop-main-container-default-content-left">
-              <NoteEditor nid={this.activeNote.nid} />
+              <NoteEditor nid={activeNote.value.nid} />
             </div>
-            <DesktopMainContainerDefaultRight note={this.activeNote} />
+            <DesktopMainContainerDefaultRight note={activeNote.value} />
           </div>
         ) : (
           <div class="desktop-main-container-default__default">
@@ -38,4 +31,6 @@ export default class DesktopMainContainerDefault extends VueComponent<IDesktopMa
       </div>
     );
   }
-}
+});
+
+export default DesktopMainContainerDefault;

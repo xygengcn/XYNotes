@@ -1,23 +1,17 @@
 import logo from '@/assets/images/logo/logo.png';
 import MinMax from '@/components/common/min-max';
-import { VueComponent } from '@/shims-vue';
 import { useNotesStore } from '@/store/notes.store';
-import { VNode } from 'vue';
-import { Component } from 'vue-property-decorator';
+import { defineComponent } from 'vue';
 import './index.scss';
 import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
 
-interface IDesktopNavMenuProps {}
+export const DESKTOP_NAV_MENU_WIDTH = 64;
 
-@Component({ name: 'DesktopNavMenu' })
-export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
-  // 左侧菜单长度
-  public static DESKTOP_NAV_MENU_WIDTH = 64;
-
-  // 左侧菜单
-  private get desktopNavMenuList(): IdesktopNavMenuItem[] {
+const DesktopNavMenu = defineComponent({
+  setup() {
     const store = useNotesStore();
-    return [
+
+    const desktopNavMenuList: IdesktopNavMenuItem[] = [
       {
         title: '新增',
         icon: 'nav-editing',
@@ -25,14 +19,14 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
         visible: true,
         action: () => {
           store.addNote();
-        },
+        }
       },
       {
         title: '列表',
         icon: 'nav-list',
         name: 'desktop-list',
         visible: true,
-        path: '/',
+        path: '/'
       },
       {
         title: '回收',
@@ -40,21 +34,19 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
         name: 'desktop-recycle',
         visible: true,
         path: '/recycle',
-        size: 18,
+        size: 18
       },
       {
         title: '设置',
         icon: 'nav-setting',
         visible: true,
         name: 'desktop-setting',
-        path: '/setting',
-      },
+        path: '/setting'
+      }
     ];
-  }
 
-  public render(): VNode {
-    return (
-      <div class="desktop-nav-menu" style={{ width: `${DesktopNavMenu.DESKTOP_NAV_MENU_WIDTH}px` }}>
+    return () => (
+      <div class="desktop-nav-menu" style={{ width: `${DESKTOP_NAV_MENU_WIDTH}px` }}>
         <div class="desktop-nav-menu-top">
           <div class="desktop-nav-menu-top-opts">
             <MinMax></MinMax>
@@ -65,7 +57,7 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
         </div>
         <div class="desktop-nav-menu-content">
           <div class="desktop-nav-menu-content-list">
-            {this.desktopNavMenuList.map((item) => {
+            {desktopNavMenuList.map((item) => {
               return item.visible && <DesktopNavMenuItem menu={item} />;
             })}
           </div>
@@ -80,4 +72,6 @@ export default class DesktopNavMenu extends VueComponent<IDesktopNavMenuProps> {
       </div>
     );
   }
-}
+});
+
+export default DesktopNavMenu;

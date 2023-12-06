@@ -1,103 +1,82 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Prop, Ref } from 'vue-property-decorator';
-import './index.scss';
+import noteEventBus from '@/event-bus';
+import { copyText } from '@/utils';
+import { createApp, defineComponent, ref } from 'vue';
 import Dialog from '../common/dialog';
 import Icon from '../common/icon';
-import { copyText } from '@/utils';
-import noteEventBus from '@/event-bus';
+import './index.scss';
 
-interface IScreenshotProps {
-  width?: string;
-  height?: string;
-}
+const ParseFormatClear = defineComponent({
+  props: {
+    width: {
+      type: String,
+      default: '400px'
+    },
+    height: {
+      type: String,
+      default: '500px'
+    }
+  },
+  setup(props) {
+    /**
+     * 输入字符
+     */
+    const text = ref('');
 
-@Component({
-  name: 'Screenshot',
-})
-export class Screenshot extends VueComponent<IScreenshotProps> {
-  /**
-   * 弹窗
-   */
-  @Ref() private readonly refDialog!: Dialog;
-  /**
-   * 长宽
-   */
-  @Prop({ default: '400px' }) private readonly width!: string;
-  @Prop({ default: '500px' }) private readonly height!: string;
+    const refDialog = ref<typeof Dialog>();
+    /**
+     * 复制
+     */
+    const handleClickCopy = () => {
+      copyText(text.value || '');
+      window.$ui.toast('复制文本成功');
+      refDialog.value.close();
+    };
 
-  /**
-   * 输入字符
-   */
-  private text = '';
+    /**
+     * 插入
+     */
+    const handleInsertEditor = () => {
+      noteEventBus.emit('insert', text.value);
+      refDialog.value.close();
+    };
 
-  /**
-   * 显示
-   * @param note
-   */
-  public show(): void {
-    this.refDialog.show();
-  }
+    const handleClose = () => {
+      text.value = '';
+    };
 
-  /**
-   * 复制
-   */
-  private handleClickCopy() {
-    copyText(this.text || '');
-    window.$ui.toast('复制文本成功');
-    this.refDialog.close();
-  }
+    const handleInput = (e) => {
+      text.value = e.target.value;
+    };
 
-  /**
-   * 插入
-   */
-  private handleInsertEditor() {
-    noteEventBus.emit('insert', this.text);
-    this.refDialog.close();
-  }
-
-  private handleClose() {
-    this.text = '';
-  }
-
-  private handleInput(e) {
-    this.text = e.target.value;
-  }
-
-  public render(): VNode {
-    return (
+    return () => (
       <Dialog
-        width={this.width}
-        height={this.height}
-        ref="refDialog"
+        width={props.width}
+        height={props.height}
+        ref={refDialog}
         title={'格式刷'}
         class="parse-format-clear-dialog"
-        onclose={this.handleClose}
+        onclose={handleClose}
       >
         <div class="parse-format-clear-content">
           <div class="parse-format-clear-content-textarea">
             <textarea
-              value={this.text}
+              value={text.value}
               id=""
               cols="30"
               rows="10"
               placeholder="粘贴需要清理格式的文本"
-              onInput={this.handleInput}
+              onInput={handleInput}
             ></textarea>
           </div>
 
           <div class="parse-format-clear-content-bottom">
             <span>
-              <Icon
-                type="item-copy"
-                onclick={this.handleClickCopy}
-                v-tippy={{ placement: 'top', content: '复制' }}
-              ></Icon>
+              <Icon type="item-copy" onclick={handleClickCopy} v-tippy={{ placement: 'top', content: '复制' }}></Icon>
             </span>
             <span>
               <Icon
                 type="item-text-insert"
-                onclick={this.handleInsertEditor}
+                onclick={handleInsertEditor}
                 v-tippy={{ placement: 'top', content: '插入' }}
               ></Icon>
             </span>
@@ -106,20 +85,21 @@ export class Screenshot extends VueComponent<IScreenshotProps> {
       </Dialog>
     );
   }
-}
+});
 
-let parseFormatClearDialogInstance: Screenshot | null = null;
-export default function showParseFormatClearDialog(): Screenshot {
-  if (!parseFormatClearDialogInstance) {
-    const panel = document.querySelector('#parse-format-clear-dialog');
-    if (panel) {
-      document.removeChild(panel);
-    }
-    const el = document.createElement('div');
-    el.id = 'parse-format-clear-dialog';
-    document.body.appendChild(el);
-    parseFormatClearDialogInstance = new Screenshot({}).$mount(el);
+export default function showParseFormatClearDialog() {
+  const instance = document.querySelector('#parse-format-clear-dialog');
+  if (instance) {
+    document.body.removeChild(instance);
   }
-  parseFormatClearDialogInstance.show();
-  return parseFormatClearDialogInstance;
+  const el = document.createElement('div');
+  el.id = 'parse-format-clear-dialog';
+  document.body.appendChild(el);
+  const app = createApp(ParseFormatClear, {
+    onClose() {
+      app.unmount();
+      el && document.body.removeChild(el);
+    }
+  });
+  app.mount(el);
 }

@@ -3,118 +3,112 @@ import Icon from '@/components/common/icon';
 import NoteItem from '@/components/note-item';
 import { Note } from '@/services/note';
 import { syncDataByV2 } from '@/services/note.action';
-import { VueComponent } from '@/shims-vue';
 import { useConfigsStore } from '@/store/config.store';
 import { useNotesStore } from '@/store/notes.store';
 import { NoteListSortType } from '@/typings/enum/note';
 import { debounce } from '@/utils/debounce-throttle';
-import { VNode } from 'vue';
-import { Component } from 'vue-property-decorator';
+import { computed, defineComponent, onBeforeMount, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { SwipeList } from 'vue-swipe-actions';
 import 'vue-swipe-actions/dist/vue-swipe-actions.css';
 import './index.scss';
-interface IMobileHomeProps {}
 
-@Component
-export default class MobileHome extends VueComponent<IMobileHomeProps> {
-  // 抽屉
-  private visibleMoreDrawer: boolean = false;
-  /**
-   * 排序类型
-   */
-  private get noteListSortType() {
-    const store = useConfigsStore();
-    return store?.noteListSort?.value || NoteListSortType.updated;
-  }
-  /**
-   * 关键词
-   */
-  private keyword = '';
-  /**
-   * 笔记列表
-   */
-  // 笔记列表
-  private get noteList() {
+const MobileHome = defineComponent({
+  setup() {
     const store = useNotesStore();
-    return store.notesList
-      .filter((note) => {
-        if (this.keyword.trim()) {
-          return (
-            note.intro?.includes(this.keyword) ||
-            note.text?.includes(this.keyword) ||
-            note.title?.includes(this.keyword)
-          );
-        }
-        return true;
-      })
-      .sort((a, b) => {
-        return b[this.noteListSortType] - a[this.noteListSortType];
-      });
-  }
+    const configStore = useConfigsStore();
+    const router = useRouter();
+    /**
+     * 关键词
+     */
+    const keyword = ref('');
 
-  /**
-   * 点击
-   */
-  private handleClickItem(note: Note) {
-    return this.$router.push({
-      name: 'mobile-detail',
-      params: {
-        nid: note.nid,
-      },
-    });
-  }
-
-  /**
-   * 新增
-   */
-  private handleClickAdd(): void {
-    const store = useNotesStore();
-    store.addNote();
-  }
-
-  /**
-   * 删除
-   */
-  private handleDeleteNote(note: Note) {
-    window.$ui.confirm({
-      type: 'warn',
-      width: 300,
-      content: '确定删除这个笔记吗？',
-      onSubmit: (context) => {
-        note?.delete();
-        context.close();
-      },
-    });
-  }
-
-  /**
-   * 搜索
-   * @returns
-   */
-  private handleInput() {
-    return debounce((e: PointerEvent) => {
+    /**
+     * 是否显示抽屉
+     */
+    const visibleMoreDrawer = ref(false);
+    /**
+     * 搜索
+     * @returns
+     */
+    const handleInput = debounce((e: PointerEvent) => {
       const target = e.target as HTMLInputElement;
-      this.keyword = target.value.trimStart();
+      keyword.value = target.value.trimStart();
     });
-  }
 
-  public render(): VNode {
-    const store = useNotesStore();
-    return (
+    /**
+     * 排序类型
+     */
+    const noteListSortType = computed(() => {
+      return configStore?.noteListSort?.value || NoteListSortType.updated;
+    });
+
+    /**
+     * 笔记列表
+     */
+    const noteList = computed(() => {
+      if (!keyword.value.trim()) {
+        return store.notesList;
+      }
+      return store.notesList
+        .filter((note) => {
+          return (
+            note.intro?.includes(keyword.value) ||
+            note.text?.includes(keyword.value) ||
+            note.title?.includes(keyword.value)
+          );
+        })
+        .sort((a, b) => {
+          return b[noteListSortType.value] - a[noteListSortType.value];
+        });
+    });
+    /**
+     * 点击
+     */
+    const handleClickItem = (note: Note) => {
+      return router.push({
+        name: 'mobile-detail',
+        params: {
+          nid: note.nid
+        }
+      });
+    };
+
+    /**
+     * 新增
+     */
+    const handleClickAdd = () => {
+      const store = useNotesStore();
+      store.addNote();
+    };
+
+    /**
+     * 删除
+     */
+    const handleDeleteNote = (note: Note) => {
+      window.$ui.confirm({
+        type: 'warn',
+        width: 300,
+        content: '确定删除这个笔记吗？',
+        onSubmit: () => {
+          note?.delete();
+        }
+      });
+    };
+
+    onBeforeMount(() => {
+      store.setActiveNoteId('');
+    });
+    return () => (
       <div class="mobile-home">
         <div class="mobile-home-header">
           <div class="mobile-home-header-search">
-            <input
-              type="text"
-              onInput={this.handleInput()}
-              class="mobile-home-header-search__input"
-              placeholder="搜索"
-            />
+            <input type="text" onInput={handleInput} class="mobile-home-header-search__input" placeholder="搜索" />
           </div>
           <div
             class="mobile-home-header-more"
-            onclick={() => {
-              this.visibleMoreDrawer = true;
+            onClick={() => {
+              visibleMoreDrawer.value = true;
             }}
           >
             <Icon type="mobile-more" size="2em"></Icon>
@@ -125,7 +119,7 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
             <SwipeList
               ref="swipeList"
               class="mobile-home-content-list-scroll"
-              items={this.noteList}
+              items={noteList.value}
               item-key="id"
               scopedSlots={{
                 default: (props) => {
@@ -134,8 +128,8 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
                       class="mobile-home-content-list-scroll-item"
                       note={props.item}
                       sortIndex={props.index}
-                      onselect={this.handleClickItem}
-                      keyword={this.keyword}
+                      onselect={handleClickItem}
+                      keyword={keyword.value}
                     ></NoteItem>
                   );
                 },
@@ -144,15 +138,15 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
                     <div class="mobile-home-content-list-scroll-right">
                       <div
                         class="mobile-home-content-list-scroll-right-delete"
-                        onclick={() => {
-                          this.handleDeleteNote(props.item);
+                        onClick={() => {
+                          handleDeleteNote(props.item);
                         }}
                       >
                         <Icon type="item-delete"> </Icon>
                       </div>
                     </div>
                   );
-                },
+                }
               }}
             />
           </div>
@@ -160,16 +154,16 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
         <div class="mobile-home-footer">
           <div class="mobile-home-footer-content">
             <span>{store.noteListCount}个笔记</span>
-            <span class="mobile-home-footer-content-add" onclick={this.handleClickAdd}>
+            <span class="mobile-home-footer-content-add" onClick={handleClickAdd}>
               <Icon type="mobile-add" size="2em"></Icon>
             </span>
           </div>
         </div>
 
         <Drawer
-          visible={this.visibleMoreDrawer}
+          visible={visibleMoreDrawer.value}
           onclose={() => {
-            this.visibleMoreDrawer = false;
+            visibleMoreDrawer.value = false;
           }}
         >
           <div class="mobile-home-more">
@@ -192,9 +186,6 @@ export default class MobileHome extends VueComponent<IMobileHomeProps> {
       </div>
     );
   }
+});
 
-  public created() {
-    const store = useNotesStore();
-    store.setActiveNoteId('');
-  }
-}
+export default MobileHome;

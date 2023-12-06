@@ -1,44 +1,30 @@
-import './preload';
-import './shortcut';
-import Vue from 'vue';
-import App from './App';
-import { createPinia, PiniaVuePlugin } from 'pinia';
-import router from './router';
-import VueCompositionApi from '@vue/composition-api';
-import vDebounce from './directive/debounce';
 import Toast from '@/components/common/toast';
+import { createPinia } from 'pinia';
+import { createApp } from 'vue';
+import VueTippy from 'vue-tippy';
+import App from './App';
 import Confirm from './components/common/confirm';
-import './registerServiceWorker';
-import VueTippy, { TippyComponent } from 'vue-tippy';
+import VueDebounce from './directive/debounce';
 import middlewareHook from './middlewares';
-import perloadDefaultMiddleware from './middlewares/preload.middleware';
 import { configSaveDefautlMiddleware } from './middlewares/config.middleware';
 import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from './middlewares/note.middleware';
+import perloadDefaultMiddleware from './middlewares/preload.middleware';
+import './preload';
+import './registerServiceWorker';
+import router from './router';
+import './shortcut';
+import VueLongPress from './directive/long-press';
 
 // @ts-ignore
 if (process.env.NODE_ENV === 'development') {
-  Vue.config.devtools = true;
   window.__TAURI__ && window.openDevtools();
 }
-
-// 提示指令注册
-Vue.use(VueTippy);
-Vue.component('tippy', TippyComponent);
 
 // ui赋值
 window.$ui = {
   toast: Toast,
-  confirm: Confirm,
+  confirm: Confirm
 };
-
-// 注册节流
-Vue.use(vDebounce);
-
-// 注册composition
-Vue.use(VueCompositionApi);
-
-// 注册pinal
-const pinia = createPinia();
 
 // 注册中间件
 middlewareHook.useMiddleware('load', perloadDefaultMiddleware());
@@ -52,13 +38,27 @@ middlewareHook.useMiddleware('deleteNote', deleteNoteDefaultMiddleware());
 middlewareHook.useMiddleware('recovery', perloadDefaultMiddleware());
 
 // 注册pinia
-Vue.use(PiniaVuePlugin);
+const pinia = createPinia();
 
-new Vue({
-  pinia,
-  router,
-  render: (h) => h(App),
-  created: async () => {
+const app = createApp(App, {
+  mounted() {
     middlewareHook.registerMiddleware('load');
-  },
-}).$mount('#app');
+  }
+});
+
+// 注册pinia
+app.use(pinia);
+
+app.use(VueDebounce);
+
+app.use(VueLongPress);
+
+// 指令
+app.use(VueTippy, {
+  directive: 'tippy', // => v-tippy
+  component: 'tippy' // => <tippy/>
+});
+
+app.use(router);
+
+app.mount('#app');

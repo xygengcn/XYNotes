@@ -1,33 +1,49 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { defineComponent } from 'vue';
 import Icon from '../common/icon';
 import './index.scss';
 
-interface IIconNavMenuProps {
-  type: string;
-  active?: boolean;
-  width?: number;
-  height?: number;
-  size?: number;
-}
-
-@Component
-export default class IconNavMenu extends VueComponent<IIconNavMenuProps> {
-  @Prop() private readonly type!: string;
-  @Prop({ default: false, type: Boolean }) private readonly active!: string;
-  @Prop({ default: 36, type: Number }) private readonly width!: number;
-  @Prop({ default: 36, type: Number }) private readonly height!: number;
-  @Prop({ default: 16, type: Number }) private readonly size!: number;
-
-  public render(): VNode {
-    return (
+const IconNavMenu = defineComponent({
+  props: {
+    active: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      required: true
+    },
+    width: {
+      type: Number,
+      default: 36
+    },
+    height: {
+      type: Number,
+      default: 36
+    },
+    size: {
+      type: Number,
+      default: 16
+    }
+  },
+  emits: ['click'],
+  setup(props, context) {
+    /**
+     * 点击事件
+     * @param e
+     */
+    const handleClick = (e) => {
+      context.emit('click', e);
+    };
+    return () => (
       <span
-        class={['icon-nav-menu', { active: this.active }]}
-        style={{ width: `${this.width}px`, height: `${this.height}px` }}
+        class={['icon-nav-menu', { active: props.active }]}
+        style={{ width: `${props.width}px`, height: `${props.height}px` }}
+        onClick={handleClick}
       >
-        <Icon type={this.type} size={this.size} />
+        <Icon type={props.type} size={props.size} />
       </span>
     );
   }
-}
+});
+
+export default IconNavMenu;

@@ -1,5 +1,5 @@
 import { defineConfig, type PluginOption } from 'vite';
-import { createVuePlugin as vue } from 'vite-plugin-vue2';
+import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath } from 'url';
 import { VitePWA } from 'vite-plugin-pwa';

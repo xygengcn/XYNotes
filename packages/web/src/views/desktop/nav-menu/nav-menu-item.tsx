@@ -1,12 +1,7 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
 import IconNavMenu from '@/components/icon-nav-menu';
+import { PropType, defineComponent } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
-
-interface IDesktopNavMenuItemProps {
-  menu: IdesktopNavMenuItem;
-}
 
 export interface IdesktopNavMenuItem {
   title: string;
@@ -18,42 +13,38 @@ export interface IdesktopNavMenuItem {
   size?: number;
 }
 
-@Component({ name: 'DesktopNavMenuItem' })
-export default class DesktopNavMenuItem extends VueComponent<IDesktopNavMenuItemProps> {
-  @Prop() private readonly menu!: IdesktopNavMenuItem;
-
-  /**
-   * 当前路由
-   */
-  private get activeNavMenu() {
-    return this.$route.name;
-  }
-
-  /**
-   * 点击左侧菜单
-   */
-  private handleClickNavMenu(): void {
-    if (this.menu.path) {
-      this.$router.push(this.menu.path);
+const DesktopNavMenuItem = defineComponent({
+  props: {
+    menu: {
+      type: Object as PropType<IdesktopNavMenuItem>,
+      required: true
     }
-    this.menu?.action?.(this.menu);
-  }
-
-  public render(): VNode {
-    return (
+  },
+  setup(props) {
+    const router = useRouter();
+    const route = useRoute();
+    const handleClickNavMenu = () => {
+      if (props.menu.path) {
+        router.push(props.menu.path);
+      }
+      props.menu?.action?.(props.menu);
+    };
+    return () => (
       <div class="desktop-nav-menu-content-list-item">
         <div class="desktop-nav-menu-content-list-item-content">
           <IconNavMenu
-            v-tippy={{ placement: 'right', content: this.menu.title }}
+            v-tippy={{ placement: 'right', content: props.menu.title }}
             width={30}
             height={30}
-            size={this.menu.size || 14}
-            type={this.menu.icon}
-            active={this.menu.name === this.activeNavMenu}
-            nativeOnclick={this.handleClickNavMenu}
+            size={props.menu.size || 14}
+            type={props.menu.icon}
+            active={props.menu.name === route.name}
+            onClick={handleClickNavMenu}
           />
         </div>
       </div>
     );
   }
-}
+});
+
+export default DesktopNavMenuItem;

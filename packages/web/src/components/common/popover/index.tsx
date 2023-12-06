@@ -1,28 +1,24 @@
-import { VNode } from 'vue';
-import { Component } from 'vue-property-decorator';
+import { defineComponent, ref } from 'vue';
 import './index.scss';
-import { VueComponent } from '@/shims-vue';
 
-interface IPopoverProps {}
-@Component({
-  name: 'Popover',
-})
-export default class Popover extends VueComponent<IPopoverProps> {
-  private isShowPopover = false;
+const Popover = defineComponent({
+  setup(props, context) {
+    const isShowPopover = ref(false);
 
-  public render(): VNode {
-    return (
+    return () => (
       <div class="popover">
-        {this.isShowPopover && <div class="popover-shadow" onclick={() => (this.isShowPopover = false)}></div>}
-        <div class="popover-slot" onclick={() => (this.isShowPopover = true)}>
-          {this.$slots.default}
+        {isShowPopover.value && <div class="popover-shadow" onClick={() => (isShowPopover.value = false)}></div>}
+        <div class="popover-slot" onClick={() => (isShowPopover.value = true)}>
+          {context.slots.default()}
         </div>
-        {this.isShowPopover && (
-          <div class="popover-content" onclick={() => (this.isShowPopover = false)}>
-            {this.$slots.popover}
+        {isShowPopover.value && (
+          <div class="popover-content" onClick={() => (isShowPopover.value = false)}>
+            {context.slots.popover()}
           </div>
         )}
       </div>
     );
   }
-}
+});
+
+export default Popover;

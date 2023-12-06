@@ -2,57 +2,70 @@ import Icon from '@/components/common/icon';
 import Loading from '@/components/common/loading';
 import NoteEditor from '@/components/note-editor';
 import showShareNoteDialog from '@/components/note-share';
-import { Note } from '@/services/note';
-import { VueComponent } from '@/shims-vue';
 import { useNotesStore } from '@/store/notes.store';
-import { VNode } from 'vue';
-import { Component } from 'vue-property-decorator';
+import { computed, defineComponent, onBeforeMount, onBeforeUnmount } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
-interface IMobileHomeProps {}
 
-@Component
-export default class MobileDetail extends VueComponent<IMobileHomeProps> {
-  /**
-   * 当前文章
-   */
-  private get note(): Note | undefined {
+const MobileDetail = defineComponent({
+  setup() {
     const store = useNotesStore();
-    return store.activeNote;
-  }
 
-  /**
-   * 分享
-   */
-  private handleClickShare() {
-    this.note &&
-      showShareNoteDialog(this.note, {
-        width: '90%',
-        height: '60%',
-        menu: ['image'],
-      });
-  }
+    const route = useRoute();
+    const router = useRouter();
 
-  /**
-   * 删除
-   */
-  private handleClickDelete() {
-    window.$ui.confirm({
-      type: 'warn',
-      width: 300,
-      content: '确定删除这个笔记吗？',
-      onSubmit: (context) => {
-        this.note?.delete();
-        context.close();
-        this.$router.back();
-      },
+    /**
+     * 当前文章
+     */
+    const note = computed(() => {
+      return store.activeNote;
     });
-  }
-  public render(): VNode {
-    return (
+
+    /**
+     * 分享
+     */
+    const handleClickShare = () => {
+      note.value &&
+        showShareNoteDialog(note.value, {
+          width: '90%',
+          height: '60%',
+          menu: ['image']
+        });
+    };
+
+    /**
+     * 删除
+     */
+    const handleClickDelete = () => {
+      note.value &&
+        window.$ui.confirm({
+          type: 'warn',
+          width: 300,
+          content: '确定删除这个笔记吗？',
+          onSubmit: () => {
+            note.value.delete();
+            router.back();
+          }
+        });
+    };
+
+    onBeforeMount(() => {
+      if (route.params?.nid) {
+        store.setActiveNoteId(route.params?.nid as string);
+      } else {
+        router.back();
+      }
+    });
+
+    onBeforeUnmount(() => {
+      store.setActiveNoteId('');
+    });
+
+    return () => (
       <div class="mobile-detail">
-        {this.note ? (
+        {note.value ? (
           <div class="mobile-detail-content">
-            <NoteEditor nid={this.note.nid}></NoteEditor>
+            <NoteEditor nid={note.value.nid}></NoteEditor>
           </div>
         ) : (
           <div class="mobile-detail-content">
@@ -62,28 +75,16 @@ export default class MobileDetail extends VueComponent<IMobileHomeProps> {
         <div class="mobile-detail-footer">
           <div class="mobile-detail-footer-list">
             <div class="mobile-detail-footer-list-item">
-              <Icon type="item-preview" size={20} nativeOnclick={this.handleClickShare}></Icon>
+              <Icon type="item-preview" size={20} nativeOnclick={handleClickShare}></Icon>
             </div>
             <div class="mobile-detail-footer-list-item">
-              <Icon type="item-delete" size={20} nativeOnclick={this.handleClickDelete}></Icon>
+              <Icon type="item-delete" size={20} nativeOnclick={handleClickDelete}></Icon>
             </div>
           </div>
         </div>
       </div>
     );
   }
+});
 
-  // 获取详情
-  public created(): void {
-    const store = useNotesStore();
-    if (this.$route.params?.nid) {
-      store.setActiveNoteId(this.$route.params?.nid);
-    } else {
-      this.$router.back();
-    }
-
-    this.$once('hook:', () => {
-      store.setActiveNoteId('');
-    });
-  }
-}
+export default MobileDetail;

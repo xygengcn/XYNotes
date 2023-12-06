@@ -1,21 +1,17 @@
 import NoteEditor from '@/components/note-editor';
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component } from 'vue-property-decorator';
+import { defineComponent } from 'vue';
 import './index.scss';
-interface IDetailPageProps {}
+import { useRoute } from 'vue-router';
 
-/**
- * 桌面端单独yes
- */
-
-@Component
-export default class DetailPage extends VueComponent<IDetailPageProps> {
-  public render(): VNode {
-    return (
+const DetailPage = defineComponent({
+  setup() {
+    const route = useRoute();
+    return () => (
       <div class="detail">
-        <NoteEditor nid={this.$route.query?.nid as string}></NoteEditor>
+        <NoteEditor nid={route.query?.nid as string}></NoteEditor>
       </div>
     );
   }
-}
+});
+
+export default DetailPage;

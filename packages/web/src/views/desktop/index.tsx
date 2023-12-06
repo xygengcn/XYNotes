@@ -1,78 +1,76 @@
-import { VueComponent } from '@/shims-vue';
 import { SideContainerMaxWidth, SideContainerMinWidth, useConfigsStore } from '@/store/config.store';
+import { findParentWithNodrag } from '@/utils';
 import { appWindow } from '@tauri-apps/api/window';
-import { VNode } from 'vue';
-import { Component, Ref } from 'vue-property-decorator';
+import { computed, defineComponent, nextTick, onBeforeMount, onMounted, ref } from 'vue';
 import './index.scss';
 import DesktopMainContainer from './main-container';
-import DesktopNavMenu from './nav-menu';
+import DesktopNavMenu, { DESKTOP_NAV_MENU_WIDTH } from './nav-menu';
 import DesktopSideContainer from './side-container';
-import { findParentWithNodrag } from '@/utils';
 
-interface IDesktopProps {}
+const Desktop = defineComponent({
+  setup() {
+    const refDrapLine = ref<HTMLDivElement>();
 
-@Component
-export default class Desktop extends VueComponent<IDesktopProps> {
-  @Ref() private readonly drapLine!: HTMLDivElement;
-
-  private get sideContainerWidth(): number {
     const store = useConfigsStore();
-    return store.sideContainerWidth;
-  }
+    const configStore = useConfigsStore();
+    const sideContainerWidth = computed(() => {
+      return store.sideContainerWidth;
+    });
 
-  public render(): VNode {
-    return (
+    onBeforeMount(() => {
+      if (window.__TAURI__) {
+        document.addEventListener('mousedown', async (e) => {
+          const drag = findParentWithNodrag(e.target as HTMLElement);
+          if (drag === 'true' || drag === true) {
+            return;
+          }
+          await appWindow.startDragging();
+        });
+      }
+    });
+
+    onMounted(() => {
+      // 修改侧边栏宽度
+      nextTick(() => {
+        // pc端
+        refDrapLine.value.onmousedown = () => {
+          document.onmousemove = (e: MouseEvent) => {
+            const clientX = e.clientX - DESKTOP_NAV_MENU_WIDTH;
+            configStore.setSideContainerWidth(clientX);
+            return false;
+          };
+          document.onmouseup = function () {
+            document.onmousemove = null;
+            document.onmouseup = null;
+          };
+          return false;
+        };
+        // 移动端
+        refDrapLine.value.ontouchstart = () => {
+          document.ontouchmove = (e: TouchEvent) => {
+            const clientX = e.touches[0].clientX - DESKTOP_NAV_MENU_WIDTH;
+            configStore.setSideContainerWidth(clientX);
+          };
+        };
+        refDrapLine.value.ontouchend = function () {
+          document.ontouchmove = null;
+        };
+      });
+    });
+
+    return () => {
       <div class="desktop">
         <DesktopNavMenu />
         <DesktopSideContainer
-          width={this.sideContainerWidth}
+          width={sideContainerWidth.value}
           maxWidth={SideContainerMaxWidth}
           minWidth={SideContainerMinWidth}
         />
-        <div class="desktop-drap-line" ref="drapLine"></div>
+        <div class="desktop-drap-line" ref={refDrapLine}></div>
         <DesktopMainContainer />
-      </div>
-    );
+      </div>;
+    };
   }
+});
 
-  public mounted(): void {
-    const store = useConfigsStore();
-    // 修改侧边栏宽度
-    this.$nextTick(() => {
-      // pc端
-      this.drapLine.onmousedown = () => {
-        document.onmousemove = (e: MouseEvent) => {
-          const clientX = e.clientX - DesktopNavMenu.DESKTOP_NAV_MENU_WIDTH;
-          store.setSideContainerWidth(clientX);
-          return false;
-        };
-        document.onmouseup = function () {
-          document.onmousemove = null;
-          document.onmouseup = null;
-        };
-        return false;
-      };
-      // 移动端
-      this.drapLine.ontouchstart = () => {
-        document.ontouchmove = (e: TouchEvent) => {
-          const clientX = e.touches[0].clientX - DesktopNavMenu.DESKTOP_NAV_MENU_WIDTH;
-          store.setSideContainerWidth(clientX);
-        };
-      };
-      this.drapLine.ontouchend = function () {
-        document.ontouchmove = null;
-      };
-    });
-  }
-  created(): void {
-    if (window.__TAURI__) {
-      document.addEventListener('mousedown', async (e) => {
-        const drag = findParentWithNodrag(e.target as HTMLElement);
-        if (drag === 'true' || drag === true) {
-          return;
-        }
-        await appWindow.startDragging();
-      });
-    }
-  }
-}
+export default Desktop;

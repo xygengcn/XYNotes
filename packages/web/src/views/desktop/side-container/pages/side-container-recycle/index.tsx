@@ -1,37 +1,45 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component } from 'vue-property-decorator';
-import './index.scss';
-import { useNotesStore } from '@/store/notes.store';
 import NoteItem from '@/components/note-item';
-import vContextMenu from '@/directive/contextmenu';
-interface IDesktopSideContainerListContentProps {
-  keyword?: string;
-}
+import { useNotesStore } from '@/store/notes.store';
+import { defineComponent } from 'vue';
+import './index.scss';
 
-@Component({
-  name: 'DesktopSideContainerRecycleContent',
-  directives: {
-    contextmenu: vContextMenu,
-  },
-})
-export default class DesktopSideContainerRecycleContent extends VueComponent<IDesktopSideContainerListContentProps> {
-  public render(): VNode {
+const DesktopSideContainerRecycleContent = defineComponent({
+  setup() {
     const store = useNotesStore();
-    return (
+
+    /**
+     * 右键
+     * @param cmdKey
+     * @param index
+     */
+    const handleContextmenu = (cmdKey: string, index: string) => {
+      const store = useNotesStore();
+      const note = index && store.recycleList.find((n) => n.nid === index);
+      console.log('[contextmenu] 右键笔记', cmdKey, index, note);
+      if (note) {
+        switch (cmdKey) {
+          case 'recovery':
+            window.$ui.confirm({
+              type: 'warn',
+              width: 300,
+              content: '确定恢复这个笔记吗？',
+              onSubmit: () => {
+                const store = useNotesStore();
+                store.recovery(note);
+                window.$ui.toast('恢复成功');
+              }
+            });
+            break;
+        }
+      }
+    };
+
+    return () => (
       <div class="desktop-side-container-recycle">
         <div class="desktop-side-container-recycle-header">
           <h3>回收站</h3>
         </div>
-        <div
-          class="desktop-side-container-recycle-list"
-          vContextmenu={{
-            menu: [{ label: '恢复', value: 'recovery' }],
-            onSelect: (value, index) => {
-              this.handleContextmenu(value, index);
-            },
-          }}
-        >
+        <div class="desktop-side-container-recycle-list">
           {store.recycleList.map((note, index) => {
             return (
               <div class="desktop-side-container-recycle-list-item" data-index={note.nid}>
@@ -46,32 +54,6 @@ export default class DesktopSideContainerRecycleContent extends VueComponent<IDe
       </div>
     );
   }
+});
 
-  /**
-   * 右键
-   * @param cmdKey
-   * @param index
-   */
-  private handleContextmenu(cmdKey: string, index: string) {
-    const store = useNotesStore();
-    const note = index && store.recycleList.find((n) => n.nid === index);
-    console.log('[contextmenu] 右键笔记', cmdKey, index, note);
-    if (note) {
-      switch (cmdKey) {
-        case 'recovery':
-          window.$ui.confirm({
-            type: 'warn',
-            width: 300,
-            content: '确定恢复这个笔记吗？',
-            onSubmit: (context) => {
-              const store = useNotesStore();
-              store.recovery(note);
-              window.$ui.toast('恢复成功');
-              context.close();
-            },
-          });
-          break;
-      }
-    }
-  }
-}
+export default DesktopSideContainerRecycleContent;

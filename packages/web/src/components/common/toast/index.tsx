@@ -1,30 +1,29 @@
-import { VueComponent } from '@/shims-vue';
-import { VNode } from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { createApp, defineComponent } from 'vue';
 import './index.scss';
 
-interface IToastProps {
-  text: string;
-}
-
-@Component
-class ToastComponent extends VueComponent<IToastProps> {
-  @Prop() private readonly text: string;
-  public render(): VNode {
-    return (
+const ToastComponent = defineComponent({
+  props: {
+    text: String
+  },
+  setup(props) {
+    return () => (
       <div class="toast">
-        <div class="toast-text">{this.text}</div>
+        <div class="toast-text">{props.text}</div>
       </div>
     );
   }
-}
+});
 
 function Toast(text: string): void {
-  const instance = new ToastComponent({ propsData: { text } });
-  instance.$mount();
-  document.body.appendChild(instance.$el);
+  const el = document.createElement('div');
+  document.body.appendChild(el);
+  const app = createApp(ToastComponent, {
+    text
+  });
+  app.mount(el);
   setTimeout(() => {
-    document.body.removeChild(instance.$el);
+    app.unmount();
+    document.body.removeChild(el);
   }, 3000);
 }
 

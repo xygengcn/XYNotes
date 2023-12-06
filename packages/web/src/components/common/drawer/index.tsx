@@ -1,44 +1,48 @@
-import { VNode } from 'vue';
-import { Component, Emit, Prop, Ref, Watch } from 'vue-property-decorator';
+import { PropType, defineComponent, ref, watch } from 'vue';
 import './index.scss';
-import { VueComponent } from '@/shims-vue';
 
-interface IDrawerProps {
-  visible: boolean;
-  position?: 'top' | 'bottom';
-  onclose?: (e: PointerEvent) => void;
-}
-@Component({
-  name: 'Drawer',
-})
-export default class Drawer extends VueComponent<IDrawerProps> {
-  @Prop() private readonly visible: boolean;
-  @Prop({ default: 'bottom' }) private readonly position: 'top' | 'bottom';
-
-  @Ref() private readonly content: HTMLDivElement;
-
-  @Emit('close')
-  private handleClose() {}
-
-  @Watch('visible')
-  watchVisible() {
-    if (this.visible) {
-      this.content.classList.remove(`drawer-content-${this.position}__close`);
-      this.content.classList.add(`drawer-content-${this.position}__open`);
-    } else {
-      this.content.classList.remove(`drawer-content-${this.position}__open`);
-      this.content.classList.add(`drawer-content-${this.position}__close`);
+const Drawer = defineComponent({
+  props: {
+    visible: {
+      type: Boolean,
+      require: true
+    },
+    position: {
+      type: String as PropType<'top' | 'bottom'>,
+      default: 'bottom'
     }
-  }
+  },
+  setup(props, context) {
+    // 关闭事件
+    const handleClose = () => {
+      context.emit('close');
+    };
 
-  public render(): VNode {
-    return (
-      <div class={{ drawer: true, 'drawer-close': !this.visible }}>
-        <div class="drawer-shadow" onclick={this.handleClose}></div>
-        <div ref="content" class={['drawer-content', `drawer-content-${this.position}`]}>
-          {this.$slots.default}
+    // 获取节点
+    const refContent = ref<HTMLDivElement>();
+
+    watch(
+      () => props.visible,
+      () => {
+        if (props.visible) {
+          refContent.value.classList.remove(`drawer-content-${props.position}__close`);
+          refContent.value.classList.add(`drawer-content-${props.position}__open`);
+        } else {
+          refContent.value.classList.remove(`drawer-content-${props.position}__open`);
+          refContent.value.classList.add(`drawer-content-${props.position}__close`);
+        }
+      }
+    );
+
+    return () => (
+      <div class={{ drawer: true, 'drawer-close': !props.visible }}>
+        <div class="drawer-shadow" onClick={handleClose}></div>
+        <div ref={refContent} class={['drawer-content', `drawer-content-${props.position}`]}>
+          {context.slots.default()}
         </div>
       </div>
     );
   }
-}
+});
+
+export default Drawer;

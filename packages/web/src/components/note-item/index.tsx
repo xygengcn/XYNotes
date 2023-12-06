@@ -1,74 +1,87 @@
 import { Note } from '@/services/note';
-import { VueComponent } from '@/shims-vue';
-import { CreateElement, VNode } from 'vue';
-import { Component, Emit, Prop, Ref, Watch } from 'vue-property-decorator';
-import { DateFormat } from 'js-lark';
-import './index.scss';
-import { highLight } from '@/utils';
 import { useNotesStore } from '@/store/notes.store';
-interface INoteItemProps {
-  note: Note; // 笔记信息
-  sortIndex: number; // 笔记排序
-  keyword?: string; // 关键词
-  onselect?: (note: Note) => void;
-}
+import { highLight } from '@/utils';
+import { DateFormat } from 'js-lark';
+import { PropType, computed, defineComponent, h, nextTick, ref, watch } from 'vue';
+import './index.scss';
 
-@Component
-export default class NoteItem extends VueComponent<INoteItemProps> {
-  @Prop() private readonly note!: Note;
-  @Prop() private readonly sortIndex!: number;
-  @Prop() private readonly keyword!: string;
-  @Ref() private readonly noteRef!: HTMLDivElement;
-
-  /**
-   * 选中的activeNoteId
-   */
-  private get activeNoteId(): string {
+const NoteItem = defineComponent({
+  props: {
+    note: {
+      type: Object as PropType<Note>,
+      required: true
+    },
+    sortIndex: {
+      type: Number,
+      required: true
+    },
+    keyword: {
+      type: String,
+      default: ''
+    }
+  },
+  emits: {
+    select(note: Note) {}
+  },
+  setup(props, context) {
     const store = useNotesStore();
-    return store.activeNoteId;
-  }
 
-  @Watch('sortIndex')
-  watchSortIndex(): void {
-    this.$nextTick(() => {
-      if (this.activeNoteId === this.note.nid) {
-        this.noteRef?.scrollIntoView({ behavior: 'smooth' });
-      }
+    /**
+     * 节点
+     */
+    const refNote = ref<HTMLDivElement>();
+
+    /**
+     * 选中
+     */
+    const activeNoteId = computed(() => {
+      return store.activeNoteId;
     });
-  }
 
-  /**
-   * 点击
-   */
-  @Emit('select')
-  private handleClickSelect(event: PointerEvent) {
-    return this.note;
-  }
-  public render(h: CreateElement): VNode {
+    /**
+     * 选中
+     */
+    const handleClickSelect = () => {
+      context.emit('select', props.note);
+    };
+
+    watch(
+      () => props.sortIndex,
+      () => {
+        nextTick(() => {
+          if (activeNoteId.value === props.note.nid) {
+            refNote.value?.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+    );
+
     return (
       <div
-        class={['note-item', 'note-item-index-' + this.sortIndex, { active: this.activeNoteId === this.note?.nid }]}
-        ref="noteRef"
-        onclick={this.handleClickSelect}
+        class={['note-item', 'note-item-index-' + props.sortIndex, { active: activeNoteId.value === props.note?.nid }]}
+        ref={refNote}
+        onClick={handleClickSelect}
       >
         <div class="note-item-header">
           {h('div', {
             class: 'note-item-header__title',
             domProps: {
-              innerHTML: highLight(this.keyword, this.note?.title),
-            },
+              innerHTML: highLight(props.keyword, props.note.title)
+            }
           })}
         </div>
         <div class="note-item-content">
-          <div class="note-item-content__time">{DateFormat(this.note?.updatedAt)}</div>
+          <div class="note-item-content__time">{DateFormat(props.note?.updatedAt)}</div>
           {h('div', {
             class: 'note-item-content__text',
             domProps: {
-              innerHTML: highLight(this.keyword, (this?.note.intro || this.note?.text)?.slice(0, 80)),
-            },
+              innerHTML: highLight(props.keyword, (props.note.intro || props.note.text)?.slice(0, 80))
+            }
           })}
         </div>
       </div>
     );
   }
-}
+});
+
+export default NoteItem;
