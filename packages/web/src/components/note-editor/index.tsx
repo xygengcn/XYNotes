@@ -8,16 +8,27 @@ import { VNode } from 'vue';
 import { Component, Prop, Ref, Watch } from 'vue-property-decorator';
 import Input from '../common/input';
 import './index.scss';
+import apiEvent from '@/api';
+import { useNotesStore } from '@/store/notes.store';
 
 interface INoteEditorProps {
-  note: Note;
+  nid: string;
+  titleVisible?: boolean;
   onCreated?: (controller: EditorController) => void;
   onMounted?: (controller: EditorController) => void; // 等after
 }
 
 @Component
 export default class NoteEditor extends VueComponent<INoteEditorProps> {
-  @Prop() private readonly note!: Note;
+  /**
+   * nid
+   */
+  @Prop() private readonly nid: string;
+
+  /**
+   * 是否显示title
+   */
+  @Prop({ default: true }) private readonly titleVisible: boolean;
 
   @Ref() private readonly editor!: Editor;
 
@@ -39,17 +50,47 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
   private static maxWidth = 2048;
 
   /**
+   * 当前笔记
+   */
+  private get activeNote(): Note {
+    const store = useNotesStore();
+    return store.activeNote;
+  }
+
+  /**
    * 监听日记发生变化
    * @param id
    */
-  @Watch('note.nid', { immediate: true })
-  watchActiveNodeId(id: string): void {
-    this.editor?.editorController?.setValue(this.note?.text || '');
+  @Watch('nid', { immediate: true })
+  watchActiveNodeId(): void {
+    const store = useNotesStore();
+    if (this.editor) {
+      this.editor.editorLoading = true;
+    }
+    this.editor?.editorController?.setValue(this.activeNote?.text || '');
+    /**
+     * 拉取最新的内容
+     */
+    apiEvent
+      .apiFetchNoteDetailData(this.nid)
+      .then((result) => {
+        if (result.nid === this.nid) {
+          this.editor?.editorController?.setValue(result.text || '');
+          store.updateNote(result);
+          return;
+        }
+      })
+      .finally(() => {
+        if (this.editor) {
+          this.editor.editorLoading = false;
+        }
+      });
+
     // 防抖
     this.debounce = debounceMap(
-      id,
+      this.nid,
       (note: Note) => {
-        if (id === note.nid) {
+        if (this.nid === note.nid) {
           note?.save();
         }
       },
@@ -86,8 +127,8 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
    */
   private handleChangeValue(value: string): void {
     if (value) {
-      this.note?.set({ text: value });
-      this.debounce(this.note);
+      this.activeNote?.set({ text: value });
+      this.debounce(this.activeNote);
     }
   }
 
@@ -97,8 +138,8 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
    */
   private handleChangeTitle(title: string): void {
     if (title) {
-      this.note?.set({ title });
-      this.debounce(this.note);
+      this.activeNote?.set({ title });
+      this.debounce(this.activeNote);
     }
   }
 
@@ -106,18 +147,18 @@ export default class NoteEditor extends VueComponent<INoteEditorProps> {
     return (
       <div class="note-editor">
         <div class="note-editor-header">
-          <span class="note-editor-header__time">{TimeFormat(this.note.updatedAt, 'yyyy年MM月dd HH:mm')}</span>
+          <span class="note-editor-header__time">{TimeFormat(this.activeNote?.updatedAt, 'yyyy年MM月dd HH:mm')}</span>
           {!!this.textLength && <span class="note-editor-header__count">统计: {this.textLength}</span>}
         </div>
-        <div class="note-editor-title" ref="titleRef" style={this.style}>
+        <div class="note-editor-title" ref="titleRef" style={this.style} vShow={this.titleVisible}>
           <div class="note-editor-title-content" style={{ maxWidth: NoteEditor.maxWidth + 'px' }}>
-            <Input value={this.note.title} onchange={this.handleChangeTitle} />
+            <Input value={this.activeNote.title} onchange={this.handleChangeTitle} />
           </div>
         </div>
         <div class="note-editor-content">
           <Editor
-            value={this.note.text || ''}
-            id={this.note.nid}
+            value={this.activeNote.text || ''}
+            id={this.activeNote.nid}
             ref="editor"
             onChange={this.handleChangeValue}
             onCounter={(count) => {

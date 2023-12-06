@@ -23,15 +23,15 @@ export default class NoteItem extends VueComponent<INoteItemProps> {
   /**
    * 选中的activeNoteId
    */
-  private get activeNote(): Note | undefined {
+  private get activeNoteId(): string {
     const store = useNotesStore();
-    return store.activeNote;
+    return store.activeNoteId;
   }
 
   @Watch('sortIndex')
   watchSortIndex(): void {
     this.$nextTick(() => {
-      if (this.activeNote?.nid === this.note.nid) {
+      if (this.activeNoteId === this.note.nid) {
         this.noteRef?.scrollIntoView({ behavior: 'smooth' });
       }
     });
@@ -47,7 +47,7 @@ export default class NoteItem extends VueComponent<INoteItemProps> {
   public render(h: CreateElement): VNode {
     return (
       <div
-        class={['note-item', 'note-item-index-' + this.sortIndex, { active: this.activeNote?.nid === this.note?.nid }]}
+        class={['note-item', 'note-item-index-' + this.sortIndex, { active: this.activeNoteId === this.note?.nid }]}
         ref="noteRef"
         onclick={this.handleClickSelect}
       >

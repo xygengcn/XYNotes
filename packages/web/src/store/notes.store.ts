@@ -27,6 +27,18 @@ export const useNotesStore = defineStore('notes', {
   },
   actions: {
     /**
+     * 更新笔记
+     */
+    updateNote(note: INote) {
+      const originNote = this.notesList.find((n) => note.nid === n.nid);
+      if (originNote) {
+        originNote.update(note);
+      } else {
+        const newNote = new Note(note);
+        this.notesList.unshift(newNote);
+      }
+    },
+    /**
      * 增加笔记
      */
     addNote(): Note {

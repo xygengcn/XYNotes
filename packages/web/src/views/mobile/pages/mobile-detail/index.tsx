@@ -38,7 +38,7 @@ export default class MobileDetail extends VueComponent<IMobileHomeProps> {
   private handleClickDelete() {
     window.$ui.confirm({
       type: 'warn',
-      width: 250,
+      width: 300,
       content: '确定删除这个笔记吗？',
       onSubmit: (context) => {
         this.note?.delete();
@@ -52,7 +52,7 @@ export default class MobileDetail extends VueComponent<IMobileHomeProps> {
       <div class="mobile-detail">
         {this.note ? (
           <div class="mobile-detail-content">
-            <NoteEditor note={this.note}></NoteEditor>
+            <NoteEditor nid={this.note.nid}></NoteEditor>
           </div>
         ) : (
           <div class="mobile-detail-content">

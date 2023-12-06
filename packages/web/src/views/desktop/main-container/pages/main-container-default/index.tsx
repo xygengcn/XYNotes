@@ -26,7 +26,7 @@ export default class DesktopMainContainerDefault extends VueComponent<IDesktopMa
         {this.activeNote ? (
           <div class="desktop-main-container-default-content">
             <div class="desktop-main-container-default-content-left">
-              <NoteEditor note={this.activeNote} />
+              <NoteEditor nid={this.activeNote.nid} />
             </div>
             <DesktopMainContainerDefaultRight note={this.activeNote} />
           </div>

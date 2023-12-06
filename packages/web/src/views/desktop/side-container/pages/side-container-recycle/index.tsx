@@ -61,7 +61,7 @@ export default class DesktopSideContainerRecycleContent extends VueComponent<IDe
         case 'recovery':
           window.$ui.confirm({
             type: 'warn',
-            width: 250,
+            width: 300,
             content: '确定恢复这个笔记吗？',
             onSubmit: (context) => {
               const store = useNotesStore();

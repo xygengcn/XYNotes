@@ -99,7 +99,7 @@ export default class DesktopSideContainerListContent extends VueComponent<IDeskt
         case 'delete':
           window.$ui.confirm({
             type: 'warn',
-            width: 250,
+            width: 300,
             content: '确定删除这个笔记吗？',
             onSubmit: (context) => {
               note.delete();

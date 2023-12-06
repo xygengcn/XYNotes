@@ -52,11 +52,10 @@
 
     &-submit {
       background-color: var(--theme-default-color);
-      color: #eee;
+      color: var(--font-light-color);
     }
 
     &-cancel {
-      background-color: #fff;
       margin-left: 15px;
     }
   }

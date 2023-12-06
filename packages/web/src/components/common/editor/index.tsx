@@ -50,7 +50,7 @@ export default class Editor extends VueComponent<EditorProps> {
   /**
    * 编辑器加载
    */
-  private editorLoading = true;
+  public editorLoading = true;
 
   // 监听变化
   @Watch('value', { immediate: true })

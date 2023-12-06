@@ -95,4 +95,11 @@ export class Note implements INote {
     const noteDetail = JSON.parse(JSON.stringify(this));
     return middlewareHook.registerMiddleware('deleteNote', noteDetail);
   }
+
+  /**
+   * 更新
+   */
+  public update(note: INote) {
+    Object.assign(this, note);
+  }
 }

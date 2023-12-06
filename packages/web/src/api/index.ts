@@ -9,39 +9,57 @@ import ApiBridge from './api.bridge';
 
 class ApiEvent implements ApiBridge {
   // 拉取笔记数据
-  apiFetchNoteListData(): Promise<INote[]> {
+  async apiFetchNoteListData(): Promise<INote[]> {
     return database.module('notes').then((model) => {
-      return model.findAll<INote>().then((list) => {
-        return list;
-      });
+      return model
+        .findAll<INote>({
+          attributes: [
+            'updatedAt',
+            'author',
+            'createdAt',
+            'intro',
+            'nid',
+            'order',
+            'origin',
+            'status',
+            'title',
+            'type',
+            'updatedAt',
+          ],
+        })
+        .then((list) => {
+          return list;
+        });
     });
   }
 
   // 拉取笔记细节
-  apiFetchNoteDetailData(): Promise<any> {
-    throw new Error('Method not implemented.');
+  async apiFetchNoteDetailData(nid: string): Promise<INote> {
+    return database.module('notes').then((model) => {
+      return model.findByPk<INote>(nid);
+    });
   }
 
   // 更新或新建笔记
-  apiSaveOrUpdateNotes(note: INote[]): Promise<any> {
+  async apiSaveOrUpdateNotes(note: INote[]): Promise<any> {
     return database.module('notes').then((model) => {
       return model.bulkCreate(note);
     });
   }
   // 删除笔记
-  apiDeleteNote(note: INote): Promise<any> {
+  async apiDeleteNote(note: INote): Promise<any> {
     return database.module('notes').then((model) => {
       return model.destory(note.nid);
     });
   }
   // 拉取配置
-  apiFetchConfigsData(): Promise<IConfigsColunm[]> {
+  async apiFetchConfigsData(): Promise<IConfigsColunm[]> {
     return database.module('configs').then((model) => {
       return model.findAll();
     });
   }
   // 更新配置
-  apiSaveOrUpdateConfigs(configs: IConfigsColunm[]): Promise<any> {
+  async apiSaveOrUpdateConfigs(configs: IConfigsColunm[]): Promise<any> {
     return database.module('configs').then((model) => {
       return model.bulkCreate(configs);
     });

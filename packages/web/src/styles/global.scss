@@ -2,6 +2,11 @@
 @import './common.scss';
 
 :root {
+  // 背景
+  --app-bg-color: #fff;
+
+  // 滚动条颜色
+  --app-scroller-bg-color: #d0d0d0;
   // 笔记风格
   --note-item-hover-color: rgb(245, 245, 245);
   --note-item-active-color: #eee;
@@ -14,6 +19,7 @@
 
   // 字体
   --font-default-color: #878787;
+  --font-light-color: #eee;
 
   // 主题
   --theme-default-color: #515151;
