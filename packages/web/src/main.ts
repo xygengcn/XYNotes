@@ -2,6 +2,7 @@ import Toast from '@/components/common/toast';
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';
+import 'tippy.js/dist/tippy.css';
 import App from './App';
 import Confirm from './components/common/confirm';
 import VueDebounce from './directive/debounce';
@@ -40,12 +41,7 @@ middlewareHook.useMiddleware('recovery', perloadDefaultMiddleware());
 // 注册pinia
 const pinia = createPinia();
 
-const app = createApp(App, {
-  mounted() {
-    middlewareHook.registerMiddleware('load');
-  }
-});
-
+const app = createApp(App);
 // 注册pinia
 app.use(pinia);
 
@@ -55,8 +51,7 @@ app.use(VueLongPress);
 
 // 指令
 app.use(VueTippy, {
-  directive: 'tippy', // => v-tippy
-  component: 'tippy' // => <tippy/>
+  directive: 'tippy' // => v-tippy
 });
 
 app.use(router);

@@ -5,7 +5,7 @@ import { Note } from '@/services/note';
 import { useNotesStore } from '@/store/notes.store';
 import { debounceMap } from '@/utils/debounce-throttle';
 import { getDeviceType, TimeFormat } from 'js-lark';
-import { computed, defineComponent, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, defineComponent, nextTick, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
 import Input from '../common/input';
 import './index.scss';
 
@@ -15,6 +15,7 @@ import './index.scss';
 export const NoteEditorMaxWidth = 2048;
 
 const NoteEditor = defineComponent({
+  name: 'NoteEditor',
   props: {
     nid: {
       type: String,
@@ -26,10 +27,19 @@ const NoteEditor = defineComponent({
     }
   },
   setup(props) {
+    /**
+     * 编辑器
+     */
     const refEditor = ref<typeof Editor>();
 
+    /**
+     * 标题
+     */
     const refTitle = ref<HTMLDivElement>();
 
+    /**
+     * store
+     */
     const store = useNotesStore();
 
     /**
@@ -42,7 +52,7 @@ const NoteEditor = defineComponent({
     /**
      * 节流事件
      */
-    let debounce: Function;
+    let saveNoteDebounce: Function;
 
     /**
      * 字数
@@ -54,7 +64,7 @@ const NoteEditor = defineComponent({
      */
     const style = computed(() => {
       if (getDeviceType() !== 'mobile') {
-        if (refTitle) {
+        if (refTitle.value) {
           const grap = refTitle.value.clientWidth - NoteEditorMaxWidth / 2;
           return {
             paddingLeft: Math.max(35, grap) + 'px',
@@ -72,38 +82,23 @@ const NoteEditor = defineComponent({
       };
     });
 
+    /**
+     * 监听nid变化
+     */
     watch(
       () => props.nid,
       () => {
-        const store = useNotesStore();
-        if (refEditor) {
-          refEditor.value.editorLoading = true;
-        }
-        refEditor.value?.editorController?.setValue(activeNote.value?.text || '');
-        /**
-         * 拉取最新的内容
-         */
-        apiEvent
-          .apiFetchNoteDetailData(props.nid)
-          .then((result) => {
-            if (result.nid === props.nid) {
-              refEditor.value?.editorController?.setValue(result.text || '');
-              store.updateNote(result);
-              return;
-            }
-          })
-          .finally(() => {
-            if (refEditor.value) {
-              refEditor.value.editorLoading = false;
-            }
-          });
-
+        refEditor.value?.setValue(activeNote.value?.text || '');
+        // 拉取最新的
+        nextTick(() => {
+          handleQueryNoteItem();
+        });
         // 防抖
-        debounce = debounceMap(
+        saveNoteDebounce = debounceMap(
           props.nid,
           (note: Note) => {
             if (props.nid === note.nid) {
-              note?.save();
+              note.save();
             }
           },
           3000
@@ -111,6 +106,27 @@ const NoteEditor = defineComponent({
       },
       { immediate: true }
     );
+    /**
+     * 拉取最新的内容
+     */
+
+    const handleQueryNoteItem = () => {
+      refEditor.value.setLoading(true);
+      return apiEvent
+        .apiFetchNoteDetailData(props.nid)
+        .then((result) => {
+          if (result.nid === props.nid) {
+            refEditor.value.setValue(result.text || '');
+            store.updateNote(result);
+            return;
+          }
+        })
+        .finally(() => {
+          if (refEditor.value) {
+            refEditor.value.setLoading(false);
+          }
+        });
+    };
 
     /**
      * 修改数据
@@ -119,7 +135,7 @@ const NoteEditor = defineComponent({
     const handleChangeValue = (value: string) => {
       if (value) {
         activeNote.value?.set({ text: value });
-        debounce(activeNote.value);
+        saveNoteDebounce(activeNote.value);
       }
     };
 
@@ -130,7 +146,7 @@ const NoteEditor = defineComponent({
     const handleChangeTitle = (title: string) => {
       if (title) {
         activeNote.value?.set({ title });
-        debounce(activeNote.value);
+        saveNoteDebounce(activeNote.value);
       }
     };
 
@@ -138,15 +154,17 @@ const NoteEditor = defineComponent({
      * 事件
      * @param text
      */
-    const insertValue = (text) => {
-      text?.trim() && refEditor.value.editorController?.insertValue(text);
+    const insertValue = (text: string) => {
+      text?.trim() && refEditor.value.insertValue(text);
     };
     onBeforeMount(() => {
+      // 注册插入
       noteEventBus.on('insert', insertValue);
     });
     onBeforeUnmount(() => {
+      // 注销事件
       noteEventBus.off('insert', insertValue);
-      debounce = null;
+      saveNoteDebounce = null;
     });
 
     return () => (
@@ -166,7 +184,7 @@ const NoteEditor = defineComponent({
             id={activeNote.value.nid}
             ref={refEditor}
             onChange={handleChangeValue}
-            onCounter={(count) => {
+            onCounter={(count: number) => {
               textLength.value = count;
             }}
           />

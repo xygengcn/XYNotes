@@ -6,6 +6,7 @@ import { PropType, computed, defineComponent, h, nextTick, ref, watch } from 'vu
 import './index.scss';
 
 const NoteItem = defineComponent({
+  name: 'NoteItem',
   props: {
     note: {
       type: Object as PropType<Note>,
@@ -21,7 +22,7 @@ const NoteItem = defineComponent({
     }
   },
   emits: {
-    select(note: Note) {}
+    select: (note: Note) => true
   },
   setup(props, context) {
     const store = useNotesStore();
@@ -56,7 +57,7 @@ const NoteItem = defineComponent({
       }
     );
 
-    return (
+    return () => (
       <div
         class={['note-item', 'note-item-index-' + props.sortIndex, { active: activeNoteId.value === props.note?.nid }]}
         ref={refNote}
@@ -65,18 +66,14 @@ const NoteItem = defineComponent({
         <div class="note-item-header">
           {h('div', {
             class: 'note-item-header__title',
-            domProps: {
-              innerHTML: highLight(props.keyword, props.note.title)
-            }
+            innerHTML: highLight(props.keyword, props.note.title)
           })}
         </div>
         <div class="note-item-content">
           <div class="note-item-content__time">{DateFormat(props.note?.updatedAt)}</div>
           {h('div', {
             class: 'note-item-content__text',
-            domProps: {
-              innerHTML: highLight(props.keyword, (props.note.intro || props.note.text)?.slice(0, 80))
-            }
+            innerHTML: highLight(props.keyword, (props.note.intro || props.note.text)?.slice(0, 80))
           })}
         </div>
       </div>

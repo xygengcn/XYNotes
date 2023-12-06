@@ -47,7 +47,7 @@ export class EditorController extends Vditor {
         enable: !!options.onCounter,
         after(count) {
           options.onCounter?.(count);
-        },
+        }
       },
       input: (value: string) => {
         options.input?.(value);
@@ -60,7 +60,7 @@ export class EditorController extends Vditor {
           options.onMounted?.(this);
         }
         this.onMounted(options);
-      },
+      }
     });
     options.onCreated?.(this);
   }
@@ -120,7 +120,7 @@ export class EditorController extends Vditor {
           attributes: true,
           childList: true,
           characterData: true,
-          subtree: true,
+          subtree: true
         });
     }
   }

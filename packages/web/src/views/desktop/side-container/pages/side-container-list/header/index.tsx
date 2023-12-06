@@ -8,12 +8,14 @@ import { computed, defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopSideContainerListHeader = defineComponent({
+  name: 'DesktopSideContainerListHeader',
   setup() {
     const store = useNotesStore();
     const configStore = useConfigsStore();
 
     // 切换排序
     const handleChangeSortType = (sort: INoteListSort) => {
+      console.info('[sort]', sort);
       configStore.setNoteListSort(sort);
     };
 

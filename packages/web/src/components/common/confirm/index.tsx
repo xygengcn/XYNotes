@@ -1,4 +1,5 @@
 import { PropType, computed, createApp, defineComponent, ref } from 'vue';
+import Button from '../button';
 import Dialog from '../dialog';
 import Icon from '../icon';
 import './index.scss';
@@ -23,24 +24,29 @@ interface IConfirmProps {
 const ConfirmComponent = defineComponent({
   name: 'Confirm',
   props: {
-    icon: {
+    type: {
       type: String as PropType<'warn' | 'error' | 'default' | 'success'>,
       required: false,
       default: 'default'
     },
-    size: {
-      type: String as PropType<'min' | 'max' | 'default'>,
-      default: 'default',
-      required: false
+    content: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String
+    },
+    width: {
+      type: Number,
+      default: 300
+    },
+    height: {
+      type: Number,
+      default: 150
     }
   },
   emits: ['close', 'submit', 'cancel'],
   setup(props, { emit }) {
-    /**
-     * 配置
-     */
-    const options = ref<IConfirmProps>({ type: 'default', width: 300, height: 150, content: '' });
-
     /**
      * 获取弹窗
      */
@@ -51,7 +57,7 @@ const ConfirmComponent = defineComponent({
      */
     const customStyle = computed(() => {
       const style = {};
-      Object.assign(style, { height: `${options.value.height || 150}px`, width: `${options.value.width || 300}px` });
+      Object.assign(style, { height: `${props.height || 150}px`, width: `${props.width || 300}px` });
       return style;
     });
 
@@ -67,6 +73,7 @@ const ConfirmComponent = defineComponent({
      */
     const handleSubmit = () => {
       emit('submit');
+      handleClose();
     };
 
     /**
@@ -74,21 +81,23 @@ const ConfirmComponent = defineComponent({
      */
     const handleCancel = () => {
       emit('cancel');
+      handleClose();
     };
+
     return () => (
       <Dialog customClass="confirm" ref={refContext} customStyle={customStyle.value} onClose={handleClose}>
         <div class="confirm-header">
-          {options.value.type && <Icon type={`tip-${options.value.type}`} size={18} />}
-          {options.value.title || '提示'}
+          <Icon type={`tip-${props.type}`} size={18} />
+          {props.title || '提示'}
         </div>
-        <div class="confirm-content">{options.value.content}</div>
+        <div class="confirm-content">{props.content}</div>
         <div class="confirm-footer">
-          <button class="confirm-footer-submit" onClick={handleSubmit}>
+          <Button class="confirm-footer-submit" size="min" onClick={handleSubmit}>
             确认
-          </button>
-          <button class="confirm-footer-cancel" onClick={handleCancel}>
+          </Button>
+          <Button class="confirm-footer-cancel" icon="" size="min" onClick={handleCancel}>
             取消
-          </button>
+          </Button>
         </div>
       </Dialog>
     );
@@ -96,6 +105,7 @@ const ConfirmComponent = defineComponent({
 });
 
 export default function Confirm(options: IConfirmProps): void {
+  console.log('[Confirm]', options);
   const instance = document.querySelector('#confirm');
   if (instance) {
     document.body.removeChild(instance);
@@ -105,6 +115,12 @@ export default function Confirm(options: IConfirmProps): void {
   document.body.appendChild(el);
   const app = createApp(ConfirmComponent, {
     ...options,
+    onSubmit() {
+      options.onSubmit?.();
+    },
+    onCancel() {
+      options.onCancel?.();
+    },
     onClose() {
       app.unmount();
       el && document.body.removeChild(el);

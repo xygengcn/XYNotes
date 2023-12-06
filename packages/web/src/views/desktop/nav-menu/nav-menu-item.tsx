@@ -14,6 +14,7 @@ export interface IdesktopNavMenuItem {
 }
 
 const DesktopNavMenuItem = defineComponent({
+  name: 'DesktopNavMenuItem',
   props: {
     menu: {
       type: Object as PropType<IdesktopNavMenuItem>,

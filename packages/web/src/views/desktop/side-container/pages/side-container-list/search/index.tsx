@@ -3,6 +3,7 @@ import { defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopSideContainerListSearch = defineComponent({
+  name: 'DesktopSideContainerListSearch',
   props: {
     value: String
   },

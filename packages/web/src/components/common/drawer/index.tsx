@@ -12,6 +12,7 @@ const Drawer = defineComponent({
       default: 'bottom'
     }
   },
+  emits: ['close'],
   setup(props, context) {
     // 关闭事件
     const handleClose = () => {

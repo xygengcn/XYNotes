@@ -27,15 +27,15 @@ const Editor = defineComponent({
   },
   emits: {
     // 文本发生变化,延时
-    change: (value: string) => {},
+    change: (value: string) => true,
     // 开始创建
-    created: (controller: EditorController) => {},
+    created: (controller: EditorController) => true,
     // 挂在结束
-    mounted: (controller: EditorController) => {},
+    mounted: (controller: EditorController) => true,
     // 字数发生变化
-    counter: (length: number) => {},
-
-    updated: (controller: EditorController) => {}
+    counter: (length: number) => true,
+    // 更新
+    updated: (controller: EditorController) => true
   },
   setup(props, context) {
     /**
@@ -48,6 +48,9 @@ const Editor = defineComponent({
      */
     const editorLoading = ref<boolean>(true);
 
+    /**
+     * 编辑器节点
+     */
     const refEditorContent = ref<HTMLDivElement>();
 
     /**
@@ -65,6 +68,9 @@ const Editor = defineComponent({
       }
     );
 
+    /**
+     * 监听值
+     */
     watch(
       () => props.value,
       () => {
@@ -86,10 +92,6 @@ const Editor = defineComponent({
       },
       { immediate: true }
     );
-
-    onBeforeUnmount(() => {
-      editorController.destroy();
-    });
 
     onMounted(() => {
       // 编辑
@@ -118,18 +120,36 @@ const Editor = defineComponent({
             context.emit('updated', controler);
           },
           onMounted: (controler) => {
+            console.log('[Editor] mounted');
             editorLoading.value = false;
             context.emit('mounted', controler);
           },
           onCounter: (count) => {
+            console.log('[Editor] counter');
             context.emit('counter', count);
           }
         });
       }
     });
+    onBeforeUnmount(() => {
+      editorController.destroy();
+    });
+
     return {
       editorLoading,
-      refEditorContent
+      refEditorContent,
+      // loading
+      setLoading: (flag: boolean) => {
+        editorLoading.value = flag;
+      },
+      // 设置值
+      setValue: (value: string) => {
+        editorController.setValue(value);
+      },
+      // 设置值
+      insertValue: (value: string) => {
+        editorController.insertValue(value);
+      }
     };
   },
   render() {

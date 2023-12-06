@@ -5,6 +5,7 @@ import './index.scss';
 import DesktopSideContainerListSearch from './search';
 
 const DesktopSideContainerList = defineComponent({
+  name: 'DesktopSideContainerList',
   setup() {
     const keyword = ref('');
     return () => (

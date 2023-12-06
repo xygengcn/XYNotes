@@ -7,6 +7,7 @@ import { computed, defineComponent, ref } from 'vue';
 import './index.scss';
 
 const DesktopSideContainerListContent = defineComponent({
+  name: 'DesktopSideContainerListContent',
   props: {
     keyword: String
   },
@@ -37,7 +38,6 @@ const DesktopSideContainerListContent = defineComponent({
     // 笔记列表
     const noteList = computed(() => {
       const store = useNotesStore();
-
       if (!props.keyword.trim()) {
         return store.notesList;
       }
@@ -94,7 +94,7 @@ const DesktopSideContainerListContent = defineComponent({
                   key={note.nid}
                   sortIndex={index}
                   keyword={props.keyword}
-                  onselect={handleSelectItem}
+                  onSelect={handleSelectItem}
                 />
               </div>
             );

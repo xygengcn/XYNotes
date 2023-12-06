@@ -9,8 +9,6 @@ import { NoteListSortType } from '@/typings/enum/note';
 import { debounce } from '@/utils/debounce-throttle';
 import { computed, defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { SwipeList } from 'vue-swipe-actions';
-import 'vue-swipe-actions/dist/vue-swipe-actions.css';
 import './index.scss';
 
 const MobileHome = defineComponent({
@@ -116,7 +114,7 @@ const MobileHome = defineComponent({
         </div>
         <div class="mobile-home-content">
           <div class="mobile-home-content-list">
-            <SwipeList
+            {/* <SwipeList
               ref="swipeList"
               class="mobile-home-content-list-scroll"
               items={noteList.value}
@@ -148,7 +146,7 @@ const MobileHome = defineComponent({
                   );
                 }
               }}
-            />
+            /> */}
           </div>
         </div>
         <div class="mobile-home-footer">
@@ -162,7 +160,7 @@ const MobileHome = defineComponent({
 
         <Drawer
           visible={visibleMoreDrawer.value}
-          onclose={() => {
+          onClose={() => {
             visibleMoreDrawer.value = false;
           }}
         >

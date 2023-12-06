@@ -6,26 +6,26 @@ import './index.scss';
 const Icon = defineComponent({
   name: 'Icon',
   props: {
-    icon: {
+    type: {
       type: String,
-      required: true,
+      required: true
     },
     size: {
       type: Number,
-      default: 16,
-    },
+      default: 16
+    }
   },
   emits: ['click'],
   setup(props, { emit }) {
     return () => (
       <i
-        class={['iconfont', `note-${props.icon}`]}
+        class={['iconfont', `note-${props.type}`]}
         style={{ fontSize: props.size + 'px' }}
         onClick={(e) => {
           emit('click', e);
         }}
       />
     );
-  },
+  }
 });
 export default Icon;

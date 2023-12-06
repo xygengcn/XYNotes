@@ -8,6 +8,7 @@ import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
 export const DESKTOP_NAV_MENU_WIDTH = 64;
 
 const DesktopNavMenu = defineComponent({
+  name: 'DesktopNavMenu',
   setup() {
     const store = useNotesStore();
 

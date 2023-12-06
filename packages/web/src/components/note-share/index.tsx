@@ -13,6 +13,7 @@ interface IScreenshotProps {
   menu?: string[];
 }
 const Screenshot = defineComponent({
+  name: 'Screenshot',
   props: {
     note: {
       type: Object as PropType<Note>,
@@ -78,8 +79,10 @@ const Screenshot = defineComponent({
     };
     return () => (
       <Dialog
-        width={props.width}
-        height={props.height}
+        customStyle={{
+          width: props.width,
+          height: props.height
+        }}
         ref={refDialog}
         class="note-share-dialog"
         title={props.note.title}
@@ -92,20 +95,12 @@ const Screenshot = defineComponent({
           <div class="note-share-content-bottom">
             {props.menu.includes('copyImage') && (
               <span class="note-share-content-bottom-item">
-                <Icon
-                  type="item-copy"
-                  onclick={handleClickCopyImage}
-                  v-tippy={{ placement: 'top', content: '复制' }}
-                ></Icon>
+                <Icon type="item-copy" onclick={handleClickCopyImage}></Icon>
               </span>
             )}
             {props.menu.includes('image') && (
               <span class="note-share-content-bottom-item">
-                <Icon
-                  type="item-pic-download"
-                  onclick={handleClickDownalodScreenshot}
-                  v-tippy={{ placement: 'top', content: '下载' }}
-                ></Icon>
+                <Icon type="item-pic-download" onclick={handleClickDownalodScreenshot}></Icon>
               </span>
             )}
           </div>
@@ -121,6 +116,7 @@ const Screenshot = defineComponent({
 });
 
 export default function showShareNoteDialog(note: Note, options: IScreenshotProps = {}) {
+  console.log('[showShareNoteDialog]', note, options);
   const instance = document.querySelector('#screenshot');
   if (instance) {
     document.body.removeChild(instance);

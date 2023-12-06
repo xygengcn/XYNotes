@@ -1,7 +1,9 @@
-import { defineComponent } from 'vue';
+import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
+import middlewareHook from './middlewares';
 
 const App = defineComponent({
+  name: 'App',
   setup() {
     const handleContextMenu = (e: Event) => {
       // @ts-ignore
@@ -9,8 +11,11 @@ const App = defineComponent({
         e.preventDefault();
       }
     };
+    onBeforeMount(() => {
+      middlewareHook.registerMiddleware('load');
+    });
     return () => (
-      <div id="app" onContextmenu={handleContextMenu}>
+      <div class="app" onContextmenu={handleContextMenu}>
         <router-view />
       </div>
     );

@@ -8,6 +8,7 @@ import { PropType, defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopMainContainerDefaultRight = defineComponent({
+  name: 'DesktopMainContainerDefaultRight',
   props: {
     note: {
       type: Object as PropType<Note>,
@@ -82,7 +83,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
                 height={30}
                 size={18}
                 type={menu.icon}
-                nativeOnclick={() => {
+                onclick={() => {
                   menu.action();
                 }}
               />

@@ -1,5 +1,4 @@
 import { PropType } from 'vue';
-
 import { defineComponent } from 'vue';
 import './index.scss';
 /**
@@ -11,13 +10,13 @@ const Button = defineComponent({
     icon: {
       type: String as PropType<'warn' | 'error' | 'default' | 'success'>,
       required: false,
-      default: 'default',
+      default: 'default'
     },
     size: {
       type: String as PropType<'min' | 'max' | 'default'>,
       default: 'default',
-      required: false,
-    },
+      required: false
+    }
   },
   emits: ['click'],
   setup(props, { emit, slots }) {
@@ -29,10 +28,10 @@ const Button = defineComponent({
       emit('click', e);
     };
     return () => (
-      <button class={['button', `button-${props.size}`, `button-size-${props.size}`]} onClick={handleClick}>
+      <button class={['button', `button-${props.icon}`, `button-size-${props.size}`]} onClick={handleClick}>
         {slots.default?.()}
       </button>
     );
-  },
+  }
 });
 export default Button;

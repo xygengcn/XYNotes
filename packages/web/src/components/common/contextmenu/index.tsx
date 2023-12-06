@@ -1,17 +1,17 @@
 import { ContextMenuItem } from '@/typings/contextmenu';
 import vClickOutside from 'click-outside-vue3';
-import { defineComponent } from 'vue';
+import { Transition, defineComponent } from 'vue';
 import './index.scss';
 
 const ContextMenu = defineComponent({
   emits: {
     close: () => {},
-    select: (key: string) => {},
+    select: (key: string) => {}
   },
   data() {
     return {
       visible: false,
-      menuList: [] as Array<ContextMenuItem>,
+      menuList: [] as Array<ContextMenuItem>
     };
   },
   methods: {
@@ -32,16 +32,16 @@ const ContextMenu = defineComponent({
     handleClose() {
       this.visible = false;
       this.$emit('close');
-    },
+    }
   },
   directives: {
-    clickOutside: vClickOutside.directive,
+    clickOutside: vClickOutside.directive
   },
   render() {
     return (
-      <transition name="fade">
+      <Transition name="fade">
         <div class="contextmenu" ref="contextmenu" v-show={this.visible} v-clickOutside={this.handleClose}>
-          <transition name="zoom">
+          <Transition name="zoom">
             <div class="contextmenu-content" onClick={this.handleClick}>
               {this.menuList.map((item) => {
                 return (
@@ -51,11 +51,11 @@ const ContextMenu = defineComponent({
                 );
               })}
             </div>
-          </transition>
+          </Transition>
         </div>
-      </transition>
+      </Transition>
     );
-  },
+  }
 });
 
 export default ContextMenu;

@@ -6,6 +6,7 @@ import Icon from '../common/icon';
 import './index.scss';
 
 const ParseFormatClear = defineComponent({
+  name: 'ParseFormatClear',
   props: {
     width: {
       type: String,
@@ -29,7 +30,7 @@ const ParseFormatClear = defineComponent({
     const handleClickCopy = () => {
       copyText(text.value || '');
       window.$ui.toast('复制文本成功');
-      refDialog.value.close();
+      refDialog.value.handleClose();
     };
 
     /**
@@ -37,21 +38,29 @@ const ParseFormatClear = defineComponent({
      */
     const handleInsertEditor = () => {
       noteEventBus.emit('insert', text.value);
-      refDialog.value.close();
+      refDialog.value.handleClose();
     };
 
+    /**
+     * 关闭
+     */
     const handleClose = () => {
       text.value = '';
     };
 
+    /**
+     * 关闭
+     */
     const handleInput = (e) => {
       text.value = e.target.value;
     };
 
     return () => (
       <Dialog
-        width={props.width}
-        height={props.height}
+        customStyle={{
+          width: props.width,
+          height: props.height
+        }}
         ref={refDialog}
         title={'格式刷'}
         class="parse-format-clear-dialog"
@@ -71,14 +80,10 @@ const ParseFormatClear = defineComponent({
 
           <div class="parse-format-clear-content-bottom">
             <span>
-              <Icon type="item-copy" onclick={handleClickCopy} v-tippy={{ placement: 'top', content: '复制' }}></Icon>
+              <Icon type="item-copy" onclick={handleClickCopy}></Icon>
             </span>
             <span>
-              <Icon
-                type="item-text-insert"
-                onclick={handleInsertEditor}
-                v-tippy={{ placement: 'top', content: '插入' }}
-              ></Icon>
+              <Icon type="item-text-insert" onclick={handleInsertEditor}></Icon>
             </span>
           </div>
         </div>

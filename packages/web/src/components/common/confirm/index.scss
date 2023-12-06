@@ -37,26 +37,6 @@
     padding: 10px 20px;
     display: flex;
     justify-content: flex-end;
-
-    button {
-      padding: 7px 15px;
-      border-radius: 8px;
-      font-size: 12px;
-      cursor: pointer;
-      border: var(--border-default-size) solid var(--theme-light-color);
-
-      &:hover {
-        opacity: 0.9;
-      }
-    }
-
-    &-submit {
-      background-color: var(--theme-default-color);
-      color: var(--font-light-color);
-    }
-
-    &-cancel {
-      margin-left: 15px;
-    }
+    gap: 15px;
   }
 }

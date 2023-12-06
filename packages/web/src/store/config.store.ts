@@ -3,12 +3,13 @@ import { IConfigsColunm, INoteListSort } from '@/typings/config';
 import { NoteListSortType } from '@/typings/enum/note';
 import { debounce } from '@/utils/debounce-throttle';
 import { defineStore } from 'pinia';
+import { toRaw } from 'vue';
 
 // 最大值
-export const SideContainerMaxWidth = 500;
+export const SIDE_CONTAINER_MAX_WIDTH = 500;
 
 // 最小值
-export const SideContainerMinWidth = 250;
+export const SIDE_CONTAINER_MIN_WIDTH = 250;
 
 // 防抖保存左侧长度
 const debounceSaveSideContainerMaxWidth = debounce((width) => {
@@ -25,8 +26,8 @@ export const useConfigsStore = defineStore('configs', {
     // 排序
     noteListSort: {
       value: NoteListSortType.updated,
-      label: '更新时间',
-    } as INoteListSort,
+      label: '更新时间'
+    } as INoteListSort
   }),
   actions: {
     /**
@@ -34,18 +35,18 @@ export const useConfigsStore = defineStore('configs', {
      * @param width
      */
     setSideContainerWidth(width: number) {
-      this.sideContainerWidth = Math.max(SideContainerMinWidth, Math.min(width, SideContainerMaxWidth));
+      this.sideContainerWidth = Math.max(SIDE_CONTAINER_MIN_WIDTH, Math.min(width, SIDE_CONTAINER_MAX_WIDTH));
       // 防抖
       debounceSaveSideContainerMaxWidth(this.sideContainerWidth);
     },
     // 保存排序
     setNoteListSort(sort: INoteListSort) {
+      console.info('[config] 保存排序配置', sort, this.noteListSort);
       this.noteListSort = sort || {
         value: NoteListSortType.updated,
-        label: '更新时间',
+        label: '更新时间'
       };
-      console.info('[config] 保存排序配置', { noteListSort: this.noteListSort });
-      return middlewareHook.registerMiddleware('saveConfig', { noteListSort: this.noteListSort });
+      return middlewareHook.registerMiddleware('saveConfig', { noteListSort: toRaw(this.noteListSort) });
     },
     /**
      * 配置初始化
@@ -54,6 +55,6 @@ export const useConfigsStore = defineStore('configs', {
       configs.forEach(({ key, value }) => {
         Object.assign(this, { [key]: value });
       });
-    },
-  },
+    }
+  }
 });

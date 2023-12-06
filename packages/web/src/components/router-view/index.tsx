@@ -3,6 +3,7 @@ import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
 import './index.scss';
 
 const AppView = defineComponent({
+  name: 'AppView',
   props: {
     name: {
       type: String,
@@ -20,7 +21,7 @@ const AppView = defineComponent({
         transitionName.value = 'slide-right';
       }
     });
-    return (
+    return () => (
       <Transition name={transitionName.value}>
         <router-view name={props.name}></router-view>
       </Transition>

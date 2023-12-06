@@ -3,6 +3,7 @@ import Icon from '../common/icon';
 import './index.scss';
 
 const IconNavMenu = defineComponent({
+  name: 'IconNavMenu',
   props: {
     active: {
       type: Boolean,

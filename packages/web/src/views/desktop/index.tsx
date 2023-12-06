@@ -1,4 +1,4 @@
-import { SideContainerMaxWidth, SideContainerMinWidth, useConfigsStore } from '@/store/config.store';
+import { SIDE_CONTAINER_MAX_WIDTH, SIDE_CONTAINER_MIN_WIDTH, useConfigsStore } from '@/store/config.store';
 import { findParentWithNodrag } from '@/utils';
 import { appWindow } from '@tauri-apps/api/window';
 import { computed, defineComponent, nextTick, onBeforeMount, onMounted, ref } from 'vue';
@@ -8,11 +8,22 @@ import DesktopNavMenu, { DESKTOP_NAV_MENU_WIDTH } from './nav-menu';
 import DesktopSideContainer from './side-container';
 
 const Desktop = defineComponent({
+  name: 'Desktop',
   setup() {
+    /**
+     * 分割线
+     */
     const refDrapLine = ref<HTMLDivElement>();
 
+    /**
+     * store
+     */
     const store = useConfigsStore();
     const configStore = useConfigsStore();
+
+    /**
+     * 列表栏长度
+     */
     const sideContainerWidth = computed(() => {
       return store.sideContainerWidth;
     });
@@ -58,18 +69,18 @@ const Desktop = defineComponent({
       });
     });
 
-    return () => {
+    return () => (
       <div class="desktop">
         <DesktopNavMenu />
         <DesktopSideContainer
           width={sideContainerWidth.value}
-          maxWidth={SideContainerMaxWidth}
-          minWidth={SideContainerMinWidth}
+          maxWidth={SIDE_CONTAINER_MAX_WIDTH}
+          minWidth={SIDE_CONTAINER_MIN_WIDTH}
         />
         <div class="desktop-drap-line" ref={refDrapLine}></div>
         <DesktopMainContainer />
-      </div>;
-    };
+      </div>
+    );
   }
 });
 
