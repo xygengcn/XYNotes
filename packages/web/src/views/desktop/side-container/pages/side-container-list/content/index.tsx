@@ -2,6 +2,7 @@ import NoteItem from '@/components/note-item';
 import { Note } from '@/services/note';
 import { useConfigsStore } from '@/store/config.store';
 import { useNotesStore } from '@/store/notes.store';
+import { IContextMenuProps } from '@/typings/contextmenu';
 import { NoteListSortType } from '@/typings/enum/note';
 import { computed, defineComponent, ref } from 'vue';
 import './index.scss';
@@ -12,7 +13,8 @@ const DesktopSideContainerListContent = defineComponent({
     keyword: String
   },
   setup(props) {
-    const store = useConfigsStore();
+    const store = useNotesStore();
+    const configStore = useConfigsStore();
 
     // 显示数量
     const listLimit = ref(20);
@@ -33,13 +35,14 @@ const DesktopSideContainerListContent = defineComponent({
      * 排序类型
      */
     const noteListSortType = computed(() => {
-      return store.noteListSort?.value || NoteListSortType.updated;
+      return configStore.noteListSort?.value || NoteListSortType.updated;
     });
     // 笔记列表
     const noteList = computed(() => {
-      const store = useNotesStore();
       if (!props.keyword.trim()) {
-        return store.notesList;
+        return store.notesList.sort((a, b) => {
+          return b[noteListSortType.value] - a[noteListSortType.value];
+        });
       }
       return store.notesList
         .filter((note) => {
@@ -55,11 +58,11 @@ const DesktopSideContainerListContent = defineComponent({
      * @param cmdKey
      * @param index
      */
-    const handleContextmenu = (cmdKey: string, index: string) => {
-      const note = index && noteList.value.find((n) => n.nid === index);
-      console.log('[contextmenu] 右键笔记', cmdKey, index, note);
-      if (note) {
-        switch (cmdKey) {
+    const handleContextmenu = (options: IContextMenuProps) => {
+      const note = options.key && noteList.value.find((n) => n.nid === options.key);
+      console.log('[contextmenu] 右键笔记', options, note);
+      if (note && options.menu) {
+        switch (options.menu.value) {
           case 'delete':
             window.$ui.confirm({
               type: 'warn',
@@ -79,16 +82,19 @@ const DesktopSideContainerListContent = defineComponent({
      * @param note
      */
     const handleSelectItem = (note: Note) => {
-      const store = useNotesStore();
       store.setActiveNoteId(note.nid);
     };
 
     return () => (
       <div class="desktop-side-container-list-content">
-        <div class="desktop-side-container-list-content-list" onScroll={handleScroll}>
+        <div
+          class="desktop-side-container-list-content-list"
+          onScroll={handleScroll}
+          v-contextmenu={{ menuList: [{ label: '删除', value: 'delete' }], onSelect: handleContextmenu }}
+        >
           {noteList.value.slice(0, listLimit.value).map((note, index) => {
             return (
-              <div class="desktop-side-container-list-content-list-item" data-index={note.nid}>
+              <div class="desktop-side-container-list-content-list-item" data-contextmenukey={note.nid}>
                 <NoteItem
                   note={note}
                   key={note.nid}

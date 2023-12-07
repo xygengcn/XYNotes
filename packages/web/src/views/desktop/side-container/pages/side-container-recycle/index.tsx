@@ -2,6 +2,7 @@ import NoteItem from '@/components/note-item';
 import { useNotesStore } from '@/store/notes.store';
 import { defineComponent } from 'vue';
 import './index.scss';
+import { IContextMenuProps } from '@/typings/contextmenu';
 
 const DesktopSideContainerRecycleContent = defineComponent({
   setup() {
@@ -12,19 +13,17 @@ const DesktopSideContainerRecycleContent = defineComponent({
      * @param cmdKey
      * @param index
      */
-    const handleContextmenu = (cmdKey: string, index: string) => {
-      const store = useNotesStore();
-      const note = index && store.recycleList.find((n) => n.nid === index);
-      console.log('[contextmenu] 右键笔记', cmdKey, index, note);
+    const handleContextmenu = (options: IContextMenuProps) => {
+      const note = options.key && store.recycleList.find((n) => n.nid === options.key);
+      console.log('[contextmenu] 恢复笔记', options, note);
       if (note) {
-        switch (cmdKey) {
+        switch (options.menu.value) {
           case 'recovery':
             window.$ui.confirm({
               type: 'warn',
               width: 300,
               content: '确定恢复这个笔记吗？',
               onSubmit: () => {
-                const store = useNotesStore();
                 store.recovery(note);
                 window.$ui.toast('恢复成功');
               }
@@ -39,10 +38,16 @@ const DesktopSideContainerRecycleContent = defineComponent({
         <div class="desktop-side-container-recycle-header">
           <h3>回收站</h3>
         </div>
-        <div class="desktop-side-container-recycle-list">
+        <div
+          class="desktop-side-container-recycle-list"
+          v-contextmenu={{
+            menuList: [{ label: '恢复', value: 'recovery' }],
+            onSelect: handleContextmenu
+          }}
+        >
           {store.recycleList.map((note, index) => {
             return (
-              <div class="desktop-side-container-recycle-list-item" data-index={note.nid}>
+              <div class="desktop-side-container-recycle-list-item" data-contextmenukey={note.nid}>
                 <NoteItem note={note} key={note.nid} sortIndex={index} />
               </div>
             );

@@ -115,7 +115,7 @@ const NoteEditor = defineComponent({
       return apiEvent
         .apiFetchNoteDetailData(props.nid)
         .then((result) => {
-          if (result.nid === props.nid) {
+          if (result?.nid === props.nid) {
             refEditor.value.setValue(result.text || '');
             store.updateNote(result);
             return;
@@ -151,6 +151,13 @@ const NoteEditor = defineComponent({
     };
 
     /**
+     * 失去焦点
+     */
+    const handleEditorBlur = () => {
+      activeNote.value.save();
+    };
+
+    /**
      * 事件
      * @param text
      */
@@ -175,7 +182,7 @@ const NoteEditor = defineComponent({
         </div>
         <div class="note-editor-title" ref={refTitle} style={style.value} v-show={props.titleVisible}>
           <div class="note-editor-title-content" style={{ maxWidth: NoteEditorMaxWidth + 'px' }}>
-            <Input value={activeNote.value.title} onchange={handleChangeTitle} />
+            <Input value={activeNote.value.title} onChange={handleChangeTitle} />
           </div>
         </div>
         <div class="note-editor-content">
@@ -184,6 +191,7 @@ const NoteEditor = defineComponent({
             id={activeNote.value.nid}
             ref={refEditor}
             onChange={handleChangeValue}
+            onBlur={handleEditorBlur}
             onCounter={(count: number) => {
               textLength.value = count;
             }}

@@ -11,7 +11,7 @@ const DesktopSideContainerList = defineComponent({
     return () => (
       <div class="desktop-side-container-list">
         <DesktopSideContainerListHeader />
-        <DesktopSideContainerListSearch v-model={keyword.value} />
+        <DesktopSideContainerListSearch v-model:keyword={keyword.value} />
         <DesktopSideContainerListContent keyword={keyword.value} />
       </div>
     );

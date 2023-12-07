@@ -23,6 +23,9 @@ export interface EditorControllerOptions extends IOptions {
 
   // 字数发生变化
   onCounter?: (length: number) => void;
+
+  // 失去焦点
+  onBlur?: (value: string) => void;
 }
 
 export class EditorController extends Vditor {
@@ -60,6 +63,9 @@ export class EditorController extends Vditor {
           options.onMounted?.(this);
         }
         this.onMounted(options);
+      },
+      blur(value) {
+        options.onBlur?.(value);
       }
     });
     options.onCreated?.(this);

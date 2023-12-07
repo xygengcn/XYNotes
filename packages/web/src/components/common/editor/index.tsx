@@ -28,6 +28,8 @@ const Editor = defineComponent({
   emits: {
     // 文本发生变化,延时
     change: (value: string) => true,
+    // 失去焦点
+    blur: (value: string) => true,
     // 开始创建
     created: (controller: EditorController) => true,
     // 挂在结束
@@ -118,6 +120,10 @@ const Editor = defineComponent({
           onUpdated: (controler) => {
             editorLoading.value = false;
             context.emit('updated', controler);
+          },
+          onBlur: (value) => {
+            editorLoading.value = false;
+            context.emit('blur', value);
           },
           onMounted: (controler) => {
             console.log('[Editor] mounted');

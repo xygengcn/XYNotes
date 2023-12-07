@@ -1,5 +1,5 @@
 import { PropType, computed, createApp, defineComponent, ref } from 'vue';
-import Button from '../button';
+import Button, { ButtonSize, ButtonType } from '../button';
 import Dialog from '../dialog';
 import Icon from '../icon';
 import './index.scss';
@@ -19,6 +19,9 @@ interface IConfirmProps {
   onSubmit?: () => void;
   // 取消回调
   onCancel?: () => void;
+
+  // 按钮数组
+  buttons?: Array<{ text: string; type: ButtonType; onClick: () => void; size: ButtonSize }>;
 }
 
 const ConfirmComponent = defineComponent({
@@ -43,6 +46,10 @@ const ConfirmComponent = defineComponent({
     height: {
       type: Number,
       default: 150
+    },
+    buttons: {
+      type: Array as PropType<Array<{ text: string; type: ButtonType; onClick: () => Boolean; size: ButtonSize }>>,
+      default: []
     }
   },
   emits: ['close', 'submit', 'cancel'],
@@ -91,13 +98,32 @@ const ConfirmComponent = defineComponent({
           {props.title || '提示'}
         </div>
         <div class="confirm-content">{props.content}</div>
+
         <div class="confirm-footer">
-          <Button class="confirm-footer-submit" size="min" onClick={handleSubmit}>
-            确认
-          </Button>
-          <Button class="confirm-footer-cancel" icon="" size="min" onClick={handleCancel}>
-            取消
-          </Button>
+          {props.buttons?.length > 0
+            ? props.buttons.map((item) => {
+                return (
+                  <Button
+                    class="confirm-footer-submit"
+                    type={item.type || 'default'}
+                    size={item.size || 'min'}
+                    onClick={async () => {
+                      const result = await item.onClick();
+                      result && handleClose();
+                    }}
+                  >
+                    {item.text}
+                  </Button>
+                );
+              })
+            : [
+                <Button class="confirm-footer-submit" size="min" onClick={handleSubmit}>
+                  确认
+                </Button>,
+                <Button class="confirm-footer-cancel" icon="" size="min" onClick={handleCancel}>
+                  取消
+                </Button>
+              ]}
         </div>
       </Dialog>
     );

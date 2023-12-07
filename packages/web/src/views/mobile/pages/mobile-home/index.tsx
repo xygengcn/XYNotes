@@ -48,7 +48,9 @@ const MobileHome = defineComponent({
      */
     const noteList = computed(() => {
       if (!keyword.value.trim()) {
-        return store.notesList;
+        return store.notesList.sort((a, b) => {
+          return b[noteListSortType.value] - a[noteListSortType.value];
+        });
       }
       return store.notesList
         .filter((note) => {
@@ -78,7 +80,6 @@ const MobileHome = defineComponent({
      * 新增
      */
     const handleClickAdd = () => {
-      const store = useNotesStore();
       store.addNote();
     };
 
@@ -172,7 +173,7 @@ const MobileHome = defineComponent({
               <div class="mobile-home-more-content-item">
                 <span class="mobile-home-more-content-item-left">数据迁移</span>
                 <span class="mobile-home-more-content-item-right">
-                  <Icon onclick={syncDataByV2} type="data-transfer" size="1.2em"></Icon>
+                  <Icon onClick={syncDataByV2} type="data-transfer" size="1.2em"></Icon>
                 </span>
               </div>
             </div>

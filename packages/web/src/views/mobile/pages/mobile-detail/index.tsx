@@ -9,8 +9,10 @@ import './index.scss';
 
 const MobileDetail = defineComponent({
   setup() {
+    /**
+     * store
+     */
     const store = useNotesStore();
-
     const route = useRoute();
     const router = useRouter();
 
@@ -75,10 +77,10 @@ const MobileDetail = defineComponent({
         <div class="mobile-detail-footer">
           <div class="mobile-detail-footer-list">
             <div class="mobile-detail-footer-list-item">
-              <Icon type="item-preview" size={20} nativeOnclick={handleClickShare}></Icon>
+              <Icon type="item-preview" size={20} onClick={handleClickShare}></Icon>
             </div>
             <div class="mobile-detail-footer-list-item">
-              <Icon type="item-delete" size={20} nativeOnclick={handleClickDelete}></Icon>
+              <Icon type="item-delete" size={20} onClick={handleClickDelete}></Icon>
             </div>
           </div>
         </div>

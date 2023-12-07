@@ -1,6 +1,16 @@
 import { PropType } from 'vue';
 import { defineComponent } from 'vue';
 import './index.scss';
+
+/**
+ * 按钮类型
+ */
+export type ButtonType = 'warn' | 'error' | 'default' | 'success';
+
+/**
+ * 按钮大小
+ */
+export type ButtonSize = 'min' | 'max' | 'default';
 /**
  * 图标组件
  */
@@ -8,12 +18,12 @@ const Button = defineComponent({
   name: 'Button',
   props: {
     icon: {
-      type: String as PropType<'warn' | 'error' | 'default' | 'success'>,
+      type: String as PropType<ButtonType>,
       required: false,
       default: 'default'
     },
     size: {
-      type: String as PropType<'min' | 'max' | 'default'>,
+      type: String as PropType<ButtonSize>,
       default: 'default',
       required: false
     }

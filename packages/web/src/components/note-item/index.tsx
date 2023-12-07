@@ -43,6 +43,9 @@ const NoteItem = defineComponent({
      * 选中
      */
     const handleClickSelect = () => {
+      if (store.activeNote) {
+        store.activeNote.save();
+      }
       context.emit('select', props.note);
     };
 

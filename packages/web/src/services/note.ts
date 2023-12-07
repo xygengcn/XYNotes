@@ -45,7 +45,7 @@ export class Note implements INote {
         text: '这里也有一些内容在这里呢！',
         intro: '这里也有一些内容在这里呢！',
         createdAt: new Date().getTime(),
-        updatedAt: new Date().getTime(),
+        updatedAt: new Date().getTime()
       });
     }
   }
@@ -60,7 +60,7 @@ export class Note implements INote {
       ...note,
       status: 0,
       intro: note?.text?.trim()?.slice(0, 50) || this.intro,
-      updatedAt: new Date().getTime(),
+      updatedAt: new Date().getTime()
     });
   }
   /**

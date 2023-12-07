@@ -2,19 +2,17 @@
  * 右键
  */
 
-export interface ContextMenuItem {
+export interface IContextMenuItem {
   label: string;
   value: string;
 }
 
-export interface ContextMenuProps {
-  left: number;
-  top: number;
-  menu: ContextMenuItem[];
-  selectText: string;
+export interface IContextMenuProps {
+  key: string;
+  menu: IContextMenuItem;
 }
 
-export interface ContextMenuOptions {
-  menu: ContextMenuItem[];
-  onSelect: (value: string, index: string) => void;
+export interface IContextMenuOptions {
+  menuList: IContextMenuItem[];
+  onSelect: (options: IContextMenuProps) => void;
 }

@@ -83,7 +83,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
                 height={30}
                 size={18}
                 type={menu.icon}
-                onclick={() => {
+                onClick={() => {
                   menu.action();
                 }}
               />

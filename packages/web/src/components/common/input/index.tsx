@@ -5,8 +5,13 @@ const Input = defineComponent({
   props: {
     value: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
+  },
+  emits: {
+    change: (value: string) => true,
+    input: (value: string) => true,
+    blur: (e: Event) => true
   },
   setup(props, context) {
     /**
@@ -63,7 +68,7 @@ const Input = defineComponent({
         </div>
       </div>
     );
-  },
+  }
 });
 
 export default Input;
