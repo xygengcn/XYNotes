@@ -6,7 +6,7 @@
 html,
 body,
 #app,
-.app {
+.web {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -16,8 +16,13 @@ body,
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   position: relative;
   background-color: var(--app-bg-color);
-  border-radius: 12px;
+
   font-family: PingFangSC-Regular, Arial, sans-serif;
+}
+
+// 客户端
+.app {
+  border-radius: 12px;
 }
 
 li,

@@ -10,6 +10,8 @@ import { debounce } from '@/utils/debounce-throttle';
 import { computed, defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import './index.scss';
+import { SwipeList } from 'vue3-swipe-actions';
+import 'vue3-swipe-actions/dist/index.css';
 
 const MobileHome = defineComponent({
   setup() {
@@ -114,19 +116,19 @@ const MobileHome = defineComponent({
         </div>
         <div class="mobile-home-content">
           <div class="mobile-home-content-list">
-            {/* <SwipeList
+            <SwipeList
               ref="swipeList"
               class="mobile-home-content-list-scroll"
               items={noteList.value}
               item-key="id"
-              scopedSlots={{
+              v-slots={{
                 default: (props) => {
                   return (
                     <NoteItem
                       class="mobile-home-content-list-scroll-item"
                       note={props.item}
                       sortIndex={props.index}
-                      onselect={handleClickItem}
+                      onSelect={handleClickItem}
                       keyword={keyword.value}
                     ></NoteItem>
                   );
@@ -146,7 +148,7 @@ const MobileHome = defineComponent({
                   );
                 }
               }}
-            /> */}
+            />
           </div>
         </div>
         <div class="mobile-home-footer">

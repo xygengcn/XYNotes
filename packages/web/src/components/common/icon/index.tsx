@@ -1,5 +1,7 @@
+import { isString } from '@/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
+
 /**
  * 图标组件
  */
@@ -11,7 +13,7 @@ const Icon = defineComponent({
       required: true
     },
     size: {
-      type: Number,
+      type: [String, Number],
       default: 16
     }
   },
@@ -20,7 +22,7 @@ const Icon = defineComponent({
     return () => (
       <i
         class={['iconfont', `note-${props.type}`]}
-        style={{ fontSize: props.size + 'px' }}
+        style={{ fontSize: isString(props.size) ? props.size : props.size + 'px' }}
         onClick={(e) => {
           emit('click', e);
         }}

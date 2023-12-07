@@ -30,8 +30,8 @@ export function copy(blob: Blob | null): Promise<any> {
   if (blob) {
     const data = [
       new ClipboardItem({
-        [blob.type]: blob,
-      }),
+        [blob.type]: blob
+      })
     ];
     return navigator.clipboard.write(data).then(
       () => {
@@ -103,4 +103,13 @@ export function findParentWithNodrag(element: HTMLElement): string | boolean | n
   }
   // 如果没有找到带有 data-nodrag 属性的父级元素，则返回 null
   return null;
+}
+
+/**
+ * 是不是字符串
+ * @param str
+ * @returns
+ */
+export function isString(str: unknown): boolean {
+  return typeof str === 'string';
 }

@@ -15,7 +15,7 @@ const App = defineComponent({
       middlewareHook.registerMiddleware('load');
     });
     return () => (
-      <div class="app" onContextmenu={handleContextMenu}>
+      <div class={{ web: true, app: window.__TAURI__ }} onContextmenu={handleContextMenu}>
         <router-view />
       </div>
     );
