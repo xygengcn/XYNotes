@@ -7,16 +7,6 @@ import './index.scss';
 
 const ParseFormatClear = defineComponent({
   name: 'ParseFormatClear',
-  props: {
-    width: {
-      type: String,
-      default: '400px'
-    },
-    height: {
-      type: String,
-      default: '500px'
-    }
-  },
   setup(props) {
     /**
      * 输入字符
@@ -56,16 +46,7 @@ const ParseFormatClear = defineComponent({
     };
 
     return () => (
-      <Dialog
-        customStyle={{
-          width: props.width,
-          height: props.height
-        }}
-        ref={refDialog}
-        title={'格式刷'}
-        class="parse-format-clear-dialog"
-        onclose={handleClose}
-      >
+      <Dialog ref={refDialog} title={'格式刷'} class="parse-format-clear-dialog" onClose={handleClose}>
         <div class="parse-format-clear-content">
           <div class="parse-format-clear-content-textarea">
             <textarea
@@ -80,10 +61,10 @@ const ParseFormatClear = defineComponent({
 
           <div class="parse-format-clear-content-bottom">
             <span>
-              <Icon type="item-copy" onclick={handleClickCopy}></Icon>
+              <Icon type="item-copy" onClick={handleClickCopy}></Icon>
             </span>
             <span>
-              <Icon type="item-text-insert" onclick={handleInsertEditor}></Icon>
+              <Icon type="item-text-insert" onClick={handleInsertEditor}></Icon>
             </span>
           </div>
         </div>

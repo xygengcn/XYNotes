@@ -1,10 +1,11 @@
+import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
 import { Note } from '@/services/note';
 import { useConfigsStore } from '@/store/config.store';
 import { useNotesStore } from '@/store/notes.store';
 import { IContextMenuProps } from '@/typings/contextmenu';
 import { NoteListSortType } from '@/typings/enum/note';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopSideContainerListContent = defineComponent({
@@ -15,21 +16,6 @@ const DesktopSideContainerListContent = defineComponent({
   setup(props) {
     const store = useNotesStore();
     const configStore = useConfigsStore();
-
-    // 显示数量
-    const listLimit = ref(20);
-
-    /**
-     * 滚动, 主动置顶
-     * @param e
-     */
-    const handleScroll = (e: Event) => {
-      const target = e.target as HTMLDivElement;
-      if (target && target.scrollTop + target.clientHeight + 30 >= target.scrollHeight) {
-        listLimit.value += 10;
-        listLimit.value = Math.max(noteList.value.length, listLimit.value);
-      }
-    };
 
     /**
      * 排序类型
@@ -86,13 +72,12 @@ const DesktopSideContainerListContent = defineComponent({
     };
 
     return () => (
-      <div class="desktop-side-container-list-content">
+      <Scroller class="desktop-side-container-list-content">
         <div
           class="desktop-side-container-list-content-list"
-          onScroll={handleScroll}
           v-contextmenu={{ menuList: [{ label: '删除', value: 'delete' }], onSelect: handleContextmenu }}
         >
-          {noteList.value.slice(0, listLimit.value).map((note, index) => {
+          {noteList.value.map((note, index) => {
             return (
               <div class="desktop-side-container-list-content-list-item" data-contextmenukey={note.nid}>
                 <NoteItem
@@ -106,7 +91,7 @@ const DesktopSideContainerListContent = defineComponent({
             );
           })}
         </div>
-      </div>
+      </Scroller>
     );
   }
 });

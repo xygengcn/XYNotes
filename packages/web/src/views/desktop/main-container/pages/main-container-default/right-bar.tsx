@@ -1,6 +1,5 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
-import showParseFormatClearDialog from '@/components/parse-format-clear';
 import { Note } from '@/services/note';
 import { copyText } from '@/utils';
 import { downloadFile } from '@/utils/file';
@@ -42,14 +41,6 @@ const DesktopMainContainerDefaultRight = defineComponent({
         visible: true,
         action: () => {
           props.note && downloadFile(JSON.stringify(props.note) || '', `${props.note.title || 'XYNote'}.json`);
-        }
-      },
-      {
-        title: '格式刷',
-        icon: 'item-clear',
-        visible: true,
-        action: () => {
-          showParseFormatClearDialog();
         }
       },
       {

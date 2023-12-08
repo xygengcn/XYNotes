@@ -1,15 +1,8 @@
 .desktop-side-container-list-content {
   flex: 1;
-  overflow: hidden;
   &-list {
     height: 100%;
-    overflow: auto;
     padding: 10px;
-    overflow: hidden;
-    &:hover {
-      overflow: overlay;
-    }
-
     &-item {
       margin-bottom: 5px;
       width: 100%;

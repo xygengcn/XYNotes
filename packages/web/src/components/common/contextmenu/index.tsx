@@ -17,8 +17,6 @@ const ContextMenuComponent = defineComponent({
     clickOutside: vClickOutside.directive
   },
   props: {
-    left: { type: Number, required: true },
-    top: { type: Number, required: true },
     menuList: {
       type: Array as PropType<Array<IContextMenuItem>>,
       required: true

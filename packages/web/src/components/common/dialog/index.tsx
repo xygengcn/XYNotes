@@ -32,7 +32,7 @@ const Dialog = defineComponent({
       default: true
     },
     customStyle: {
-      type: Object as PropType<CSSStyleDeclaration>,
+      type: Object as PropType<Partial<CSSStyleDeclaration>>,
       default: () => {},
       required: false
     },
@@ -86,7 +86,7 @@ const Dialog = defineComponent({
               {this.$props.title && (
                 <div class="dialog-header">
                   <h3>{this.$props.title}</h3>
-                  <Icon type="close" size={20} onclick={this.handleClose}></Icon>
+                  <Icon type="close" size={20} onClick={this.handleClose}></Icon>
                 </div>
               )}
               <div class={['dialog-content', this.$props.customClass]}>{this.$slots.default?.()}</div>

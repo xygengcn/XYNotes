@@ -35,7 +35,7 @@
       &-selects {
         text-decoration: none;
         outline: none;
-        padding: 5px 0px;
+        padding: 5px;
         width: 120px;
         cursor: default;
         li {
@@ -44,13 +44,13 @@
           font-size: 14px;
           list-style: none;
           display: inline-flex;
+          border-radius: 4px;
           cursor: pointer;
           .text {
             flex: 1;
           }
           &:hover {
-            color: #fff;
-            background-color: var(--theme-default-color);
+            background-color: var(--note-item-hover-color);
           }
         }
       }

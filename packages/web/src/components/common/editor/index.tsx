@@ -1,5 +1,7 @@
+import { IContextMenuProps } from '@/typings/contextmenu';
 import { PropType, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import Loading from '../loading';
+import Scroller from '../scroller';
 import './index.scss';
 import { EditorController, VDITOR_CDN } from './lib';
 export * from './lib';
@@ -95,6 +97,16 @@ const Editor = defineComponent({
       { immediate: true }
     );
 
+    const onContextMenu = async (options: IContextMenuProps) => {
+      switch (options.menu.value) {
+        case 'pasteText': {
+          const text = await navigator.clipboard.readText();
+          editorController.insertValue(text);
+          break;
+        }
+      }
+    };
+
     onMounted(() => {
       // 编辑
       if (props.type === 'editor') {
@@ -144,6 +156,8 @@ const Editor = defineComponent({
     return {
       editorLoading,
       refEditorContent,
+      // 右键事件
+      onContextMenu,
       // loading
       setLoading: (flag: boolean) => {
         editorLoading.value = flag;
@@ -160,14 +174,23 @@ const Editor = defineComponent({
   },
   render() {
     return (
-      <div class={{ editor: true, 'editor-preview': this.type === 'preview' }} data-id={this.id} data-nodrag>
-        <div ref="refEditorContent" class="editor-content" tabindex="1"></div>
+      <Scroller class={{ editor: true, 'editor-preview': this.type === 'preview' }} data-id={this.id} data-nodrag>
+        <div
+          ref="refEditorContent"
+          class="editor-content"
+          tabindex="1"
+          v-contextmenu={{
+            menuList: [{ label: '仅粘贴文本', value: 'pasteText' }],
+            onSelect: this.onContextMenu
+          }}
+          data-contextmenukey="Editor"
+        ></div>
         {this.editorLoading && (
           <div class="editor-loading">
             <Loading text="加载中" />
           </div>
         )}
-      </div>
+      </Scroller>
     );
   }
 });

@@ -113,3 +113,18 @@ export function findParentWithNodrag(element: HTMLElement): string | boolean | n
 export function isString(str: unknown): boolean {
   return typeof str === 'string';
 }
+
+/**
+ * blob to string
+ * @param blob
+ * @returns
+ */
+export function blob2String(blob: Blob): Promise<string> {
+  const reader = new FileReader();
+  return new Promise((resolve) => {
+    reader.readAsText(blob, 'utf-8');
+    reader.onload = function (e) {
+      resolve(reader.result as string);
+    };
+  });
+}

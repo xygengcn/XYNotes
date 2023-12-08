@@ -3,6 +3,7 @@ import { useNotesStore } from '@/store/notes.store';
 import { defineComponent } from 'vue';
 import './index.scss';
 import { IContextMenuProps } from '@/typings/contextmenu';
+import Scroller from '@/components/common/scroller';
 
 const DesktopSideContainerRecycleContent = defineComponent({
   setup() {
@@ -38,21 +39,23 @@ const DesktopSideContainerRecycleContent = defineComponent({
         <div class="desktop-side-container-recycle-header">
           <h3>回收站</h3>
         </div>
-        <div
-          class="desktop-side-container-recycle-list"
-          v-contextmenu={{
-            menuList: [{ label: '恢复', value: 'recovery' }],
-            onSelect: handleContextmenu
-          }}
-        >
-          {store.recycleList.map((note, index) => {
-            return (
-              <div class="desktop-side-container-recycle-list-item" data-contextmenukey={note.nid}>
-                <NoteItem note={note} key={note.nid} sortIndex={index} />
-              </div>
-            );
-          })}
-        </div>
+        <Scroller class="desktop-side-container-recycle-scroll">
+          <div
+            class="desktop-side-container-recycle-list"
+            v-contextmenu={{
+              menuList: [{ label: '恢复', value: 'recovery' }],
+              onSelect: handleContextmenu
+            }}
+          >
+            {store.recycleList.map((note, index) => {
+              return (
+                <div class="desktop-side-container-recycle-list-item" data-contextmenukey={note.nid}>
+                  <NoteItem note={note} key={note.nid} sortIndex={index} />
+                </div>
+              );
+            })}
+          </div>
+        </Scroller>
         {store.recycleList.length === 0 && (
           <div class="desktop-side-container-recycle-blank">暂无缓存数据（刷新清空）</div>
         )}

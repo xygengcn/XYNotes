@@ -1,7 +1,10 @@
 .desktop-side-container-recycle {
   flex: 1;
+  height: 100%;
   overflow: hidden;
   user-select: none;
+  display: flex;
+  flex-direction: column;
   &-header {
     width: 100%;
     display: flex;
@@ -15,9 +18,12 @@
       font-weight: 400;
     }
   }
+
+  &-scroll {
+    flex: 1;
+  }
   &-list {
     height: 100%;
-    overflow: auto;
     padding: 10px;
     &-item {
       width: 100%;

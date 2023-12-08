@@ -65,9 +65,9 @@ const MobileDetail = defineComponent({
 
     return () => (
       <div class="mobile-detail">
-        {note.value ? (
+        {route.params?.nid ? (
           <div class="mobile-detail-content">
-            <NoteEditor nid={note.value.nid}></NoteEditor>
+            <NoteEditor nid={route.params.nid as string}></NoteEditor>
           </div>
         ) : (
           <div class="mobile-detail-content">

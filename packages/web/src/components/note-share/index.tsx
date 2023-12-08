@@ -53,7 +53,7 @@ const Screenshot = defineComponent({
     const handleClickDownalodScreenshot = () => {
       loading.value = true;
       // 生成截图
-      return screenshot(refScreenshotPreview.value.editorContent, props.note.title).then(() => {
+      return screenshot(refScreenshotPreview.value.refEditorContent, props.note.title).then(() => {
         loading.value = false;
       });
     };
@@ -65,7 +65,7 @@ const Screenshot = defineComponent({
     const handleClickCopyImage = () => {
       loading.value = true;
       // 生成截图
-      return screenshotCopy(refScreenshotPreview.value.editorContent).then(() => {
+      return screenshotCopy(refScreenshotPreview.value.refEditorContent).then(() => {
         loading.value = false;
         window.$ui.toast('复制图片成功');
       });
@@ -86,7 +86,7 @@ const Screenshot = defineComponent({
         ref={refDialog}
         class="note-share-dialog"
         title={props.note.title}
-        onclose={handleClose}
+        onClose={handleClose}
       >
         <div class="note-share-content">
           <div class="note-share-content-preview">
@@ -95,12 +95,12 @@ const Screenshot = defineComponent({
           <div class="note-share-content-bottom">
             {props.menu.includes('copyImage') && (
               <span class="note-share-content-bottom-item">
-                <Icon type="item-copy" onclick={handleClickCopyImage}></Icon>
+                <Icon type="item-copy" onClick={handleClickCopyImage}></Icon>
               </span>
             )}
             {props.menu.includes('image') && (
               <span class="note-share-content-bottom-item">
-                <Icon type="item-pic-download" onclick={handleClickDownalodScreenshot}></Icon>
+                <Icon type="item-pic-download" onClick={handleClickDownalodScreenshot}></Icon>
               </span>
             )}
           </div>

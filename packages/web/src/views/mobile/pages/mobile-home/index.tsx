@@ -12,6 +12,7 @@ import { useRouter } from 'vue-router';
 import './index.scss';
 import { SwipeList } from 'vue3-swipe-actions';
 import 'vue3-swipe-actions/dist/index.css';
+import Scroller from '@/components/common/scroller';
 
 const MobileHome = defineComponent({
   setup() {
@@ -116,7 +117,7 @@ const MobileHome = defineComponent({
           </div>
         </div>
         <div class="mobile-home-content">
-          <div class="mobile-home-content-list">
+          <Scroller class="mobile-home-content-list">
             <SwipeList
               ref="swipeList"
               class="mobile-home-content-list-scroll"
@@ -150,7 +151,7 @@ const MobileHome = defineComponent({
                 }
               }}
             />
-          </div>
+          </Scroller>
         </div>
         <div class="mobile-home-footer">
           <div class="mobile-home-footer-content">

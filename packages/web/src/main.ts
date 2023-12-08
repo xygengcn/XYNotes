@@ -14,6 +14,7 @@ import './registerServiceWorker';
 import router from './router';
 import './shortcut';
 import VueContextMenu from './directive/contextmenu';
+import 'overlayscrollbars/overlayscrollbars.css';
 
 // @ts-ignore
 if (process.env.NODE_ENV === 'development') {

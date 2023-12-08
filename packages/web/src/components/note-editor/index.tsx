@@ -9,11 +9,6 @@ import { computed, defineComponent, nextTick, onBeforeMount, onBeforeUnmount, re
 import Input from '../common/input';
 import './index.scss';
 
-/**
- * 最大长度
- */
-export const NoteEditorMaxWidth = 2048;
-
 const NoteEditor = defineComponent({
   name: 'NoteEditor',
   props: {
@@ -31,11 +26,6 @@ const NoteEditor = defineComponent({
      * 编辑器
      */
     const refEditor = ref<typeof Editor>();
-
-    /**
-     * 标题
-     */
-    const refTitle = ref<HTMLDivElement>();
 
     /**
      * store
@@ -64,13 +54,6 @@ const NoteEditor = defineComponent({
      */
     const style = computed(() => {
       if (getDeviceType() !== 'mobile') {
-        if (refTitle.value) {
-          const grap = refTitle.value.clientWidth - NoteEditorMaxWidth / 2;
-          return {
-            paddingLeft: Math.max(35, grap) + 'px',
-            paddingRight: Math.max(35, grap) + 'px'
-          };
-        }
         return {
           paddingLeft: 35 + 'px',
           paddingRight: 35 + 'px'
@@ -180,8 +163,8 @@ const NoteEditor = defineComponent({
           <span class="note-editor-header__time">{TimeFormat(activeNote.value?.updatedAt, 'yyyy年MM月dd HH:mm')}</span>
           {!!textLength.value && <span class="note-editor-header__count">统计: {textLength.value}</span>}
         </div>
-        <div class="note-editor-title" ref={refTitle} style={style.value} v-show={props.titleVisible}>
-          <div class="note-editor-title-content" style={{ maxWidth: NoteEditorMaxWidth + 'px' }}>
+        <div class="note-editor-title" style={style.value} v-show={props.titleVisible}>
+          <div class="note-editor-title-content">
             <Input value={activeNote.value.title} onChange={handleChangeTitle} />
           </div>
         </div>
