@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 1498139 */
-  src: url('iconfont.woff2?t=1701522096990') format('woff2'),
-       url('iconfont.woff?t=1701522096990') format('woff'),
-       url('iconfont.ttf?t=1701522096990') format('truetype');
+  src: url('iconfont.woff2?t=1702216012488') format('woff2'),
+       url('iconfont.woff?t=1702216012488') format('woff'),
+       url('iconfont.ttf?t=1702216012488') format('truetype');
 }
 
 .iconfont {
@@ -13,28 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.note-max-window:before {
-  content: "\e633";
-}
-
-.note-close-window:before {
-  content: "\e8bd";
-}
-
-.note-minus-window:before {
-  content: "\e7df";
-}
-
-.note-close:before {
-  content: "\e747";
-}
-
-.note-item-text-insert:before {
-  content: "\e8bc";
-}
-
-.note-item-clear:before {
-  content: "\e62a";
+.note-item-splitscreen:before {
+  content: "\e639";
 }
 
 .note-nav-recycle:before {
@@ -45,10 +25,6 @@
   content: "\e622";
 }
 
-.note-item-pic-download:before {
-  content: "\e6df";
-}
-
 .note-item-preview:before {
   content: "\e623";
 }
@@ -57,20 +33,12 @@
   content: "\e654";
 }
 
-.note-item-md-download:before {
-  content: "\e620";
-}
-
 .note-data-transfer:before {
   content: "\e742";
 }
 
 .note-mobile-more:before {
   content: "\e62f";
-}
-
-.note-renwu:before {
-  content: "\e63f";
 }
 
 .note-item-share:before {

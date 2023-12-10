@@ -31,6 +31,7 @@
     max-height: 90%;
   }
 
+  // 顶部
   &-header {
     display: flex;
     align-items: center;
@@ -38,19 +39,15 @@
     padding: 0px 15px;
     font-weight: 400;
     border-bottom: 1px solid #eee;
-    h3 {
-      font-size: 16px;
+    &-content {
       flex: 1;
-      margin: 0px;
-      @include line(1);
-    }
-    .iconfont {
-      cursor: pointer;
-      border-radius: 4px;
-      width: 22px;
-      height: 22px;
-      &:hover {
-        background-color: #eee;
+      margin-left: 10px;
+      h3 {
+        font-size: 16px;
+        flex: 1;
+        margin: 0px;
+
+        @include line(1);
       }
     }
   }

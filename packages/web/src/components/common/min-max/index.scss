@@ -1,5 +1,6 @@
 .min-max {
   display: flex;
+  width: 64px;
   justify-content: space-between;
   padding: 8px 5px;
   visibility: hidden;
@@ -9,48 +10,55 @@
   }
 
   // 按钮
-  .note {
+  .icon {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    font-size: 12px;
+    color: #fff;
     &-close-window {
-      color: #fc4546;
-      &::after {
-        background-color: #fc4546;
-      }
+      background: #fc4546;
     }
-
     &-minus-window {
-      color: #fcb024;
-      &::after {
-        background-color: #fcb024;
-      }
+      background: #fcb024;
     }
 
-    &-max-window {
-      color: #29c332;
-      &::after {
-        background-color: #29c332;
-      }
+    &-fullscreen-window {
+      background: #29c332;
+    }
+
+    // 禁用
+    &.disabled {
+      background: var(--window-icon-disabled) !important;
+      background-image: none;
     }
   }
 
-  // 变色
   &:hover {
-    .iconfont::after {
-      background-color: #333;
-    }
-  }
+    .icon {
+      &-close-window {
+        background-image: url('@/assets/icons/window-close.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
 
-  .iconfont {
-    position: relative;
-    z-index: 0;
-    &::after {
-      position: absolute;
-      left: 0;
-      top: 0;
-      content: '';
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      z-index: -1;
+      &-minus-window {
+        background-image: url('@/assets/icons/window-minus.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      &-fullscreen-window {
+        background-image: url('@/assets/icons/window-fullscreen.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      // 禁用
+      &.disabled {
+        color: var(--window-icon-disabled);
+      }
     }
   }
 }

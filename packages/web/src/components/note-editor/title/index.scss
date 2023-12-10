@@ -1,0 +1,23 @@
+.note-editor-title {
+  position: relative;
+  .input {
+    padding-bottom: 0.3em;
+    border-bottom: 0.5px solid var(--border-default-color);
+    position: relative;
+    &-content {
+      &-inner {
+        font-size: 1.75em;
+        font-weight: 600;
+      }
+    }
+    &::after {
+      content: '标题';
+      position: absolute;
+      font-size: 0.5rem;
+      font-weight: normal;
+      color: rgba(88, 96, 105, 0.36);
+      right: 0px;
+      top: 0;
+    }
+  }
+}

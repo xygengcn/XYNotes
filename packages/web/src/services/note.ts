@@ -1,6 +1,7 @@
 import middlewareHook from '@/middlewares';
 import { uuid } from 'js-lark';
 import { INote, INoteAttachment, INoteStatus, INoteType } from '@/typings/note';
+import { debounce } from '@/utils/debounce-throttle';
 
 export class Note implements INote {
   // 笔记类型
@@ -35,6 +36,12 @@ export class Note implements INote {
   // 笔记附件
   public attachment: Array<INoteAttachment> = [];
 
+  // 字数
+  public counter: number = 0;
+
+  // 保存节流
+  private __saveNoteDebouceFn;
+
   constructor(note?: INote) {
     if (note) {
       Object.assign(this, note);
@@ -48,6 +55,11 @@ export class Note implements INote {
         updatedAt: new Date().getTime()
       });
     }
+
+    // 节流保存函数
+    this.__saveNoteDebouceFn = debounce(() => {
+      this.save();
+    }, 3000);
   }
 
   /**
@@ -63,19 +75,62 @@ export class Note implements INote {
       updatedAt: new Date().getTime()
     });
   }
+
+  public toRaw(): INote {
+    return {
+      // 笔记id
+      nid: this.nid,
+
+      // 笔记标题
+      title: this.title,
+
+      // 笔记类型
+      type: this.type,
+
+      // 排序
+      order: this.order,
+
+      // 笔记内容
+      text: this.text,
+
+      // 笔记创建时间
+      createdAt: this.createdAt,
+
+      // 笔记最新更新时间
+      updatedAt: this.updatedAt,
+      // 简要信息
+      intro: this.intro,
+
+      // 笔记状态
+      status: this.status,
+
+      // 笔记来源
+      origin: this.origin,
+
+      // 笔记作者
+      author: this.author,
+
+      // 笔记附件
+      attachment: this.attachment
+    };
+  }
   /**
    * 保存
-   * @param note
+   * @param force 强制立即保存
    * @returns
    */
-  public async save(): Promise<void> {
+  public async save(force: boolean = true) {
+    // 不强制保存
+    if (!force) {
+      this.__saveNoteDebouceFn();
+      return;
+    }
     // 草稿状态才保存
     if (this.status === INoteStatus.draft) {
       // 保存中
       this.status = INoteStatus.saving;
-      const noteDetail = JSON.parse(JSON.stringify(this));
-
-      return middlewareHook
+      const noteDetail = this.toRaw();
+      middlewareHook
         .registerMiddleware('saveNote', [{ ...noteDetail, status: 1 }])
         .then((result) => {
           this.status = 1;
@@ -86,13 +141,14 @@ export class Note implements INote {
           this.status = INoteStatus.draft;
         });
     }
+    return;
   }
 
   /**
    * 删除笔记
    */
   public delete(): Promise<any> {
-    const noteDetail = JSON.parse(JSON.stringify(this));
+    const noteDetail = this.toRaw();
     return middlewareHook.registerMiddleware('deleteNote', noteDetail);
   }
 

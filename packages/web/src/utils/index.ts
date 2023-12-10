@@ -128,3 +128,13 @@ export function blob2String(blob: Blob): Promise<string> {
     };
   });
 }
+
+/**
+ * 去除字符串空格和tab
+ * @param str
+ * @returns
+ */
+export function trim(str: string) {
+  if (!isString(str)) return '';
+  return str?.trim().replace(/\t/g, ' ') || '';
+}

@@ -1,3 +1,4 @@
+@import '@/styles/functions/index.scss';
 .mobile-detail {
   height: 100%;
   width: 100%;
@@ -5,12 +6,24 @@
   display: flex;
   flex-direction: column;
 
+  // 顶部
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    // 分享按钮
+    .iconfont {
+      position: absolute;
+      right: 10px;
+      color: var(--mobile-icon-color);
+    }
+  }
+
   &-content {
     flex: 1;
     overflow: hidden;
-    .note-editor-header {
-      padding: 10px 0px;
-    }
     .note-editor-title {
       padding: 5px 0px;
       .input {
@@ -21,20 +34,40 @@
       }
     }
   }
-  &-footer {
-    height: 48px;
+
+  // 抽屉
+  &-drawer {
+    width: 100%;
+    min-height: 100px;
     display: flex;
-    padding: 0px 15px;
-    &-list {
-      width: 100%;
+    gap: 10px;
+    padding: 20px 20px 35px 20px;
+    --app-bg-color: #f5f5f5;
+    background-color: var(--app-bg-color);
+
+    &-item {
       display: flex;
-      justify-content: space-evenly;
+      flex-direction: column;
+      background-color: white;
       align-items: center;
-      &-item {
-        min-width: 80px;
-        display: flex;
-        justify-content: center;
-        color: var(--mobile-icon-color);
+      justify-content: center;
+      border-radius: 8px;
+      width: 64px;
+      height: 64px;
+
+      &-icon {
+        padding: 6px;
+        .iconfont {
+          color: var(--mobile-icon-color);
+        }
+      }
+
+      &-text {
+        padding: 0px 4px;
+        font-size: 10px;
+        color: var(--font-default-color);
+        line-height: 12px;
+        @include line(2);
       }
     }
   }

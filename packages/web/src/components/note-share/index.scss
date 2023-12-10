@@ -1,4 +1,42 @@
 .note-share {
+  // 顶部
+  &-title {
+    display: flex;
+    width: 100%;
+    h3 {
+      flex: 1;
+    }
+
+    // 菜单
+    &-right {
+      padding: 0px 5px;
+
+      &-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 4px;
+        &:hover {
+          background-color: var(--note-item-hover-color);
+        }
+      }
+      &-menu {
+        width: max-content;
+        padding: 4px;
+        font-size: 14px;
+        &-item {
+          padding: 7px 10px;
+          cursor: pointer;
+          border-radius: 4px;
+          &:hover {
+            background-color: var(--note-item-hover-color);
+          }
+        }
+      }
+    }
+  }
   // 主体
   &-content {
     width: 100%;

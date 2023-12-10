@@ -28,9 +28,9 @@ const ConfirmComponent = defineComponent({
   name: 'Confirm',
   props: {
     type: {
-      type: String as PropType<'warn' | 'error' | 'default' | 'success'>,
+      type: String as PropType<'warn' | 'error' | 'success'>,
       required: false,
-      default: 'default'
+      default: ''
     },
     content: {
       type: String,
@@ -64,7 +64,11 @@ const ConfirmComponent = defineComponent({
      */
     const customStyle = computed(() => {
       const style = {};
-      Object.assign(style, { height: `${props.height || 150}px`, width: `${props.width || 300}px` });
+      Object.assign(style, {
+        minHeight: `${props.height || 150}px`,
+        height: 'max-content',
+        width: `${props.width || 300}px`
+      });
       return style;
     });
 
@@ -94,8 +98,8 @@ const ConfirmComponent = defineComponent({
     return () => (
       <Dialog customClass="confirm" ref={refContext} customStyle={customStyle.value} onClose={handleClose}>
         <div class="confirm-header">
-          <Icon type={`tip-${props.type}`} size={18} />
-          {props.title || '提示'}
+          <Icon type={`tip-${props.type}`} size={18} v-show={props.type} />
+          <span>{props.title || '提示'}</span>
         </div>
         <div class="confirm-content">{props.content}</div>
 
@@ -105,7 +109,7 @@ const ConfirmComponent = defineComponent({
                 return (
                   <Button
                     class="confirm-footer-submit"
-                    type={item.type || 'default'}
+                    icon={item.type || 'default'}
                     size={item.size || 'min'}
                     onClick={async () => {
                       const result = await item.onClick();
@@ -120,7 +124,7 @@ const ConfirmComponent = defineComponent({
                 <Button class="confirm-footer-submit" size="min" onClick={handleSubmit}>
                   确认
                 </Button>,
-                <Button class="confirm-footer-cancel" icon="" size="min" onClick={handleCancel}>
+                <Button class="confirm-footer-cancel" icon="normal" size="min" onClick={handleCancel}>
                   取消
                 </Button>
               ]}

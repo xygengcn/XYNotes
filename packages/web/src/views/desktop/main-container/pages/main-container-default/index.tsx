@@ -4,6 +4,8 @@ import { useNotesStore } from '@/store/notes.store';
 import { computed, defineComponent } from 'vue';
 import './index.scss';
 import DesktopMainContainerDefaultRight from './right-bar';
+import NoteEditorCounter from '@/components/note-editor/counter';
+import NoteEditorTitle from '@/components/note-editor/title';
 
 const DesktopMainContainerDefault = defineComponent({
   name: 'DesktopMainContainerDefault',
@@ -20,13 +22,17 @@ const DesktopMainContainerDefault = defineComponent({
         {activeNote.value && (
           <div class="desktop-main-container-default-content">
             <div class="desktop-main-container-default-content-left">
-              <NoteEditor nid={activeNote.value.nid} />
+              <NoteEditor nid={activeNote.value.nid}>
+                {{
+                  header: ({ note }) => [<NoteEditorCounter note={note} />, <NoteEditorTitle note={note} />]
+                }}
+              </NoteEditor>
             </div>
             <DesktopMainContainerDefaultRight note={activeNote.value} />
           </div>
         )}
         <div class="desktop-main-container-default__default" v-show={!activeNote.value}>
-          <Icon type="logo" size={200} draggable></Icon>
+          <Icon type="logo" size={200}></Icon>
         </div>
       </div>
     );

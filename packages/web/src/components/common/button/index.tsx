@@ -5,7 +5,7 @@ import './index.scss';
 /**
  * 按钮类型
  */
-export type ButtonType = 'warn' | 'error' | 'default' | 'success';
+export type ButtonType = 'normal' | 'warn' | 'error' | 'default' | 'success';
 
 /**
  * 按钮大小

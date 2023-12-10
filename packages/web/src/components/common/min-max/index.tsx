@@ -1,18 +1,31 @@
 import { app } from '@tauri-apps/api';
 import { appWindow } from '@tauri-apps/api/window';
-import { defineComponent, onMounted, ref } from 'vue';
-import Icon from '../icon';
+import { PropType, defineComponent, onMounted, ref } from 'vue';
 import './index.scss';
 
 const MinMax = defineComponent({
-  setup() {
-    const isFullScrean = ref(false);
+  props: {
+    type: {
+      type: String as PropType<'window' | 'dialog'>,
+      default: 'window'
+    },
+    disabled: {
+      type: Array as PropType<Array<'close' | 'fullscreen' | 'min'>>,
+      default: []
+    }
+  },
+  emits: ['close', 'fullscreen', 'min'],
+  setup(props, context) {
+    /**
+     * 是不是全屏状态
+     */
+    const isFullScreanWindow = ref(false);
 
     onMounted(async () => {
-      if (window.__TAURI__) {
-        isFullScrean.value = await appWindow.isFullscreen();
+      if (window.__TAURI__ && props.type == 'window') {
+        isFullScreanWindow.value = await appWindow.isFullscreen();
         appWindow.onResized(async () => {
-          isFullScrean.value = await appWindow.isFullscreen();
+          isFullScreanWindow.value = await appWindow.isFullscreen();
         });
       }
     });
@@ -21,11 +34,16 @@ const MinMax = defineComponent({
      * 全屏
      */
     const handleMaxWindow = async () => {
-      if (window.__TAURI__) {
-        if (await appWindow.isMaximized()) {
-          appWindow.setFullscreen(false);
-        } else {
-          appWindow.setFullscreen(true);
+      // 禁用
+      if (props.disabled.includes('fullscreen')) return false;
+      context.emit('fullscreen');
+      if (props.type == 'window') {
+        if (window.__TAURI__) {
+          if (await appWindow.isMaximized()) {
+            appWindow.setFullscreen(false);
+          } else {
+            appWindow.setFullscreen(true);
+          }
         }
       }
     };
@@ -34,7 +52,10 @@ const MinMax = defineComponent({
      * 关闭
      */
     const handleCloseWindow = () => {
-      if (window.__TAURI__) {
+      // 禁用
+      if (props.disabled.includes('close')) return false;
+      context.emit('close');
+      if (window.__TAURI__ && props.type == 'window') {
         app.hide();
       }
     };
@@ -43,16 +64,28 @@ const MinMax = defineComponent({
      * 最小化
      */
     const handleMinWindow = () => {
-      if (window.__TAURI__) {
+      // 禁用
+      if (props.disabled.includes('min')) return false;
+      context.emit('min');
+      if (window.__TAURI__ && props.type == 'window') {
         appWindow.minimize();
       }
     };
 
     return () => (
-      <div class={{ 'min-max': true, visiable: !isFullScrean.value }} v-show={window.__TAURI__}>
-        <Icon type="close-window" size={13} onclick={handleCloseWindow}></Icon>
-        <Icon type="minus-window" size={13} onclick={handleMinWindow}></Icon>
-        <Icon type="max-window" size={13} onclick={handleMaxWindow}></Icon>
+      <div class={{ 'min-max': true, visiable: !isFullScreanWindow.value }}>
+        <i
+          class={{ 'icon icon-close-window': true, disabled: props.disabled.includes('close') }}
+          onClick={handleCloseWindow}
+        ></i>
+        <i
+          class={{ 'icon icon-minus-window': true, disabled: props.disabled.includes('min') }}
+          onClick={handleMinWindow}
+        ></i>
+        <i
+          class={{ 'icon icon-fullscreen-window': true, disabled: props.disabled.includes('fullscreen') }}
+          onClick={handleMaxWindow}
+        ></i>
       </div>
     );
   }

@@ -1,12 +1,8 @@
 import apiEvent from '@/api';
 import Editor from '@/components/common/editor';
 import noteEventBus from '@/event-bus';
-import { Note } from '@/services/note';
 import { useNotesStore } from '@/store/notes.store';
-import { debounceMap } from '@/utils/debounce-throttle';
-import { getDeviceType, TimeFormat } from 'js-lark';
 import { computed, defineComponent, nextTick, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
-import Input from '../common/input';
 import './index.scss';
 
 const NoteEditor = defineComponent({
@@ -21,7 +17,7 @@ const NoteEditor = defineComponent({
       default: true
     }
   },
-  setup(props) {
+  setup(props, context) {
     /**
      * 编辑器
      */
@@ -40,32 +36,6 @@ const NoteEditor = defineComponent({
     });
 
     /**
-     * 节流事件
-     */
-    let saveNoteDebounce: Function;
-
-    /**
-     * 字数
-     */
-    const textLength = ref(0);
-
-    /**
-     * 样式
-     */
-    const style = computed(() => {
-      if (getDeviceType() !== 'mobile') {
-        return {
-          paddingLeft: 35 + 'px',
-          paddingRight: 35 + 'px'
-        };
-      }
-      return {
-        paddingLeft: 10 + 'px',
-        paddingRight: 10 + 'px'
-      };
-    });
-
-    /**
      * 监听nid变化
      */
     watch(
@@ -76,25 +46,15 @@ const NoteEditor = defineComponent({
         nextTick(() => {
           handleQueryNoteItem();
         });
-        // 防抖
-        saveNoteDebounce = debounceMap(
-          props.nid,
-          (note: Note) => {
-            if (props.nid === note.nid) {
-              note.save();
-            }
-          },
-          3000
-        );
       },
       { immediate: true }
     );
+
     /**
      * 拉取最新的内容
      */
-
-    const handleQueryNoteItem = () => {
-      refEditor.value.setLoading(true);
+    const handleQueryNoteItem = async () => {
+      refEditor.value?.setLoading(true);
       return apiEvent
         .apiFetchNoteDetailData(props.nid)
         .then((result) => {
@@ -117,19 +77,8 @@ const NoteEditor = defineComponent({
      */
     const handleChangeValue = (value: string) => {
       if (value) {
-        activeNote.value?.set({ text: value });
-        saveNoteDebounce(activeNote.value);
-      }
-    };
-
-    /**
-     * 修改标题
-     * @param title
-     */
-    const handleChangeTitle = (title: string) => {
-      if (title) {
-        activeNote.value?.set({ title });
-        saveNoteDebounce(activeNote.value);
+        activeNote.value.set({ text: value });
+        activeNote.value.save(false);
       }
     };
 
@@ -137,7 +86,7 @@ const NoteEditor = defineComponent({
      * 失去焦点
      */
     const handleEditorBlur = () => {
-      activeNote.value.save();
+      activeNote.value.save(false);
     };
 
     /**
@@ -150,37 +99,31 @@ const NoteEditor = defineComponent({
     onBeforeMount(() => {
       // 注册插入
       noteEventBus.on('insert', insertValue);
+      if (!store.activeNoteId && props.nid) {
+        store.setActiveNoteId(props.nid);
+      }
     });
     onBeforeUnmount(() => {
       // 注销事件
       noteEventBus.off('insert', insertValue);
-      saveNoteDebounce = null;
     });
 
     return () => (
       <div class="note-editor">
-        <div class="note-editor-header">
-          <span class="note-editor-header__time">{TimeFormat(activeNote.value?.updatedAt, 'yyyy年MM月dd HH:mm')}</span>
-          {!!textLength.value && <span class="note-editor-header__count">统计: {textLength.value}</span>}
-        </div>
-        <div class="note-editor-title" style={style.value} v-show={props.titleVisible}>
-          <div class="note-editor-title-content">
-            <Input value={activeNote.value.title} onChange={handleChangeTitle} />
-          </div>
-        </div>
+        <div class="note-editor-header">{context.slots.header?.({ note: activeNote.value })}</div>
         <div class="note-editor-content">
           <Editor
-            value={activeNote.value.text || ''}
-            id={activeNote.value.nid}
+            value={activeNote.value?.text || ''}
+            id={props.nid}
             ref={refEditor}
             onChange={handleChangeValue}
             onBlur={handleEditorBlur}
             onCounter={(count: number) => {
-              textLength.value = count;
+              activeNote.value.counter = count;
             }}
           />
         </div>
-        <div class="note-editor-footer"></div>
+        <div class="note-editor-footer">{context.slots.footer?.({ note: activeNote.value })}</div>
       </div>
     );
   }

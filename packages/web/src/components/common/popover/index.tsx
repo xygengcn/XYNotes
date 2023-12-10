@@ -1,7 +1,13 @@
-import { defineComponent, ref } from 'vue';
+import { PropType, defineComponent, ref } from 'vue';
 import './index.scss';
 
 const Popover = defineComponent({
+  props: {
+    position: {
+      type: String as PropType<'left' | 'right'>,
+      default: 'right'
+    }
+  },
   setup(props, context) {
     const isShowPopover = ref(false);
 
@@ -12,7 +18,10 @@ const Popover = defineComponent({
           {context.slots.default()}
         </div>
         {isShowPopover.value && (
-          <div class="popover-content" onClick={() => (isShowPopover.value = false)}>
+          <div
+            class={['popover-content', `popover-position-${props.position}`]}
+            onClick={() => (isShowPopover.value = false)}
+          >
             {context.slots.popover()}
           </div>
         )}

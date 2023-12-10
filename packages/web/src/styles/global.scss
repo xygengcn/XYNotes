@@ -39,12 +39,19 @@
 
   // 高亮
   --theme-text-highlight: #f3bb41;
+
+  // 三个禁用颜色
+  --window-icon-disabled: #eee;
+
+  // 字数组件的高度
+  --editor-counter-height: 56px;
 }
 
 // 移动端
 .mobile {
   --note-item-hover-color: white;
   --note-item-active-color: white;
-
   --note-item-swipe-delete: #f56c6c;
+
+  --editor-counter-height: 48px;
 }

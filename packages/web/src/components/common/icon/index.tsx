@@ -1,5 +1,5 @@
 import { isString } from '@/utils';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import './index.scss';
 
 /**
@@ -19,10 +19,20 @@ const Icon = defineComponent({
   },
   emits: ['click'],
   setup(props, { emit }) {
+    const style = computed(() => {
+      if (!isString(props.size)) {
+        return {
+          fontSize: props.size + 'px'
+        };
+      }
+      return {
+        fontSize: props.size
+      };
+    });
     return () => (
       <i
         class={['iconfont', `note-${props.type}`]}
-        style={{ fontSize: isString(props.size) ? props.size : props.size + 'px' }}
+        style={style.value}
         onClick={(e) => {
           emit('click', e);
         }}

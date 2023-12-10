@@ -4,6 +4,7 @@ import Loading from '../loading';
 import Scroller from '../scroller';
 import './index.scss';
 import { EditorController, VDITOR_CDN } from './lib';
+import { trim } from '@/utils';
 export * from './lib';
 
 const Editor = defineComponent({
@@ -22,7 +23,6 @@ const Editor = defineComponent({
     delay: {
       type: Number
     },
-
     id: {
       type: String
     }
@@ -100,8 +100,12 @@ const Editor = defineComponent({
     const onContextMenu = async (options: IContextMenuProps) => {
       switch (options.menu.value) {
         case 'pasteText': {
-          const text = await navigator.clipboard.readText();
-          editorController.insertValue(text);
+          let text = await navigator.clipboard.readText();
+          console.log('[paste]', text);
+          text = trim(text);
+          if (text) {
+            editorController.insertValue(text);
+          }
           break;
         }
       }
@@ -150,7 +154,7 @@ const Editor = defineComponent({
       }
     });
     onBeforeUnmount(() => {
-      editorController.destroy();
+      editorController?.destroy();
     });
 
     return {
@@ -180,7 +184,7 @@ const Editor = defineComponent({
           class="editor-content"
           tabindex="1"
           v-contextmenu={{
-            menuList: [{ label: '仅粘贴文本', value: 'pasteText' }],
+            menuList: (this.type === 'editor' && [{ label: '仅粘贴文本', value: 'pasteText' }]) || [],
             onSelect: this.onContextMenu
           }}
           data-contextmenukey="Editor"

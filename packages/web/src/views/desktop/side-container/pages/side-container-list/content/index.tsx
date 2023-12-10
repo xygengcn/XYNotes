@@ -53,7 +53,7 @@ const DesktopSideContainerListContent = defineComponent({
             window.$ui.confirm({
               type: 'warn',
               width: 300,
-              content: '确定删除这个笔记吗？',
+              content: `确定删除《${note.title}》这个笔记吗？`,
               onSubmit: () => {
                 note.delete();
               }

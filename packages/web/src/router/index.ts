@@ -11,42 +11,46 @@ const routes: Array<RouteRecordRaw> = [
         name: 'desktop-list',
         components: {
           side: () => import('@/views/desktop/side-container/pages/side-container-list'),
-          main: () => import('@/views/desktop/main-container/pages/main-container-default'),
+          main: () => import('@/views/desktop/main-container/pages/main-container-default')
         },
         meta: {
-          device: 'desktop',
-        },
+          device: 'desktop'
+        }
       },
       {
         path: 'setting',
         name: 'desktop-setting',
         components: {
           side: () => import('@/views/desktop/side-container/pages/side-container-setting'),
-          main: () => import('@/views/desktop/main-container/pages/main-container-default'),
+          main: () => import('@/views/desktop/main-container/pages/main-container-default')
         },
         meta: {
-          device: 'desktop',
-        },
+          device: 'desktop'
+        }
       },
       {
         path: 'recycle',
         name: 'desktop-recycle',
         components: {
           side: () => import('@/views/desktop/side-container/pages/side-container-recycle'),
-          main: () => import('@/views/desktop/main-container/pages/main-container-default'),
+          main: () => import('@/views/desktop/main-container/pages/main-container-default')
         },
         meta: {
-          device: 'desktop',
-        },
-      },
+          device: 'desktop'
+        }
+      }
     ],
     meta: {
-      device: 'desktop',
-    },
+      device: 'desktop'
+    }
+  },
+  {
+    path: '/detail',
+    component: () => import('@/views/detail-page')
   },
   {
     path: '/m',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/mobile'),
+    component: () => import('@/views/mobile'),
     children: [
       {
         path: '/',
@@ -55,8 +59,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           keepAlive: true, // 需要被缓存
           device: 'mobile',
-          index: 0,
-        },
+          index: 0
+        }
       },
       {
         path: 'detail/:nid',
@@ -64,19 +68,19 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/mobile/pages/mobile-detail'),
         meta: {
           device: 'mobile',
-          index: 1,
-        },
-      },
+          index: 1
+        }
+      }
     ],
     meta: {
-      device: 'mobile',
-    },
-  },
+      device: 'mobile'
+    }
+  }
 ];
 
 const router = createRouter({
   routes,
-  history: createWebHashHistory(),
+  history: createWebHashHistory()
 });
 router.beforeEach((to, from, next) => {
   if (to.meta?.device == 'desktop') {

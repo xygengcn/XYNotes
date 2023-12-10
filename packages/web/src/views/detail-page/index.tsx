@@ -7,7 +7,7 @@ const DetailPage = defineComponent({
   setup() {
     const route = useRoute();
     return () => (
-      <div class="detail">
+      <div class="detail-page">
         <NoteEditor nid={route.query?.nid as string}></NoteEditor>
       </div>
     );

@@ -19,5 +19,6 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "svg.preview.background": "transparent"
 }

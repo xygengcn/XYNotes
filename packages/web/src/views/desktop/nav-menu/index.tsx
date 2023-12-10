@@ -50,7 +50,7 @@ const DesktopNavMenu = defineComponent({
       <div class="desktop-nav-menu" style={{ width: `${DESKTOP_NAV_MENU_WIDTH}px` }}>
         <div class="desktop-nav-menu-top">
           <div class="desktop-nav-menu-top-opts">
-            <MinMax></MinMax>
+            <MinMax v-show={window.__TAURI__}></MinMax>
           </div>
           <div class="desktop-nav-menu-top-logo">
             <img src={logo} alt="" />

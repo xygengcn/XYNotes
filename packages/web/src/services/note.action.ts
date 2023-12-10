@@ -9,14 +9,12 @@ import Database from 'ts-database';
 export function syncDataByV2() {
   window.$ui.confirm({
     content: '确定要迁移旧版本数据吗？',
-    onSubmit: (context) => {
-      // 关闭
-      context.close();
+    onSubmit: () => {
       // 数据库
       const databaseV2 = new Database({
         name: 'XYNOTES',
         version: 1,
-        modules: [{ name: 'notes', primary: 'nid', columns: [] }],
+        modules: [{ name: 'notes', primary: 'nid', columns: [] }]
       });
 
       databaseV2.module('notes').then((module) => {
@@ -40,7 +38,7 @@ export function syncDataByV2() {
               attachment: [],
               author: '',
               type: 'text',
-              origin: '',
+              origin: ''
             };
           });
           const store = useNotesStore();
@@ -52,6 +50,6 @@ export function syncDataByV2() {
           });
         });
       });
-    },
+    }
   });
 }

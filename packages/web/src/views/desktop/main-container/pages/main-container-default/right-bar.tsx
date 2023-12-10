@@ -5,6 +5,7 @@ import { copyText } from '@/utils';
 import { downloadFile } from '@/utils/file';
 import { PropType, defineComponent } from 'vue';
 import './index.scss';
+import { useRouter } from 'vue-router';
 
 const DesktopMainContainerDefaultRight = defineComponent({
   name: 'DesktopMainContainerDefaultRight',
@@ -15,22 +16,23 @@ const DesktopMainContainerDefaultRight = defineComponent({
     }
   },
   setup(props) {
+    const router = useRouter();
     const menuList = [
       {
         title: '预览',
         icon: 'item-preview',
         visible: true,
-        action: () => {
-          props.note && showShareNoteDialog(props.note);
+        action: (note: Note) => {
+          note && showShareNoteDialog(note);
         }
       },
       {
         title: '复制',
         icon: 'item-copy',
         visible: true,
-        action: () => {
-          if (props.note.text) {
-            copyText(props.note.text || '');
+        action: (note: Note) => {
+          if (note.text) {
+            copyText(note.text || '');
             window.$ui.toast('复制文本成功');
           }
         }
@@ -39,27 +41,48 @@ const DesktopMainContainerDefaultRight = defineComponent({
         title: 'JSON下载',
         icon: 'item-json-download',
         visible: true,
-        action: () => {
-          props.note && downloadFile(JSON.stringify(props.note) || '', `${props.note.title || 'XYNote'}.json`);
+        action: (note: Note) => {
+          note && downloadFile(JSON.stringify(note) || '', `${note.title || 'XYNote'}.json`);
+        }
+      },
+      {
+        title: '分屏',
+        icon: 'item-splitscreen',
+        visible: true,
+        action: (note: Note) => {
+          if (note) {
+            handleSplitScreen(note);
+          }
         }
       },
       {
         title: '删除',
         icon: 'item-delete',
         visible: true,
-        action: () => {
-          props.note &&
+        action: (note: Note) => {
+          note &&
             window.$ui.confirm({
               type: 'warn',
               width: 300,
-              content: '确定删除这个笔记吗？',
+              content: `确定删除《${note.title}》这个笔记吗？`,
               onSubmit: () => {
-                props.note.delete();
+                note.delete();
               }
             });
         }
       }
     ];
+
+    // 新开页面
+    const handleSplitScreen = (note: Note) => {
+      let routeUrl = router.resolve({
+        path: '/detail',
+        query: {
+          nid: note.nid
+        }
+      });
+      window.open(routeUrl.href, '_blank');
+    };
 
     return () => (
       <div class="desktop-main-container-default-content-right">
@@ -75,7 +98,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
                 size={18}
                 type={menu.icon}
                 onClick={() => {
-                  menu.action();
+                  menu.action(props.note);
                 }}
               />
             </div>

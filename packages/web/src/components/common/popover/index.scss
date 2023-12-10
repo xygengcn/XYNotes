@@ -21,4 +21,14 @@
     border-radius: 4px;
     box-shadow: 1px 0px 7px 0px #d9d9d9;
   }
+
+  &-position {
+    &-left {
+      right: 0;
+    }
+  }
+
+  &-slot {
+    cursor: pointer;
+  }
 }

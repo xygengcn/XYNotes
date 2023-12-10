@@ -1,5 +1,5 @@
-import { PropType, StyleValue, Transition, defineComponent } from 'vue';
-import Icon from '../icon';
+import { PropType, StyleValue, Transition, computed, defineComponent, ref } from 'vue';
+import MinMax from '../min-max';
 import './index.scss';
 
 /**
@@ -48,47 +48,90 @@ const Dialog = defineComponent({
     }
   },
   emits: ['close'],
-  data() {
+  setup(props, context) {
+    const refDialogWrap = ref<HTMLDivElement>();
+
+    /**
+     * 是否全屏
+     */
+    const isFullscreen = ref(false);
+
+    /**
+     * 点击关闭
+     * @param e
+     */
+    const handleClose = (e: Event) => {
+      context.emit('close', e);
+    };
+
+    /**
+     * 点击全屏
+     */
+    const handleScreen = () => {
+      isFullscreen.value = !isFullscreen.value;
+    };
+
+    /**
+     * 样式
+     */
+    const wrapStyle = computed<StyleValue>(() => {
+      return {
+        width: props.width + 'px',
+        height: props.height + 'px',
+        ...(props.customStyle || {}),
+        ...(isFullscreen.value
+          ? { width: '100%', height: '100%', maxHeight: '100%', maxWidth: '100%', borderRadius: 0 }
+          : {})
+      } as StyleValue;
+    });
+
     return {
-      visible: true
+      handleClose,
+      handleScreen,
+      refDialogWrap,
+      wrapStyle
     };
   },
-  methods: {
-    handleClose() {
-      this.$data.visible = false;
-    }
-  },
   render() {
+    /**
+     * 标题
+     * @returns
+     */
+    const Title = () => {
+      if (this.$slots.title || this.$props.title) {
+        return (
+          <div class="dialog-header">
+            <MinMax
+              type="dialog"
+              disabled={['min']}
+              onClose={this.handleClose}
+              onFullscreen={this.handleScreen}
+            ></MinMax>
+            <div class="dialog-header-content">
+              {this.$slots.title ? this.$slots.title() : <h3>{this.$props.title}</h3>}
+            </div>
+          </div>
+        );
+      }
+      return null;
+    };
+
     return (
       <Transition name="fade">
-        <div class="dialog" v-show={this.visible}>
+        <div class="dialog">
           {this.$props.modal && (
             <div
               class="dialog-modal"
-              onClick={() => {
+              onClick={(e) => {
                 if (this.$props.closeOnClickModal) {
-                  this.handleClose();
+                  this.handleClose(e);
                 }
               }}
             ></div>
           )}
           <Transition name="zoom">
-            <div
-              class="dialog-wrap"
-              style={
-                {
-                  width: this.$props.width + 'px',
-                  height: this.$props.height + 'px',
-                  ...(this.$props.customStyle || {})
-                } as StyleValue
-              }
-            >
-              {this.$props.title && (
-                <div class="dialog-header">
-                  <h3>{this.$props.title}</h3>
-                  <Icon type="close" size={20} onClick={this.handleClose}></Icon>
-                </div>
-              )}
+            <div class="dialog-wrap" ref="refDialogWrap" style={this.wrapStyle}>
+              <Title></Title>
               <div class={['dialog-content', this.$props.customClass]}>{this.$slots.default?.()}</div>
             </div>
           </Transition>

@@ -20,6 +20,9 @@
       margin-top: 20px;
       margin-bottom: 12px;
     }
+    * {
+      user-select: text;
+    }
   }
 
   // 任务列表
