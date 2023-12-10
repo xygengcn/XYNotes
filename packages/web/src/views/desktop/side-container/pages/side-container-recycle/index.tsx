@@ -39,7 +39,7 @@ const DesktopSideContainerRecycleContent = defineComponent({
         <div class="desktop-side-container-recycle-header">
           <h3>回收站</h3>
         </div>
-        <Scroller class="desktop-side-container-recycle-scroll">
+        <Scroller class="desktop-side-container-recycle-scroll" v-show={store.recycleList.length > 0}>
           <div
             class="desktop-side-container-recycle-list"
             v-contextmenu={{
