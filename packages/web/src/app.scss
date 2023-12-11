@@ -15,14 +15,14 @@ body,
   // 移动端点击
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   position: relative;
-  background-color: var(--app-bg-color);
-
   font-family: PingFangSC-Regular, Arial, sans-serif;
+  background-color: transparent;
 }
 
 // 客户端
 .app {
   border-radius: 12px;
+  background-color: var(--app-bg-color);
 }
 
 li,
