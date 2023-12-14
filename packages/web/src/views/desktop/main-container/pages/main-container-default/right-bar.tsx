@@ -82,20 +82,22 @@ const DesktopMainContainerDefaultRight = defineComponent({
       <div class="desktop-main-container-default-content-right" data-tauri-drag-region>
         {menuList.map((menu) => {
           return (
-            <div
-              class="desktop-main-container-default-content-right-menu"
-              v-tippy={{ placement: 'left', content: menu.title }}
-            >
-              <IconNavMenu
-                width={30}
-                height={30}
-                size={18}
-                type={menu.icon}
-                onClick={() => {
-                  menu.action(props.note);
-                }}
-              />
-            </div>
+            menu.visible && (
+              <div
+                class="desktop-main-container-default-content-right-menu"
+                v-tippy={{ placement: 'left', content: menu.title }}
+              >
+                <IconNavMenu
+                  width={30}
+                  height={30}
+                  size={18}
+                  type={menu.icon}
+                  onClick={() => {
+                    menu.action(props.note);
+                  }}
+                />
+              </div>
+            )
           );
         })}
       </div>
