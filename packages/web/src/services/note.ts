@@ -68,13 +68,14 @@ export class Note implements INote {
    * @param note
    */
   public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
-    // 截取前50作简要信息
-    Object.assign(this, {
-      ...note,
-      status: 0,
-      intro: note?.text?.trim()?.slice(0, 50) || this.intro,
-      updatedAt: new Date().getTime()
-    });
+    if (note.status === INoteStatus.draft || this.status === INoteStatus.draft) {
+      // 截取前50作简要信息
+      Object.assign(this, {
+        ...note,
+        intro: note?.text?.trim()?.slice(0, 50) || this.intro,
+        updatedAt: new Date().getTime()
+      });
+    }
   }
 
   public toRaw(): INote {
@@ -121,13 +122,14 @@ export class Note implements INote {
    * @returns
    */
   public async save(force: boolean = true) {
+    console.log('[save]', this.nid, this.status, force);
     // 不强制保存
     if (!force) {
       this.__saveNoteDebouceFn();
       return;
     }
     // 草稿状态才保存
-    if (force || this.status === INoteStatus.draft) {
+    if (this.status === INoteStatus.draft) {
       // 保存中
       this.status = INoteStatus.saving;
       const noteDetail = this.toRaw();

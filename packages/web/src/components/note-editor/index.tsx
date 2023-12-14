@@ -1,8 +1,8 @@
 import apiEvent from '@/api';
 import Editor from '@/components/common/editor';
-import noteEventBus from '@/event-bus';
 import { useNotesStore } from '@/store/notes.store';
-import { computed, defineComponent, nextTick, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue';
+import { INoteStatus } from '@/typings/note';
+import { computed, defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
 import './index.scss';
 
 const NoteEditor = defineComponent({
@@ -79,14 +79,22 @@ const NoteEditor = defineComponent({
      * @param value
      */
     const handleChangeValue = (value: string) => {
-      activeNote.value.set({ text: value });
+      activeNote.value.set({ text: value, status: INoteStatus.draft });
       activeNote.value.save(false);
+    };
+
+    /**
+     * 输入事件
+     */
+    const handleEditorInput = () => {
+      activeNote.value.set({ status: INoteStatus.draft });
     };
 
     /**
      * 失去焦点
      */
-    const handleEditorBlur = () => {
+    const handleEditorBlur = (value: string) => {
+      activeNote.value.set({ text: value });
       activeNote.value.save(false);
     };
 
@@ -94,19 +102,16 @@ const NoteEditor = defineComponent({
      * 事件
      * @param text
      */
-    const insertValue = (text: string) => {
-      text?.trim() && refEditor.value.insertValue(text);
+    const handleEditorPaste = (text: string) => {
+      if (text?.trim()) {
+        activeNote.value.set({ status: INoteStatus.draft });
+        refEditor.value.insertValue(text);
+      }
     };
     onBeforeMount(() => {
-      // 注册插入
-      noteEventBus.on('insert', insertValue);
       if (!store.activeNoteId && props.nid) {
         store.setActiveNoteId(props.nid);
       }
-    });
-    onBeforeUnmount(() => {
-      // 注销事件
-      noteEventBus.off('insert', insertValue);
     });
 
     return () => (
@@ -118,8 +123,10 @@ const NoteEditor = defineComponent({
             id={props.nid}
             ref={refEditor}
             loading={fetchNoteLoading.value}
+            onInput={handleEditorInput}
             onChange={handleChangeValue}
             onBlur={handleEditorBlur}
+            onPaste={handleEditorPaste}
             onCounter={(count: number) => {
               activeNote.value.counter = count;
             }}
