@@ -27,7 +27,7 @@
     "pinia": "^2.1.7",
     "register-service-worker": "^1.7.2",
     "ts-database": "0.0.4",
-    "vditor-lite": "^3.9.7",
+    "vditor-lite": "3.9.8",
     "vue-tippy": "^6.3.1",
     "vue3-swipe-actions": "^0.0.1"
   },

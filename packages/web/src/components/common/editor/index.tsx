@@ -43,7 +43,11 @@ const Editor = defineComponent({
     // 字数发生变化
     counter: (length: number) => true,
     // 更新
-    updated: (controller: EditorController) => true
+    updated: (controller: EditorController) => true,
+    // 输入
+    input: (e: InputEvent) => true,
+    // 粘贴
+    paste: (value: string) => true
   },
   setup(props, context) {
     /**
@@ -108,6 +112,7 @@ const Editor = defineComponent({
             console.log('[paste]', text);
             text = trim(text);
             if (text) {
+              context.emit('paste', text);
               const selection = window.getSelection();
               if (selection.rangeCount > 0) {
                 selection.getRangeAt(0).deleteContents();
@@ -135,6 +140,10 @@ const Editor = defineComponent({
             enable: false
           },
           value: props.value,
+          onInput(e) {
+            console.log('[Editor] input');
+            context.emit('input', e);
+          },
           onChange: (value) => {
             console.log('[Editor] change');
             context.emit('change', value);

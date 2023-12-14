@@ -26,6 +26,9 @@ export interface EditorControllerOptions extends IOptions {
 
   // 失去焦点
   onBlur?: (value: string) => void;
+
+  // 输入
+  onInput?: (e: InputEvent) => void;
 }
 
 export class EditorController extends Vditor {
@@ -52,8 +55,11 @@ export class EditorController extends Vditor {
           options.onCounter?.(count);
         }
       },
-      input: (value: string) => {
-        options.input?.(value);
+      input: (e) => {
+        options.onInput?.(e);
+      },
+      change: (value: string) => {
+        options.change?.(value);
         this.onChange(value, options);
       },
       after: () => {

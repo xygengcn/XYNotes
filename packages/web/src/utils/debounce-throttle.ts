@@ -16,6 +16,7 @@ export function debounce(callback: Function, delay = 300) {
       // apply: 作用就是改变方法内部this的指向, 并能将参数传递给该方法, 最后立即执行这个函数
       callback.apply(self, args);
     }, delay);
+    return timer;
   };
 }
 
