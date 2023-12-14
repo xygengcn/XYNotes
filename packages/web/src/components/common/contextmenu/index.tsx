@@ -11,7 +11,7 @@ const ContextMenuComponent = defineComponent({
   name: 'ContextMenuComponent',
   emits: {
     close: () => true,
-    select: (options: { menu: IContextMenuItem }) => true
+    select: (options: IContextMenuProps) => true
   },
   directives: {
     clickOutside: vClickOutside.directive
@@ -34,7 +34,11 @@ const ContextMenuComponent = defineComponent({
       const target = e.target as HTMLDivElement;
       e.stopPropagation();
       e.preventDefault();
-      context.emit('select', { menu: props.menuList[target.dataset.index || 0] });
+
+      context.emit('select', {
+        menu: props.menuList[target.dataset.index || 0],
+        key: target.dataset.key
+      });
       handleClose();
     };
     /**
@@ -64,7 +68,7 @@ const ContextMenuComponent = defineComponent({
             <div class="contextmenu-content" onClick={this.handleClick}>
               {this.menuList.map((item, index) => {
                 return (
-                  <div class="contextmenu-content-item" key={item.value} data-index={index}>
+                  <div class="contextmenu-content-item" data-key={item.value} data-index={index}>
                     {item.label}
                   </div>
                 );
@@ -84,7 +88,11 @@ const ContextMenuComponent = defineComponent({
  * @param onSubmit
  */
 export default function contextMenu(menuList: IContextMenuItem[], onSubmit: (options: IContextMenuProps) => void) {
-  console.log('[contextMenu]', menuList);
+  const selection = window.getSelection();
+  let range: Range = null;
+  if (selection.rangeCount > 0) {
+    range = selection.getRangeAt(0).cloneRange();
+  }
   const instance = document.querySelector('#contextmenu');
   if (instance) {
     document.body.removeChild(instance);
@@ -95,7 +103,9 @@ export default function contextMenu(menuList: IContextMenuItem[], onSubmit: (opt
   const app = createApp(ContextMenuComponent, {
     menuList,
     onSelect(options: IContextMenuProps) {
-      onSubmit?.(options);
+      const selection = window.getSelection();
+      selection.addRange(range);
+      onSubmit?.({ ...options, range });
     },
     onClose() {
       app.unmount();

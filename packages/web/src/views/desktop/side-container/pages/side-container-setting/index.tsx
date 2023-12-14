@@ -49,14 +49,14 @@ const DesktopSideContainerList = defineComponent({
     };
     return () => (
       <div class="desktop-side-container-setting">
-        <div class="desktop-side-container-setting-header">
-          <h3>设置</h3>
+        <div class="desktop-side-container-setting-header" data-tauri-drag-region>
+          <h3 data-tauri-drag-region>设置</h3>
         </div>
         <div class="desktop-side-container-setting-content">
           <div class="desktop-side-container-setting-content-item">
             <span class="desktop-side-container-setting-content-item-left">数据备份</span>
             <span class="desktop-side-container-setting-content-item-right">
-              <Button size="min" onclick={handleBackup}>
+              <Button size="min" onClick={handleBackup}>
                 备份
               </Button>
             </span>
@@ -64,7 +64,7 @@ const DesktopSideContainerList = defineComponent({
           <div class="desktop-side-container-setting-content-item">
             <span class="desktop-side-container-setting-content-item-left">数据恢复</span>
             <span class="desktop-side-container-setting-content-item-right">
-              <Button size="min" onclick={handleRecovery}>
+              <Button size="min" onClick={handleRecovery}>
                 恢复
               </Button>
             </span>
@@ -72,7 +72,7 @@ const DesktopSideContainerList = defineComponent({
           <div class="desktop-side-container-setting-content-item">
             <span class="desktop-side-container-setting-content-item-left">数据迁移</span>
             <span class="desktop-side-container-setting-content-item-right">
-              <Button size="min" onclick={handleV2Data}>
+              <Button size="min" onClick={handleV2Data}>
                 迁移
               </Button>
             </span>

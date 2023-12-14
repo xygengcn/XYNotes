@@ -1,5 +1,6 @@
 import { save } from '@tauri-apps/api/dialog';
 import { writeFile } from '@tauri-apps/api/fs';
+import is from '@/utils/is';
 
 /**
  * 文件下载
@@ -22,10 +23,10 @@ export function download(content: string, filename: string): void {
 export async function downloadFile(content: string, filename: string): Promise<void> {
   console.log('[downloadFile]', filename);
   // 兼容客户端
-  if (window.__TAURI__) {
+  if (is.app()) {
     const path = await save({
       title: filename,
-      defaultPath: filename,
+      defaultPath: filename
     });
     return writeFile(path, content);
   }

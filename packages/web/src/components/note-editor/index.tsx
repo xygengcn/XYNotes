@@ -24,6 +24,11 @@ const NoteEditor = defineComponent({
     const refEditor = ref<typeof Editor>();
 
     /**
+     * loading
+     */
+    const fetchNoteLoading = ref(false);
+
+    /**
      * store
      */
     const store = useNotesStore();
@@ -54,7 +59,7 @@ const NoteEditor = defineComponent({
      * 拉取最新的内容
      */
     const handleQueryNoteItem = async () => {
-      refEditor.value?.setLoading(true);
+      fetchNoteLoading.value = true;
       return apiEvent
         .apiFetchNoteDetailData(props.nid)
         .then((result) => {
@@ -65,9 +70,7 @@ const NoteEditor = defineComponent({
           }
         })
         .finally(() => {
-          if (refEditor.value) {
-            refEditor.value.setLoading(false);
-          }
+          fetchNoteLoading.value = false;
         });
     };
 
@@ -76,10 +79,8 @@ const NoteEditor = defineComponent({
      * @param value
      */
     const handleChangeValue = (value: string) => {
-      if (value) {
-        activeNote.value.set({ text: value });
-        activeNote.value.save(false);
-      }
+      activeNote.value.set({ text: value });
+      activeNote.value.save(false);
     };
 
     /**
@@ -116,6 +117,7 @@ const NoteEditor = defineComponent({
             value={activeNote.value?.text || ''}
             id={props.nid}
             ref={refEditor}
+            loading={fetchNoteLoading.value}
             onChange={handleChangeValue}
             onBlur={handleEditorBlur}
             onCounter={(count: number) => {

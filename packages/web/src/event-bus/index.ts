@@ -1,7 +1,26 @@
+import { INote } from '@/typings/note';
+
 type Handler<T extends (...args: any) => any = (...args: any[]) => any> = (...val: Parameters<T>) => void;
+
+/**
+ * 事件总线
+ */
 
 export class EventBus<Events extends Record<string, any>> {
   private map: Map<string, Set<Handler>> = new Map();
+
+  /**
+   * 推送
+   */
+  private broadcastChannel = new BroadcastChannel('xynote-channel');
+
+  constructor() {
+    this.broadcastChannel.addEventListener('message', (e) => {
+      if (e.data?.action) {
+        this.emit(e.data.action, ...e.data.message);
+      }
+    });
+  }
 
   /**
    * 订阅事件
@@ -27,6 +46,8 @@ export class EventBus<Events extends Record<string, any>> {
     if (!set) return;
     const copied = [...set];
     copied.forEach((fn) => fn.call(fn, ...value));
+    // 发送到其他窗口
+    this.broadcastChannel.postMessage({ action: name, message: value });
   }
   /**
    *  清除所有事件
@@ -69,6 +90,9 @@ export class EventBus<Events extends Record<string, any>> {
 interface INoteEventBus {
   // 插入事件
   insert: (text: string) => void;
+
+  // 笔记更新
+  update: (options: { noteList: INote[]; action: 'update' | 'delete' }) => void;
 }
 
 /**

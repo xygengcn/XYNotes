@@ -1,6 +1,8 @@
 import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
 import middlewareHook from './middlewares';
+import is from './utils/is';
+import { appWindow } from '@tauri-apps/api/window';
 
 const App = defineComponent({
   name: 'App',
@@ -13,9 +15,15 @@ const App = defineComponent({
     };
     onBeforeMount(() => {
       middlewareHook.registerMiddleware('load');
+      if (is.app()) {
+        appWindow.listen('quit-event', () => {
+          appWindow.close();
+        });
+      }
     });
+
     return () => (
-      <div class={{ web: true, app: window.__TAURI__ }} onContextmenu={handleContextMenu}>
+      <div class={{ web: true, app: is.app() }} onContextmenu={handleContextMenu}>
         <router-view />
       </div>
     );

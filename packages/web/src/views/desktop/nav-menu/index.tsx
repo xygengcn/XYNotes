@@ -4,6 +4,7 @@ import { useNotesStore } from '@/store/notes.store';
 import { defineComponent } from 'vue';
 import './index.scss';
 import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
+import is from '@/utils/is';
 
 export const DESKTOP_NAV_MENU_WIDTH = 64;
 
@@ -50,14 +51,14 @@ const DesktopNavMenu = defineComponent({
       <div class="desktop-nav-menu" style={{ width: `${DESKTOP_NAV_MENU_WIDTH}px` }}>
         <div class="desktop-nav-menu-top">
           <div class="desktop-nav-menu-top-opts">
-            <MinMax v-show={window.__TAURI__}></MinMax>
+            <MinMax v-show={is.app()}></MinMax>
           </div>
           <div class="desktop-nav-menu-top-logo">
-            <img src={logo} alt="" />
+            <img src={logo} alt="" data-tauri-drag-region />
           </div>
         </div>
-        <div class="desktop-nav-menu-content">
-          <div class="desktop-nav-menu-content-list">
+        <div class="desktop-nav-menu-content" data-tauri-drag-region>
+          <div class="desktop-nav-menu-content-list" data-tauri-drag-region>
             {desktopNavMenuList.map((item) => {
               return item.visible && <DesktopNavMenuItem menu={item} />;
             })}

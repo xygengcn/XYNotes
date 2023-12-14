@@ -1,7 +1,5 @@
 import { SIDE_CONTAINER_MAX_WIDTH, SIDE_CONTAINER_MIN_WIDTH, useConfigsStore } from '@/store/config.store';
-import { findParentWithNodrag } from '@/utils';
-import { appWindow } from '@tauri-apps/api/window';
-import { computed, defineComponent, nextTick, onBeforeMount, onMounted, ref } from 'vue';
+import { computed, defineComponent, nextTick, onMounted, ref } from 'vue';
 import './index.scss';
 import DesktopMainContainer from './main-container';
 import DesktopNavMenu, { DESKTOP_NAV_MENU_WIDTH } from './nav-menu';
@@ -26,18 +24,6 @@ const Desktop = defineComponent({
      */
     const sideContainerWidth = computed(() => {
       return store.sideContainerWidth;
-    });
-
-    onBeforeMount(() => {
-      if (window.__TAURI__) {
-        document.addEventListener('mousedown', async (e) => {
-          const drag = findParentWithNodrag(e.target as HTMLElement);
-          if (drag === 'true' || drag === true) {
-            return;
-          }
-          await appWindow.startDragging();
-        });
-      }
     });
 
     onMounted(() => {

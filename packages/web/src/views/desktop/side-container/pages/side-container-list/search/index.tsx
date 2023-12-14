@@ -23,12 +23,13 @@ const DesktopSideContainerListSearch = defineComponent({
     };
 
     return () => (
-      <div class="desktop-side-container-list-search" data-nodrag>
+      <div class="desktop-side-container-list-search" data-tauri-drag-region>
         <input
           type="text"
           placeholder="搜索笔记"
           value={props.keyword}
           onInput={handleInput}
+          none-drag-region
           id="desktopSideContainerListSearch"
         />
       </div>

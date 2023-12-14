@@ -2,6 +2,7 @@ import middlewareHook from '@/middlewares';
 import { uuid } from 'js-lark';
 import { INote, INoteAttachment, INoteStatus, INoteType } from '@/typings/note';
 import { debounce } from '@/utils/debounce-throttle';
+import { downloadFile } from '@/utils/file';
 
 export class Note implements INote {
   // 笔记类型
@@ -40,7 +41,7 @@ export class Note implements INote {
   public counter: number = 0;
 
   // 保存节流
-  private __saveNoteDebouceFn;
+  public __saveNoteDebouceFn;
 
   constructor(note?: INote) {
     if (note) {
@@ -126,14 +127,14 @@ export class Note implements INote {
       return;
     }
     // 草稿状态才保存
-    if (this.status === INoteStatus.draft) {
+    if (force || this.status === INoteStatus.draft) {
       // 保存中
       this.status = INoteStatus.saving;
       const noteDetail = this.toRaw();
-      middlewareHook
+      return middlewareHook
         .registerMiddleware('saveNote', [{ ...noteDetail, status: 1 }])
         .then((result) => {
-          this.status = 1;
+          this.status = INoteStatus.normal;
           return result;
         })
         .catch(() => {
@@ -157,5 +158,13 @@ export class Note implements INote {
    */
   public update(note: INote) {
     Object.assign(this, note);
+  }
+
+  /**
+   * json文件
+   */
+  public toJson() {
+    const str = JSON.stringify(this.toRaw());
+    return downloadFile(str || '', `${this.title || 'XYNote'}.json`);
   }
 }

@@ -35,9 +35,9 @@ const DesktopSideContainerRecycleContent = defineComponent({
     };
 
     return () => (
-      <div class="desktop-side-container-recycle">
-        <div class="desktop-side-container-recycle-header">
-          <h3>回收站</h3>
+      <div class="desktop-side-container-recycle" data-tauri-drag-region>
+        <div class="desktop-side-container-recycle-header" data-tauri-drag-region>
+          <h3 data-tauri-drag-region>回收站</h3>
         </div>
         <Scroller class="desktop-side-container-recycle-scroll" v-show={store.recycleList.length > 0}>
           <div

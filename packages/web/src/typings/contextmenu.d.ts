@@ -10,6 +10,7 @@ export interface IContextMenuItem {
 export interface IContextMenuProps {
   key: string;
   menu: IContextMenuItem;
+  range?: Range;
 }
 
 export interface IContextMenuOptions {

@@ -5,6 +5,7 @@ import Scroller from '../scroller';
 import './index.scss';
 import { EditorController, VDITOR_CDN } from './lib';
 import { trim } from '@/utils';
+import { readText } from '@/utils/clipboard';
 export * from './lib';
 
 const Editor = defineComponent({
@@ -25,6 +26,9 @@ const Editor = defineComponent({
     },
     id: {
       type: String
+    },
+    loading: {
+      type: Boolean
     }
   },
   emits: {
@@ -100,12 +104,17 @@ const Editor = defineComponent({
     const onContextMenu = async (options: IContextMenuProps) => {
       switch (options.menu.value) {
         case 'pasteText': {
-          let text = await navigator.clipboard.readText();
-          console.log('[paste]', text);
-          text = trim(text);
-          if (text) {
-            editorController.insertValue(text);
-          }
+          readText().then((text) => {
+            console.log('[paste]', text);
+            text = trim(text);
+            if (text) {
+              const selection = window.getSelection();
+              if (selection.rangeCount > 0) {
+                selection.getRangeAt(0).deleteContents();
+              }
+              editorController.insertValue(text, true);
+            }
+          });
           break;
         }
       }
@@ -127,9 +136,11 @@ const Editor = defineComponent({
           },
           value: props.value,
           onChange: (value) => {
+            console.log('[Editor] change');
             context.emit('change', value);
           },
           onCreated: (controler) => {
+            console.log('[Editor] created');
             editorLoading.value = true;
             context.emit('created', controler);
           },
@@ -162,10 +173,6 @@ const Editor = defineComponent({
       refEditorContent,
       // 右键事件
       onContextMenu,
-      // loading
-      setLoading: (flag: boolean) => {
-        editorLoading.value = flag;
-      },
       // 设置值
       setValue: (value: string) => {
         editorController.setValue(value);
@@ -189,7 +196,7 @@ const Editor = defineComponent({
           }}
           data-contextmenukey="Editor"
         ></div>
-        {this.editorLoading && (
+        {(this.editorLoading || this.loading) && (
           <div class="editor-loading">
             <Loading text="加载中" />
           </div>

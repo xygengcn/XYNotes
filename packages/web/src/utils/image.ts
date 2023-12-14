@@ -3,6 +3,7 @@ import { copy } from '.';
 import { download } from './file';
 import { writeBinaryFile } from '@tauri-apps/api/fs';
 import { save } from '@tauri-apps/api/dialog';
+import is from './is';
 
 /**
  * 生成图片下载
@@ -15,14 +16,14 @@ export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<an
     return html2canvas(dom, {
       allowTaint: true, // 跨域
       useCORS: true, // 跨域
-      scale: 2,
+      scale: 2
     }).then(async (canvas) => {
       const image = canvas.toDataURL('image/png'); // 导出图片
       // 兼容客户端
-      if (window.__TAURI__) {
+      if (is.app()) {
         const path = await save({
           title: filename,
-          defaultPath: filename + '.png',
+          defaultPath: filename + '.png'
         });
         return writeBinaryFile(path, await fetch(image).then((res) => res.arrayBuffer()));
       }
@@ -43,7 +44,7 @@ export function screenshotCopy(dom: HTMLDivElement): Promise<any> {
     return html2canvas(dom, {
       allowTaint: true, // 跨域
       useCORS: true, // 跨域
-      scale: 2,
+      scale: 2
     }).then((canvas) => {
       canvas.toBlob(async (blob) => {
         return copy(blob);

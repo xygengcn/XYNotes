@@ -1,5 +1,5 @@
-import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router';
 import { getDeviceType } from 'js-lark';
+import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -80,7 +80,7 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   routes,
-  history: createWebHashHistory()
+  history: createWebHistory()
 });
 router.beforeEach((to, from, next) => {
   if (to.meta?.device == 'desktop') {

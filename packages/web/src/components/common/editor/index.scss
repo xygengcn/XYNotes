@@ -3,6 +3,16 @@
   height: 100%;
   position: relative;
 
+  * {
+    user-select: text;
+    -webkit-user-select: auto;
+  }
+
+  [contenteditable] {
+    -webkit-user-select: auto;
+    user-select: all;
+  }
+
   // 预览
   &-preview {
     pre {

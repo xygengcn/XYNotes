@@ -30,10 +30,14 @@ const DesktopSideContainerListHeader = defineComponent({
     });
 
     return () => (
-      <div class="desktop-side-container-list-header">
-        <div class="desktop-side-container-list-header-top">笔记</div>
-        <div class="desktop-side-container-list-header-bottom">
-          <div class="desktop-side-container-list-header-bottom-left">{store.noteListCount}条笔记</div>
+      <div class="desktop-side-container-list-header" data-tauri-drag-region>
+        <div class="desktop-side-container-list-header-top" data-tauri-drag-region>
+          笔记
+        </div>
+        <div class="desktop-side-container-list-header-bottom" data-tauri-drag-region>
+          <div class="desktop-side-container-list-header-bottom-left" data-tauri-drag-region>
+            {store.noteListCount}条笔记
+          </div>
           <div class="desktop-side-container-list-header-bottom-right">
             <Popover
               v-slots={{

@@ -17,9 +17,15 @@ const NoteEditorCounter = defineComponent({
   },
   setup(props) {
     return () => (
-      <div class="note-editor-counter">
-        <span class="note-editor-counter-time">{TimeFormat(props.note?.updatedAt, 'yyyy年MM月dd HH:mm')}</span>
-        {!!props.note?.counter && <span class="note-editor-counter-count">统计: {props.note?.counter}</span>}
+      <div class="note-editor-counter" data-tauri-drag-region>
+        <span class="note-editor-counter-time" data-tauri-drag-region>
+          {TimeFormat(props.note?.updatedAt, 'yyyy年MM月dd HH:mm')}
+        </span>
+        {!!props.note?.counter && (
+          <span class="note-editor-counter-count" data-tauri-drag-region>
+            统计: {props.note?.counter}
+          </span>
+        )}
       </div>
     );
   }

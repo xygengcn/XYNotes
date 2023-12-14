@@ -1,7 +1,7 @@
-import { app } from '@tauri-apps/api';
 import { appWindow } from '@tauri-apps/api/window';
 import { PropType, defineComponent, onMounted, ref } from 'vue';
 import './index.scss';
+import is from '@/utils/is';
 
 const MinMax = defineComponent({
   props: {
@@ -22,7 +22,7 @@ const MinMax = defineComponent({
     const isFullScreanWindow = ref(false);
 
     onMounted(async () => {
-      if (window.__TAURI__ && props.type == 'window') {
+      if (is.app() && props.type == 'window') {
         isFullScreanWindow.value = await appWindow.isFullscreen();
         appWindow.onResized(async () => {
           isFullScreanWindow.value = await appWindow.isFullscreen();
@@ -38,7 +38,7 @@ const MinMax = defineComponent({
       if (props.disabled.includes('fullscreen')) return false;
       context.emit('fullscreen');
       if (props.type == 'window') {
-        if (window.__TAURI__) {
+        if (is.app()) {
           if (await appWindow.isMaximized()) {
             appWindow.setFullscreen(false);
           } else {
@@ -55,8 +55,11 @@ const MinMax = defineComponent({
       // 禁用
       if (props.disabled.includes('close')) return false;
       context.emit('close');
-      if (window.__TAURI__ && props.type == 'window') {
-        app.hide();
+      if (is.app() && props.type == 'window') {
+        if (is.mainWindow()) {
+          return appWindow.hide();
+        }
+        appWindow.close();
       }
     };
 
@@ -67,23 +70,26 @@ const MinMax = defineComponent({
       // 禁用
       if (props.disabled.includes('min')) return false;
       context.emit('min');
-      if (window.__TAURI__ && props.type == 'window') {
+      if (is.app() && props.type == 'window') {
         appWindow.minimize();
       }
     };
 
     return () => (
-      <div class={{ 'min-max': true, visiable: !isFullScreanWindow.value }}>
+      <div class={{ 'min-max': true, visiable: !isFullScreanWindow.value }} data-tauri-drag-region>
         <i
           class={{ 'icon icon-close-window': true, disabled: props.disabled.includes('close') }}
+          none-drag-region
           onClick={handleCloseWindow}
         ></i>
         <i
           class={{ 'icon icon-minus-window': true, disabled: props.disabled.includes('min') }}
+          none-drag-region
           onClick={handleMinWindow}
         ></i>
         <i
           class={{ 'icon icon-fullscreen-window': true, disabled: props.disabled.includes('fullscreen') }}
+          none-drag-region
           onClick={handleMaxWindow}
         ></i>
       </div>

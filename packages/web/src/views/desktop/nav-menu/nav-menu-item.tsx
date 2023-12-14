@@ -31,8 +31,8 @@ const DesktopNavMenuItem = defineComponent({
       props.menu?.action?.(props.menu);
     };
     return () => (
-      <div class="desktop-nav-menu-content-list-item">
-        <div class="desktop-nav-menu-content-list-item-content">
+      <div class="desktop-nav-menu-content-list-item" data-tauri-drag-region>
+        <div class="desktop-nav-menu-content-list-item-content" data-tauri-drag-region>
           <IconNavMenu
             v-tippy={{ placement: 'right', content: props.menu.title }}
             width={30}

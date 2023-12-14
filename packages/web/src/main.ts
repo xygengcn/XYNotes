@@ -1,42 +1,21 @@
-import Toast from '@/components/common/toast';
+import 'overlayscrollbars/overlayscrollbars.css';
 import { createPinia } from 'pinia';
 import 'tippy.js/dist/tippy.css';
 import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';
 import App from './App';
-import Confirm from './components/common/confirm';
-import middlewareHook from './middlewares';
-import { configSaveDefautlMiddleware } from './middlewares/config.middleware';
-import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from './middlewares/note.middleware';
-import perloadDefaultMiddleware from './middlewares/preload.middleware';
+import VueContextMenu from './directive/contextmenu';
+
 import './preload';
 import './registerServiceWorker';
 import router from './router';
 import './shortcut';
-import VueContextMenu from './directive/contextmenu';
-import 'overlayscrollbars/overlayscrollbars.css';
+import is from './utils/is';
 
 // @ts-ignore
 if (process.env.NODE_ENV === 'development') {
-  window.__TAURI__ && window.openDevtools();
+  is.app() && window.openDevtools(true);
 }
-
-// ui赋值
-window.$ui = {
-  toast: Toast,
-  confirm: Confirm
-};
-
-// 注册中间件
-middlewareHook.useMiddleware('load', perloadDefaultMiddleware());
-
-middlewareHook.useMiddleware('saveConfig', configSaveDefautlMiddleware());
-
-middlewareHook.useMiddleware('saveNote', saveNoteDefaultMiddleware());
-
-middlewareHook.useMiddleware('deleteNote', deleteNoteDefaultMiddleware());
-
-middlewareHook.useMiddleware('recovery', perloadDefaultMiddleware());
 
 // 注册pinia
 const pinia = createPinia();

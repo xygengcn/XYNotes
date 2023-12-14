@@ -3,35 +3,95 @@
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
-#[cfg(debug_assertions)] // only include this code on debug builds
-fn open_devtools(app_handle: tauri::AppHandle, flag: bool) {
-    if flag {
-        app_handle.get_window("main").unwrap().open_devtools(); // `main` is the first window from tauri.conf.json without an explicit label
+#[cfg(any(debug_assertions, feature = "devtools"))]
+fn open_devtools(app_handle: tauri::AppHandle, label: String, flag: bool) {
+    let window = app_handle.get_window(&label).unwrap();
+    if flag || !window.is_devtools_open() {
+        window.open_devtools();
     } else {
-        app_handle.get_window("main").unwrap().close_devtools();
+        window.close_devtools();
     }
 }
 
 use tauri::Manager;
-use tauri::{CustomMenuItem, Menu, MenuItem, Submenu};
+use tauri::{
+    AboutMetadata, CustomMenuItem, Menu, MenuItem, RunEvent, Submenu, SystemTray, SystemTrayEvent,
+    SystemTrayMenu, WindowEvent,
+};
 
 fn main() {
     // 添加mac顶部菜单
-    let quit = CustomMenuItem::new("quit".to_string(), "退出");
-    let submenu = Submenu::new("XY笔记", Menu::new().add_item(quit));
-    let menu = Menu::new()
-        .add_native_item(MenuItem::Copy)
-        .add_item(CustomMenuItem::new("hide", "Hide"))
-        .add_submenu(submenu);
-    tauri::Builder::default()
+    let about_menu = Submenu::new(
+        "About",
+        Menu::new()
+            .add_native_item(MenuItem::About("".to_string(), AboutMetadata::default()))
+            .add_item(CustomMenuItem::new("quit", "Quit")),
+    );
+    let edit_menu = Submenu::new(
+        "Edit",
+        Menu::new()
+            .add_native_item(MenuItem::Undo)
+            .add_native_item(MenuItem::Redo)
+            .add_native_item(MenuItem::Cut)
+            .add_native_item(MenuItem::Copy)
+            .add_native_item(MenuItem::Paste)
+            .add_native_item(MenuItem::SelectAll),
+    );
+    let menu = Menu::new().add_submenu(about_menu).add_submenu(edit_menu);
+
+    let tray_menu = SystemTrayMenu::new();
+    // .add_item(CustomMenuItem::new("quit".to_string(), "Quit"))
+    // .add_native_item(SystemTrayMenuItem::Separator)
+    // .add_item(CustomMenuItem::new("hide".to_string(), "Hide"));
+    let tray = SystemTray::new().with_menu(tray_menu);
+
+    // app
+    let app = tauri::Builder::default()
         .menu(menu)
         .on_menu_event(|event| match event.menu_item_id() {
             "quit" => {
-                std::process::exit(0);
+                // emit event to JS and quit from there after cleanup
+                event.window().emit("quit-event", {}).unwrap();
+            }
+            _ => {}
+        })
+        .system_tray(tray)
+        .on_system_tray_event(|app, event| match event {
+            SystemTrayEvent::LeftClick { .. } => {
+                let window = match app.get_window("main") {
+                    Some(window) => match window.is_visible().expect("winvis") {
+                        true => {
+                            window.hide().expect("winhide");
+                            return;
+                        }
+                        false => window,
+                    },
+                    None => return,
+                };
+                #[cfg(not(target_os = "macos"))]
+                {
+                    window.show().unwrap();
+                }
+                window.set_focus().unwrap();
             }
             _ => {}
         })
         .invoke_handler(tauri::generate_handler![open_devtools])
-        .run(tauri::generate_context!())
+        .build(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    // 退出事件
+    app.run(|app_handle, e| match e {
+        // Triggered when a window is trying to close
+        RunEvent::WindowEvent { label, event, .. } => match event {
+            WindowEvent::CloseRequested { api, .. } => {
+                let app_handle = app_handle.clone();
+                let window = app_handle.get_window(&label).unwrap();
+                window.emit("quit-event", {}).unwrap();
+                api.prevent_close();
+            }
+            _ => {}
+        },
+        _ => {}
+    })
 }
