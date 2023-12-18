@@ -1,0 +1,15 @@
+.note-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  z-index: 0;
+
+  &-content {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &-footer {
+    height: 1em;
+  }
+}

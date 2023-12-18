@@ -1,0 +1,71 @@
+.drawer {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  &-close {
+    pointer-events: none;
+    .drawer-shadow {
+      display: none;
+      animation: all 0.3s linear normal;
+    }
+  }
+
+  &-shadow {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0px;
+    z-index: 1;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+  }
+
+  &-content {
+    width: 100%;
+    height: max-content;
+    overflow: hidden;
+    max-height: 50%;
+    z-index: 2;
+    background-color: #fff;
+    position: absolute;
+    box-shadow: 1px 0px 1px 1px #f0f0f0ba;
+    display: flex;
+
+    // 从下往上
+    &-bottom {
+      bottom: 0;
+      border-radius: 10px 10px 0px 0px;
+      transform: translateY(100%);
+      &__open {
+        transform: translateY(0);
+        animation: drawBottomShow 0.3s linear normal;
+      }
+      &__close {
+        transform: translateY(100%);
+        animation: drawBottomClose 0.3s linear normal;
+      }
+    }
+  }
+
+  @keyframes drawBottomShow {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes drawBottomClose {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+}

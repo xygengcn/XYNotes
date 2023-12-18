@@ -1,0 +1,63 @@
+.min-max {
+  display: flex;
+  width: 64px;
+  justify-content: space-between;
+  padding: 8px 5px;
+  visibility: hidden;
+  cursor: pointer;
+  &.visiable {
+    visibility: visible;
+  }
+
+  // 按钮
+  .icon {
+    display: inline-flex;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    color: #fff;
+    &-close-window {
+      background: #fc4546;
+    }
+    &-minus-window {
+      background: #fcb024;
+    }
+
+    &-fullscreen-window {
+      background: #29c332;
+    }
+
+    // 禁用
+    &.disabled {
+      background: var(--window-icon-disabled) !important;
+      background-image: none;
+    }
+  }
+
+  &:hover {
+    .icon {
+      &-close-window {
+        background-image: url('@/assets/icons/window-close.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      &-minus-window {
+        background-image: url('@/assets/icons/window-minus.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      &-fullscreen-window {
+        background-image: url('@/assets/icons/window-fullscreen.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      // 禁用
+      &.disabled {
+        color: var(--window-icon-disabled);
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.input {
+  width: 100%;
+  * {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  &-content {
+    width: 100%;
+    input {
+      width: 100%;
+      outline: none;
+      border: none;
+      font-size: 1em;
+      background: #fff;
+    }
+  }
+}

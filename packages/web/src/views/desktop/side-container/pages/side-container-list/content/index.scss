@@ -1,0 +1,13 @@
+.desktop-side-container-list-content {
+  flex: 1;
+  &-list {
+    height: 100%;
+    padding: 10px;
+    &-item {
+      margin-bottom: 5px;
+      width: 100%;
+      content-visibility: auto;
+      overflow: hidden;
+    }
+  }
+}

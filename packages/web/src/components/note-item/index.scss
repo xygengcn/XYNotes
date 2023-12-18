@@ -1,0 +1,58 @@
+@import '@/styles/functions/index.scss';
+.note-item {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 18px;
+  width: 100%;
+  cursor: pointer;
+
+  * {
+    user-select: none;
+  }
+
+  b {
+    color: var(--theme-text-highlight);
+  }
+
+  &:hover {
+    background-color: var(--note-item-hover-color);
+    border-radius: 10px;
+  }
+
+  &.active {
+    background-color: var(--note-item-active-color);
+    border-radius: 10px;
+  }
+  &-header {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: var(--theme-default-color);
+    margin-bottom: 5px;
+  }
+  &-content {
+    font-size: 12px;
+    font-weight: 400;
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    &__time {
+      color: var(--theme-default-color);
+    }
+    &__text {
+      color: var(--font-default-color);
+      flex: 1;
+      margin-left: 6px;
+      @include line(1);
+    }
+  }
+
+  & + & {
+    border-top: var(--border-default-size) solid var(--border-default-color);
+  }
+  &.active + &,
+  & + &.active {
+    border-top: 1px solid #fff;
+  }
+}

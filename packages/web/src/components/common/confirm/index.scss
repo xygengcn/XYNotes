@@ -1,0 +1,44 @@
+@import '@/styles/functions/index.scss';
+.confirm {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  &-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 500;
+    border-bottom: var(--border-default-size) solid var(--border-default-color);
+
+    i {
+      margin-right: 6px;
+      &.note-tip {
+        &-error {
+          color: var(--theme-error-color);
+        }
+        &-warn {
+          color: var(--theme-warn-color);
+        }
+        &-success {
+          color: var(--theme-success-color);
+        }
+      }
+    }
+  }
+
+  // 主体
+  &-content {
+    flex: 1;
+    margin: 10px 20px;
+    font-size: 14px;
+    overflow: auto;
+    @include line(3);
+  }
+  &-footer {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+}

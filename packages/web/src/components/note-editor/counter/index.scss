@@ -1,0 +1,13 @@
+.note-editor-counter {
+  font-size: 12px;
+  color: var(--font-default-color);
+  height: var(--editor-counter-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // 字数
+  &-count {
+    margin-left: 20px;
+  }
+}

@@ -1,0 +1,74 @@
+@import '@/styles/functions/index.scss';
+.mobile-detail {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  // 顶部
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    // 分享按钮
+    .iconfont {
+      position: absolute;
+      right: 10px;
+      color: var(--mobile-icon-color);
+    }
+  }
+
+  &-content {
+    flex: 1;
+    overflow: hidden;
+    .note-editor-title {
+      padding: 5px 0px;
+      .input {
+        padding-bottom: 6px;
+        &-content-inner {
+          font-size: 1.2em;
+        }
+      }
+    }
+  }
+
+  // 抽屉
+  &-drawer {
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    gap: 10px;
+    padding: 20px 20px 35px 20px;
+    --app-bg-color: #f5f5f5;
+    background-color: var(--app-bg-color);
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      width: 64px;
+      height: 64px;
+
+      &-icon {
+        padding: 6px;
+        .iconfont {
+          color: var(--mobile-icon-color);
+        }
+      }
+
+      &-text {
+        padding: 0px 4px;
+        font-size: 10px;
+        color: var(--font-default-color);
+        line-height: 12px;
+        @include line(2);
+      }
+    }
+  }
+}
