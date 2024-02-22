@@ -7,6 +7,7 @@ function unregister() {
     });
   }
 }
+// @ts-ignore
 if (process.env.NODE_ENV === 'production') {
   register(`sw.js`, {
     ready() {
@@ -31,6 +32,6 @@ if (process.env.NODE_ENV === 'production') {
     error(error) {
       unregister();
       console.error('注册时出错：', error);
-    },
+    }
   });
 }

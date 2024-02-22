@@ -8,8 +8,7 @@ const App = defineComponent({
   name: 'App',
   setup() {
     const handleContextMenu = (e: Event) => {
-      // @ts-ignore
-      if (process.env.NODE_ENV === 'production') {
+      if (is.isProduction()) {
         e.preventDefault();
       }
     };

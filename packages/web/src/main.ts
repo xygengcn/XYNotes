@@ -12,8 +12,9 @@ import router from './router';
 import './shortcut';
 import is from './utils/is';
 
-// @ts-ignore
-if (process.env.NODE_ENV === 'development') {
+
+// 开发环境
+if (is.isDevelopment()) {
   is.app() && window.openDevtools(true);
 }
 
