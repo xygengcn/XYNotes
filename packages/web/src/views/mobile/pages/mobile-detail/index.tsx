@@ -86,7 +86,7 @@ const MobileDetail = defineComponent({
             </div>,
             <div class="mobile-detail-content">
               <NoteEditorTitle note={note.value} />
-              <NoteEditor nid={route.params?.nid as string}></NoteEditor>
+              <NoteEditor nid={route.params?.nid as string} remoteId={route.params?.remoteId as string}></NoteEditor>
             </div>
           ]
         ) : (

@@ -8,19 +8,22 @@ export default abstract class ApiBridge {
   /**
    * 拉取所有的笔记数据
    */
-  abstract apiFetchNoteListData(): Promise<INote[]>;
+  abstract apiFetchNoteListData(
+    remoteBaseUrl: string,
+    cb: (type: 'local' | 'remote', note: INote[]) => void
+  ): Promise<INote[]>;
 
   /**
    * 拉取某个详情的笔记
    */
 
-  abstract apiFetchNoteDetailData(nid: string): Promise<any>;
+  abstract apiFetchNoteDetailData(nid: string, remoteId: string): Promise<any>;
 
   /**
    * 添加或者修改笔记
    * @returns
    */
-  abstract apiSaveOrUpdateNotes(note: INote[]): Promise<any>;
+  abstract apiSaveOrUpdateNote(note: INote): Promise<any>;
 
   /**
    * 删除笔记

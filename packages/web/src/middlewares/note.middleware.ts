@@ -5,10 +5,10 @@ import noteEventBus from '@/event-bus';
 
 // 保存笔记中间件
 export function saveNoteDefaultMiddleware(): IMiddlewareFunction<'saveNote'> {
-  return async (next, noteList) => {
-    await apiEvent.apiSaveOrUpdateNotes(noteList);
-    console.log('[apiSaveOrUpdateNotes]', noteList);
-    noteEventBus.emit('update', { noteList, action: 'update' });
+  return async (next, note) => {
+    await apiEvent.apiSaveOrUpdateNote(note);
+    console.log('[apiSaveOrUpdateNote]', note);
+    noteEventBus.emit('update', { note, action: 'update' });
     return next();
   };
 }
@@ -19,7 +19,7 @@ export function deleteNoteDefaultMiddleware(): IMiddlewareFunction<'deleteNote'>
     await apiEvent.apiDeleteNote(note).then(() => {
       const store = useNotesStore();
       store.deleteNote(note.nid);
-      noteEventBus.emit('update', { noteList: [note], action: 'delete' });
+      noteEventBus.emit('update', { note, action: 'delete' });
     });
     return next();
   };

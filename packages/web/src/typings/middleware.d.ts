@@ -9,7 +9,7 @@ export interface IMiddlewareEvent {
   load: () => void;
 
   // 保存笔记
-  saveNote: (note: INote[]) => void;
+  saveNote: (note: INote) => void;
 
   // 删除笔记
   deleteNote: (note: INote) => void;

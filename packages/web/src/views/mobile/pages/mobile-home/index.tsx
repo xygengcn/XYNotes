@@ -72,7 +72,8 @@ const MobileHome = defineComponent({
       return router.push({
         name: 'mobile-detail',
         params: {
-          nid: note.nid
+          nid: note.nid,
+          remoteId: note.remoteId
         }
       });
     };

@@ -12,6 +12,10 @@ const NoteEditor = defineComponent({
       type: String,
       required: true
     },
+    remoteId: {
+      type: String,
+      required: true
+    },
     titleVisible: {
       type: Boolean,
       default: true
@@ -61,7 +65,7 @@ const NoteEditor = defineComponent({
     const handleQueryNoteItem = async () => {
       fetchNoteLoading.value = true;
       return apiEvent
-        .apiFetchNoteDetailData(props.nid)
+        .apiFetchNoteDetailData(props.nid, props.remoteId)
         .then((result) => {
           if (result?.nid === props.nid) {
             refEditor.value.setValue(result.text || '');

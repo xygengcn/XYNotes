@@ -2,10 +2,10 @@ import Button from '@/components/common/button';
 import database from '@/database';
 import middlewareHook from '@/middlewares';
 import { syncDataByV2 } from '@/services/note.action';
-import { useConfigsStore } from '@/store/config.store';
 import { downloadFile, jsonFileReader } from '@/utils/file';
 import { defineComponent } from 'vue';
 import './index.scss';
+import { useAppStore } from '@/store/app.store';
 
 const DesktopSideContainerList = defineComponent({
   setup() {
@@ -20,9 +20,9 @@ const DesktopSideContainerList = defineComponent({
       database
         .backup()
         .then((database) => {
-          const configs = useConfigsStore();
+          const appStore = useAppStore();
           const backupData = {
-            version: configs.version,
+            version: appStore.version,
             database
           };
           downloadFile(JSON.stringify(backupData), 'database.json');

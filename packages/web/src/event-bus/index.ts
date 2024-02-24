@@ -89,7 +89,7 @@ export class EventBus<Events extends Record<string, any>> {
 
 interface INoteEventBus {
   // 笔记更新
-  update: (options: { noteList: INote[]; action: 'update' | 'delete' }) => void;
+  update: (options: { note: INote; action: 'update' | 'delete' }) => void;
 }
 
 /**

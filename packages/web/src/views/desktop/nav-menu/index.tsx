@@ -5,13 +5,16 @@ import { defineComponent } from 'vue';
 import './index.scss';
 import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
 import is from '@/utils/is';
+import Loading from '@/components/common/loading';
+import { AppLoadStatus, useAppStore } from '@/store/app.store';
 
 export const DESKTOP_NAV_MENU_WIDTH = 64;
 
 const DesktopNavMenu = defineComponent({
   name: 'DesktopNavMenu',
   setup() {
-    const store = useNotesStore();
+    const noteStore = useNotesStore();
+    const appStore =useAppStore()
 
     const desktopNavMenuList: IdesktopNavMenuItem[] = [
       {
@@ -20,7 +23,7 @@ const DesktopNavMenu = defineComponent({
         name: 'desktop-edit',
         visible: true,
         action: () => {
-          store.addNote();
+          noteStore.addNote();
         }
       },
       {
@@ -65,8 +68,15 @@ const DesktopNavMenu = defineComponent({
           </div>
         </div>
         <div class="desktop-nav-menu-bottom">
-          <div class="desktop-nav-menu-bottom-version" v-tippy={{ placement: 'right', content: '此项目开源于XY笔记' }}>
-            <a href="https://github.com/xygengcn/XYNotes" target="_blank">
+          <div class="desktop-nav-menu-bottom-loading" v-show={appStore.loadStatus !== AppLoadStatus.finish}>
+            <Loading color="var(--font-default-color)"></Loading>
+          </div>
+          <div class="desktop-nav-menu-bottom-version">
+            <a
+              href="https://github.com/xygengcn/XYNotes"
+              target="_blank"
+              v-tippy={{ placement: 'right', content: '此项目开源于XY笔记' }}
+            >
               V{__APP_VERSION__}
             </a>
           </div>

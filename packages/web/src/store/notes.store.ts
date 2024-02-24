@@ -3,13 +3,14 @@ import { Note } from '@/services/note';
 import { INote } from '@/typings/note';
 import { defineStore } from 'pinia';
 import defaultJson from './default.json';
+import ArrayMap from '@/utils/array-map';
 
 export const useNotesStore = defineStore('notes', {
   state: () => ({
     // 当前选中笔记，当前编辑笔记
     activeNoteId: '' as string,
-    notesList: [] as Note[],
-    recycleList: [] as Note[],
+    notesList: new ArrayMap<Note>('nid'),
+    recycleList: [] as Note[]
   }),
   getters: {
     // 当前笔记
@@ -23,7 +24,7 @@ export const useNotesStore = defineStore('notes', {
     // 笔记个数
     noteListCount(state): number {
       return state.notesList?.length || 0;
-    },
+    }
   },
   actions: {
     /**
@@ -58,8 +59,8 @@ export const useNotesStore = defineStore('notes', {
      * @param list
      */
     setNoteList(list: INote[]): void {
-      this.notesList = list.map((note) => {
-        return new Note(note);
+      list.forEach((note) => {
+        this.notesList.push(new Note(note));
       });
     },
     /**
@@ -80,11 +81,11 @@ export const useNotesStore = defineStore('notes', {
 
     /**
      * 保存到数据库
-     * @param notes
+     * @param note
      * @returns
      */
-    saveNoteListToDatabse(notes: INote[]) {
-      return middlewareHook.registerMiddleware('saveNote', notes);
+    saveNoteListToDatabse(note: INote) {
+      return middlewareHook.registerMiddleware('saveNote', note);
     },
 
     /**
@@ -97,8 +98,8 @@ export const useNotesStore = defineStore('notes', {
     },
     // 初始化默认数据
     saveDefaultData() {
-      this.setNoteList(defaultJson);
+      this.setNoteList([defaultJson]);
       this.saveNoteListToDatabse(defaultJson);
-    },
-  },
+    }
+  }
 });

@@ -14,7 +14,7 @@ const DetailPage = defineComponent({
           <MinMax type="window"></MinMax>
         </div>
         <div class="detail-page-content">
-          <NoteEditor nid={route.query?.nid as string}></NoteEditor>
+          <NoteEditor nid={route.query?.nid as string} remoteId={route.query?.remoteId as string}></NoteEditor>
         </div>
       </div>
     );

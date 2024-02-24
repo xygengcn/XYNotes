@@ -40,8 +40,11 @@ export class Note implements INote {
   // 字数
   public counter: number = 0;
 
+  // 在线Id
+  public remoteId: string = '';
+
   // 保存节流
-  public __saveNoteDebouceFn;
+  private __saveNoteDebouceFn: (...args: any[]) => number;
 
   constructor(note?: INote) {
     if (note) {
@@ -113,7 +116,10 @@ export class Note implements INote {
       author: this.author,
 
       // 笔记附件
-      attachment: this.attachment
+      attachment: this.attachment,
+
+      // 在线id
+      remoteId: this.remoteId
     };
   }
   /**
@@ -134,7 +140,7 @@ export class Note implements INote {
       this.status = INoteStatus.saving;
       const noteDetail = this.toRaw();
       return middlewareHook
-        .registerMiddleware('saveNote', [{ ...noteDetail, status: 1 }])
+        .registerMiddleware('saveNote',{ ...noteDetail, status: 1 })
         .then((result) => {
           this.status = INoteStatus.normal;
           return result;
