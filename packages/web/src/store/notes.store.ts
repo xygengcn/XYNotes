@@ -10,7 +10,7 @@ export const useNotesStore = defineStore('notes', {
     // 当前选中笔记，当前编辑笔记
     activeNoteId: '' as string,
     notesList: new ArrayMap<Note>('nid'),
-    recycleList: [] as Note[]
+    recycleList: new ArrayMap<Note>('nid')
   }),
   getters: {
     // 当前笔记
@@ -93,7 +93,7 @@ export const useNotesStore = defineStore('notes', {
      * @param note
      */
     recovery(note: Note) {
-      this.recycleList = this.recycleList.filter((item) => item.nid !== note.nid);
+      this.recycleList.delete(note.nid);
       this.notesList.push(note);
     },
     // 初始化默认数据

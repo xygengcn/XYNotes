@@ -2,12 +2,12 @@
  * 数组
  */
 export default class ArrayMap<T extends { [key: string]: any }> {
-  private array: T[];
+  private _array: T[];
   private _map: Map<string, T>;
   private keyProperty: string;
 
   constructor(keyProperty: string = 'id') {
-    this.array = [];
+    this._array = [];
     this._map = new Map();
     this.keyProperty = keyProperty;
   }
@@ -22,33 +22,34 @@ export default class ArrayMap<T extends { [key: string]: any }> {
   }
 
   // Array methods
-  push(obj: T): void {
-    if (!obj.hasOwnProperty(this.keyProperty)) {
-      console.error(`Object must have a property '${this.keyProperty}'`);
-      return;
+  push(...arr: T[]): void {
+    for (const obj of arr) {
+      if (!obj.hasOwnProperty(this.keyProperty)) {
+        console.error(`Object must have a property '${this.keyProperty}'`);
+        return;
+      }
+      // 存在则更新
+      if (!this.ensureUniqueKey(obj)) {
+        return;
+      }
+      // 不存在则更新
+      this._array.push(obj);
+      const key: string = obj[this.keyProperty];
+      this._map.set(key, obj);
     }
-
-    // 存在则更新
-    if (!this.ensureUniqueKey(obj)) {
-      return;
-    }
-
-    this.array.push(obj);
-    const key: string = obj[this.keyProperty];
-    this._map.set(key, obj);
   }
 
-  update(obj: T): void {
-    const key: string = obj[this.keyProperty];
+  update(newObject: T): void {
+    const key: string = newObject[this.keyProperty];
     const existingObj = this._map.get(key);
     if (existingObj) {
       // Merge properties of newObj into existingObj
-      Object.assign(existingObj, obj);
+      Object.assign(existingObj, newObject);
       this._map.set(key, existingObj);
       // Update array with the modified element
-      const index = this.array.indexOf(existingObj);
+      const index = this._array.indexOf(existingObj);
       if (index !== -1) {
-        this.array[index] = existingObj;
+        this._array[index] = existingObj;
       }
     }
   }
@@ -64,13 +65,13 @@ export default class ArrayMap<T extends { [key: string]: any }> {
       return;
     }
 
-    this.array.unshift(obj);
+    this._array.unshift(obj);
     const key: string = obj[this.keyProperty];
     this._map.set(key, obj);
   }
 
   pop(): T | undefined {
-    const obj: T | undefined = this.array.pop();
+    const obj: T | undefined = this._array.pop();
     if (obj) {
       const key: string = obj[this.keyProperty];
       this._map.delete(key);
@@ -79,16 +80,15 @@ export default class ArrayMap<T extends { [key: string]: any }> {
   }
 
   find(predicate: (value: T, index: number, array: Readonly<T>[]) => boolean): T | undefined {
-    return this.array.find(predicate);
+    return this._array.find(predicate);
   }
 
   findIndex(predicate: (value: T, index: number, array: Readonly<T>[]) => boolean): number {
-    return this.array.findIndex(predicate);
+    return this._array.findIndex(predicate);
   }
 
   splice(start: number, deleteCount?: number, ...items: Readonly<T>[]): T[] {
-    const deletedItems = this.array.splice(start, deleteCount, ...items);
-
+    const deletedItems = this._array.splice(start, deleteCount, ...items);
     // 更新 Map
     deletedItems.forEach((deletedItem) => {
       const key = deletedItem[this.keyProperty];
@@ -103,20 +103,20 @@ export default class ArrayMap<T extends { [key: string]: any }> {
   }
 
   filter(predicate: (value: T, index: number, array: Readonly<T>[]) => boolean): T[] {
-    const filteredArray = this.array.filter(predicate);
+    const filteredArray = this._array.filter(predicate);
     return filteredArray;
   }
 
   map<U>(callbackfn: (value: T, index: number, array: Readonly<T>[]) => U): U[] {
-    return this.array.map(callbackfn);
+    return this._array.map(callbackfn);
   }
 
   forEach(callbackfn: (value: T, index: number, array: Readonly<T>[]) => void): void {
-    return this.array.forEach(callbackfn);
+    return this._array.forEach(callbackfn);
   }
 
   sort(compareFn?: (a: Readonly<T>, b: Readonly<T>) => number): T[] {
-    return this.array.sort(compareFn);
+    return this._array.sort(compareFn);
   }
 
   // Map methods
@@ -127,27 +127,66 @@ export default class ArrayMap<T extends { [key: string]: any }> {
     }
 
     this._map.set(key, obj);
-    this.array.push(obj);
+    this._array.push(obj);
   }
 
   get(key: string): T | undefined {
     return this._map.get(key);
   }
 
-  // Additional methods
+  /**
+   * 返回长度
+   */
   size(): number {
-    return this.array.length;
+    return this._array.length;
   }
 
+  /**
+   * 返回长度
+   */
   get length(): number {
-    return this.array.length;
+    return this._array.length;
   }
 
+  /**
+   * 返回key
+   * @returns
+   */
   keys(): IterableIterator<string> {
     return this._map.keys();
   }
 
+  /**
+   * 返回values
+   * @returns
+   */
   values(): IterableIterator<T> {
     return this._map.values();
+  }
+
+  /**
+   * 删除
+   * @param key
+   */
+  delete(key: string) {
+    this._map.delete(key);
+    this._array = this._array.filter((i) => i[this.keyProperty] === key);
+  }
+
+  /**
+   * 清理
+   */
+  clear() {
+    this._map.clear();
+    this._array = [];
+  }
+
+  /**
+   * 初始化
+   * @param arr
+   */
+  reset(arr: T[]) {
+    this.clear();
+    this.push(...arr);
   }
 }
