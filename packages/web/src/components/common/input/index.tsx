@@ -2,6 +2,7 @@ import { defineComponent, onBeforeUnmount } from 'vue';
 import './index.scss';
 
 const Input = defineComponent({
+  name: 'Input',
   props: {
     value: {
       type: String,

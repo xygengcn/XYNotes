@@ -15,6 +15,7 @@ import 'vue3-swipe-actions/dist/index.css';
 import Scroller from '@/components/common/scroller';
 
 const MobileHome = defineComponent({
+  name: 'MobileHome',
   setup() {
     const store = useNotesStore();
     const configStore = useConfigsStore();

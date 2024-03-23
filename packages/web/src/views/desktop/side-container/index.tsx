@@ -2,6 +2,7 @@ import { defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopSideContainer = defineComponent({
+  name: 'DesktopSideContainer',
   props: {
     width: {
       type: Number,

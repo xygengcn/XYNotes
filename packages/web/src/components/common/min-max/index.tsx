@@ -4,6 +4,7 @@ import './index.scss';
 import is from '@/utils/is';
 
 const MinMax = defineComponent({
+  name: 'MinMax',
   props: {
     type: {
       type: String as PropType<'window' | 'dialog'>,

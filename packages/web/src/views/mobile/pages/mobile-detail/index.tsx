@@ -11,6 +11,7 @@ import NoteEditorTitle from '@/components/note-editor/title';
 import Drawer from '@/components/common/drawer';
 
 const MobileDetail = defineComponent({
+  name: 'MobileDetail',
   setup() {
     /**
      * store

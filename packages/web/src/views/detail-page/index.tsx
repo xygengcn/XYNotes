@@ -6,6 +6,7 @@ import MinMax from '@/components/common/min-max';
 import is from '@/utils/is';
 
 const DetailPage = defineComponent({
+  name: 'DetailPage',
   setup() {
     const route = useRoute();
     return () => (

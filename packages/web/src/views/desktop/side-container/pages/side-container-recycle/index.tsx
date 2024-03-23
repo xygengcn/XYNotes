@@ -6,6 +6,7 @@ import { IContextMenuProps } from '@/typings/contextmenu';
 import Scroller from '@/components/common/scroller';
 
 const DesktopSideContainerRecycleContent = defineComponent({
+  name: 'DesktopSideContainerRecycleContent',
   setup() {
     const store = useNotesStore();
 

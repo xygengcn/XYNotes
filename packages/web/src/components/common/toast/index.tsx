@@ -2,6 +2,7 @@ import { createApp, defineComponent } from 'vue';
 import './index.scss';
 
 const ToastComponent = defineComponent({
+  name: 'Toast',
   props: {
     text: String
   },

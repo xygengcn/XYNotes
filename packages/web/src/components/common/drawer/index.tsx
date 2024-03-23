@@ -2,6 +2,7 @@ import { PropType, defineComponent, ref, watch } from 'vue';
 import './index.scss';
 
 const Drawer = defineComponent({
+  name: 'Drawer',
   props: {
     visible: {
       type: Boolean,

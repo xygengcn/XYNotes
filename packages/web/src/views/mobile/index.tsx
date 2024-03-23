@@ -3,6 +3,7 @@ import { defineComponent } from 'vue';
 import './index.scss';
 
 const Mobile = defineComponent({
+  name: 'Mobile',
   setup() {
     return () => (
       <div class="mobile">

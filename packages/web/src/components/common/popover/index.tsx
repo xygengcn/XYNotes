@@ -2,6 +2,7 @@ import { PropType, defineComponent, ref } from 'vue';
 import './index.scss';
 
 const Popover = defineComponent({
+  name: 'Popover',
   props: {
     position: {
       type: String as PropType<'left' | 'right'>,

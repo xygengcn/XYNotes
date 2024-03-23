@@ -7,7 +7,8 @@ import { defineComponent } from 'vue';
 import './index.scss';
 import { useAppStore } from '@/store/app.store';
 
-const DesktopSideContainerList = defineComponent({
+const DesktopSideContainerSetting = defineComponent({
+  name: 'DesktopSideContainerSetting',
   setup() {
     // 同步旧版本数据
     const handleV2Data = () => {
@@ -88,4 +89,4 @@ const DesktopSideContainerList = defineComponent({
   }
 });
 
-export default DesktopSideContainerList;
+export default DesktopSideContainerSetting;

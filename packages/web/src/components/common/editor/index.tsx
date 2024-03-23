@@ -9,6 +9,7 @@ import { readText } from '@/utils/clipboard';
 export * from './lib';
 
 const Editor = defineComponent({
+  name: 'Editor',
   props: {
     value: {
       type: String,
