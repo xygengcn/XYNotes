@@ -104,7 +104,9 @@ export default function contextMenu(menuList: IContextMenuItem[], onSubmit: (opt
     menuList,
     onSelect(options: IContextMenuProps) {
       const selection = window.getSelection();
-      selection.addRange(range);
+      if (selection.rangeCount > 0) {
+        selection.addRange(range);
+      }
       onSubmit?.({ ...options, range });
     },
     onClose() {

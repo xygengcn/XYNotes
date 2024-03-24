@@ -25,7 +25,7 @@ export default function perloadDefaultMiddleware(): IMiddlewareFunction<'load'> 
     await apiEvent.apiFetchConfigsData().then((config) => {
       configs.syncConfigs(config);
       // 同步笔记信息
-      return apiEvent.apiFetchNoteListData(configs.remoteBaseUrl, cb).then((list) => {
+      return apiEvent.apiFetchNoteListData(configs.global.REMOTE_BASE_URL, cb).then((list) => {
         if (list.length === 0) {
           // 默认值
           note.saveDefaultData();

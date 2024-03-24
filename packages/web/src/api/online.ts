@@ -6,14 +6,15 @@ import { INote } from '@/typings/note';
  * 在线数据保存
  */
 
-class ApiEventOnline  {
+class ApiEventOnline {
   // 基础拉取
   private async fetch<T extends any = any>(url: string, body: any = {}): Promise<T> {
     const configStore = useConfigsStore();
-    if (!configStore.remoteBaseUrl) {
+    if (!configStore.global.REMOTE_BASE_URL) {
       return Promise.resolve(null);
     }
-    return fetch(configStore.remoteBaseUrl + url, {
+    const uri = new URL(url, configStore.global.REMOTE_BASE_URL);
+    return fetch(uri, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,10 +36,13 @@ class ApiEventOnline  {
         throw body;
       })
       .catch(async (e) => {
+        console.error('[[online]] fetch', e);
         if (e instanceof Response) {
-          const body = await e.json();
+          const body = await e.json().catch(() => e);
           throw {
             ...e,
+            status: e.status,
+            message: e.statusText,
             data: body
           };
         }
@@ -52,7 +56,7 @@ class ApiEventOnline  {
         return result || [];
       })
       .catch((e) => {
-        console.error('[online]. list', e);
+        console.error('[online] list', e);
         return [];
       });
   }

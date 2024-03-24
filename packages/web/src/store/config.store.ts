@@ -17,6 +17,12 @@ const debounceSaveSideContainerMaxWidth = debounce((width) => {
   middlewareHook.registerMiddleware('saveConfig', { sideContainerWidth: width });
 });
 
+// 防抖保存左侧长度
+const debounceSaveGlobalConfigs = debounce((global, globalText) => {
+  console.info('[config] 全局配置保存', global);
+  return middlewareHook.registerMiddleware('saveConfig', { global, globalText });
+}, 1000);
+
 export const useConfigsStore = defineStore('configs', {
   state: () => ({
     // 宽度
@@ -26,8 +32,13 @@ export const useConfigsStore = defineStore('configs', {
       value: NoteListSortType.updated,
       label: '更新时间'
     } as INoteListSort,
-    // 在线同步地址
-    remoteBaseUrl:""
+    // 全局配置文字
+    globalText: '',
+    // 全局配置
+    global: {} as {
+      // 在线同步地址
+      REMOTE_BASE_URL: string;
+    }
   }),
   actions: {
     /**
@@ -47,6 +58,17 @@ export const useConfigsStore = defineStore('configs', {
         label: '更新时间'
       };
       return middlewareHook.registerMiddleware('saveConfig', { noteListSort: toRaw(this.noteListSort) });
+    },
+    /**
+     * 配置保存
+     * @param global
+     * @param globalText
+     * @returns
+     */
+    saveGlobalConfig(global: any, globalText: string) {
+      this.global = global;
+      this.globalText = globalText;
+      debounceSaveGlobalConfigs(global, globalText);
     },
     /**
      * 配置初始化

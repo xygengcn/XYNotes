@@ -135,12 +135,12 @@ export class Note implements INote {
       return;
     }
     // 草稿状态才保存
-    if (this.status === INoteStatus.draft) {
+    if (this.status === INoteStatus.draft || force) {
       // 保存中
       this.status = INoteStatus.saving;
       const noteDetail = this.toRaw();
       return middlewareHook
-        .registerMiddleware('saveNote',{ ...noteDetail, status: 1 })
+        .registerMiddleware('saveNote', { ...noteDetail, status: 1 })
         .then((result) => {
           this.status = INoteStatus.normal;
           return result;

@@ -21,6 +21,7 @@
     "@tauri-apps/api": "^1.5.1",
     "click-outside-vue3": "^4.0.1",
     "html2canvas": "^1.4.1",
+    "ini-simple-parser": "^1.0.0",
     "js-lark": "^0.0.2",
     "overlayscrollbars": "^2.4.5",
     "overlayscrollbars-vue": "^0.5.6",

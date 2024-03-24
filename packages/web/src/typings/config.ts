@@ -10,6 +10,11 @@ export interface INoteListSort {
 export interface IConfigs extends Record<string, unknown> {
   sideContainerWidth: number;
   noteListSort: INoteListSort;
+  globalText: string;
+  global: {
+    // 在线同步地址
+    REMOTE_BASE_URL: string;
+  };
 }
 
 // 配置数据库

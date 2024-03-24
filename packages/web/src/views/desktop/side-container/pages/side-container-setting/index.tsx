@@ -6,10 +6,14 @@ import { downloadFile, jsonFileReader } from '@/utils/file';
 import { defineComponent } from 'vue';
 import './index.scss';
 import { useAppStore } from '@/store/app.store';
+import { useRouter } from 'vue-router';
 
 const DesktopSideContainerSetting = defineComponent({
   name: 'DesktopSideContainerSetting',
   setup() {
+    // 路由
+    const router = useRouter();
+
     // 同步旧版本数据
     const handleV2Data = () => {
       syncDataByV2();
@@ -48,6 +52,11 @@ const DesktopSideContainerSetting = defineComponent({
           console.error('[recovery]', e);
         });
     };
+
+    // 编辑配置
+    const handleEditConfig = () => {
+      router.push('/setting/config');
+    };
     return () => (
       <div class="desktop-side-container-setting">
         <div class="desktop-side-container-setting-header" data-tauri-drag-region>
@@ -75,6 +84,14 @@ const DesktopSideContainerSetting = defineComponent({
             <span class="desktop-side-container-setting-content-item-right">
               <Button size="min" onClick={handleV2Data}>
                 迁移
+              </Button>
+            </span>
+          </div>
+          <div class="desktop-side-container-setting-content-item">
+            <span class="desktop-side-container-setting-content-item-left">配置文件</span>
+            <span class="desktop-side-container-setting-content-item-right">
+              <Button size="min" onClick={handleEditConfig}>
+                配置
               </Button>
             </span>
           </div>

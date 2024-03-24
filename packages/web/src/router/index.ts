@@ -20,13 +20,27 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'setting',
         name: 'desktop-setting',
-        components: {
-          side: () => import('@/views/desktop/side-container/pages/side-container-setting'),
-          main: () => import('@/views/desktop/main-container/pages/main-container-default')
-        },
         meta: {
           device: 'desktop'
-        }
+        },
+        children: [
+          {
+            path: '',
+            name: 'desktop-setting-default',
+            components: {
+              side: () => import('@/views/desktop/side-container/pages/side-container-setting'),
+              main: () => import('@/views/desktop/main-container/pages/main-container-default')
+            }
+          },
+          {
+            path: 'config',
+            name: 'desktop-setting-config',
+            components: {
+              side: () => import('@/views/desktop/side-container/pages/side-container-setting'),
+              main: () => import('@/views/desktop/main-container/pages/main-container-config')
+            }
+          }
+        ]
       },
       {
         path: 'recycle',

@@ -56,6 +56,19 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       },
       {
+        title: '同步',
+        icon: 'item-sync',
+        visible: true,
+        action: (note: Note) => {
+          if (note) {
+            if (!note.remoteId) {
+              note.remoteId = note.nid;
+            }
+            note.save(true);
+          }
+        }
+      },
+      {
         title: '删除',
         icon: 'item-delete',
         visible: true,
