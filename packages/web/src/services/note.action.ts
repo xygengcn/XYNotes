@@ -1,5 +1,4 @@
 import { useNotesStore } from '@/store/notes.store';
-import { INote } from '@/typings/note';
 import { uuid } from 'js-lark';
 import Database from 'ts-database';
 
@@ -18,9 +17,10 @@ export function syncDataByV2() {
       });
 
       databaseV2.module('notes').then((module) => {
-        module.findAll<any>().then((result) => {
-          const notes: INote[] = result.map((note) => {
-            return {
+        module.findAll<any>().then(async (result) => {
+          const store = useNotesStore();
+          for (const note of result) {
+            await store.saveNoteListToDatabse({
               nid: uuid(),
               // 笔记标题
               title: note.title,
@@ -32,22 +32,26 @@ export function syncDataByV2() {
               updatedAt: note.updated,
               // 简要信息
               intro: note?.text?.trim()?.slice(0, 50) || '',
-              // 笔记状态
+              // 排序
               order: 0,
+              // 笔记状态
               status: 1,
+              // 附件
               attachment: [],
+              // 作者
               author: '',
+              // 笔记类型
               type: 'text',
-              origin: ''
-            };
-          });
-          const store = useNotesStore();
-          store.saveNoteListToDatabse(notes).then(() => {
-            window.$ui.toast('数据迁移成功');
-            setTimeout(() => {
-              window.location.href = '/';
-            }, 300);
-          });
+              // 笔记来源
+              origin: '',
+              // 远程id
+              remoteId: ''
+            });
+          }
+          window.$ui.toast('数据迁移成功');
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 300);
         });
       });
     }
