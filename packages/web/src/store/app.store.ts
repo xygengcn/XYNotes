@@ -21,18 +21,12 @@ export const useAppStore = defineStore('app', {
     // 版本
     version: __APP_VERSION__,
     // 加载状态
-    loadStatus: AppLoadStatus.configsLoading,
-    // 忽略网络同步
-    ignoreOnlineSync: false
+    loadStatus: AppLoadStatus.configsLoading
   }),
   actions: {
     // 修改状态
     setLoadStatus(status: AppLoadStatus) {
       this.loadStatus = status;
-    },
-    // 由于网络多次失败问题，会停止网络同步状态
-    setIgnoreOnlineSync() {
-      this.ignoreOnlineSync = true;
     }
   }
 });

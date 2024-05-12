@@ -7,9 +7,18 @@ import is from '@/utils/is';
  */
 
 class ApiEventOnline {
+  // 由于网络多次失败问题，会停止网络同步状态
+  private ignoreOnlineSync: boolean = false;
+  // 由于网络多次失败问题，记录失败次数
+  private onlineSyncErrorCount: number = 0;
+
   // 基础拉取
   private async fetch<T extends any = any>(url: string, body: any = {}): Promise<T> {
-    if (window.GlobalConfig?.REMOTE_ONLINE_SYNC !== 'true' || !is.url(window.GlobalConfig?.REMOTE_BASE_URL)) {
+    if (
+      window.GlobalConfig?.REMOTE_ONLINE_SYNC !== 'true' ||
+      !is.url(window.GlobalConfig?.REMOTE_BASE_URL) ||
+      this.ignoreOnlineSync
+    ) {
       return Promise.resolve(null);
     }
     const uri = new URL(url, window.GlobalConfig.REMOTE_BASE_URL);
@@ -29,13 +38,20 @@ class ApiEventOnline {
         }
         const body = await response.json();
         if (body.code === 200) {
+          this.onlineSyncErrorCount = 0;
+          this.ignoreOnlineSync = false;
           return body.data;
         }
         body.userMsg && window.$ui.toast(body.userMsg);
         throw body;
       })
       .catch(async (e) => {
-        console.error('[[online]] fetch', e);
+        // 记录失败次数
+        this.onlineSyncErrorCount++;
+        if (this.onlineSyncErrorCount >= 3) {
+          this.ignoreOnlineSync = true;
+        }
+        console.error('[[online]] fetch', this.onlineSyncErrorCount, 'Error:', e);
         if (e instanceof Response) {
           const body = await e.json().catch(() => e);
           throw {
