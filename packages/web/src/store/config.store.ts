@@ -4,6 +4,7 @@ import { NoteListSortType } from '@/typings/enum/note';
 import { debounce } from '@/utils/debounce-throttle';
 import { defineStore } from 'pinia';
 import { toRaw } from 'vue';
+import { IGlobalConfig } from './../typings/config';
 
 // 最大值
 export const SIDE_CONTAINER_MAX_WIDTH = 500;
@@ -17,12 +18,6 @@ const debounceSaveSideContainerMaxWidth = debounce((width) => {
   middlewareHook.registerMiddleware('saveConfig', { sideContainerWidth: width });
 });
 
-// 防抖保存左侧长度
-const debounceSaveGlobalConfigs = debounce((global, globalText) => {
-  console.info('[config] 全局配置保存', global);
-  return middlewareHook.registerMiddleware('saveConfig', { global, globalText });
-}, 1000);
-
 export const useConfigsStore = defineStore('configs', {
   state: () => ({
     // 宽度
@@ -32,13 +27,10 @@ export const useConfigsStore = defineStore('configs', {
       value: NoteListSortType.updated,
       label: '更新时间'
     } as INoteListSort,
-    // 全局配置文字
-    globalText: '',
-    // 全局配置
-    global: {} as {
-      // 在线同步地址
-      REMOTE_BASE_URL: string;
-    }
+    // 全局配置原始数据
+    configJson: {} as IGlobalConfig,
+    // 全局配置解析后的数据
+    configValue: '' as string
   }),
   actions: {
     /**
@@ -65,10 +57,14 @@ export const useConfigsStore = defineStore('configs', {
      * @param globalText
      * @returns
      */
-    saveGlobalConfig(global: any, globalText: string) {
-      this.global = global;
-      this.globalText = globalText;
-      debounceSaveGlobalConfigs(global, globalText);
+    saveGlobalConfig(configJson: IGlobalConfig, configValue: string) {
+      this.configJson = configJson;
+      this.configValue = configValue;
+      window.GlobalConfig = this.configJson;
+      console.info('[config] 全局配置保存', configJson);
+      return middlewareHook.registerMiddleware('saveConfig', { configJson, configValue }).then(() => {
+        window.$ui.toast('保存成功');
+      });
     },
     /**
      * 配置初始化
@@ -77,6 +73,7 @@ export const useConfigsStore = defineStore('configs', {
       configs.forEach(({ key, value }) => {
         Object.assign(this, { [key]: value });
       });
+      window.GlobalConfig = this.configJson;
     }
   }
 });

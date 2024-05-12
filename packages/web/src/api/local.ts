@@ -1,6 +1,7 @@
 import database from '@/database';
 import { IConfigsColunm } from '@/typings/config';
 import { INote } from '@/typings/note';
+import { object } from '@/utils/object';
 
 /**
  * 本地数据保存
@@ -19,12 +20,11 @@ class ApiEventLocal {
             'intro',
             'nid',
             'order',
-            'origin',
             'status',
             'title',
             'type',
-            'updatedAt',
-          ],
+            'onlineUpdatedAt'
+          ]
         })
         .then((list) => {
           return list;
@@ -40,15 +40,19 @@ class ApiEventLocal {
   }
 
   // 更新或新建笔记
-  async apiSaveOrUpdateNote(note: INote): Promise<any> {
+  async apiSaveOrUpdateNote(note: INote): Promise<INote> {
     return database.module('notes').then((model) => {
-      return model.bulkCreate([note]);
+      // 转换数据格式
+      const noteTableAttr = object.omit(note, ['attachment']);
+      return model.bulkCreate([noteTableAttr]).then(() => {
+        return note;
+      });
     });
   }
   // 删除笔记
-  async apiDeleteNote(note: INote): Promise<void> {
+  async apiDeleteNote(note: INote): Promise<boolean> {
     return database.module('notes').then((model) => {
-      return model.destory(note.nid);
+      return model.destory(note.nid).then(() => true);
     });
   }
   // 拉取配置

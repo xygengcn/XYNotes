@@ -3,7 +3,7 @@ import { getDeviceType } from 'js-lark';
 import { computed, defineComponent, PropType } from 'vue';
 import Input from '@/components/common/input';
 import './index.scss';
-import { INoteStatus } from '@/typings/note';
+import { NoteStatus } from '@/typings/note';
 
 const NoteEditorTitle = defineComponent({
   name: 'NoteEditorTitle',
@@ -36,7 +36,7 @@ const NoteEditorTitle = defineComponent({
      */
     const handleChangeTitle = (title: string) => {
       if (title) {
-        props.note.set({ title, status: INoteStatus.draft });
+        props.note.set({ title, status: NoteStatus.draft });
         props.note.save();
       }
     };

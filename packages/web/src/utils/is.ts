@@ -18,6 +18,16 @@ const is = {
   isProduction(): boolean {
     // @ts-ignore
     return process.env.NODE_ENV === 'production';
+  },
+  // 判断是不是url
+  url(url: string) {
+    if ((typeof url === 'string' && url.indexOf('http://') === 0) || url.indexOf('https://') === 0) {
+      try {
+        const uri = new URL(url);
+        return !!uri;
+      } catch (error) {}
+    }
+    return false;
   }
 };
 

@@ -2,27 +2,27 @@ import database from '@/database';
 import { IConfigsColunm } from '@/typings/config';
 import { INote } from '@/typings/note';
 import ApiBridge from './api.bridge';
-import apiEventOnline from './online';
 import apiEventLocal from './local';
+import apiEventOnline from './online';
 
 /**
  * 事件继承，所有数据处理都经过这里
  */
 
 class ApiEvent implements ApiBridge {
-  // 拉取笔记数据
-  async apiFetchNoteListData(
-    remoteBaseUrl: string,
-    cb: (type: 'local' | 'remote', note: INote[]) => void
-  ): Promise<INote[]> {
+  /**
+   * 拉取笔记数据
+   * @param remoteBaseUrl 远程地址
+   * @param cb
+   * @returns
+   */
+  async apiFetchNoteListData(): Promise<INote[]> {
     return apiEventLocal
       .apiFetchNoteListData()
       .then((localResult) => {
-        cb('local', localResult);
-        if (remoteBaseUrl) {
+        if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
           return apiEventOnline.apiFetchNoteListData().then((onlineResult) => {
-            cb('remote', onlineResult);
-            return onlineResult.concat(localResult);
+            return localResult.concat(onlineResult);
           });
         }
         return localResult;
@@ -33,27 +33,37 @@ class ApiEvent implements ApiBridge {
   }
 
   // 拉取笔记细节
-  async apiFetchNoteDetailData(nid: string, remoteId: string): Promise<INote> {
-    if (remoteId) {
-      return apiEventOnline.apiFetchNoteDetailData(remoteId);
-    }
-    return apiEventLocal.apiFetchNoteDetailData(nid);
+  async apiFetchNoteDetailData(nid: string): Promise<INote> {
+    return apiEventLocal.apiFetchNoteDetailData(nid).then((note) => {
+      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+        return apiEventOnline.apiFetchNoteDetailData(nid).catch(() => {
+          return note;
+        });
+      }
+      return note;
+    });
   }
 
   // 更新或新建笔记
   async apiSaveOrUpdateNote(note: INote): Promise<any> {
-    if (note.remoteId) {
-      return apiEventOnline.apiSaveOrUpdateNote(note);
-    }
-    return apiEventLocal.apiSaveOrUpdateNote(note);
+    return apiEventLocal.apiSaveOrUpdateNote(note).then((note) => {
+      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+        return apiEventOnline.apiSaveOrUpdateNote(note).catch(() => {
+          return note;
+        });
+      }
+      return note;
+    });
   }
 
   // 删除笔记
-  async apiDeleteNote(note: INote): Promise<void> {
-    if (note.remoteId) {
-      return apiEventOnline.apiDeleteNote(note);
-    }
-    return apiEventLocal.apiDeleteNote(note);
+  async apiDeleteNote(note: INote): Promise<boolean> {
+    return apiEventLocal.apiDeleteNote(note).then((result) => {
+      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+        return apiEventOnline.apiDeleteNote(note);
+      }
+      return result;
+    });
   }
   // 拉取配置
   async apiFetchConfigsData(): Promise<IConfigsColunm[]> {

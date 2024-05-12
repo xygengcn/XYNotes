@@ -56,19 +56,6 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       },
       {
-        title: '同步',
-        icon: 'item-sync',
-        visible: true,
-        action: (note: Note) => {
-          if (note) {
-            if (!note.remoteId) {
-              note.remoteId = note.nid;
-            }
-            note.save(true);
-          }
-        }
-      },
-      {
         title: '删除',
         icon: 'item-delete',
         visible: true,
@@ -88,7 +75,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
 
     // 新开页面
     const handleSplitScreen = (note: Note) => {
-      window.createWindow({ nid: note.nid, remoteId: note.remoteId });
+      window.createWindow({ nid: note.nid });
     };
 
     return () => (

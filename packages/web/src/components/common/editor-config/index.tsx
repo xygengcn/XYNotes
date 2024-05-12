@@ -2,6 +2,7 @@ import parse from 'ini-simple-parser';
 import { defineComponent, nextTick, onMounted, ref } from 'vue';
 import Scroller from '../scroller';
 import './index.scss';
+import { debounce } from '@/utils/debounce-throttle';
 
 const EditorConfig = defineComponent({
   name: 'EditorConfig',
@@ -13,7 +14,8 @@ const EditorConfig = defineComponent({
     }
   },
   emits: {
-    change: (obj: any, value: string) => obj
+    change: (obj: any, value: string) => obj,
+    save: (obj: any, value: string) => obj
   },
   setup(props, context) {
     /**
@@ -25,7 +27,7 @@ const EditorConfig = defineComponent({
      * 输入监听
      * @param e
      */
-    const onInput = (e: Event) => {
+    const onInput = debounce(() => {
       try {
         const innerText = refEditorContent.value.innerText.trim();
         if (innerText) {
@@ -33,7 +35,7 @@ const EditorConfig = defineComponent({
           context.emit('change', result, innerText);
         }
       } catch (error) {}
-    };
+    }, 1000);
 
     /**
      * 聚焦
@@ -49,14 +51,41 @@ const EditorConfig = defineComponent({
       });
     };
 
+    /**
+     * 粘贴
+     * @param e
+     */
+    const onPaste = (e: ClipboardEvent) => {
+      e.preventDefault();
+      const text = e.clipboardData.getData('text/plain');
+      // 插入文本
+      document.execCommand('insertHTML', false, text);
+    };
+
+    /**
+     * 监听
+     * @param e
+     */
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's')) {
+        const innerText = refEditorContent.value.innerText.trim();
+        if (innerText) {
+          const result = parse(innerText);
+          context.emit('save', result, innerText);
+        }
+      }
+    };
+
     onMounted(() => {
       refEditorContent.value.innerText = props.value;
-      focus();
     });
 
     return {
       refEditorContent,
-      onInput
+      onInput,
+      onPaste,
+      onKeyDown,
+      focus
     };
   },
   render() {
@@ -68,6 +97,8 @@ const EditorConfig = defineComponent({
           contenteditable
           spellcheck="false"
           onInput={this.onInput}
+          onPaste={this.onPaste}
+          onKeydown={this.onKeyDown}
         ></div>
       </Scroller>
     );

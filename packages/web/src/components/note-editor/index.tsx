@@ -1,7 +1,7 @@
 import apiEvent from '@/api';
 import Editor from '@/components/common/editor';
 import { useNotesStore } from '@/store/notes.store';
-import { INoteStatus } from '@/typings/note';
+import { NoteStatus } from '@/typings/note';
 import { computed, defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
 import './index.scss';
 
@@ -9,10 +9,6 @@ const NoteEditor = defineComponent({
   name: 'NoteEditor',
   props: {
     nid: {
-      type: String,
-      required: true
-    },
-    remoteId: {
       type: String,
       required: true
     },
@@ -65,7 +61,7 @@ const NoteEditor = defineComponent({
     const handleQueryNoteItem = async () => {
       fetchNoteLoading.value = true;
       return apiEvent
-        .apiFetchNoteDetailData(props.nid, props.remoteId)
+        .apiFetchNoteDetailData(props.nid)
         .then((result) => {
           if (result?.nid === props.nid) {
             refEditor.value.setValue(result.text || '');
@@ -83,7 +79,7 @@ const NoteEditor = defineComponent({
      * @param value
      */
     const handleChangeValue = (value: string) => {
-      activeNote.value.set({ text: value, status: INoteStatus.draft });
+      activeNote.value.set({ text: value, status: NoteStatus.draft });
       activeNote.value.save(false);
     };
 
@@ -91,7 +87,7 @@ const NoteEditor = defineComponent({
      * 输入事件
      */
     const handleEditorInput = () => {
-      activeNote.value.set({ status: INoteStatus.draft });
+      activeNote.value.set({ status: NoteStatus.draft });
     };
 
     /**
@@ -108,7 +104,7 @@ const NoteEditor = defineComponent({
      */
     const handleEditorPaste = (text: string) => {
       if (text?.trim()) {
-        activeNote.value.set({ status: INoteStatus.draft });
+        activeNote.value.set({ status: NoteStatus.draft });
         refEditor.value.insertValue(text);
       }
     };

@@ -41,11 +41,7 @@ export function syncDataByV2() {
               // 作者
               author: '',
               // 笔记类型
-              type: 'text',
-              // 笔记来源
-              origin: '',
-              // 远程id
-              remoteId: ''
+              type: 'text'
             });
           }
           window.$ui.toast('数据迁移成功');

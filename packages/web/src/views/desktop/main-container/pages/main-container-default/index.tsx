@@ -22,7 +22,7 @@ const DesktopMainContainerDefault = defineComponent({
         {activeNote.value && (
           <div class="desktop-main-container-default-content">
             <div class="desktop-main-container-default-content-left">
-              <NoteEditor nid={activeNote.value.nid} remoteId={activeNote.value.remoteId}>
+              <NoteEditor nid={activeNote.value.nid}>
                 {{
                   header: ({ note }) => [<NoteEditorCounter note={note} />, <NoteEditorTitle note={note} />]
                 }}

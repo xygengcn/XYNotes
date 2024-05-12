@@ -1,7 +1,7 @@
 /**
  * 笔记所有字段
  */
-export enum INoteStatus {
+export enum NoteStatus {
   draft = 0, // 草稿状态
   saving = 0.5, // 正在保存
   normal = 1, // 保存状态
@@ -11,11 +11,13 @@ export enum INoteStatus {
 /**
  * 笔记类型
  */
-export enum INoteType {
+export enum NoteType {
   text = 'text'
 }
 
-export interface INoteAttachment {}
+/**
+ * 笔记数据格式
+ */
 export interface INote {
   // 笔记id
   nid: string;
@@ -24,7 +26,7 @@ export interface INote {
   title: string;
 
   // 笔记类型
-  type: INoteType | string;
+  type: NoteType | string;
 
   // 排序
   order: number;
@@ -42,17 +44,19 @@ export interface INote {
   intro: string;
 
   // 笔记状态
-  status: INoteStatus;
-
-  // 笔记来源
-  origin: string;
+  status: NoteStatus;
 
   // 笔记作者
   author: string;
 
+  // 线上更新时间
+  onlineUpdatedAt?: number;
+
   // 笔记附件
   attachment: Array<INoteAttachment>;
-
-  // 在线id
-  remoteId: string;
 }
+
+/**
+ * 笔记附件
+ */
+export interface INoteAttachment {}

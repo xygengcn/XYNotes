@@ -1,12 +1,12 @@
 import middlewareHook from '@/middlewares';
 import { uuid } from 'js-lark';
-import { INote, INoteAttachment, INoteStatus, INoteType } from '@/typings/note';
+import { INote, INoteAttachment, NoteStatus, NoteType } from '@/typings/note';
 import { debounce } from '@/utils/debounce-throttle';
 import { downloadFile } from '@/utils/file';
 
 export class Note implements INote {
   // 笔记类型
-  public type: INoteType = INoteType.text;
+  public type: NoteType = NoteType.text;
   // 笔记id
   public nid!: string;
 
@@ -26,7 +26,7 @@ export class Note implements INote {
   public intro: string = '';
 
   // 笔记状态
-  public status: INoteStatus = 0;
+  public status: NoteStatus = 0;
   // 笔记来源
   public origin: string = '';
   // 笔记作者
@@ -40,8 +40,8 @@ export class Note implements INote {
   // 字数
   public counter: number = 0;
 
-  // 在线Id
-  public remoteId: string = '';
+  // 线上更新时间
+  public onlineUpdatedAt: number = 0;
 
   // 保存节流
   private __saveNoteDebouceFn: (...args: any[]) => number;
@@ -71,7 +71,7 @@ export class Note implements INote {
    * @param note
    */
   public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
-    if (note.status === INoteStatus.draft || this.status === INoteStatus.draft) {
+    if (note.status === NoteStatus.draft || this.status === NoteStatus.draft) {
       // 截取前50作简要信息
       Object.assign(this, {
         ...note,
@@ -109,9 +109,6 @@ export class Note implements INote {
       // 笔记状态
       status: this.status,
 
-      // 笔记来源
-      origin: this.origin,
-
       // 笔记作者
       author: this.author,
 
@@ -119,7 +116,7 @@ export class Note implements INote {
       attachment: this.attachment,
 
       // 在线id
-      remoteId: this.remoteId
+      onlineUpdatedAt: this.onlineUpdatedAt
     };
   }
   /**
@@ -135,19 +132,19 @@ export class Note implements INote {
       return;
     }
     // 草稿状态才保存
-    if (this.status === INoteStatus.draft || force) {
+    if (this.status === NoteStatus.draft || force) {
       // 保存中
-      this.status = INoteStatus.saving;
+      this.status = NoteStatus.saving;
       const noteDetail = this.toRaw();
       return middlewareHook
         .registerMiddleware('saveNote', { ...noteDetail, status: 1 })
         .then((result) => {
-          this.status = INoteStatus.normal;
+          this.status = NoteStatus.normal;
           return result;
         })
         .catch(() => {
           // 返回草稿状态
-          this.status = INoteStatus.draft;
+          this.status = NoteStatus.draft;
         });
     }
     return;

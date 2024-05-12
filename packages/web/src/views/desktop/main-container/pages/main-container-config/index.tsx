@@ -11,8 +11,8 @@ const DesktopMainContainerConfig = defineComponent({
      * 数据切换
      * @param obj
      */
-    const onChange = (obj: any, value) => {
-      config.saveGlobalConfig(obj, value);
+    const onChange = (configJson: any, configValue: string) => {
+      config.saveGlobalConfig(configJson, configValue);
     };
     return () => (
       <div class="desktop-main-container-config">
@@ -20,7 +20,7 @@ const DesktopMainContainerConfig = defineComponent({
           <h2>全局配置编辑</h2>
         </div>
         <div class="desktop-main-container-config-content">
-          <EditorConfig value={config.globalText} onChange={onChange}></EditorConfig>
+          <EditorConfig value={config.configValue} onChange={onChange} onSave={onChange}></EditorConfig>
         </div>
       </div>
     );

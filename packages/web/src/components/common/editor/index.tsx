@@ -74,7 +74,6 @@ const Editor = defineComponent({
       () => {
         editorLoading.value = true;
         nextTick(() => {
-          editorController?.focus();
           const selection = window.getSelection();
           selection.removeAllRanges();
         });

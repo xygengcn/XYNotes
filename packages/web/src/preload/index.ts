@@ -22,7 +22,7 @@ if (is.app()) {
   };
 
   // 创建窗口
-  window.createWindow = (options: { nid: string; remoteId: string }) => {
+  window.createWindow = (options: { nid: string }) => {
     console.log('[createWindow]', options);
     const webviewId = `nid-${options.nid}`;
 
@@ -34,7 +34,7 @@ if (is.app()) {
     }
 
     webview = new WebviewWindow(webviewId, {
-      url: `/detail?nid=${options.nid}&remoteId=${options.remoteId}`,
+      url: `/detail?nid=${options.nid}`,
       fullscreen: false,
       alwaysOnTop: false,
       resizable: true,
