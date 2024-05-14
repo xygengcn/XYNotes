@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 1498139 */
-  src: url('iconfont.woff2?t=1711264927146') format('woff2'),
-       url('iconfont.woff?t=1711264927146') format('woff'),
-       url('iconfont.ttf?t=1711264927146') format('truetype');
+  src: url('iconfont.woff2?t=1715696889446') format('woff2'),
+       url('iconfont.woff?t=1715696889446') format('woff'),
+       url('iconfont.ttf?t=1715696889446') format('truetype');
 }
 
 .iconfont {
@@ -14,7 +14,7 @@
 }
 
 .note-item-sync:before {
-  content: "\e6a8";
+  content: "\e6ca";
 }
 
 .note-item-splitscreen:before {

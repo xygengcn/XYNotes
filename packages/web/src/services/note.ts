@@ -1,3 +1,4 @@
+import apiEvent from '@/api';
 import middlewareHook from '@/middlewares';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@/typings/note';
 import { debounce } from '@/utils/debounce-throttle';
@@ -168,5 +169,16 @@ export class Note implements INote {
   public toJson() {
     const str = JSON.stringify(this.toRaw());
     return downloadFile(str || '', `${this.title || 'XYNote'}.json`);
+  }
+
+  /**
+   * 同步数据，不修改更新时间
+   * @returns
+   */
+  public sync() {
+    console.log('[note] sync', this.nid);
+    return apiEvent.apiSaveOrUpdateNote(this.toRaw(), true).then((note) => {
+      this.update(note);
+    });
   }
 }

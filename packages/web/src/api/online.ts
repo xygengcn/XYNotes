@@ -2,6 +2,7 @@ import { IConfigsColunm } from '@/typings/config';
 import { INote } from '@/typings/note';
 import { getCookie } from '@/utils';
 import is from '@/utils/is';
+import { object } from '@/utils/object';
 
 /**
  * 在线数据保存
@@ -91,8 +92,13 @@ class ApiEventOnline {
   }
 
   // 更新或新建笔记
-  async apiSaveOrUpdateNote(note: INote): Promise<INote> {
-    return this.fetch('/note/detail/save', { note })
+  async apiSaveOrUpdateNote(note: INote, sync: boolean = false): Promise<INote> {
+    const content = object.omit(note, ['attachment']);
+    // 不是同步
+    if (!sync) {
+      content.updatedAt = Date.now();
+    }
+    return this.fetch('/note/detail/save', { note: content })
       .then((result) => {
         console.log('[online] save', result);
         return result;
