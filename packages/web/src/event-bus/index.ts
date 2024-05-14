@@ -44,8 +44,7 @@ export class EventBus<Events extends Record<string, any>> {
   emit<EventName extends keyof Events>(name: EventName, ...value: Parameters<Events[EventName]>) {
     const set: Set<Handler<Events[EventName]>> | undefined = this.map.get(name as string);
     if (!set) return;
-    const copied = [...set];
-    copied.forEach((fn) => fn.call(fn, ...value));
+    set.forEach((fn) => fn.call(fn, ...value));
     // 发送到其他窗口
     this.broadcastChannel.postMessage({ action: name, message: value });
   }

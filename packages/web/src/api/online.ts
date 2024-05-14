@@ -66,7 +66,7 @@ class ApiEventOnline {
   }
   // 拉取笔记数据
   async apiFetchNoteListData(): Promise<INote[]> {
-    return this.fetch('/note/all/list')
+    return this.fetch('/note/list/query')
       .then((result) => {
         return result || [];
       })
@@ -78,7 +78,7 @@ class ApiEventOnline {
 
   // 拉取笔记细节
   async apiFetchNoteDetailData(nid: string): Promise<INote> {
-    return this.fetch('/note/detail', { nid })
+    return this.fetch('/note/detail/query', { nid })
       .then((result) => {
         return result;
       })
@@ -90,7 +90,7 @@ class ApiEventOnline {
 
   // 更新或新建笔记
   async apiSaveOrUpdateNote(note: INote): Promise<INote> {
-    return this.fetch('/note/save', { note })
+    return this.fetch('/note/detail/save', { note })
       .then((result) => {
         console.log('[online] save', result);
         return result;
@@ -103,7 +103,7 @@ class ApiEventOnline {
 
   // 删除笔记
   async apiDeleteNote(note: INote): Promise<boolean> {
-    return this.fetch('/note/delete', { nid: note.nid })
+    return this.fetch('/note/detail/delete', { nid: note.nid })
       .then((result) => {
         console.log('[online] delete', result);
         return result;

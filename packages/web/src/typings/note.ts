@@ -49,9 +49,6 @@ export interface INote {
   // 笔记作者
   author: string;
 
-  // 线上更新时间
-  onlineUpdatedAt?: number;
-
   // 笔记附件
   attachment: Array<INoteAttachment>;
 }

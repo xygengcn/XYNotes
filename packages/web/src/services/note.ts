@@ -1,8 +1,8 @@
 import middlewareHook from '@/middlewares';
-import { uuid } from 'js-lark';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@/typings/note';
 import { debounce } from '@/utils/debounce-throttle';
 import { downloadFile } from '@/utils/file';
+import { uuid } from 'js-lark';
 
 export class Note implements INote {
   // 笔记类型
@@ -40,9 +40,6 @@ export class Note implements INote {
   // 字数
   public counter: number = 0;
 
-  // 线上更新时间
-  public onlineUpdatedAt: number = 0;
-
   // 保存节流
   private __saveNoteDebouceFn: (...args: any[]) => number;
 
@@ -72,12 +69,13 @@ export class Note implements INote {
    */
   public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
     if (note.status === NoteStatus.draft || this.status === NoteStatus.draft) {
-      // 截取前50作简要信息
-      Object.assign(this, {
-        ...note,
-        intro: note?.text?.trim()?.slice(0, 50) || this.intro,
-        updatedAt: new Date().getTime()
+      const newNote = Object.assign(note, {
+        // 截取前50作简要信息
+        intro: note?.text?.trim()?.slice(0, 50) || this.intro
       });
+      Object.assign(this, newNote);
+
+      this.update(this.toRaw());
     }
   }
 
@@ -113,10 +111,7 @@ export class Note implements INote {
       author: this.author,
 
       // 笔记附件
-      attachment: this.attachment,
-
-      // 在线id
-      onlineUpdatedAt: this.onlineUpdatedAt
+      attachment: this.attachment
     };
   }
   /**
@@ -139,7 +134,10 @@ export class Note implements INote {
       return middlewareHook
         .registerMiddleware('saveNote', { ...noteDetail, status: 1 })
         .then((result) => {
-          this.status = NoteStatus.normal;
+          const note = result[0];
+          if (note) {
+            this.update(note);
+          }
           return result;
         })
         .catch(() => {

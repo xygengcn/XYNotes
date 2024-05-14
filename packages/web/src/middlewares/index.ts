@@ -38,7 +38,7 @@ class Middleware {
     event: T,
     ...args: Parameters<IMiddlewareEvent[T]>
   ): Promise<any> {
-    console.info('[hook]', event, { args });
+    console.info('[hook]', event, args);
     const middleware = this.middlewareMap.get(event);
     if (middleware?.hook) {
       return await middleware.hook.apply(undefined, args);

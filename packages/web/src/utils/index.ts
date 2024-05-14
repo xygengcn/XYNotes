@@ -72,9 +72,8 @@ export function compose(middlewares: Array<Function>) {
     function dispatch(i: number) {
       let fn = middlewares[i];
       if (!fn) {
-        return Promise.resolve();
+        return Promise.resolve(args);
       }
-
       return Promise.resolve(
         fn(function next() {
           return dispatch(i + 1);
