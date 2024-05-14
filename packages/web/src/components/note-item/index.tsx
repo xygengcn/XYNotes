@@ -42,9 +42,9 @@ const NoteItem = defineComponent({
     /**
      * 选中
      */
-    const handleClickSelect = () => {
+    const handleClickSelect = async () => {
       if (store.activeNote) {
-        store.activeNote.save();
+        await store.activeNote.save(true);
       }
       context.emit('select', props.note);
     };

@@ -15,6 +15,7 @@ export function debounce(callback: Function, delay = 300) {
     timer = window.setTimeout(function () {
       // apply: 作用就是改变方法内部this的指向, 并能将参数传递给该方法, 最后立即执行这个函数
       callback.apply(self, args);
+      timer && window.clearTimeout(timer);
     }, delay);
     return timer;
   };
@@ -37,6 +38,7 @@ export const debounceMap = (key: string, callback: Function, delay: number = 300
     const self = this;
     timer = window.setTimeout(function () {
       callback.apply(self, args);
+      timer && window.clearTimeout(timer);
       window.debounceMap.delete(key);
     }, delay);
     window.debounceMap.set(key, timer);

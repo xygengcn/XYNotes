@@ -28,7 +28,7 @@ document.addEventListener('keydown', (e) => {
     const store = useNotesStore();
     e.preventDefault();
     e.stopPropagation();
-    store.activeNote?.save();
+    store.activeNote?.save(true);
     return;
   }
 });

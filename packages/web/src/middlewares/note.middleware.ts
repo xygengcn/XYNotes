@@ -6,10 +6,11 @@ import noteEventBus from '@/event-bus';
 // 保存笔记中间件
 export function saveNoteDefaultMiddleware(): IMiddlewareFunction<'saveNote'> {
   return async (next, note) => {
+    console.log('[apiSaveOrUpdateNote] param', note.nid, note.updatedAt);
     const result = await apiEvent.apiSaveOrUpdateNote(note);
-    console.log('[apiSaveOrUpdateNote]', result);
-    if(result){
-      Object.assign(note,result)
+    console.log('[apiSaveOrUpdateNote] result', note.nid, result.updatedAt);
+    if (result) {
+      Object.assign(note, result);
     }
     noteEventBus.emit('update', { note: result, action: 'update' });
     return next();

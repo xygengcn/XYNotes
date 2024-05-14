@@ -141,7 +141,6 @@ const Editor = defineComponent({
           },
           value: props.value,
           onInput(e) {
-            console.log('[Editor] input');
             context.emit('input', e);
           },
           onChange: (value) => {

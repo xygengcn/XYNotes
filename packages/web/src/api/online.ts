@@ -1,5 +1,6 @@
 import { IConfigsColunm } from '@/typings/config';
 import { INote } from '@/typings/note';
+import { getCookie } from '@/utils';
 import is from '@/utils/is';
 
 /**
@@ -26,7 +27,7 @@ class ApiEventOnline {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: window.GlobalConfig.REMOTE_AUTHORIZATION || '',
+        Authorization: window.GlobalConfig.REMOTE_AUTHORIZATION || getCookie('Authorization') || '',
         DeviceId: '',
         source: 'Note_Service'
       },
@@ -50,8 +51,9 @@ class ApiEventOnline {
         this.onlineSyncErrorCount++;
         if (this.onlineSyncErrorCount >= 3) {
           this.ignoreOnlineSync = true;
+          console.error('[online] fetch 触发熔断机制', this.onlineSyncErrorCount);
         }
-        console.error('[[online]] fetch', this.onlineSyncErrorCount, 'Error:', e);
+        console.error('[online] fetch', this.onlineSyncErrorCount, 'Error:', e);
         if (e instanceof Response) {
           const body = await e.json().catch(() => e);
           throw {

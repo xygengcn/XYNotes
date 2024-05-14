@@ -17,10 +17,10 @@ export class Note implements INote {
   public text: string = '';
 
   // 笔记创建时间
-  public createdAt!: number;
+  public createdAt: number = Date.now();
 
   // 笔记最新更新时间
-  public updatedAt!: number;
+  public updatedAt: number = Date.now();
 
   // 简要信息
   public intro: string = '';
@@ -58,8 +58,8 @@ export class Note implements INote {
     }
 
     // 节流保存函数
-    this.__saveNoteDebouceFn = debounce(() => {
-      this.save();
+    this.__saveNoteDebouceFn = debounce((note: Note) => {
+      note.save(true);
     }, 3000);
   }
 
@@ -67,15 +67,12 @@ export class Note implements INote {
    * 设置值
    * @param note
    */
-  public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
+  public set(note: Partial<Exclude<INote, 'updatedAt'>> & { counter?: number }): void {
     if (note.status === NoteStatus.draft || this.status === NoteStatus.draft) {
-      const newNote = Object.assign(note, {
+      Object.assign(this, note, {
         // 截取前50作简要信息
         intro: note?.text?.trim()?.slice(0, 50) || this.intro
       });
-      Object.assign(this, newNote);
-
-      this.update(this.toRaw());
     }
   }
 
@@ -111,7 +108,7 @@ export class Note implements INote {
       author: this.author,
 
       // 笔记附件
-      attachment: this.attachment
+      attachment: []
     };
   }
   /**
@@ -119,15 +116,15 @@ export class Note implements INote {
    * @param force 强制立即保存
    * @returns
    */
-  public async save(force: boolean = true) {
-    console.log('[save]', this.nid, this.status, force);
+  public async save(force: boolean = false) {
+    console.log('[save]', this.nid, 'status:', this.status, 'force:', force);
     // 不强制保存
     if (!force) {
-      this.__saveNoteDebouceFn();
-      return;
+      this.__saveNoteDebouceFn(this);
+      return Promise.resolve();
     }
     // 草稿状态才保存
-    if (this.status === NoteStatus.draft || force) {
+    if (this.status === NoteStatus.draft) {
       // 保存中
       this.status = NoteStatus.saving;
       const noteDetail = this.toRaw();
@@ -136,16 +133,18 @@ export class Note implements INote {
         .then((result) => {
           const note = result[0];
           if (note) {
+            console.log('[save] success', note);
             this.update(note);
           }
           return result;
         })
-        .catch(() => {
+        .catch((e) => {
           // 返回草稿状态
           this.status = NoteStatus.draft;
+          console.error('[save] error', e);
         });
     }
-    return;
+    return Promise.resolve();
   }
 
   /**

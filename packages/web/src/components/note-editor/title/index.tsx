@@ -37,7 +37,7 @@ const NoteEditorTitle = defineComponent({
     const handleChangeTitle = (title: string) => {
       if (title) {
         props.note.set({ title, status: NoteStatus.draft });
-        props.note.save();
+        props.note.save(false);
       }
     };
 
