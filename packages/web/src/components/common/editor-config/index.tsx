@@ -3,6 +3,7 @@ import { defineComponent, nextTick, onMounted, ref } from 'vue';
 import Scroller from '../scroller';
 import './index.scss';
 import { debounce } from '@/utils/debounce-throttle';
+import { readText } from '@/utils/clipboard';
 
 const EditorConfig = defineComponent({
   name: 'EditorConfig',
@@ -52,14 +53,45 @@ const EditorConfig = defineComponent({
     };
 
     /**
+     * 插入
+     * @param text
+     */
+    const insertTextAtCursor = (text: string) => {
+      if (window.getSelection) {
+        // Get the selection object
+        const sel = window.getSelection();
+        if (sel.rangeCount) {
+          // Get the first range of the selection
+          const range = sel.getRangeAt(0);
+
+          // Delete the selected text, if any
+          range.deleteContents();
+
+          // Create a new text node with the inserted text
+          var textNode = document.createTextNode(text);
+
+          // Insert the new text node at the current cursor position
+          range.insertNode(textNode);
+
+          // Move the cursor to the end of the inserted text
+          range.setStartAfter(textNode);
+          range.setEndAfter(textNode);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+    };
+
+    /**
      * 粘贴
      * @param e
      */
-    const onPaste = (e: ClipboardEvent) => {
+    const onPaste = async (e: ClipboardEvent) => {
       e.preventDefault();
-      const text = e.clipboardData.getData('text/plain');
+      const text = await readText();
+      console.log(111, text);
       // 插入文本
-      document.execCommand('insertHTML', false, text);
+      insertTextAtCursor(text);
     };
 
     /**
