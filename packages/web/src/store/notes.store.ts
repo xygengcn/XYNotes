@@ -59,9 +59,11 @@ export const useNotesStore = defineStore('notes', {
      * @param list
      */
     setNoteList(list: INote[]): void {
-      list.forEach((note) => {
-        this.notesList.push(new Note(note));
-      });
+      list
+        .sort((a, b) => b.updatedAt - a.updatedAt)
+        .forEach((note) => {
+          this.notesList.push(new Note(note));
+        });
     },
     /**
      * 删除笔记
@@ -98,7 +100,7 @@ export const useNotesStore = defineStore('notes', {
     },
     // 初始化默认数据
     saveDefaultData() {
-      this.setNoteList([defaultJson]);
+      this.notesList.push(new Note(defaultJson));
       this.saveNoteListToDatabse(defaultJson);
     }
   }

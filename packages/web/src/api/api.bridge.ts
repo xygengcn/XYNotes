@@ -8,7 +8,11 @@ export default abstract class ApiBridge {
   /**
    * 拉取所有的笔记数据
    */
-  abstract apiFetchNoteListData(): Promise<INote[]>;
+  abstract apiFetchNoteListData(content: {
+    updateTime: number;
+    pageSize: number;
+    order: 'updatedAt' | 'createdAt';
+  }): Promise<INote[]>;
 
   /**
    * 拉取某个详情的笔记

@@ -56,6 +56,7 @@ export class Note implements INote {
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime()
       });
+      this.counter = this.text.length;
     }
 
     // 节流保存函数

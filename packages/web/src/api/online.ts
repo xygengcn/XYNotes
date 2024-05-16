@@ -68,8 +68,12 @@ class ApiEventOnline {
       });
   }
   // 拉取笔记数据
-  async apiFetchNoteListData(): Promise<INote[]> {
-    return this.fetch('/note/list/query')
+  async apiFetchNoteListData(content: {
+    updateTime: number;
+    pageSize: number;
+    order: 'updatedAt' | 'createdAt';
+  }): Promise<INote[]> {
+    return this.fetch('/note/list/query', content)
       .then((result) => {
         return result || [];
       })

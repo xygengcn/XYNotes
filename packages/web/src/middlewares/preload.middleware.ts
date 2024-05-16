@@ -17,14 +17,16 @@ export default function perloadDefaultMiddleware(): IMiddlewareFunction<'load'> 
     await apiEvent.apiFetchConfigsData().then((config) => {
       configs.syncConfigs(config);
       // 同步笔记信息
-      return apiEvent.apiFetchNoteListData().then((list) => {
-        if (list.length === 0) {
-          // 默认值
-          note.saveDefaultData();
-        } else {
-          note.setNoteList(list);
-        }
-      });
+      return apiEvent
+        .apiFetchNoteListData({ updateTime: 0, order: configs.noteListSort.value, pageSize: 50 })
+        .then((list) => {
+          if (list.length === 0) {
+            // 默认值
+            note.saveDefaultData();
+          } else {
+            note.setNoteList(list);
+          }
+        });
     });
     // 结束加载
     app.setLoadStatus(AppLoadStatus.finish);

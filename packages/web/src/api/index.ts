@@ -16,12 +16,16 @@ class ApiEvent implements ApiBridge {
    * @param cb
    * @returns
    */
-  async apiFetchNoteListData(): Promise<INote[]> {
+  async apiFetchNoteListData(content: {
+    updateTime: number;
+    pageSize: number;
+    order: 'updatedAt' | 'createdAt';
+  }): Promise<INote[]> {
     return apiEventLocal
       .apiFetchNoteListData()
       .then((localResult) => {
         if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
-          return apiEventOnline.apiFetchNoteListData().then((onlineResult) => {
+          return apiEventOnline.apiFetchNoteListData(content).then((onlineResult) => {
             return localResult.concat(onlineResult);
           });
         }
