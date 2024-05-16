@@ -30,7 +30,7 @@ export const useConfigsStore = defineStore('configs', {
     // 全局配置原始数据
     configJson: {} as IGlobalConfig,
     // 全局配置解析后的数据
-    configValue: '' as string
+    configValue: `# 在线同步地址\n\nREMOTE_BASE_URL=\n\n# 是否同步在线\n\nREMOTE_ONLINE_SYNC=` as string
   }),
   actions: {
     /**

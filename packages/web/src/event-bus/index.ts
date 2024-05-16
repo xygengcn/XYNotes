@@ -45,8 +45,16 @@ export class EventBus<Events extends Record<string, any>> {
     const set: Set<Handler<Events[EventName]>> | undefined = this.map.get(name as string);
     if (!set) return;
     set.forEach((fn) => fn.call(fn, ...value));
+  }
+
+  /**
+   * 触发事件
+   * @param name 事件名
+   * @param handler 事件处理函数
+   */
+  broadcast<EventName extends keyof Events>(name: EventName, ...value: Parameters<Events[EventName]>) {
     // 发送到其他窗口
-    this.broadcastChannel.postMessage({ action: name, message: value });
+    this.broadcastChannel.postMessage({ action: name, message: value, origin: window.location.href });
   }
   /**
    *  清除所有事件

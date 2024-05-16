@@ -85,7 +85,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
 
     // 新开页面
     const handleSplitScreen = (note: Note) => {
-      window.createWindow({ nid: note.nid });
+      window.app?.createWindow({ nid: note.nid });
     };
 
     return () => (

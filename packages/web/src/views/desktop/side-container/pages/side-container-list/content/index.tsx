@@ -7,6 +7,7 @@ import { IContextMenuProps } from '@/typings/contextmenu';
 import { NoteListSortType } from '@/typings/enum/note';
 import { computed, defineComponent } from 'vue';
 import './index.scss';
+import is from '@/utils/is';
 
 const DesktopSideContainerListContent = defineComponent({
   name: 'DesktopSideContainerListContent',
@@ -68,6 +69,14 @@ const DesktopSideContainerListContent = defineComponent({
      * @param note
      */
     const handleSelectItem = (note: Note) => {
+      if (is.app()) {
+        const webview = window.app.getAppWindow(note);
+        if (webview) {
+          webview.setFocus();
+          store.setActiveNoteId(undefined);
+          return;
+        }
+      }
       store.setActiveNoteId(note.nid);
     };
 

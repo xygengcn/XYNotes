@@ -59,11 +59,10 @@ export const useNotesStore = defineStore('notes', {
      * @param list
      */
     setNoteList(list: INote[]): void {
-      list
-        .sort((a, b) => b.updatedAt - a.updatedAt)
-        .forEach((note) => {
-          this.notesList.push(new Note(note));
-        });
+      list = list.sort((a, b) => a.updatedAt - b.updatedAt);
+      list.forEach((note) => {
+        this.notesList.push(new Note(note));
+      });
     },
     /**
      * 删除笔记

@@ -10,12 +10,12 @@ const is = {
     return appWindow.label === 'main';
   },
   // 判断是不是开发环境
-  isDevelopment(): boolean {
+  development(): boolean {
     // @ts-ignore
     return process.env.NODE_ENV === 'development';
   },
   // 判断是不是生产环境
-  isProduction(): boolean {
+  production(): boolean {
     // @ts-ignore
     return process.env.NODE_ENV === 'production';
   },

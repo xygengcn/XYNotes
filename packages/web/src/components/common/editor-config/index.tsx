@@ -31,10 +31,8 @@ const EditorConfig = defineComponent({
     const onInput = debounce(() => {
       try {
         const innerText = refEditorContent.value.innerText.trim();
-        if (innerText) {
-          const result = parse(innerText);
-          context.emit('change', result, innerText);
-        }
+        const result = innerText ? parse(innerText) : {};
+        context.emit('change', result, innerText);
       } catch (error) {}
     }, 1000);
 

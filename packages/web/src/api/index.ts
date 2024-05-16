@@ -83,9 +83,12 @@ class ApiEvent implements ApiBridge {
 
   // 同步笔记
   async apiSyncNote(note: INote): Promise<INote> {
-    return apiEventOnline.apiSyncNote(note).then(() => {
-      return apiEventLocal.apiSaveOrUpdateNote(note);
-    });
+    if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+      return apiEventOnline.apiSyncNote(note).then(() => {
+        return apiEventLocal.apiSaveOrUpdateNote(note, true);
+      });
+    }
+    return note;
   }
 
   // 拉取配置

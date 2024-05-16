@@ -12,7 +12,7 @@ export function saveNoteDefaultMiddleware(): IMiddlewareFunction<'saveNote'> {
     if (result) {
       Object.assign(note, result);
     }
-    noteEventBus.emit('update', { note: result, action: 'update' });
+    noteEventBus.broadcast('update', { note: result, action: 'update' });
     return next();
   };
 }
@@ -23,7 +23,7 @@ export function deleteNoteDefaultMiddleware(): IMiddlewareFunction<'deleteNote'>
     await apiEvent.apiDeleteNote(note).then(() => {
       const store = useNotesStore();
       store.deleteNote(note.nid);
-      noteEventBus.emit('update', { note, action: 'delete' });
+      noteEventBus.broadcast('update', { note, action: 'delete' });
     });
     return next();
   };

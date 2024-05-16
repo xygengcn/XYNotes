@@ -12,10 +12,9 @@ import router from './router';
 import './shortcut';
 import is from './utils/is';
 
-
 // 开发环境
-if (is.isDevelopment()) {
-  is.app() && window.openDevtools(true);
+if (is.development()) {
+  is.app() && window.app.openDevtools(true);
 }
 
 // 注册pinia

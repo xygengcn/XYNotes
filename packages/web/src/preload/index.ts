@@ -4,36 +4,51 @@
 
 import Confirm from '@/components/common/confirm';
 import Toast from '@/components/common/toast';
-import is from '@/utils/is';
-import { invoke } from '@tauri-apps/api';
-import { WebviewWindow, appWindow } from '@tauri-apps/api/window';
 import middlewareHook from '@/middlewares';
 import { configSaveDefautlMiddleware } from '@/middlewares/config.middleware';
 import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from '@/middlewares/note.middleware';
 import perloadDefaultMiddleware from '@/middlewares/preload.middleware';
+import is from '@/utils/is';
+import { invoke } from '@tauri-apps/api';
+import { window as AppWindow } from '@tauri-apps/api';
 
 /**
  * 注册客户端事件
  */
 if (is.app()) {
   // 打开控制台
-  window.openDevtools = (flag: boolean) => {
-    invoke('open_devtools', { label: appWindow.label, flag });
+  const openDevtools = (flag: boolean) => {
+    invoke('open_devtools', { label: AppWindow.appWindow.label, flag });
+  };
+
+  /**
+   * 获取窗口
+   * @param options
+   * @returns
+   */
+  const getAppWindow = (options: { nid: string }) => {
+    const webviewId = `nid-${options.nid}`;
+    // 获取窗口
+    let webview = AppWindow.WebviewWindow.getByLabel(webviewId);
+    if (webview) {
+      return webview;
+    }
+    return undefined;
   };
 
   // 创建窗口
-  window.createWindow = (options: { nid: string }) => {
+  const createWindow = (options: { nid: string }) => {
     console.log('[createWindow]', options);
     const webviewId = `nid-${options.nid}`;
 
     // 获取窗口
-    let webview = WebviewWindow.getByLabel(webviewId);
+    let webview = AppWindow.WebviewWindow.getByLabel(webviewId);
     if (webview) {
       webview.setFocus();
       return;
     }
 
-    webview = new WebviewWindow(webviewId, {
+    webview = new AppWindow.WebviewWindow(webviewId, {
       url: `/detail?nid=${options.nid}`,
       fullscreen: false,
       alwaysOnTop: false,
@@ -51,8 +66,16 @@ if (is.app()) {
   };
 
   // 显示窗口
-  window.show = () => {
-    appWindow.show();
+  const show = () => {
+    AppWindow.appWindow.show();
+  };
+
+  // 客户端功能
+  window.app = {
+    show,
+    getAppWindow,
+    createWindow,
+    openDevtools
   };
 }
 
