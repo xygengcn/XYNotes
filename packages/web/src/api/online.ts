@@ -92,12 +92,9 @@ class ApiEventOnline {
   }
 
   // 更新或新建笔记
-  async apiSaveOrUpdateNote(note: INote, sync: boolean = false): Promise<INote> {
+  async apiSaveOrUpdateNote(note: INote): Promise<INote> {
     const content = object.omit(note, ['attachment']);
-    // 不是同步
-    if (!sync) {
-      content.updatedAt = Date.now();
-    }
+    content.updatedAt = Date.now();
     return this.fetch('/note/detail/save', { note: content })
       .then((result) => {
         console.log('[online] save', result);
@@ -119,6 +116,20 @@ class ApiEventOnline {
       .catch((e) => {
         console.error('[online] delete', e);
         return false;
+      });
+  }
+
+  // 同步笔记
+  async apiSyncNote(note: INote): Promise<INote> {
+    const content = object.omit(note, ['attachment']);
+    return this.fetch('/note/detail/sync', { note: content })
+      .then((result) => {
+        console.log('[online] save', result);
+        return result;
+      })
+      .catch((e) => {
+        console.error('[online] save', e);
+        throw e;
       });
   }
 

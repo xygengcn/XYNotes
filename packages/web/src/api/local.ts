@@ -29,14 +29,11 @@ class ApiEventLocal {
   }
 
   // 更新或新建笔记
-  async apiSaveOrUpdateNote(note: INote, sync: boolean = false): Promise<INote> {
+  async apiSaveOrUpdateNote(note: INote): Promise<INote> {
     return database.module('notes').then((model) => {
       // 转换数据格式
       const noteTableAttr = object.omit(note, ['attachment']);
-      // 不是同步
-      if (!sync) {
-        noteTableAttr.updatedAt = Date.now();
-      }
+      noteTableAttr.updatedAt = Date.now();
       return model.bulkCreate([noteTableAttr]).then(() => {
         return {
           ...note,

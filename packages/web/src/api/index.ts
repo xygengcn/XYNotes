@@ -50,12 +50,12 @@ class ApiEvent implements ApiBridge {
   }
 
   // 更新或新建笔记
-  async apiSaveOrUpdateNote(note: INote, sync: boolean = false): Promise<INote> {
+  async apiSaveOrUpdateNote(note: INote): Promise<INote> {
     const content = structuredClone(note);
-    return apiEventLocal.apiSaveOrUpdateNote(content, sync).then((note) => {
+    return apiEventLocal.apiSaveOrUpdateNote(content).then((note) => {
       if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
         return apiEventOnline
-          .apiSaveOrUpdateNote(note, sync)
+          .apiSaveOrUpdateNote(note)
           .then((result) => {
             return result || note;
           })
@@ -74,6 +74,13 @@ class ApiEvent implements ApiBridge {
         return apiEventOnline.apiDeleteNote(note);
       }
       return result;
+    });
+  }
+
+  // 同步笔记
+  async apiSyncNote(note: INote): Promise<INote> {
+    return apiEventOnline.apiSyncNote(note).then(() => {
+      return apiEventLocal.apiSaveOrUpdateNote(note);
     });
   }
 
