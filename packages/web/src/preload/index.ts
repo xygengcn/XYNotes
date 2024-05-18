@@ -90,7 +90,7 @@ window.$ui = {
 /**
  * 注册中间件
  */
-middlewareHook.useMiddleware('load', perloadDefaultMiddleware());
+middlewareHook.useMiddleware('sync', perloadDefaultMiddleware());
 
 middlewareHook.useMiddleware('saveConfig', configSaveDefautlMiddleware());
 

@@ -24,7 +24,7 @@ class ApiEvent implements ApiBridge {
     return apiEventLocal
       .apiFetchNoteListData()
       .then((localResult) => {
-        if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+        if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === true) {
           return apiEventOnline.apiFetchNoteListData(content).then((onlineResult) => {
             return localResult.concat(onlineResult);
           });
@@ -39,7 +39,7 @@ class ApiEvent implements ApiBridge {
   // 拉取笔记细节
   async apiFetchNoteDetailData(nid: string): Promise<INote> {
     return apiEventLocal.apiFetchNoteDetailData(nid).then((note) => {
-      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === true) {
         return apiEventOnline
           .apiFetchNoteDetailData(nid)
           .then((result) => {
@@ -57,7 +57,7 @@ class ApiEvent implements ApiBridge {
   async apiSaveOrUpdateNote(note: INote): Promise<INote> {
     const content = structuredClone(note);
     return apiEventLocal.apiSaveOrUpdateNote(content).then((note) => {
-      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === true) {
         return apiEventOnline
           .apiSaveOrUpdateNote(note)
           .then((result) => {
@@ -74,7 +74,7 @@ class ApiEvent implements ApiBridge {
   // 删除笔记
   async apiDeleteNote(note: INote): Promise<boolean> {
     return apiEventLocal.apiDeleteNote(note).then((result) => {
-      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+      if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === true) {
         return apiEventOnline.apiDeleteNote(note);
       }
       return result;
@@ -83,7 +83,7 @@ class ApiEvent implements ApiBridge {
 
   // 同步笔记
   async apiSyncNote(note: INote): Promise<INote> {
-    if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === 'true') {
+    if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === true) {
       return apiEventOnline.apiSyncNote(note).then(() => {
         return apiEventLocal.apiSaveOrUpdateNote(note, true);
       });

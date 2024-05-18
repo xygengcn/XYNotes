@@ -2,7 +2,7 @@
   position: relative;
   .input {
     padding-bottom: 0.3em;
-    border-bottom: 0.5px solid var(--border-default-color);
+    border-bottom: var(--border-default-size) solid var(--border-default-color);
     position: relative;
     &-content {
       &-inner {

@@ -7,11 +7,20 @@ const Input = defineComponent({
     value: {
       type: String,
       default: ''
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    border: {
+      type: Boolean,
+      default: false
     }
   },
   emits: {
     change: (value: string) => true,
     input: (value: string) => true,
+    'update:value': (value: string) => true,
     blur: (e: Event) => true
   },
   setup(props, context) {
@@ -26,6 +35,7 @@ const Input = defineComponent({
      */
     const handleInput = (e: Event) => {
       context.emit('input', (e.target as HTMLInputElement).value);
+      context.emit('update:value', (e.target as HTMLInputElement).value);
       handleChange(e);
     };
     /**
@@ -57,7 +67,7 @@ const Input = defineComponent({
     });
 
     return () => (
-      <div class="input" data-nodrag>
+      <div class={{ input: true, 'input-border': props.border }} data-nodrag>
         <div class="input-content">
           <input
             class="input-content-inner"
@@ -65,6 +75,7 @@ const Input = defineComponent({
             value={props.value}
             onInput={handleInput}
             onBlur={handleBlur}
+            placeholder={props.placeholder}
           />
         </div>
       </div>

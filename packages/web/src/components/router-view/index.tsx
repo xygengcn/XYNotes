@@ -1,5 +1,5 @@
-import { Transition, defineComponent, ref, watch } from 'vue';
-import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+import { Transition, defineComponent, ref, Suspense } from 'vue';
+import { RouteLocationNormalizedLoaded, useRouter } from 'vue-router';
 import './index.scss';
 
 const AppView = defineComponent({
@@ -12,19 +12,35 @@ const AppView = defineComponent({
   },
   setup(props) {
     const transitionName = ref('');
-    const route = useRoute();
-    watch(route, (to: RouteLocationNormalizedLoaded, from: RouteLocationNormalizedLoaded) => {
-      if (to.meta.index > from.meta.index) {
+    const router = useRouter();
+    router.beforeEach((to: RouteLocationNormalizedLoaded, from: RouteLocationNormalizedLoaded) => {
+      if (to.meta.index >= from.meta.index) {
         //设置动画名称
-        transitionName.value = 'slide-left';
-      } else {
         transitionName.value = 'slide-right';
+      } else if (to.query?.routerType === 'push') {
+        transitionName.value = 'slide-left';
       }
     });
+
+    router.afterEach(() => {
+      setTimeout(() => {
+        transitionName.value = '';
+      }, 300);
+    });
+
     return () => (
-      <Transition name={transitionName.value}>
-        <router-view name={props.name}></router-view>
-      </Transition>
+      <router-view
+        name={props.name}
+        v-slots={{
+          default: ({ Component }) => (
+            <Transition name={transitionName.value}>
+              <Suspense>
+                <Component></Component>
+              </Suspense>
+            </Transition>
+          )
+        }}
+      ></router-view>
     );
   }
 });

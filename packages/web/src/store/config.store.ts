@@ -28,9 +28,7 @@ export const useConfigsStore = defineStore('configs', {
       label: '更新时间'
     } as INoteListSort,
     // 全局配置原始数据
-    configJson: {} as IGlobalConfig,
-    // 全局配置解析后的数据
-    configValue: `# 在线同步地址\n\nREMOTE_BASE_URL=\n\n# 是否同步在线\n\nREMOTE_ONLINE_SYNC=` as string
+    configJson: {} as IGlobalConfig
   }),
   actions: {
     /**
@@ -57,12 +55,10 @@ export const useConfigsStore = defineStore('configs', {
      * @param globalText
      * @returns
      */
-    saveGlobalConfig(configJson: IGlobalConfig, configValue: string) {
-      this.configJson = configJson;
-      this.configValue = configValue;
-      window.GlobalConfig = this.configJson;
-      console.info('[config] 全局配置保存', configJson);
-      return middlewareHook.registerMiddleware('saveConfig', { configJson, configValue }).then(() => {
+    saveGlobalConfig() {
+      window.GlobalConfig = { ...this.configJson };
+      console.info('[config] 全局配置保存', this.configJson);
+      return middlewareHook.registerMiddleware('saveConfig', { configJson: { ...this.configJson } }).then(() => {
         window.$ui.toast('保存成功');
       });
     },
@@ -73,7 +69,7 @@ export const useConfigsStore = defineStore('configs', {
       configs.forEach(({ key, value }) => {
         Object.assign(this, { [key]: value });
       });
-      window.GlobalConfig = this.configJson;
+      window.GlobalConfig = { ...this.configJson };
     }
   }
 });

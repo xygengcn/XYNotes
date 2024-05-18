@@ -18,6 +18,9 @@
   --border-default-size: 0.5px;
 
   // 字体
+  --font-primary-size: 16px;
+  --font-normal-size: 14px;
+  --font-small-size: 12px;
   --font-default-color: #878787;
   --font-light-color: #eee;
 
@@ -45,13 +48,32 @@
 
   // 字数组件的高度
   --editor-counter-height: 56px;
+
+  // setting页面
+  --setting-title-font-szie: var(--font-primary-size);
+  --setting-title-padding: 0px 0px 12px 0px;
+  --setting-page-bg-color: var(--app-bg-color);
 }
 
 // 移动端
 .mobile {
+  // 主题
+  --app-bg-color: #f5f5f5;
+
   --note-item-hover-color: white;
   --note-item-active-color: white;
   --note-item-swipe-delete: #f56c6c;
 
+  // 字体
+  --font-primary-size: 1.2em;
+  --font-normal-size: 1em;
+  --font-small-size: 0.8em;
+
+  // 字数组件的高度
   --editor-counter-height: 48px;
+
+  // setting页面
+  --setting-title-font-szie: var(--font-small-size);
+  --setting-title-padding: 0px 12px 8px 12px;
+  --setting-page-bg-color: var(--app-bg-color);
 }

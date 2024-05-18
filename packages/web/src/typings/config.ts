@@ -27,7 +27,7 @@ export interface IGlobalConfig {
   // 在线同步地址
   REMOTE_BASE_URL: string;
   // 是否同步在线
-  REMOTE_ONLINE_SYNC: 'true' | 'false';
+  REMOTE_ONLINE_SYNC: boolean;
   // 在线认证Authorization
   REMOTE_AUTHORIZATION: string;
 }

@@ -6,7 +6,7 @@ import { INote } from './note';
  */
 export interface IMiddlewareEvent {
   // 初始化
-  load: () => void;
+  sync: () => void;
 
   // 保存笔记
   saveNote: (note: INote) => void;

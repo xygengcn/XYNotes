@@ -9,10 +9,15 @@ import './index.scss';
 import NoteEditorCounter from '@/components/note-editor/counter';
 import NoteEditorTitle from '@/components/note-editor/title';
 import Drawer from '@/components/common/drawer';
+import { useThemeColor } from '@/hook/theme';
 
 const MobileDetail = defineComponent({
   name: 'MobileDetail',
   setup() {
+    /**
+     * 切换主题
+     */
+    useThemeColor('#fff');
     /**
      * store
      */

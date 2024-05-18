@@ -2,7 +2,6 @@ import Drawer from '@/components/common/drawer';
 import Icon from '@/components/common/icon';
 import NoteItem from '@/components/note-item';
 import { Note } from '@/services/note';
-import { syncDataByV2 } from '@/services/note.action';
 import { useConfigsStore } from '@/store/config.store';
 import { useNotesStore } from '@/store/notes.store';
 import { NoteListSortType } from '@/typings/enum/note';
@@ -13,6 +12,7 @@ import './index.scss';
 import { SwipeList } from 'vue3-swipe-actions';
 import 'vue3-swipe-actions/dist/index.css';
 import Scroller from '@/components/common/scroller';
+import middlewareHook from '@/middlewares';
 
 const MobileHome = defineComponent({
   name: 'MobileHome',
@@ -99,6 +99,21 @@ const MobileHome = defineComponent({
       });
     };
 
+    /**
+     * 数据同步
+     */
+    const handleSyncList = () => {
+      middlewareHook.registerMiddleware('sync');
+      visibleMoreDrawer.value = false;
+    };
+
+    /**
+     * 远程配置
+     */
+    const handleSetSetting = () => {
+      router.push('/m/setting');
+    };
+
     onBeforeMount(() => {
       store.setActiveNoteId('');
     });
@@ -173,9 +188,15 @@ const MobileHome = defineComponent({
             <div class="mobile-home-more-header">操作</div>
             <div class="mobile-home-more-content">
               <div class="mobile-home-more-content-item">
-                <span class="mobile-home-more-content-item-left">数据迁移</span>
+                <span class="mobile-home-more-content-item-left">数据同步</span>
                 <span class="mobile-home-more-content-item-right">
-                  <Icon onClick={syncDataByV2} type="data-transfer" size="1.2em"></Icon>
+                  <Icon onClick={handleSyncList} type="item-sync" size="1.2em"></Icon>
+                </span>
+              </div>
+              <div class="mobile-home-more-content-item">
+                <span class="mobile-home-more-content-item-left">基础配置</span>
+                <span class="mobile-home-more-content-item-right">
+                  <Icon onClick={handleSetSetting} type="nav-setting" size="1.2em"></Icon>
                 </span>
               </div>
             </div>

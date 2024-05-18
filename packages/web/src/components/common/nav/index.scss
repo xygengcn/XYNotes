@@ -1,0 +1,25 @@
+.nav {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  background-color: var(--nav-bg-color);
+
+  & > span {
+    display: inline-flex;
+    align-items: center;
+    flex: 33.33% 1 1;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  &-back {
+    color: #2587e9;
+    padding: 0px 14px;
+    line-height: 20px;
+    flex-shrink: 1;
+    cursor: pointer;
+  }
+
+  &-title {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,33 @@
+.switch {
+  width: 32px;
+  height: 18px;
+  border-radius: 9px;
+  border: 1px solid var(--border-default-color);
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  padding: 2px;
+  &-box {
+    display: inline-block;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--theme-default-color);
+    transition: left 0.5s;
+  }
+}
+
+.switch[data-value='false'] {
+  .switch-box {
+    left: 2px;
+  }
+}
+.switch[data-value='true'] {
+  --border-default-color: #fff;
+  background-color: var(--theme-default-color);
+  .switch-box {
+    background-color: #fff;
+    left: 16px;
+  }
+}

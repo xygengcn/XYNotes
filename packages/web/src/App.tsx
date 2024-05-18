@@ -16,7 +16,7 @@ const App = defineComponent({
       }
     };
     onBeforeMount(() => {
-      middlewareHook.registerMiddleware('load');
+      middlewareHook.registerMiddleware('sync');
       if (is.app()) {
         // 监听退出事件
         appWindow.listen('quit-event', () => {

@@ -6,7 +6,7 @@ import { IMiddlewareFunction } from '@/typings/middleware';
 
 // 启动后同步操作
 
-export default function perloadDefaultMiddleware(): IMiddlewareFunction<'load'> {
+export default function perloadDefaultMiddleware(): IMiddlewareFunction<'sync'> {
   return async (next) => {
     const configs = useConfigsStore();
     const note = useNotesStore();
@@ -15,6 +15,7 @@ export default function perloadDefaultMiddleware(): IMiddlewareFunction<'load'> 
     app.setLoadStatus(AppLoadStatus.configsLoading);
     // 同步配置
     await apiEvent.apiFetchConfigsData().then((config) => {
+      console.log('[sync] config', config);
       configs.syncConfigs(config);
       // 同步笔记信息
       return apiEvent

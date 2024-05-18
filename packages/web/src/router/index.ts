@@ -84,6 +84,15 @@ const routes: Array<RouteRecordRaw> = [
           device: 'mobile',
           index: 1
         }
+      },
+      {
+        path: 'setting',
+        name: 'mobile-setting',
+        component: () => import('@/views/mobile/pages/mobile-setting'),
+        meta: {
+          device: 'mobile',
+          index: 1
+        }
       }
     ],
     meta: {

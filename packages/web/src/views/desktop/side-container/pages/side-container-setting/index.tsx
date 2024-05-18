@@ -1,7 +1,6 @@
 import Button from '@/components/common/button';
 import database from '@/database';
 import middlewareHook from '@/middlewares';
-import { syncDataByV2 } from '@/services/note.action';
 import { downloadFile, jsonFileReader } from '@/utils/file';
 import { defineComponent } from 'vue';
 import './index.scss';
@@ -13,11 +12,6 @@ const DesktopSideContainerSetting = defineComponent({
   setup() {
     // 路由
     const router = useRouter();
-
-    // 同步旧版本数据
-    const handleV2Data = () => {
-      syncDataByV2();
-    };
 
     // 数据备份
     const handleBackup = () => {
@@ -80,15 +74,7 @@ const DesktopSideContainerSetting = defineComponent({
             </span>
           </div>
           <div class="desktop-side-container-setting-content-item">
-            <span class="desktop-side-container-setting-content-item-left">数据迁移</span>
-            <span class="desktop-side-container-setting-content-item-right">
-              <Button size="min" onClick={handleV2Data}>
-                迁移
-              </Button>
-            </span>
-          </div>
-          <div class="desktop-side-container-setting-content-item">
-            <span class="desktop-side-container-setting-content-item-left">配置文件</span>
+            <span class="desktop-side-container-setting-content-item-left">远程配置</span>
             <span class="desktop-side-container-setting-content-item-right">
               <Button size="min" onClick={handleEditConfig}>
                 配置

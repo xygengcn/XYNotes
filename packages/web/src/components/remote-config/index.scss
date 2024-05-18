@@ -1,0 +1,43 @@
+.remote-config {
+  width: 100%;
+
+  // 标题
+  &-title {
+    line-height: 20px;
+    font-size: var(--setting-title-font-szie);
+    padding: var(--setting-title-padding);
+  }
+
+  // 容器
+  &-container {
+    background-color: #fff;
+    &-li {
+      display: flex;
+      padding: 12px 20px;
+      min-height: 48px;
+      line-height: 154%;
+      font-size: var(--font-normal-size);
+      color: rgb(31, 31, 31);
+      justify-content: space-between;
+
+      &-label {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+      }
+
+      &-value {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        input {
+          text-align: right;
+        }
+      }
+      & + & {
+        border-top: var(--border-default-size) solid var(--border-default-color);
+      }
+    }
+  }
+}

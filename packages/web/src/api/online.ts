@@ -17,7 +17,7 @@ class ApiEventOnline {
   // 基础拉取
   private async fetch<T extends any = any>(url: string, body: any = {}): Promise<T> {
     if (
-      window.GlobalConfig?.REMOTE_ONLINE_SYNC !== 'true' ||
+      window.GlobalConfig?.REMOTE_ONLINE_SYNC === false ||
       !is.url(window.GlobalConfig?.REMOTE_BASE_URL) ||
       this.ignoreOnlineSync
     ) {
