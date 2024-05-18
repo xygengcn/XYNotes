@@ -40,6 +40,7 @@
       height: 100%;
       overflow: auto;
       padding: 15px;
+      overflow-x: hidden;
 
       // 列表
       &-scroll {
