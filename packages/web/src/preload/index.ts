@@ -9,8 +9,8 @@ import { configSaveDefautlMiddleware } from '@/middlewares/config.middleware';
 import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from '@/middlewares/note.middleware';
 import perloadDefaultMiddleware from '@/middlewares/preload.middleware';
 import is from '@/utils/is';
-import { invoke } from '@tauri-apps/api';
-import { window as AppWindow } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api/core';
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 
 /**
  * 注册客户端事件
@@ -18,7 +18,8 @@ import { window as AppWindow } from '@tauri-apps/api';
 if (is.app()) {
   // 打开控制台
   const openDevtools = (flag: boolean) => {
-    invoke('open_devtools', { label: AppWindow.appWindow.label, flag });
+    const appWindow = WebviewWindow.getCurrent();
+    invoke('open_devtools', { label: appWindow.label, flag });
   };
 
   /**
@@ -29,7 +30,7 @@ if (is.app()) {
   const getAppWindow = (options: { nid: string }) => {
     const webviewId = `nid-${options.nid}`;
     // 获取窗口
-    let webview = AppWindow.WebviewWindow.getByLabel(webviewId);
+    let webview = WebviewWindow.getByLabel(webviewId);
     if (webview) {
       return webview;
     }
@@ -42,13 +43,14 @@ if (is.app()) {
     const webviewId = `nid-${options.nid}`;
 
     // 获取窗口
-    let webview = AppWindow.WebviewWindow.getByLabel(webviewId);
+    let webview = WebviewWindow.getByLabel(webviewId);
     if (webview) {
+      webview.show();
       webview.setFocus();
       return;
     }
 
-    webview = new AppWindow.WebviewWindow(webviewId, {
+    webview = new WebviewWindow(webviewId, {
       url: `/detail?nid=${options.nid}`,
       fullscreen: false,
       alwaysOnTop: false,
@@ -67,7 +69,8 @@ if (is.app()) {
 
   // 显示窗口
   const show = () => {
-    AppWindow.appWindow.show();
+    const appWindow = WebviewWindow.getCurrent();
+    appWindow.show();
   };
 
   // 客户端功能

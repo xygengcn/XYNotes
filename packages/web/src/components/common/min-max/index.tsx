@@ -1,7 +1,8 @@
-import { appWindow } from '@tauri-apps/api/window';
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { PropType, defineComponent, onMounted, ref } from 'vue';
 import './index.scss';
 import is from '@/utils/is';
+import { Window } from '@tauri-apps/api/window';
 
 const MinMax = defineComponent({
   name: 'MinMax',
@@ -24,6 +25,7 @@ const MinMax = defineComponent({
 
     onMounted(async () => {
       if (is.app() && props.type == 'window') {
+        const appWindow = Window.getCurrent();
         isFullScreanWindow.value = await appWindow.isFullscreen();
         appWindow.onResized(async () => {
           isFullScreanWindow.value = await appWindow.isFullscreen();
@@ -40,9 +42,12 @@ const MinMax = defineComponent({
       context.emit('fullscreen');
       if (props.type == 'window') {
         if (is.app()) {
+          const appWindow = WebviewWindow.getCurrent();
           if (await appWindow.isMaximized()) {
+            isFullScreanWindow.value = false;
             appWindow.setFullscreen(false);
           } else {
+            isFullScreanWindow.value = true;
             appWindow.setFullscreen(true);
           }
         }
@@ -52,11 +57,12 @@ const MinMax = defineComponent({
     /**
      * 关闭
      */
-    const handleCloseWindow = () => {
+    const handleCloseWindow = async () => {
       // 禁用
       if (props.disabled.includes('close')) return false;
       context.emit('close');
       if (is.app() && props.type == 'window') {
+        const appWindow = Window.getCurrent();
         if (is.mainWindow()) {
           return appWindow.hide();
         }
@@ -67,11 +73,12 @@ const MinMax = defineComponent({
     /**
      * 最小化
      */
-    const handleMinWindow = () => {
+    const handleMinWindow = async () => {
       // 禁用
       if (props.disabled.includes('min')) return false;
       context.emit('min');
       if (is.app() && props.type == 'window') {
+        const appWindow = WebviewWindow.getCurrent();
         appWindow.minimize();
       }
     };

@@ -1,13 +1,17 @@
-import { appWindow } from '@tauri-apps/api/window';
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 
 const is = {
   // 是不是客户端
   app(): boolean {
-    return !!window.__TAURI__;
+    // @ts-ignore
+    return !!window.__TAURI_INTERNALS__;
   },
   // 是不是主窗口
   mainWindow(): boolean {
-    return appWindow.label === 'main';
+    if (this.app()) {
+      return WebviewWindow?.getCurrent()?.label === 'main';
+    }
+    return false;
   },
   // 判断是不是开发环境
   development(): boolean {

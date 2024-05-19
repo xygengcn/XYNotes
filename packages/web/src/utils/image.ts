@@ -1,8 +1,8 @@
 import html2canvas from 'html2canvas';
 import { copy } from '.';
 import { download } from './file';
-import { writeBinaryFile } from '@tauri-apps/api/fs';
-import { save } from '@tauri-apps/api/dialog';
+import { writeFile } from '@tauri-apps/plugin-fs';
+import { save } from '@tauri-apps/plugin-dialog';
 import is from './is';
 
 /**
@@ -25,7 +25,8 @@ export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<an
           title: filename,
           defaultPath: filename + '.png'
         });
-        return writeBinaryFile(path, await fetch(image).then((res) => res.arrayBuffer()));
+        const byte = await fetch(image).then((res) => res.arrayBuffer());
+        return writeFile(path, new Uint8Array(byte));
       }
       download(image, filename + '.png');
     });

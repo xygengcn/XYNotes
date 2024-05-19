@@ -2,77 +2,26 @@
   "build": {
     "beforeDevCommand": "",
     "beforeBuildCommand": "cd ../web && pnpm build",
-    "devPath": "http://localhost:8080",
-    "distDir": "../node_modules/@xynotes/web/dist",
-    "withGlobalTauri": false
+    "frontendDist": "../node_modules/@xynotes/web/dist",
+    "devUrl": "http://localhost:8080"
   },
-  "package": {
-    "productName": "XY笔记",
-    "version": "4.0.0"
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
   },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "clipboard": {
-        "all": true,
-        "writeText": true,
-        "readText": true
-      },
-      "window": {
-        "all": false,
-        "center": true,
-        "maximize": true,
-        "minimize": true,
-        "unmaximize": true,
-        "unminimize": true,
-        "setClosable": true,
-        "setFullscreen": true,
-        "setMinSize": true,
-        "setMinimizable": true,
-        "show": true,
-        "startDragging": true,
-        "create": true,
-        "close": true,
-        "hide": true,
-        "setFocus": true
-      },
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "app": {
-        "all": false,
-        "hide": true,
-        "show": true
-      },
-      "dialog": {
-        "all": false,
-        "ask": false,
-        "confirm": false,
-        "message": false,
-        "open": false,
-        "save": true
-      },
-      "fs": {
-        "all": false,
-        "copyFile": false,
-        "createDir": false,
-        "exists": false,
-        "readDir": false,
-        "readFile": false,
-        "removeDir": false,
-        "removeFile": false,
-        "renameFile": false,
-        "scope": [],
-        "writeFile": true
-      }
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "com.xynotes.dev",
-      "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"]
-    },
+  "productName": "XY笔记",
+  "version": "4.0.0",
+  "identifier": "com.xynotes.dev",
+  "plugins": {},
+  "app": {
+    "withGlobalTauri": false,
     "security": {
       "csp": null
     },
@@ -91,9 +40,6 @@
         "decorations": false,
         "transparent": true
       }
-    ],
-    "systemTray": {
-      "iconPath": "icons/tray.png"
-    }
+    ]
   }
 }

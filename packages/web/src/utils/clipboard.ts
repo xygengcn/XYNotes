@@ -1,4 +1,4 @@
-import { clipboard } from '@tauri-apps/api';
+import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 import is from './is';
 
 /**

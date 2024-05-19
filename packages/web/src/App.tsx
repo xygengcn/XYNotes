@@ -1,10 +1,10 @@
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
-import middlewareHook from './middlewares';
-import is from './utils/is';
-import { appWindow } from '@tauri-apps/api/window';
 import noteEventBus from './event-bus';
+import middlewareHook from './middlewares';
 import { useNotesStore } from './store/notes.store';
+import is from './utils/is';
 
 const App = defineComponent({
   name: 'App',
@@ -15,11 +15,13 @@ const App = defineComponent({
         e.preventDefault();
       }
     };
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
       middlewareHook.registerMiddleware('sync');
       if (is.app()) {
+        const appWindow = WebviewWindow.getCurrent();
         // 监听退出事件
         appWindow.listen('quit-event', () => {
+          console.log('[app] quit-event');
           appWindow.close();
         });
         // 监听其他事件

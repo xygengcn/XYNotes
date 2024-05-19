@@ -1,5 +1,5 @@
-import { save } from '@tauri-apps/api/dialog';
-import { writeFile } from '@tauri-apps/api/fs';
+import { save } from '@tauri-apps/plugin-dialog';
+import { writeTextFile } from '@tauri-apps/plugin-fs';
 import is from '@/utils/is';
 
 /**
@@ -28,7 +28,7 @@ export async function downloadFile(content: string, filename: string): Promise<v
       title: filename,
       defaultPath: filename
     });
-    return writeFile(path, content);
+    return writeTextFile(path, content);
   }
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
   return download(URL.createObjectURL(blob), filename);
