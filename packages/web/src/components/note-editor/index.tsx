@@ -103,10 +103,7 @@ const NoteEditor = defineComponent({
      * @param text
      */
     const handleEditorPaste = (text: string) => {
-      if (text?.trim()) {
-        activeNote.value.set({ status: NoteStatus.draft });
-        refEditor.value.insertValue(text);
-      }
+      activeNote.value.set({ status: NoteStatus.draft, text });
     };
     onBeforeMount(() => {
       if (!store.activeNoteId && props.nid) {

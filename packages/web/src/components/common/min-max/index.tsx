@@ -43,7 +43,7 @@ const MinMax = defineComponent({
       if (props.type == 'window') {
         if (is.app()) {
           const appWindow = WebviewWindow.getCurrent();
-          if (await appWindow.isMaximized()) {
+          if (await appWindow.isFullscreen()) {
             isFullScreanWindow.value = false;
             appWindow.setFullscreen(false);
           } else {

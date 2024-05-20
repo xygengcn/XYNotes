@@ -1,11 +1,11 @@
 import { IContextMenuProps } from '@/typings/contextmenu';
+import { trim } from '@/utils';
+import { readText } from '@/utils/clipboard';
 import { PropType, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import Loading from '../loading';
 import Scroller from '../scroller';
 import './index.scss';
 import { EditorController, VDITOR_CDN } from './lib';
-import { trim } from '@/utils';
-import { readText } from '@/utils/clipboard';
 export * from './lib';
 
 const Editor = defineComponent({
@@ -108,18 +108,31 @@ const Editor = defineComponent({
     const onContextMenu = async (options: IContextMenuProps) => {
       switch (options.menu.value) {
         case 'pasteText': {
-          readText().then((text) => {
-            console.log('[paste]', text);
-            text = trim(text);
-            if (text) {
-              context.emit('paste', text);
-              const selection = window.getSelection();
-              if (selection.rangeCount > 0) {
-                selection.getRangeAt(0).deleteContents();
+          readText()
+            .then((text) => {
+              console.log('[paste]', text);
+              text = trim(text);
+              if (text) {
+                const selection = window.getSelection();
+                // 获取旧选区
+                let range = options.range;
+                if (range) {
+                  selection.addRange(options.range);
+                  range.deleteContents();
+                } else {
+                  // 创建新选区
+                  range = document.createRange();
+                }
+                range.insertNode(document.createTextNode(text));
+                range.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                context.emit('paste', editorController.getValue());
               }
-              editorController.insertValue(text, true);
-            }
-          });
+            })
+            .catch((e) => {
+              console.log('[paste] error', e);
+            });
           break;
         }
       }
