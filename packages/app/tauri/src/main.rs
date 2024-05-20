@@ -17,15 +17,22 @@ use tauri::Manager;
 use tauri::{
     image::Image,
     tray::{ClickType, TrayIconBuilder},
+    ActivationPolicy,
 };
 fn main() {
-    // app
     let _app = tauri::Builder::default()
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
+            // mac
+            #[cfg(target_os = "macos")]
+            {
+                app.set_activation_policy(ActivationPolicy::Accessory);
+            }
+
+            // 托盘
             let _tray = TrayIconBuilder::new()
                 .icon(Image::from_path("./icons/tray.png")?)
                 .on_tray_icon_event(|tray, event| {
