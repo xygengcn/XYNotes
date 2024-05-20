@@ -17,7 +17,7 @@ use tauri::Manager;
 use tauri::{
     image::Image,
     tray::{ClickType, TrayIconBuilder},
-    ActivationPolicy,
+    ActivationPolicy, WindowEvent,
 };
 fn main() {
     let _app = tauri::Builder::default()
@@ -31,7 +31,6 @@ fn main() {
             {
                 app.set_activation_policy(ActivationPolicy::Accessory);
             }
-
             // 托盘
             let _tray = TrayIconBuilder::new()
                 .icon(Image::from_path("./icons/tray.png")?)
@@ -47,6 +46,21 @@ fn main() {
                 .build(app)?;
 
             Ok(())
+        })
+        .on_window_event(|window, event| match event {
+            WindowEvent::CloseRequested { api, .. } => {
+                println!("[WindowEvent] CloseRequested {}", window.label());
+                if window.label() == "main" {
+                    // tauri::AppHandle::set_activation_policy(
+                    //     &window.app_handle(),
+                    //     ActivationPolicy::Accessory,
+                    // );
+                    window.hide().unwrap();
+                    // 取消默认事件
+                    api.prevent_close();
+                }
+            }
+            _ => {}
         })
         .invoke_handler(tauri::generate_handler![open_devtools])
         .run(tauri::generate_context!())

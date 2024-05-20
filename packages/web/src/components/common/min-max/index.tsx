@@ -1,8 +1,8 @@
-import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { PropType, defineComponent, onMounted, ref } from 'vue';
-import './index.scss';
 import is from '@/utils/is';
+import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { Window } from '@tauri-apps/api/window';
+import { PropType, defineComponent } from 'vue';
+import './index.scss';
 
 const MinMax = defineComponent({
   name: 'MinMax',
@@ -19,21 +19,6 @@ const MinMax = defineComponent({
   emits: ['close', 'fullscreen', 'min'],
   setup(props, context) {
     /**
-     * 是不是全屏状态
-     */
-    const isFullScreanWindow = ref(false);
-
-    onMounted(async () => {
-      if (is.app() && props.type == 'window') {
-        const appWindow = Window.getCurrent();
-        isFullScreanWindow.value = await appWindow.isFullscreen();
-        appWindow.onResized(async () => {
-          isFullScreanWindow.value = await appWindow.isFullscreen();
-        });
-      }
-    });
-
-    /**
      * 全屏
      */
     const handleMaxWindow = async () => {
@@ -42,13 +27,11 @@ const MinMax = defineComponent({
       context.emit('fullscreen');
       if (props.type == 'window') {
         if (is.app()) {
-          const appWindow = WebviewWindow.getCurrent();
-          if (await appWindow.isFullscreen()) {
-            isFullScreanWindow.value = false;
-            appWindow.setFullscreen(false);
+          const appWindow = Window.getCurrent();
+          if (await appWindow.isMaximized()) {
+            appWindow.unmaximize();
           } else {
-            isFullScreanWindow.value = true;
-            appWindow.setFullscreen(true);
+            appWindow.maximize();
           }
         }
       }
@@ -63,9 +46,6 @@ const MinMax = defineComponent({
       context.emit('close');
       if (is.app() && props.type == 'window') {
         const appWindow = Window.getCurrent();
-        if (is.mainWindow()) {
-          return appWindow.hide();
-        }
         appWindow.close();
       }
     };
@@ -84,7 +64,7 @@ const MinMax = defineComponent({
     };
 
     return () => (
-      <div class={{ 'min-max': true, visiable: !isFullScreanWindow.value }} data-tauri-drag-region>
+      <div class={{ 'min-max': true, visiable: true }} data-tauri-drag-region>
         <i
           class={{ 'icon icon-close-window': true, disabled: props.disabled.includes('close') }}
           none-drag-region
