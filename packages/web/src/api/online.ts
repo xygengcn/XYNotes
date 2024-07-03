@@ -29,8 +29,8 @@ class ApiEventOnline {
       headers: {
         'Content-Type': 'application/json',
         Authorization: window.GlobalConfig.REMOTE_AUTHORIZATION || getCookie('Authorization') || '',
-        DeviceId: '',
-        source: 'Note_Service'
+        'X-App-DeviceId': '',
+        'X-App-Source': 'Note_Service'
       },
       body: JSON.stringify(body)
     })
