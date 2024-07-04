@@ -4,6 +4,7 @@ import { highLight } from '@/utils';
 import { DateFormat } from 'js-lark';
 import { PropType, computed, defineComponent, h, nextTick, ref, watch } from 'vue';
 import './index.scss';
+import Icon from '../common/icon';
 
 const NoteItem = defineComponent({
   name: 'NoteItem',
@@ -67,7 +68,16 @@ const NoteItem = defineComponent({
         onClick={handleClickSelect}
       >
         <div class="note-item-header">
-          {h('div', {
+          <span
+            class={[
+              'note-item-header__onlineTag',
+              props.note.onlineSyncAt === props.note.updatedAt ? 'online' : 'draft'
+            ]}
+            v-show={props.note.onlineSyncAt}
+          >
+            <Icon type="online"></Icon>
+          </span>
+          {h('span', {
             class: 'note-item-header__title',
             innerHTML: highLight(props.keyword, props.note.title)
           })}

@@ -23,7 +23,7 @@
       &-label {
         display: flex;
         align-items: center;
-        margin-right: 10px;
+        margin-right: 20px;
       }
 
       &-value {
@@ -33,6 +33,7 @@
         justify-content: end;
         input {
           text-align: right;
+          color: #8e8e8e;
         }
       }
       & + & {

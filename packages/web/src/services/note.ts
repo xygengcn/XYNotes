@@ -28,10 +28,13 @@ export class Note implements INote {
 
   // 笔记状态
   public status: NoteStatus = 0;
+
   // 笔记来源
   public origin: string = '';
+
   // 笔记作者
   public author: string = '';
+
   // 排序
   public order: number = 0;
 
@@ -41,12 +44,16 @@ export class Note implements INote {
   // 字数
   public counter: number = 0;
 
+  // 同步时间
+  public onlineSyncAt: number = 0;
+
   // 保存节流
   private __saveNoteDebouceFn: (...args: any[]) => number;
 
   constructor(note?: INote) {
     if (note) {
       Object.assign(this, note);
+      this.counter = this.text.length;
     } else {
       Object.assign(this, {
         nid: uuid(),

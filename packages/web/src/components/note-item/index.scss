@@ -25,10 +25,28 @@
   }
   &-header {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 20px;
     color: var(--theme-default-color);
     margin-bottom: 5px;
+    height: 20px;
+
+    // 在线标识
+    &__onlineTag {
+      margin-right: 6px;
+      // 在线同步
+      &.online {
+        & > i {
+          color: var(--theme-default-tag-color);
+        }
+      }
+      // 草稿
+      &.draft {
+        & > i {
+          color: var(--theme-warn-tag-color);
+        }
+      }
+    }
   }
   &-content {
     font-size: 12px;

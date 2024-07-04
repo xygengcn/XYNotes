@@ -51,6 +51,9 @@ export interface INote {
 
   // 笔记附件
   attachment: Array<INoteAttachment>;
+
+  // 在线同步时间
+  onlineSyncAt?: number;
 }
 
 /**
