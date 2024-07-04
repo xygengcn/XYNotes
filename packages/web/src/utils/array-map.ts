@@ -21,6 +21,16 @@ export default class ArrayMap<T extends { [key: string]: any }> {
     return true;
   }
 
+  /**
+   * 判断对象中是否包含指定的键
+   *
+   * @param key 要检查的键名
+   * @returns 如果包含则返回true，否则返回false
+   */
+  has(key: string): boolean {
+    return this._map.has(key);
+  }
+
   // Array methods
   push(...arr: T[]): void {
     for (const obj of arr) {

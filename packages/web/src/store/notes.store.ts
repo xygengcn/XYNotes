@@ -55,13 +55,21 @@ export const useNotesStore = defineStore('notes', {
       this.activeNoteId = nid;
     },
     /**
-     * 设置笔记列表
+     * 设置笔记列表 线上优先
+     *
      * @param list
      */
     setNoteList(list: INote[]): void {
-      list = list.sort((a, b) => a.updatedAt - b.updatedAt);
+      list = list.sort((a, b) => b.updatedAt - a.updatedAt);
       list.forEach((note) => {
-        this.notesList.push(new Note(note));
+        if (this.notesList.has(note.nid)) {
+          // 在线
+          if (note.onlineSyncAt) {
+            this.notesList.update(new Note(note));
+          }
+        } else {
+          this.notesList.push(new Note(note));
+        }
       });
     },
     /**
