@@ -43,13 +43,13 @@ class ApiEvent implements ApiBridge {
         return apiEventOnline
           .apiFetchNoteDetailData(nid)
           .then((result) => {
-            return result || note;
+            return result || (note ? { ...note, onlineSyncAt: 0 } : note);
           })
           .catch(() => {
-            return note;
+            return note ? { ...note, onlineSyncAt: 0 } : note;
           });
       }
-      return note;
+      return note ? { ...note, onlineSyncAt: 0 } : note;
     });
   }
 
@@ -84,8 +84,10 @@ class ApiEvent implements ApiBridge {
   // 同步笔记
   async apiSyncNote(note: INote): Promise<INote> {
     if (window.GlobalConfig?.REMOTE_ONLINE_SYNC === true) {
-      return apiEventOnline.apiSyncNote(note).then(() => {
-        return apiEventLocal.apiSaveOrUpdateNote(note, true);
+      return apiEventOnline.apiSyncNote(note).then((online) => {
+        return apiEventLocal.apiSaveOrUpdateNote(note, true).then(() => {
+          return online;
+        });
       });
     }
     return note;
