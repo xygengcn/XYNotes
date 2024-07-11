@@ -187,6 +187,7 @@ export class Note implements INote {
     console.log('[note] sync', this.nid);
     return apiEvent.apiSyncNote(this.toRaw()).then((note) => {
       this.update(note);
+      window.$ui.toast('同步成功');
     });
   }
 }

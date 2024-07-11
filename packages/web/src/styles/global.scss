@@ -50,13 +50,18 @@
   --editor-counter-height: 56px;
 
   // setting页面
-  --setting-title-font-szie: var(--font-primary-size);
+  --setting-title-font-szie: var(--font-small-size);
+  --setting-label-font-szie: var(--font-normal-size);
   --setting-title-padding: 0px 0px 12px 0px;
   --setting-page-bg-color: var(--app-bg-color);
 
   // 标签颜色
   --theme-default-tag-color: #f3bb41;
   --theme-warn-tag-color: #f3bb4169;
+
+  // 笔记列表样式
+  --note-item-header-font-size: 14px;
+  --note-item-content-font-size: 12px;
 }
 
 // 移动端
@@ -69,15 +74,20 @@
   --note-item-swipe-delete: #f56c6c;
 
   // 字体
-  --font-primary-size: 1.2em;
-  --font-normal-size: 1em;
-  --font-small-size: 0.8em;
+  --font-primary-size: 1.3em;
+  --font-normal-size: 1.1em;
+  --font-small-size: 0.9em;
 
   // 字数组件的高度
   --editor-counter-height: 48px;
 
   // setting页面
   --setting-title-font-szie: var(--font-small-size);
+  --setting-label-font-szie: var(--font-normal-size);
   --setting-title-padding: 0px 12px 8px 12px;
   --setting-page-bg-color: var(--app-bg-color);
+
+  // 笔记列表样式
+  --note-item-header-font-size: var(--font-normal-size);
+  --note-item-content-font-size: var(--font-small-size);
 }

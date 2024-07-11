@@ -3,7 +3,7 @@ import './index.scss';
 import Icon from '../icon';
 
 /**
- * 导航栏
+ * 移动端导航栏
  */
 
 const Nav = defineComponent({

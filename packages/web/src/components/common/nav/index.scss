@@ -1,6 +1,6 @@
 .nav {
   display: flex;
-  height: 40px;
+  height: 44px;
   align-items: center;
   background-color: var(--nav-bg-color);
 
@@ -12,14 +12,17 @@
     overflow: hidden;
   }
   &-back {
-    color: #2587e9;
+    color: var(--mobile-icon-color);
     padding: 0px 14px;
     line-height: 20px;
     flex-shrink: 1;
     cursor: pointer;
+    font-size: var(--font-normal-size);
   }
 
   &-title {
     justify-content: center;
+    font-size: var(--font-normal-size);
+    font-weight: 600;
   }
 }
