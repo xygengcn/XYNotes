@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "main": "./dist/export.cjs",
+  "main": "./dist/export.js",
   "module": "./dist/export.js",
   "typings": "./dist/export.d.ts",
   "scripts": {

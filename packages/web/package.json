@@ -35,6 +35,7 @@
     "vue3-swipe-actions": "^0.0.1"
   },
   "devDependencies": {
+    "@xynotes/core": "workspace:^",
     "@vitejs/plugin-vue": "^4.5.1",
     "@vitejs/plugin-vue-jsx": "3.1.0",
     "pina": "^0.20.2204228",

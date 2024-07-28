@@ -3,8 +3,9 @@
 @import './extensions/index.scss';
 
 .markdown-editor {
-  color: #333;
+  color: #24292e;
   height: 100%;
+  font-family: 'Helvetica Neue,Luxi Sans,DejaVu Sans,Hiragino Sans GB,Microsoft Yahei,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",Segoe UI Symbol,"Android Emoji",EmojiSymbols';
 
   // 主题色
   --markdown-editor-theme-color: #f3bb41;
@@ -18,7 +19,7 @@
   // 容器
   .tiptap {
     outline: none;
-    height: 100%;
+    min-height: 100%;
   }
 
   // 表格

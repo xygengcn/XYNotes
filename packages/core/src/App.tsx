@@ -41,7 +41,7 @@ export default defineComponent({
           <button onClick={handleInput}>插入</button>
           <button onClick={handleReset}>初始化</button>
         </div>
-        <MarkdownEditor modelValue={text.value} ref={editor} onCounter={onCounter} count></MarkdownEditor>
+        <MarkdownEditor modelValue={text.value} ref={editor} onCounter={onCounter} counter></MarkdownEditor>
       </div>
     );
   }

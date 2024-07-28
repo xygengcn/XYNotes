@@ -14,9 +14,13 @@ const MarkdownEditor = defineComponent({
       default: ''
     },
     // 是否开启计数
-    count: {
+    counter: {
       type: Boolean,
       default: false
+    },
+    editable: {
+      type: Boolean,
+      default: true
     }
   },
   emits: {
@@ -31,10 +35,11 @@ const MarkdownEditor = defineComponent({
     // 节点
     const refEditor = ref<VNodeRef>();
 
-    // 编辑器
+    // 编辑器初始化
     const editorInstance = new Editor({
       content: props.modelValue,
       extensions: extensions,
+      editable: props.editable ?? true,
       onCreate() {
         emit('created', editorInstance);
       },
@@ -45,7 +50,7 @@ const MarkdownEditor = defineComponent({
         // 改变
         emit('change', editorInstance);
         // 计数
-        props.count &&
+        props.counter &&
           emit('counter', {
             characters: editor.storage.characterCount.characters(),
             words: editor.storage.characterCount.words()

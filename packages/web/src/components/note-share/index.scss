@@ -48,12 +48,7 @@
     &-preview {
       flex: 1;
       overflow: auto;
-      .editor {
-        &-content {
-          padding: 10px 1em;
-          font-size: 14px;
-        }
-      }
+      --note-item-content-padding: 0.5em 1em;
     }
 
     &-bottom {

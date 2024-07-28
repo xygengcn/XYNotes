@@ -1,5 +1,5 @@
 import apiEvent from '@/api';
-import Editor from '@/components/common/editor';
+import Editor from '@/components/common/editor-plus';
 import { useNotesStore } from '@/store/notes.store';
 import { NoteStatus } from '@/typings/note';
 import { computed, defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
@@ -84,13 +84,6 @@ const NoteEditor = defineComponent({
     };
 
     /**
-     * 输入事件
-     */
-    const handleEditorInput = () => {
-      activeNote.value.set({ status: NoteStatus.draft });
-    };
-
-    /**
      * 失去焦点
      */
     const handleEditorBlur = (value: string) => {
@@ -120,7 +113,6 @@ const NoteEditor = defineComponent({
             id={props.nid}
             ref={refEditor}
             loading={fetchNoteLoading.value}
-            onInput={handleEditorInput}
             onChange={handleChangeValue}
             onBlur={handleEditorBlur}
             onPaste={handleEditorPaste}

@@ -62,6 +62,9 @@
   // 笔记列表样式
   --note-item-header-font-size: 14px;
   --note-item-content-font-size: 12px;
+
+  // 编辑器的padding
+  --note-item-content-padding: 1em 2em;
 }
 
 // 移动端
@@ -90,4 +93,5 @@
   // 笔记列表样式
   --note-item-header-font-size: var(--font-normal-size);
   --note-item-content-font-size: var(--font-small-size);
+  --note-item-content-padding: 0.5em 1em;
 }

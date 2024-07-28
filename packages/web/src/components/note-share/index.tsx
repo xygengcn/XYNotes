@@ -3,7 +3,7 @@ import { Note } from '@/services/note';
 import { screenshot, screenshotCopy } from '@/utils/image';
 import { PropType, createApp, defineComponent, ref } from 'vue';
 import Dialog from '../common/dialog';
-import Editor from '../common/editor';
+import Editor from '../common/editor-plus';
 import Icon from '../common/icon';
 import Loading from '../common/loading';
 import Popover from '../common/popover';
@@ -49,8 +49,9 @@ const Screenshot = defineComponent({
      */
     const handleClickDownalodScreenshot = () => {
       loading.value = true;
+      const el = refScreenshotPreview.value.getContentElement();
       // 生成截图
-      return screenshot(refScreenshotPreview.value.refEditorContent, props.note.title).then(() => {
+      return screenshot(el, props.note.title).then(() => {
         loading.value = false;
       });
     };
@@ -61,8 +62,9 @@ const Screenshot = defineComponent({
      */
     const handleClickCopyImage = () => {
       loading.value = true;
+      const el = refScreenshotPreview.value.getContentElement();
       // 生成截图
-      return screenshotCopy(refScreenshotPreview.value.refEditorContent).then(() => {
+      return screenshotCopy(el).then(() => {
         loading.value = false;
         window.$ui.toast('复制图片成功');
       });

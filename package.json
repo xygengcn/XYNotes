@@ -12,7 +12,8 @@
   ],
   "private": true,
   "scripts": {
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "clean-install": "rm -rf ./{packages,services}/*/node_modules node_modules && pnpm i"
   },
   "dependencies": {},
   "devDependencies": {
