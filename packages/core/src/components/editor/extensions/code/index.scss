@@ -1,0 +1,19 @@
+:root {
+  --markdown-editor-code-color: #e5484d;
+  --markdown-editor-code-bg-color: #feebec;
+}
+
+.markdown-editor-code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  border-radius: 3px;
+  background-color: var(--markdown-editor-code-bg-color);
+  color: var(--markdown-editor-code-color);
+  background-size: 20px 20px;
+  white-space: pre-wrap;
+
+  ::selection {
+    background: var(--markdown-editor-code-bg-color);
+  }
+}

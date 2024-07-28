@@ -1,0 +1,20 @@
+html,
+body,
+#app,
+.app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.app {
+  width: 80%;
+  padding: 0px 100px 100px;
+
+  &-menu {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0px;
+    border-bottom: 1px solid #ccc;
+  }
+}

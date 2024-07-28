@@ -1,0 +1,31 @@
+:root {
+  // code颜色
+  --markdown-editor-codeblock-bg-color: #282c34;
+}
+// 代码块
+.markdown-editor-codeblock {
+  border-radius: 8px;
+  padding: 14px 16px;
+  position: relative;
+  background: var(--markdown-editor-codeblock-bg-color);
+
+  // 选中颜色
+  ::selection {
+    background: #e8e8e84d;
+  }
+
+  // 语言标识
+  &::after {
+    content: attr(data-language);
+    position: absolute;
+    right: 8px;
+    top: 3px;
+    font-size: 10px;
+    color: #a3a3a3;
+  }
+  &:hover {
+    &::after {
+      content: '';
+    }
+  }
+}

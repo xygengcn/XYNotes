@@ -1,0 +1,8 @@
+:root {
+  --markdown-editor-strike-color: #a1a1a1;
+  --markdown-editor-strike-text-decoration-color: #e5484d;
+}
+.markdown-editor-strike {
+  color: var(--markdown-editor-strike-color);
+  text-decoration-color: var(--markdown-editor-strike-text-decoration-color);
+}

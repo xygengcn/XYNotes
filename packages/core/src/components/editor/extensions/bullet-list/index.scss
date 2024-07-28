@@ -1,0 +1,15 @@
+// 列表
+.markdown-editor {
+  // 列表
+  ul {
+    &:not([data-type='taskList']) {
+      margin: 0;
+      padding: 0px 1em;
+      li {
+        &::marker {
+          color: var(--markdown-editor-theme-color);
+        }
+      }
+    }
+  }
+}

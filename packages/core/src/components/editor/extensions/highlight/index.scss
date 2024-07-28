@@ -1,0 +1,9 @@
+:root {
+  --markdown-editor-highlight-bg-color: #fdf6e5;
+  --markdown-editor-highlight-color: #e1b800;
+}
+.markdown-editor-highlight {
+  background-color: var(--markdown-editor-highlight-bg-color);
+  color: var(--markdown-editor-highlight-color);
+  outline: none;
+}

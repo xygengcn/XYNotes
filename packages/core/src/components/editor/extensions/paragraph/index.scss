@@ -1,0 +1,13 @@
+// 标题
+.markdown-editor {
+  p {
+    margin: 0;
+  }
+
+  // 引用
+  &-blockquote {
+    margin: 1.6em 0px;
+    border-left: 4px solid var(--markdown-editor-theme-color);
+    padding-left: 1rem;
+  }
+}
