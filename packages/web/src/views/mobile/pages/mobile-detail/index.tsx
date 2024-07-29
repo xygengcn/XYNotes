@@ -1,15 +1,15 @@
+import Drawer from '@/components/common/drawer';
 import Icon from '@/components/common/icon';
 import Loading from '@/components/common/loading';
 import NoteEditor from '@/components/note-editor';
+import NoteEditorCounter from '@/components/note-editor/counter';
+import NoteEditorTitle from '@/components/note-editor/title';
 import showShareNoteDialog from '@/components/note-share';
+import { useThemeColor } from '@/services/theme';
 import { useNotesStore } from '@/store/notes.store';
 import { computed, defineComponent, onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
-import NoteEditorCounter from '@/components/note-editor/counter';
-import NoteEditorTitle from '@/components/note-editor/title';
-import Drawer from '@/components/common/drawer';
-import { useThemeColor } from '@/services/theme';
 
 const MobileDetail = defineComponent({
   name: 'MobileDetail',
@@ -98,8 +98,11 @@ const MobileDetail = defineComponent({
               ></Icon>
             </div>,
             <div class="mobile-detail-content">
-              <NoteEditorTitle note={note.value} />
-              <NoteEditor nid={route.params?.nid as string}></NoteEditor>
+              <NoteEditor nid={route.params?.nid as string}>
+                {{
+                  header: (props) => <NoteEditorTitle note={props.note} />
+                }}
+              </NoteEditor>
             </div>
           ]
         ) : (

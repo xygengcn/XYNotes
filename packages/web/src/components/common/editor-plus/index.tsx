@@ -1,3 +1,4 @@
+import { useScroll } from '@/services/hook';
 import { IContextMenuProps } from '@/typings/contextmenu';
 import { trim } from '@/utils';
 import { readText } from '@/utils/clipboard';
@@ -5,7 +6,6 @@ import { Editor as EditorController, MarkdownEditor } from '@xynotes/core';
 import '@xynotes/core/dist/style.css';
 import { PropType, defineComponent, nextTick, ref, shallowRef, watch } from 'vue';
 import Loading from '../loading';
-import Scroller from '../scroller';
 import './index.scss';
 
 const Editor = defineComponent({
@@ -54,12 +54,17 @@ const Editor = defineComponent({
     /**
      * 编辑器
      */
-    const refEditor = shallowRef<typeof Scroller>();
+    const refEditor = shallowRef<HTMLDivElement>();
 
     /**
      * 编辑器内容节点
      */
     const refEditorContent = shallowRef<typeof MarkdownEditor>();
+
+    /**
+     * 滚动数据
+     */
+    const { scrollerState } = useScroll(refEditorContent as any);
 
     /**
      * 监听id
@@ -136,9 +141,9 @@ const Editor = defineComponent({
      */
     const getContentElement = () => {
       // 通过ref获取编辑器内容区域的DOM元素，并返回它。
-      if (refEditor.value.$el) {
+      if (refEditor.value) {
         // 寻找data-overlayscrollbars-contents为true的子节点
-        return (refEditor.value.$el as HTMLDivElement).querySelector('[contenteditable="false"]') as HTMLElement;
+        return refEditor.value.querySelector('[contenteditable="false"]') as HTMLElement;
       }
     };
 
@@ -146,6 +151,7 @@ const Editor = defineComponent({
       refEditor,
       editorLoading,
       refEditorContent,
+      scrollerState,
       onCounter,
       onCreated,
       onBlur,
@@ -165,7 +171,7 @@ const Editor = defineComponent({
   },
   render() {
     return (
-      <Scroller
+      <div
         class={{ editor: true, 'editor-preview': this.type === 'preview' }}
         data-id={this.id}
         data-nodrag
@@ -187,7 +193,7 @@ const Editor = defineComponent({
             <Loading text="加载中" />
           </div>
         )}
-      </Scroller>
+      </div>
     );
   }
 });

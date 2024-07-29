@@ -24,15 +24,6 @@
   &-content {
     flex: 1;
     overflow: hidden;
-    .note-editor-title {
-      padding: 5px 0px;
-      .input {
-        padding-bottom: 6px;
-        &-content-inner {
-          font-size: 1.2em;
-        }
-      }
-    }
   }
 
   // 抽屉

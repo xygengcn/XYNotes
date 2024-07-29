@@ -4,6 +4,13 @@
   height: 100%;
   z-index: 0;
 
+  &-header {
+    // 标题下线
+    &[data-content-top='false'] {
+      border-bottom: var(--border-default-size) solid var(--border-default-color);
+    }
+  }
+
   &-content {
     flex: 1;
     overflow: hidden;

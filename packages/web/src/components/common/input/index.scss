@@ -14,6 +14,8 @@
       border: none;
       font-size: 1em;
       background: #fff;
+      padding-block: 0px;
+      padding-inline: 0px;
       &::placeholder {
         color: #cccccc;
       }

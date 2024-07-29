@@ -49,7 +49,7 @@ const NoteEditor = defineComponent({
         refEditor.value?.setValue(activeNote.value?.text || '');
         // 拉取最新的
         nextTick(() => {
-          handleQueryNoteItem();
+          handleQueryNoteDetail();
         });
       },
       { immediate: true }
@@ -58,7 +58,7 @@ const NoteEditor = defineComponent({
     /**
      * 拉取最新的内容
      */
-    const handleQueryNoteItem = async () => {
+    const handleQueryNoteDetail = async () => {
       fetchNoteLoading.value = true;
       return apiEvent
         .apiFetchNoteDetailData(props.nid)
@@ -106,7 +106,9 @@ const NoteEditor = defineComponent({
 
     return () => (
       <div class="note-editor">
-        <div class="note-editor-header">{context.slots.header?.({ note: activeNote.value })}</div>
+        <div class="note-editor-header" data-content-top={refEditor.value?.scrollerState.top === 0}>
+          {context.slots.header?.({ note: activeNote.value })}
+        </div>
         <div class="note-editor-content">
           <Editor
             value={activeNote.value?.text || ''}
