@@ -1,4 +1,4 @@
-import { window } from '@tauri-apps/api';
+import type { window } from '@tauri-apps/api';
 import type { IGlobalConfig } from './typings/config';
 
 declare global {
@@ -16,6 +16,11 @@ declare global {
      * 全局变量
      */
     GlobalConfig: IGlobalConfig;
+
+    /**
+     * tauri变量
+     */
+    __TAURI_INTERNALS__:any
   }
 }
 

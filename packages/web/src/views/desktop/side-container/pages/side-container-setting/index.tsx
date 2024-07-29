@@ -1,5 +1,5 @@
 import Button from '@/components/common/button';
-import database from '@/database';
+import database from '@/services/database';
 import middlewareHook from '@/middlewares';
 import { downloadFile, jsonFileReader } from '@/utils/file';
 import { defineComponent } from 'vue';

@@ -1,4 +1,4 @@
-import database from '@/database';
+import database from '@/services/database';
 import { IConfigsColunm } from '@/typings/config';
 import { INote } from '@/typings/note';
 import { object } from '@/utils/object';

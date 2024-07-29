@@ -1,7 +1,7 @@
 import { useNotesStore } from '@/store/notes.store';
 import { IMiddlewareFunction } from '@/typings/middleware';
 import apiEvent from '@/api';
-import noteEventBus from '@/event-bus';
+import noteEventBus from '@/services/event-bus';
 
 // 保存笔记中间件
 export function saveNoteDefaultMiddleware(): IMiddlewareFunction<'saveNote'> {
@@ -12,7 +12,7 @@ export function saveNoteDefaultMiddleware(): IMiddlewareFunction<'saveNote'> {
     if (result) {
       Object.assign(note, result);
     }
-    noteEventBus.broadcast('update', { note: result, action: 'update' });
+    noteEventBus.broadcast('note:update', { note: result, action: 'update' });
     return next();
   };
 }
@@ -23,7 +23,7 @@ export function deleteNoteDefaultMiddleware(): IMiddlewareFunction<'deleteNote'>
     await apiEvent.apiDeleteNote(note).then(() => {
       const store = useNotesStore();
       store.deleteNote(note.nid);
-      noteEventBus.broadcast('update', { note, action: 'delete' });
+      noteEventBus.broadcast('note:update', { note, action: 'delete' });
     });
     return next();
   };

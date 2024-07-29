@@ -1,7 +1,7 @@
 import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
-import noteEventBus from './event-bus';
+import noteEventBus from './services/event-bus';
 import middlewareHook from './middlewares';
 import { useNotesStore } from './store/notes.store';
 import is from './utils/is';
@@ -25,7 +25,7 @@ const App = defineComponent({
           appWindow.close();
         });
         // 监听其他事件
-        noteEventBus.on('update', (content) => {
+        noteEventBus.on('note:update', (content) => {
           if (content.action === 'update') {
             if (is.mainWindow()) {
               noteStore.updateNote(content.note);

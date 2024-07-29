@@ -5,11 +5,10 @@ import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';
 import App from './App';
 import VueContextMenu from './directive/contextmenu';
-
 import './preload';
 import './registerServiceWorker';
 import router from './router';
-import './shortcut';
+import './services/shortcut';
 import is from './utils/is';
 
 // 开发环境
