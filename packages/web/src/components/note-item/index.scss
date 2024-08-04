@@ -25,7 +25,6 @@
   }
   &-header {
     font-size: var(--note-item-header-font-size);
-    font-weight: 600;
     line-height: 20px;
     color: var(--theme-default-color);
     margin-bottom: 5px;
@@ -47,17 +46,25 @@
         }
       }
     }
+
+    // 标题
+    &__title {
+      font-family: var(--font-family-bold);
+      @include line(1);
+    }
   }
   &-content {
     font-size: var(--note-item-content-font-size);
-    font-weight: 400;
     display: flex;
     width: 100%;
     align-items: center;
 
+    // 时间
     &__time {
       color: var(--theme-default-color);
     }
+
+    // 内容
     &__text {
       color: var(--font-default-color);
       flex: 1;
