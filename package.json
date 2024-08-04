@@ -13,6 +13,7 @@
   "private": true,
   "scripts": {
     "postinstall": "husky install",
+    "v": "./build/build-version.sh",
     "clean-install": "rm -rf ./{packages,services}/*/node_modules node_modules && pnpm i"
   },
   "dependencies": {},
