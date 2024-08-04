@@ -111,7 +111,14 @@ const MarkdownEditor = defineComponent({
     return { editor: editorInstance, refEditor, getContent, insertContent, setEditable, setContent };
   },
   render() {
-    return <EditorContent ref={this.refEditor} class="markdown-editor" editor={this.editor}></EditorContent>;
+    return (
+      <EditorContent
+        ref={this.refEditor}
+        class="markdown-editor"
+        editor={this.editor}
+        data-editable={this.editable}
+      ></EditorContent>
+    );
   }
 });
 export default MarkdownEditor;

@@ -1,0 +1,23 @@
+{
+    "name": "@xynotes/tauri",
+    "version": "4.0.2",
+    "description": "",
+    "scripts": {
+        "dev": "tauri dev",
+        "build:dev": "tauri build --debug",
+        "build": "tauri build",
+        "icon": "tauri icon logo.png"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@xynotes/web": "workspace:^"
+    },
+    "tauri": {
+        "appPath": "./"
+    },
+    "dependencies": {
+        "@tauri-apps/cli": "2.0.0-rc.1"
+    }
+}

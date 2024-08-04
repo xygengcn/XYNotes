@@ -16,6 +16,13 @@
     background: #edb94645;
   }
 
+  // 非编辑状态下可以不设置height
+  &[data-editable='false'] {
+    .tiptap {
+      min-height: 0;
+    }
+  }
+
   // 容器
   .tiptap {
     outline: none;

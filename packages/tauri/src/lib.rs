@@ -1,9 +1,6 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
-#[cfg(any(debug_assertions, feature = "devtools"))]
+#[cfg(any(debug_assertions))]
 fn open_devtools(app_handle: tauri::AppHandle, label: String, flag: bool) {
     let window = app_handle.get_webview_window(&label).unwrap();
     if flag || !window.is_devtools_open() {
@@ -12,19 +9,18 @@ fn open_devtools(app_handle: tauri::AppHandle, label: String, flag: bool) {
         window.close_devtools();
     }
 }
-
 use tauri::Manager;
-use tauri::{
-    image::Image,
-    tray::{ClickType, TrayIconBuilder},
-    ActivationPolicy, WindowEvent,
-};
-fn main() {
-    let _app = tauri::Builder::default()
+use tauri::{ActivationPolicy, WindowEvent};
+
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
+pub fn run() {
+    tauri::Builder::default()
+        .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
+        .invoke_handler(tauri::generate_handler![open_devtools])
         .setup(|app| {
             // mac
             #[cfg(target_os = "macos")]
@@ -32,21 +28,22 @@ fn main() {
                 app.set_activation_policy(ActivationPolicy::Accessory);
             }
             // 托盘
-            let _tray = TrayIconBuilder::new()
-                .icon(Image::from_path("./icons/tray.png")?)
-                .on_tray_icon_event(|tray, event| {
-                    if event.click_type == ClickType::Left {
-                        println!("[WindowEvent] on_tray_icon_event {:?}", event.click_type);
-                        let app = tray.app_handle();
-                        let window = app.get_webview_window("main").unwrap();
-                        window.show().unwrap();
-                        window.set_focus().unwrap();
-                    }
-                })
-                .build(app)?;
+            // let _tray = TrayIconBuilder::new()
+            //     .icon(Image::from_path("./icons/tray.png")?)
+            //     .on_tray_icon_event(|tray, event| {
+            //         if event.click_type == ClickType::Left {
+            //             println!("[WindowEvent] on_tray_icon_event {:?}", event.click_type);
+            //             let app = tray.app_handle();
+            //             let window = app.get_webview_window("main").unwrap();
+            //             window.show().unwrap();
+            //             window.set_focus().unwrap();
+            //         }
+            //     })
+            //     .build(app)?;
 
             Ok(())
         })
+        // 窗口事件
         .on_window_event(|window, event| match event {
             WindowEvent::CloseRequested { api, .. } => {
                 println!("[WindowEvent] CloseRequested {}", window.label());
@@ -62,7 +59,6 @@ fn main() {
             }
             _ => {}
         })
-        .invoke_handler(tauri::generate_handler![open_devtools])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

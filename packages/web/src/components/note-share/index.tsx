@@ -64,10 +64,15 @@ const Screenshot = defineComponent({
       loading.value = true;
       const el = refScreenshotPreview.value.getContentElement();
       // 生成截图
-      return screenshotCopy(el).then(() => {
-        loading.value = false;
-        window.$ui.toast('复制图片成功');
-      });
+      return screenshotCopy(el)
+        .then(() => {
+          loading.value = false;
+          window.$ui.toast('复制图片成功');
+        })
+        .catch((e) => {
+          console.error('[screenshotCopy]', e);
+          window.$ui.toast('复制图片失败');
+        });
     };
 
     /**

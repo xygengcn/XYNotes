@@ -1,0 +1,44 @@
+{
+  "productName": "XY笔记",
+  "version": "4.0.2",
+  "identifier": "com.xynotes.dev",
+  "build": {
+    "beforeDevCommand": "",
+    "devUrl": "http://localhost:8080",
+    "beforeBuildCommand": "",
+    "frontendDist": "./node_modules/@xynotes/web/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "fullscreen": false,
+        "alwaysOnTop": false,
+        "resizable": true,
+        "title": "XY笔记",
+        "width": 1200,
+        "height": 750,
+        "minWidth": 900,
+        "minHeight": 600,
+        "decorations": false,
+        "transparent": true
+      }
+    ],
+    "withGlobalTauri": false,
+    "security": {
+      "csp": null
+    },
+    "macOSPrivateApi": true
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

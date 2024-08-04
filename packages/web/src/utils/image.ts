@@ -1,9 +1,9 @@
 import html2canvas from 'html2canvas';
-import { copy } from '.';
 import { download } from './file';
 import { writeFile } from '@tauri-apps/plugin-fs';
 import { save } from '@tauri-apps/plugin-dialog';
 import is from './is';
+import { copyBlob } from './clipboard';
 
 /**
  * 生成图片下载
@@ -48,7 +48,7 @@ export function screenshotCopy(dom: HTMLDivElement): Promise<any> {
       scale: 2
     }).then((canvas) => {
       canvas.toBlob(async (blob) => {
-        return copy(blob);
+        return copyBlob(blob);
       });
     });
   }

@@ -1,7 +1,7 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
 import { Note } from '@/services/note';
-import { copyText } from '@/utils';
+import { copyText } from '@/utils/clipboard';
 import is from '@/utils/is';
 import { PropType, defineComponent } from 'vue';
 import './index.scss';

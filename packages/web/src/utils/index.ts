@@ -22,46 +22,6 @@ export function highLight(keyword: string, text: string): string {
 }
 
 /**
- * 复制
- * @param blob
- * @returns
- */
-export function copy(blob: Blob | null): Promise<any> {
-  if (blob) {
-    const data = [
-      new ClipboardItem({
-        [blob.type]: blob
-      })
-    ];
-    return navigator.clipboard.write(data).then(
-      () => {
-        return Promise.resolve();
-      },
-      () => {
-        return Promise.reject('Unable to write to clipboard.');
-      }
-    );
-  }
-  return Promise.reject('Unable to write to clipboard.');
-}
-
-/**
- * 复制文本
- * @param text
- * @returns
- */
-export function copyText(text: string): Promise<any> {
-  return navigator.clipboard.writeText(text).then(
-    () => {
-      return Promise.resolve();
-    },
-    () => {
-      return Promise.reject('Unable to write to clipboard.');
-    }
-  );
-}
-
-/**
  * compose函数
  * @param middlewares
  * @returns
