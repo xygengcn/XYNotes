@@ -1,6 +1,4 @@
 import is from '@/utils/is';
-import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { Window } from '@tauri-apps/api/window';
 import { PropType, defineComponent } from 'vue';
 import './index.scss';
 
@@ -27,11 +25,10 @@ const MinMax = defineComponent({
       context.emit('fullscreen');
       if (props.type == 'window') {
         if (is.app()) {
-          const appWindow = Window.getCurrent();
-          if (await appWindow.isMaximized()) {
-            appWindow.unmaximize();
+          if (await window.$appWindow.isMaximized()) {
+            window.$appWindow.unmaximize();
           } else {
-            appWindow.maximize();
+            window.$appWindow.maximize();
           }
         }
       }
@@ -45,8 +42,7 @@ const MinMax = defineComponent({
       if (props.disabled.includes('close')) return false;
       context.emit('close');
       if (is.app() && props.type == 'window') {
-        const appWindow = Window.getCurrent();
-        appWindow.close();
+        window.$appWindow.closeWindow();
       }
     };
 
@@ -58,8 +54,7 @@ const MinMax = defineComponent({
       if (props.disabled.includes('min')) return false;
       context.emit('min');
       if (is.app() && props.type == 'window') {
-        const appWindow = WebviewWindow.getCurrent();
-        appWindow.minimize();
+        window.$appWindow.minimize();
       }
     };
 

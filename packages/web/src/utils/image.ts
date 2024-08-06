@@ -1,9 +1,7 @@
 import html2canvas from 'html2canvas';
-import { download } from './file';
-import { writeFile } from '@tauri-apps/plugin-fs';
-import { save } from '@tauri-apps/plugin-dialog';
-import is from './is';
 import { copyBlob } from './clipboard';
+import { download } from './file';
+import is from './is';
 
 /**
  * 生成图片下载
@@ -21,12 +19,12 @@ export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<an
       const image = canvas.toDataURL('image/png'); // 导出图片
       // 兼容客户端
       if (is.app()) {
-        const path = await save({
+        const path = await window.$appWindow.showDirDialog({
           title: filename,
           defaultPath: filename + '.png'
         });
         const byte = await fetch(image).then((res) => res.arrayBuffer());
-        return writeFile(path, new Uint8Array(byte));
+        return window.$appWindow.writeFile(path, new Uint8Array(byte));
       }
       download(image, filename + '.png');
     });

@@ -1,6 +1,4 @@
-import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 import is from './is';
-import { Image } from '@tauri-apps/api/image';
 
 /**
  * 读取粘贴板
@@ -8,7 +6,7 @@ import { Image } from '@tauri-apps/api/image';
  */
 export function readText() {
   if (is.app()) {
-    return clipboard.readText();
+    return window.$appWindow.clipboardReadText();
   }
   return navigator.clipboard.readText();
 }
@@ -21,7 +19,7 @@ export function readText() {
 export async function copyBlob(blob: Blob | null): Promise<any> {
   if (blob) {
     if (is.app()) {
-      return clipboard.writeImage(await Image.fromBytes(await blob.arrayBuffer()));
+      return window.$appWindow.clipboardWriteImage(blob);
     }
     const data = [
       new ClipboardItem({

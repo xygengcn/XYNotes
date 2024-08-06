@@ -70,9 +70,9 @@ const DesktopSideContainerListContent = defineComponent({
      */
     const handleSelectItem = (note: Note) => {
       if (is.app()) {
-        const webview = window.app.getAppWindow(note);
-        if (webview) {
-          webview.setFocus();
+        const has = window.$appWindow.hasAppWindow(note.nid);
+        if (has) {
+          window.$appWindow.setWindowFocus(note.nid);
           store.setActiveNoteId(undefined);
           return;
         }

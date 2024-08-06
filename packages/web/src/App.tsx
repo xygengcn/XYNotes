@@ -1,4 +1,3 @@
-import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
 import noteEventBus from './services/event-bus';
@@ -18,12 +17,6 @@ const App = defineComponent({
     onBeforeMount(async () => {
       middlewareHook.registerMiddleware('sync');
       if (is.app()) {
-        const appWindow = WebviewWindow.getCurrent();
-        // 监听退出事件
-        appWindow.listen('quit-event', () => {
-          console.log('[app] quit-event');
-          appWindow.close();
-        });
         // 监听其他事件
         noteEventBus.on('note:update', (content) => {
           if (content.action === 'update') {
