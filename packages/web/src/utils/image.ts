@@ -9,7 +9,7 @@ import is from './is';
  * @param filename
  * @returns
  */
-export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<void> {
+export async function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<void> {
   if (dom) {
     return html2canvas(dom, {
       allowTaint: true, // 跨域
@@ -21,7 +21,12 @@ export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<vo
       if (is.app()) {
         const path = await window.$appWindow.showDirDialog({
           title: filename,
-          defaultPath: filename + '.png'
+          /**
+           * TODO 因为中文名字会导致下载失败，所以暂时使用时间戳
+           *
+           * @link https://github.com/tauri-apps/plugins-workspace/issues/1478
+           */
+          defaultPath: Date.now() + '.png'
         });
         if (path) {
           const byte = await fetch(image).then((res) => res.arrayBuffer());

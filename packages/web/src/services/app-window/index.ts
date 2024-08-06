@@ -160,7 +160,7 @@ function writeTextFile(path: string, text: string) {
 function writeFile(path: string, data: Uint8Array) {
   // tauri
   if (isTauriApp()) {
-    return tauriWriteFile(path, data);
+    return tauriWriteFile(path, data, { create: true });
   }
 }
 
@@ -186,17 +186,15 @@ function clipboardWriteImage(blob: Blob) {
   }
 }
 
-
 /**
  * 粘贴板读取
- * @returns 
+ * @returns
  */
-function clipboardReadText():Promise<string>{
-     // tauri
+function clipboardReadText(): Promise<string> {
+  // tauri
   if (isTauriApp()) {
     return tauriClipboardReadText();
   }
-
 }
 
 /**
