@@ -26,10 +26,11 @@ export async function downloadFile(content: string, filename: string): Promise<v
       title: filename,
       defaultPath: filename
     });
-    return window.$appWindow.writeTextFile(path, content);
+    if (path) return window.$appWindow.writeTextFile(path, content);
+  } else {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    return download(URL.createObjectURL(blob), filename);
   }
-  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-  return download(URL.createObjectURL(blob), filename);
 }
 
 /**

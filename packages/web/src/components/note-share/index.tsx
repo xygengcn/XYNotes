@@ -51,9 +51,14 @@ const Screenshot = defineComponent({
       loading.value = true;
       const el = refScreenshotPreview.value.getContentElement();
       // 生成截图
-      return screenshot(el, props.note.title).then(() => {
-        loading.value = false;
-      });
+      return screenshot(el, props.note.title)
+        .catch((e) => {
+          console.error('[screenshot]', e);
+          window.$ui.toast('生成图片失败');
+        })
+        .finally(() => {
+          loading.value = false;
+        });
     };
 
     /**
@@ -66,12 +71,14 @@ const Screenshot = defineComponent({
       // 生成截图
       return screenshotCopy(el)
         .then(() => {
-          loading.value = false;
           window.$ui.toast('复制图片成功');
         })
         .catch((e) => {
           console.error('[screenshotCopy]', e);
           window.$ui.toast('复制图片失败');
+        })
+        .finally(() => {
+          loading.value = false;
         });
     };
 

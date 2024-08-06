@@ -9,7 +9,7 @@ import is from './is';
  * @param filename
  * @returns
  */
-export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<any> {
+export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<void> {
   if (dom) {
     return html2canvas(dom, {
       allowTaint: true, // 跨域
@@ -23,8 +23,11 @@ export function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Promise<an
           title: filename,
           defaultPath: filename + '.png'
         });
-        const byte = await fetch(image).then((res) => res.arrayBuffer());
-        return window.$appWindow.writeFile(path, new Uint8Array(byte));
+        if (path) {
+          const byte = await fetch(image).then((res) => res.arrayBuffer());
+          return window.$appWindow.writeFile(path, new Uint8Array(byte));
+        }
+        throw new Error('未选择路径');
       }
       download(image, filename + '.png');
     });
