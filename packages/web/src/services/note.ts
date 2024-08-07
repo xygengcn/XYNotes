@@ -48,6 +48,7 @@ export class Note implements INote {
   public onlineSyncAt: number = 0;
 
   // 保存节流
+  private __saveNoteDebouce:number;
   private __saveNoteDebouceFn: (...args: any[]) => number;
 
   constructor(note?: INote) {
@@ -129,7 +130,7 @@ export class Note implements INote {
     console.log('[save]', this.nid, 'status:', this.status, 'force:', force);
     // 不强制保存
     if (!force) {
-      this.__saveNoteDebouceFn(this);
+      this.__saveNoteDebouce = this.__saveNoteDebouceFn(this);
       return Promise.resolve();
     }
     // 草稿状态才保存
@@ -160,6 +161,10 @@ export class Note implements INote {
    * 删除笔记
    */
   public delete(): Promise<any> {
+    // 清除定时器
+    if(this.__saveNoteDebouce){
+      window.clearTimeout(this.__saveNoteDebouce)
+    }
     const noteDetail = this.toRaw();
     return middlewareHook.registerMiddleware('deleteNote', noteDetail);
   }
