@@ -24,7 +24,7 @@ export default abstract class ApiBridge {
    * 添加或者修改笔记
    * @returns
    */
-  abstract apiSaveOrUpdateNote(note: INote): Promise<any>;
+  abstract apiSaveOrUpdateNote(note: INote, onlineSync: boolean): Promise<any>;
 
   /**
    * 删除笔记

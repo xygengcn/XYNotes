@@ -94,7 +94,7 @@ export const useNotesStore = defineStore('notes', {
      * @returns
      */
     saveNoteListToDatabse(note: INote) {
-      return middlewareHook.registerMiddleware('saveNote', note);
+      return middlewareHook.registerMiddleware('saveNote', { note, onlineSync: !!note.onlineSyncAt });
     },
 
     /**

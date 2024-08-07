@@ -17,18 +17,18 @@ class ApiEventOnline {
   // 基础拉取
   private async fetch<T extends any = any>(url: string, body: any = {}): Promise<T> {
     if (
-      window.GlobalConfig?.REMOTE_ONLINE_SYNC === false ||
-      !is.url(window.GlobalConfig?.REMOTE_BASE_URL) ||
+      window.$config?.REMOTE_ONLINE_SYNC === false ||
+      !is.url(window.$config?.REMOTE_BASE_URL) ||
       this.ignoreOnlineSync
     ) {
       return Promise.resolve(null);
     }
-    const uri = new URL(url, window.GlobalConfig.REMOTE_BASE_URL);
+    const uri = new URL(url, window.$config.REMOTE_BASE_URL);
     return fetch(uri, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: window.GlobalConfig.REMOTE_AUTHORIZATION || getCookie('Authorization') || '',
+        Authorization: window.$config.REMOTE_AUTHORIZATION || getCookie('Authorization') || '',
         'X-App-DeviceId': '',
         'X-App-Source': 'Note_Service'
       },

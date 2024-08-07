@@ -7,7 +7,7 @@ declare global {
     /**
      * 全局变量
      */
-    GlobalConfig: IGlobalConfig;
+    $config: IGlobalConfig;
 
     /**
      * 客户端数据

@@ -9,7 +9,7 @@ export interface IMiddlewareEvent {
   sync: () => void;
 
   // 保存笔记
-  saveNote: (note: INote) => void;
+  saveNote: (content: { note: INote; onlineSync: boolean }) => void;
 
   // 删除笔记
   deleteNote: (note: INote) => void;

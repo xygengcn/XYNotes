@@ -56,7 +56,7 @@ export const useConfigsStore = defineStore('configs', {
      * @returns
      */
     saveGlobalConfig() {
-      window.GlobalConfig = { ...this.configJson };
+      window.$config = { ...this.configJson };
       console.info('[config] 全局配置保存', this.configJson);
       return middlewareHook.registerMiddleware('saveConfig', { configJson: { ...this.configJson } }).then(() => {
         window.$ui.toast('保存成功');
@@ -69,7 +69,7 @@ export const useConfigsStore = defineStore('configs', {
       configs.forEach(({ key, value }) => {
         Object.assign(this, { [key]: value });
       });
-      window.GlobalConfig = { ...this.configJson };
+      window.$config = { ...this.configJson };
     }
   }
 });
