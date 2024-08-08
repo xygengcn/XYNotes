@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # 定义一个包含多个 package.json 文件路径的数组
-json_files=("packages/web/package.json" "packages/app/package.json" "packages/app/tauri/tauri.conf.json")
+json_files=("packages/web/package.json" "packages/tauri/package.json" "packages/tauri/tauri.conf.json")
 
 # 检查是否提供了命令行参数
 if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 new version"
+    echo "[error] Usage: $0 new version"
     exit 1
 fi
 
