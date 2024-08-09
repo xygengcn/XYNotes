@@ -49,7 +49,7 @@ export default class ArrayMap<T extends { [key: string]: any }> {
     }
   }
 
-  update(newObject: T): void {
+  update(newObject: Partial<T>): void {
     const key: string = newObject[this.keyProperty];
     const existingObj = this._map.get(key);
     if (existingObj) {

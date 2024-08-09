@@ -9,10 +9,10 @@ export class Note implements INote {
   // 笔记类型
   public type: NoteType = NoteType.text;
   // 笔记id
-  public nid!: string;
+  public nid: string = '';
 
   // 笔记标题
-  public title!: string;
+  public title: string = '';
 
   // 笔记内容
   public text: string = '';
@@ -139,7 +139,7 @@ export class Note implements INote {
       this.status = NoteStatus.saving;
       const noteDetail = this.toRaw();
       return middlewareHook
-        .registerMiddleware('saveNote', { note: { ...noteDetail, status: 1 }, onlineSync: !!noteDetail.onlineSyncAt })
+        .registerMiddleware('saveNote', { note: { ...noteDetail, status: 1 }, onlineSync: !!this.onlineSyncAt })
         .then((result) => {
           const note = result[0];
           if (note) {
@@ -172,7 +172,7 @@ export class Note implements INote {
   /**
    * 更新
    */
-  public update(note: INote) {
+  public update(note: Partial<INote>) {
     Object.assign(this, note);
   }
 

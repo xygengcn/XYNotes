@@ -60,12 +60,14 @@ export const useNotesStore = defineStore('notes', {
      * @param list
      */
     setNoteList(list: INote[]): void {
+      // 先排序
       list = list.sort((a, b) => b.updatedAt - a.updatedAt);
       list.forEach((note) => {
         if (this.notesList.has(note.nid)) {
-          // 在线
+          // 如果在线的在后面，同步时间
           if (note.onlineSyncAt) {
-            this.notesList.update(new Note(note));
+            const originNote = this.notesList.get(note.nid);
+            originNote.update({ onlineSyncAt: note.onlineSyncAt });
           }
         } else {
           this.notesList.push(new Note(note));
@@ -107,8 +109,8 @@ export const useNotesStore = defineStore('notes', {
     },
     // 初始化默认数据
     saveDefaultData() {
-      this.notesList.push(new Note(defaultJson));
-      this.saveNoteListToDatabse(defaultJson);
+      this.notesList.push(new Note(defaultJson as INote));
+      this.saveNoteListToDatabse(defaultJson as INote);
     }
   }
 });

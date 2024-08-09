@@ -38,36 +38,49 @@ class ApiEvent implements ApiBridge {
 
   // 拉取笔记细节
   async apiFetchNoteDetailData(nid: string): Promise<INote> {
-    return apiEventLocal.apiFetchNoteDetailData(nid).then((note) => {
-      if (window.$config?.REMOTE_ONLINE_SYNC === true) {
-        return apiEventOnline
-          .apiFetchNoteDetailData(nid)
-          .then((result) => {
-            return result || (note ? { ...note, onlineSyncAt: 0 } : note);
-          })
-          .catch(() => {
-            return note ? { ...note, onlineSyncAt: 0 } : note;
-          });
-      }
-      return note ? { ...note, onlineSyncAt: 0 } : note;
-    });
+    // 本地数据
+    const localNote = await apiEventLocal.apiFetchNoteDetailData(nid).catch(() => null);
+
+    // 线上数据
+    let onlineNote = null;
+
+    if (window.$config?.REMOTE_ONLINE_SYNC === true) {
+      onlineNote = await apiEventOnline.apiFetchNoteDetailData(nid).catch(() => null);
+    }
+
+    // 没有本地数据
+    if (!localNote) {
+      return onlineNote;
+    }
+
+    // 没有线上数据
+    if (!onlineNote) {
+      return { ...localNote, onlineSyncAt: 0 };
+    }
+
+    // 本地数据比线上数据新
+    if (localNote.updatedAt > onlineNote.onlineSyncAt) {
+      return { ...localNote, onlineSyncAt: onlineNote.onlineSyncAt };
+    }
+
+    return { ...localNote, ...onlineNote };
   }
 
   // 更新或新建笔记
   async apiSaveOrUpdateNote(note: INote, onlineSync: boolean): Promise<INote> {
     const content = structuredClone(note);
-    return apiEventLocal.apiSaveOrUpdateNote(content).then((note) => {
+    return apiEventLocal.apiSaveOrUpdateNote(content).then((local) => {
       if (window.$config?.REMOTE_ONLINE_SYNC === true && onlineSync) {
         return apiEventOnline
-          .apiSaveOrUpdateNote(note)
+          .apiSaveOrUpdateNote(local)
           .then((result) => {
-            return result || note;
+            return result || local;
           })
           .catch(() => {
-            return note;
+            return local;
           });
       }
-      return note;
+      return local;
     });
   }
 

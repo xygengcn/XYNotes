@@ -26,7 +26,7 @@ export interface INote {
   title: string;
 
   // 笔记类型
-  type: NoteType | string;
+  type: NoteType;
 
   // 排序
   order: number;
