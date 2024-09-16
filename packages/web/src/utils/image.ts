@@ -22,11 +22,11 @@ export async function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Prom
         const path = await window.$appWindow.showDirDialog({
           title: filename,
           /**
-           * TODO 因为中文名字会导致下载失败，所以暂时使用时间戳
+           * TODO 因为中文名字会导致下载失败
            *
            * @link https://github.com/tauri-apps/plugins-workspace/issues/1478
            */
-          defaultPath: Date.now() + '.png'
+          defaultPath: filename + '.png'
         });
         if (path) {
           const byte = await fetch(image).then((res) => res.arrayBuffer());

@@ -157,9 +157,21 @@ function writeTextFile(path: string, text: string) {
  * @param data
  * @returns
  */
-function writeFile(path: string, data: Uint8Array) {
+function writeFile(path: string | URL, data: Uint8Array) {
   // tauri
   if (isTauriApp()) {
+    /**
+     * fix: 修复中文保存问题 writeFile fails with error "unexpected invoke body"
+     * @see https://github.com/tauri-apps/plugins-workspace/issues/1478
+     * @link https://github.com/tauri-apps/plugins-workspace/pull/1640
+     */
+    if (typeof path === 'string') {
+      if (path.startsWith('file:')) {
+        path = new URL(encodeURI(path));
+      } else {
+        path = new URL('file://' + encodeURI(path));
+      }
+    }
     return tauriWriteFile(path, data, { create: true });
   }
 }
