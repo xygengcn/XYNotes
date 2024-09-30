@@ -14,18 +14,18 @@
     background: #e8e8e84d;
   }
 
-  // 语言标识
-  &::after {
-    content: attr(data-language);
+  // 语言
+  &-language {
     position: absolute;
     right: 8px;
     top: 3px;
-    font-size: 10px;
+    font-size: 12px;
+    text-align: right;
     color: #a3a3a3;
-  }
-  &:hover {
-    &::after {
-      content: '';
-    }
+    background: var(--markdown-editor-codeblock-bg-color);
+    border: none;
+    outline: none;
+    text-decoration: none;
+    font-family: monospace;
   }
 }

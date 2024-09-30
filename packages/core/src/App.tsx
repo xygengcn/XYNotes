@@ -31,6 +31,19 @@ export default defineComponent({
       editor.value?.setContent(__MARKDOWN__);
     };
 
+    /**
+     * 获取编辑器内容并打印到控制台
+     */
+    const handleGetContent = () => {
+      console.log('content:', editor.value?.getContent());
+    };
+
+    /**
+     * 计数器回调函数
+     *
+     * @param e 回调函数参数
+     * @returns 无返回值
+     */
     const onCounter = (e) => {
       console.log('onCounter', e);
     };
@@ -40,6 +53,7 @@ export default defineComponent({
           <input type="text" v-model={inputText.value} />
           <button onClick={handleInput}>插入</button>
           <button onClick={handleReset}>初始化</button>
+          <button onClick={handleGetContent}>获取content</button>
         </div>
         <MarkdownEditor modelValue={text.value} ref={editor} onCounter={onCounter} counter></MarkdownEditor>
       </div>

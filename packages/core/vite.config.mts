@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { fileURLToPath } from 'url';
 import dts from 'vite-plugin-dts';
 
 const markdown = readFileSync(join(__dirname, './readme.md'), 'utf-8');
@@ -31,6 +32,18 @@ export default defineConfig({
         }
       }
     }
+  },
+  resolve: {
+    alias: [
+      {
+        find: /^~(.*)$/,
+        replacement: '$1'
+      },
+      {
+        find: '@',
+        replacement: fileURLToPath(new URL('./src', import.meta.url))
+      }
+    ]
   },
   server: {
     host: '0.0.0.0',
