@@ -1,0 +1,27 @@
+{
+  "name": "@xynotes/utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "rm -rf ./dist && tsc",
+    "postinstall": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./clipboard/*": "./dist/clipboard.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.7",
+    "eslint": "^8.4.1",
+    "prettier": "^2.5.1",
+    "typescript": "^4.7.4"
+  }
+}
