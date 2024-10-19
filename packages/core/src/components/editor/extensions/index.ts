@@ -44,8 +44,8 @@ export const extensions = [
   }),
   Markdown.configure({
     breaks: true,
-    transformPastedText: true,
-    transformCopiedText: true
+    transformPastedText: true
+    // transformCopiedText: true // 会影响复制的内容
   }),
 
   // 标题

@@ -27,6 +27,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
        * 插入主体
        */
       const content = document.createElement('code');
+      content.spellcheck = false; // 关闭语法检查
       for (const [key, value] of Object.entries(mergeAttributes(this.options.HTMLAttributes))) {
         if (value !== undefined && value !== null) {
           parent.setAttribute(key, value);
@@ -36,12 +37,18 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
       parent.append(content);
       /**
        * 语言选择框
+       *
+       * @tips iCloud密码Chrome插件会影响无法输入
        */
       const languageInput = document.createElement('input');
+      languageInput.type = 'text';
       languageInput.classList.add('markdown-editor-codeblock-language');
       if (editor.isEditable) {
         languageInput.oninput = stopPropagation;
         languageInput.onkeydown = stopPropagation;
+        languageInput.onkeyup = stopPropagation;
+        languageInput.onmousedown = stopPropagation;
+        languageInput.onmouseup = stopPropagation;
         languageInput.addEventListener('change', () => {
           // 不发生变化则不更新
           if (languageInput.value === node.attrs.language) return;
@@ -61,8 +68,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
       } else {
         languageInput.disabled = true;
       }
-      languageInput.value = node.attrs.language;
-
+      languageInput.value = node.attrs.language || 'plaintext';
       parent.append(languageInput);
       return {
         dom: parent,
