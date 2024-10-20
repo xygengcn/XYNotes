@@ -107,6 +107,21 @@ export function tauriUnmaximize() {
 }
 
 /**
+ * 判断当前窗口是否为主窗口
+ *
+ * 该函数通过获取当前的WebviewWindow实例，并检查其label属性是否为"main"，来判断当前窗口是否为主窗口
+ * 主窗口通常是指应用程序启动时的第一个窗口，或具有核心功能的窗口
+ *
+ * @returns {boolean} 如果当前窗口为主窗口，则返回true；否则返回false
+ */
+export function tauriIsMainWindow(): boolean {
+  // 获取当前的WebviewWindow实例
+  const appWindow = WebviewWindow.getCurrent();
+  // 检查当前窗口的label属性是否为"main"
+  return appWindow.label === 'main';
+}
+
+/**
  * 最大化
  * @returns
  */
@@ -130,6 +145,12 @@ export function tauriMinimize() {
  */
 export function tauriCloseCurrentWindow() {
   const appWindow = WebviewWindow.getCurrent();
+  /**
+   * 如果是主窗口，则隐藏，否则关闭
+   */
+  if (appWindow.label === 'main') {
+    return appWindow.hide();
+  }
   return appWindow.close();
 }
 
@@ -156,4 +177,4 @@ export async function tauriClipboardWriteImage(blob: Blob) {
 /**
  * 粘贴板读取文本
  */
-export const tauriClipboardReadText = clipboard.readText
+export const tauriClipboardReadText = clipboard.readText;

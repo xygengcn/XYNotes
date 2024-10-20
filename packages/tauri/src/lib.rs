@@ -27,35 +27,12 @@ pub fn run() {
             {
                 app.set_activation_policy(ActivationPolicy::Accessory);
             }
-            // 托盘
-            // let _tray = TrayIconBuilder::new()
-            //     .icon(Image::from_path("./icons/tray.png")?)
-            //     .on_tray_icon_event(|tray, event| {
-            //         if event.click_type == ClickType::Left {
-            //             println!("[WindowEvent] on_tray_icon_event {:?}", event.click_type);
-            //             let app = tray.app_handle();
-            //             let window = app.get_webview_window("main").unwrap();
-            //             window.show().unwrap();
-            //             window.set_focus().unwrap();
-            //         }
-            //     })
-            //     .build(app)?;
-
             Ok(())
         })
         // 窗口事件
         .on_window_event(|window, event| match event {
-            WindowEvent::CloseRequested { api, .. } => {
+            WindowEvent::CloseRequested {} => {
                 println!("[WindowEvent] CloseRequested {}", window.label());
-                if window.label() == "main" {
-                    // tauri::AppHandle::set_activation_policy(
-                    //     &window.app_handle(),
-                    //     ActivationPolicy::Accessory,
-                    // );
-                    window.hide().unwrap();
-                    // 取消默认事件
-                    api.prevent_close();
-                }
             }
             _ => {}
         })
