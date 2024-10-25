@@ -29,6 +29,7 @@
     color: var(--theme-default-color);
     margin-bottom: 5px;
     height: 20px;
+    display: flex;
 
     // 在线标识
     &__onlineTag {
@@ -49,6 +50,8 @@
 
     // 标题
     &__title {
+      display: inline-block;
+      flex: 1;
       font-family: var(--font-family-bold);
       @include line(1);
     }
