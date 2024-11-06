@@ -9,6 +9,7 @@ function pick<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: A
     for (const attr of attrs) {
       Reflect.set(newObject, attr, obj[attr]);
     }
+    return newObject
   }
   return obj;
 }
@@ -25,6 +26,7 @@ function omit<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: A
     for (const attr of attrs) {
       Reflect.deleteProperty(newObject, attr);
     }
+    return newObject
   }
   return obj;
 }
