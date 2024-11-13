@@ -29,7 +29,8 @@ const MarkdownEditor = defineComponent({
     change: (editor: Editor) => editor,
     counter: (content: { characters: number; words: number }) => content,
     blur: (editor: Editor) => editor,
-    focus: (editor: Editor) => editor
+    focus: (editor: Editor) => editor,
+    upload: (files: FileList, event: Event, editor: Editor) => editor
   },
   setup(props, { emit }) {
     // 节点
@@ -62,6 +63,15 @@ const MarkdownEditor = defineComponent({
       onFocus() {
         emit('focus', editorInstance);
       }
+    });
+
+    /**
+     * 图片粘贴上传
+     */
+    // @ts-ignore
+    editorInstance.on('upload', (files: FileList, event: Event) => {
+      console.log('[editor] upload', files);
+      emit('upload', files, event, editorInstance);
     });
 
     /**

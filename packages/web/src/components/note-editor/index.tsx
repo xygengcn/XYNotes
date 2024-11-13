@@ -104,6 +104,13 @@ const NoteEditor = defineComponent({
       }
     });
 
+    /**
+     * 上传
+     * @param files
+     */
+    const handleUpload = (files) => {
+      // 处理图片上传
+    };
     return () => (
       <div class="note-editor">
         <div class="note-editor-header" data-content-top={refEditor.value?.scrollerState.top === 0}>
@@ -118,6 +125,7 @@ const NoteEditor = defineComponent({
             onChange={handleChangeValue}
             onBlur={handleEditorBlur}
             onPaste={handleEditorPaste}
+            onUpload={handleUpload}
             onCounter={(count: number) => {
               activeNote.value.counter = count;
             }}

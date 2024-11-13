@@ -1,5 +1,5 @@
 {
-  "name": "@xynotes/core",
+  "name": "@xynotes/editor",
   "description": "基于tiptap的markdown编辑器主要内容",
   "private": true,
   "version": "0.0.1",

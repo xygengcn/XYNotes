@@ -1,5 +1,5 @@
 import { App } from 'vue';
-import MarkdownEditor from './components/editor';
+import MarkdownEditor from './editor';
 
 export type { Editor, EditorContent } from '@tiptap/vue-3';
 export { MarkdownEditor };

@@ -37,7 +37,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.1",
     "@vitejs/plugin-vue-jsx": "3.1.0",
-    "@xynotes/core": "workspace:^",
+    "@xynotes/editor": "workspace:^",
     "pina": "^0.20.2204228",
     "prettier": "^2.6.2",
     "rollup-plugin-visualizer": "^5.8.3",

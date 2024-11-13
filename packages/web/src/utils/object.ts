@@ -22,7 +22,7 @@ function pick<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: A
  */
 function omit<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: Array<K>): Omit<T, K> {
   if (attrs?.length > 0) {
-    const newObject = Object.create(obj);
+    const newObject = structuredClone(obj);
     for (const attr of attrs) {
       Reflect.deleteProperty(newObject, attr);
     }

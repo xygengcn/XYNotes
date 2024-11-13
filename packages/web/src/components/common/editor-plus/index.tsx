@@ -2,8 +2,8 @@ import { useScroll } from '@/services/hook';
 import { IContextMenuProps } from '@/typings/contextmenu';
 import { trim } from '@/utils';
 import { readText } from '@/utils/clipboard';
-import { Editor as EditorController, MarkdownEditor } from '@xynotes/core';
-import '@xynotes/core/dist/style.css';
+import { Editor as EditorController, MarkdownEditor } from '@xynotes/editor';
+import '@xynotes/editor/dist/style.css';
 import { PropType, defineComponent, nextTick, ref, shallowRef, watch } from 'vue';
 import Loading from '../loading';
 import './index.scss';
@@ -43,7 +43,9 @@ const Editor = defineComponent({
     // 字数发生变化
     counter: (length: number) => true,
     // 粘贴
-    paste: (value: string) => true
+    paste: (value: string) => true,
+    // 上传
+    upload: (files: FileList, event: Event, editor: EditorController) => editor
   },
   setup(props, context) {
     /**
@@ -185,6 +187,7 @@ const Editor = defineComponent({
           onCounter={this.onCounter}
           onCreated={this.onCreated}
           onBlur={this.onBlur}
+          onUpload={this.$emit.bind(this, 'upload')}
           counter={this.counter}
           editable={this.type === 'editor'}
         />
