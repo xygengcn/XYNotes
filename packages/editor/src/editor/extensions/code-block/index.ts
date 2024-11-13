@@ -23,6 +23,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
   addNodeView() {
     return ({ node, editor, getPos }) => {
       const parent = document.createElement('pre');
+
       /**
        * 插入主体
        */
@@ -33,6 +34,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           parent.setAttribute(key, value);
         }
       }
+      let parentLanguage = node.attrs.language;
       parent.setAttribute('data-language', node.attrs.language);
       parent.append(content);
       /**
@@ -43,28 +45,30 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
       const languageInput = document.createElement('input');
       languageInput.type = 'text';
       languageInput.classList.add('markdown-editor-codeblock-language');
+      const onChange = () => {
+        // 不发生变化则不更新
+        if (languageInput.value === node.attrs.language) return;
+        // 可编辑
+        if (editor.isEditable && typeof getPos === 'function') {
+          editor.view.dispatch(
+            editor.view.state.tr.setNodeMarkup(getPos(), undefined, {
+              ...node.attrs,
+              language: languageInput.value
+            })
+          );
+        } else {
+          // 不可编辑
+          languageInput.value = node.attrs.language;
+        }
+      };
       if (editor.isEditable) {
         languageInput.oninput = stopPropagation;
         languageInput.onkeydown = stopPropagation;
         languageInput.onkeyup = stopPropagation;
         languageInput.onmousedown = stopPropagation;
         languageInput.onmouseup = stopPropagation;
-        languageInput.addEventListener('change', () => {
-          // 不发生变化则不更新
-          if (languageInput.value === node.attrs.language) return;
-          // 可编辑
-          if (editor.isEditable && typeof getPos === 'function') {
-            editor.view.dispatch(
-              editor.view.state.tr.setNodeMarkup(getPos(), undefined, {
-                ...node.attrs,
-                language: languageInput.value
-              })
-            );
-          } else {
-            // 不可编辑
-            languageInput.value = node.attrs.language;
-          }
-        });
+
+        languageInput.addEventListener('change', onChange);
       } else {
         languageInput.disabled = true;
       }
@@ -74,7 +78,13 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
         dom: parent,
         contentDOM: content,
         update: (updatedNode) => {
-          parent.setAttribute('data-language', updatedNode.attrs.language);
+          if (updatedNode.type !== this.type) {
+            return false;
+          }
+          if (parentLanguage !== updatedNode.attrs.language) {
+            parentLanguage = updatedNode.attrs.language;
+            parent.setAttribute('data-language', updatedNode.attrs.language);
+          }
           return true;
         }
       };
