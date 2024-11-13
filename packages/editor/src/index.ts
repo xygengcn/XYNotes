@@ -1,8 +1,9 @@
 import { App } from 'vue';
-import MarkdownEditor from './editor';
+import MarkdownEditor from './editor/index';
+import { defineMarkdownEditor } from './editor/hook';
 
 export type { Editor, EditorContent } from '@tiptap/vue-3';
-export { MarkdownEditor };
+export { MarkdownEditor, defineMarkdownEditor };
 
 export default {
   install(app: App) {
