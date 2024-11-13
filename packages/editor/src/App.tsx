@@ -1,5 +1,5 @@
 import { defineComponent, ref, shallowRef } from 'vue';
-import MarkdownEditor from './components/editor';
+import MarkdownEditor from './editor';
 import './app.scss';
 
 declare const __MARKDOWN__: string;

@@ -36,6 +36,11 @@
   }
 
   &-bottom {
+    &-loading {
+      .loading {
+        background-color: transparent;
+      }
+    }
     &-version {
       height: 60px;
       line-height: 60px;
