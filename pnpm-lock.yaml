@@ -202,9 +202,6 @@ importers:
       ts-database:
         specifier: 0.0.4
         version: 0.0.4
-      vditor-lite:
-        specifier: 3.9.8
-        version: 3.9.8
       vue-tippy:
         specifier: ^6.3.1
         version: 6.4.4(vue@3.3.10(typescript@4.9.5))
@@ -2253,9 +2250,6 @@ packages:
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
 
-  diff-match-patch@1.0.5:
-    resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
-
   diff@4.0.2:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
@@ -3729,9 +3723,6 @@ packages:
   validator@13.12.0:
     resolution: {integrity: sha512-c1Q0mCiPlgdTVVVIJIrBuxNicYE+t/7oKeI9MWLj3fh/uq2Pxh/3eeWbVZ4OcGW1TUf53At0njHw5SMdA3tmMg==}
     engines: {node: '>= 0.10'}
-
-  vditor-lite@3.9.8:
-    resolution: {integrity: sha512-RgZ1cq0OmXZ6VbYP5wf6avAGOJtMU65gE17jX5sBKewoW7s58MP2h2WgAmnsoAAfGRGcD1sPbtzE2F0MawZuEw==}
 
   vite-plugin-dts@3.9.1:
     resolution: {integrity: sha512-rVp2KM9Ue22NGWB8dNtWEr+KekN3rIgz1tWD050QnRGlriUCmaDwa7qA5zDEjbXg5lAXhYMSBJtx3q3hQIJZSg==}
@@ -6253,8 +6244,6 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  diff-match-patch@1.0.5: {}
-
   diff@4.0.2: {}
 
   doctrine@3.0.0:
@@ -7810,10 +7799,6 @@ snapshots:
       spdx-expression-parse: 3.0.1
 
   validator@13.12.0: {}
-
-  vditor-lite@3.9.8:
-    dependencies:
-      diff-match-patch: 1.0.5
 
   vite-plugin-dts@3.9.1(@types/node@22.7.7)(rollup@4.19.1)(typescript@5.5.4)(vite@5.3.5(@types/node@22.7.7)(sass@1.77.8)(terser@5.36.0)):
     dependencies:
