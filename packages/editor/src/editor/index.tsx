@@ -123,7 +123,7 @@ const MarkdownEditor = defineComponent({
   render() {
     return (
       <EditorContent
-        ref={this.refEditor}
+        ref="refEditor"
         class="markdown-editor"
         editor={this.editor}
         data-editable={this.editable}

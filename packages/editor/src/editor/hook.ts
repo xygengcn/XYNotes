@@ -6,6 +6,10 @@ import './index.scss';
 
 type callback = ((...args: any) => void) | null;
 
+/**
+ * 定制编辑器
+ * @returns
+ */
 export const defineMarkdownEditor = () => {
   const editor = shallowRef<Editor>();
   const editorEvent = new Eventemitter();
@@ -17,6 +21,15 @@ export const defineMarkdownEditor = () => {
    */
   const getContent = () => {
     return editor.value?.storage.markdown.getMarkdown();
+  };
+
+  /**
+   * 获取结构数据
+   *
+   * @returns 返回结构数据
+   */
+  const getData = () => {
+    return editor.value?.storage.markdown.getData();
   };
 
   /**
@@ -47,15 +60,27 @@ export const defineMarkdownEditor = () => {
     return editor.value?.commands.setContent(content);
   };
 
-  return (options: { defaultValue: string; editable?: boolean; counter: boolean }) => {
+  /**
+   * 获取字数
+   * @returns
+   */
+  const getCounter = () => {
+    return {
+      characters: editor.value?.storage.characterCount.characters() || 0,
+      words: editor.value?.storage.characterCount.words() || 0
+    };
+  };
+
+  return (options: { defaultValue: string; editable?: boolean }) => {
     const instance = getCurrentInstance();
 
     // 编辑器事件
     let createdCallback: callback = null;
     let changeCallback: callback = null;
     let blurCallback: callback = null;
-    let counterCallback: callback = null;
     let focusCallback: callback = null;
+    let uploadCallback: callback = null;
+
     const onCreated = (cb: (editor: Editor) => void) => {
       if (createdCallback) editorEvent.off('created', createdCallback);
       editorEvent.on('created', (createdCallback = cb));
@@ -72,13 +97,16 @@ export const defineMarkdownEditor = () => {
       if (focusCallback) editorEvent.off('focus', focusCallback);
       editorEvent.on('focus', (focusCallback = cb));
     };
-    const onCounter = (cb: (editor: Editor) => void) => {
-      if (counterCallback) editorEvent.off('counter', counterCallback);
-      editorEvent.on('counter', (counterCallback = cb));
+    const onUpload = (cb: (file: FileList, e: Event, editor: Editor) => void) => {
+      if (uploadCallback) editorEvent.off('upload', uploadCallback);
+      editorEvent.on('upload', (uploadCallback = cb));
     };
 
+    /**
+     * 挂载
+     */
     onMounted(() => {
-      if (instance?.refs.editor) {
+      if (instance?.refs.editor && !editor.value) {
         editor.value = new Editor({
           element: instance?.refs.editor as HTMLDivElement,
           content: options.defaultValue,
@@ -90,8 +118,6 @@ export const defineMarkdownEditor = () => {
           onUpdate({ editor }) {
             // 改变
             editorEvent.emit('change', editor);
-            // 计数
-            options.counter && editorEvent.emit('counter', editor);
           },
           onBlur() {
             editorEvent.emit('blur', editor.value);
@@ -100,14 +126,22 @@ export const defineMarkdownEditor = () => {
             editorEvent.emit('focus', editor.value);
           }
         });
+        /**
+         * 图片粘贴上传
+         */
+        // @ts-ignore
+        editor.value.on('upload', (files: FileList, event: Event) => {
+          console.log('[editor] upload', files);
+          editorEvent.emit('upload', files, event, editor.value);
+        });
       }
     });
     onBeforeUnmount(() => {
       createdCallback && editorEvent.off('created', createdCallback);
       changeCallback && editorEvent.off('change', changeCallback);
       blurCallback && editorEvent.off('blur', blurCallback);
-      counterCallback && editorEvent.off('counter', counterCallback);
       focusCallback && editorEvent.off('focus', focusCallback);
+      uploadCallback && editorEvent.off('upload', uploadCallback);
       if (instance?.refs.editor) {
         editor.value?.destroy();
         editorEvent.removeAllListeners();
@@ -119,11 +153,13 @@ export const defineMarkdownEditor = () => {
       onChange,
       onBlur,
       onFocus,
-      onCounter,
       getContent,
       insertContent,
       setEditable,
-      setContent
+      setContent,
+      getCounter,
+      getData,
+      onUpload
     };
   };
 };

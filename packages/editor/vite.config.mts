@@ -10,14 +10,14 @@ const markdown = readFileSync(join(__dirname, './readme.md'), 'utf-8');
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx(), dts({ include: ['./src/**/**.ts', './src/**/**.tsx'] })],
+  plugins: [vue(), vueJsx(), dts({})],
   define: {
     __MARKDOWN__: JSON.stringify(markdown)
   },
   build: {
     outDir: 'dist',
     lib: {
-      entry: './src/index.ts',
+      entry: ['./src/editor/index.tsx','./src/editor/hook.ts'],
       name: 'MarkdownEditor',
       formats: ['es', 'cjs']
     },

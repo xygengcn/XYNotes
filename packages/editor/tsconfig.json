@@ -9,14 +9,17 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "isolatedModules": false,
+    "skipLibCheck": false,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "noImplicitAny": false,
+    "declaration": true,
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["src/vditor/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
