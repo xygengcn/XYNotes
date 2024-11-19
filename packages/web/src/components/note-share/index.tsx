@@ -3,11 +3,11 @@ import { Note } from '@/services/note';
 import { screenshot, screenshotCopy } from '@/utils/image';
 import { PropType, createApp, defineComponent, ref } from 'vue';
 import Dialog from '../common/dialog';
-import Editor from '../common/editor-plus';
 import Icon from '../common/icon';
-import Loading from '../common/loading';
+import { Loading } from '@xynotes/components';
 import Popover from '../common/popover';
 import './index.scss';
+import { EditorPerview, useEditorPreview } from '@xynotes/editor';
 
 interface IScreenshotProps {
   width?: string;
@@ -39,17 +39,15 @@ const Screenshot = defineComponent({
      * 弹窗
      */
     const refDialog = ref<typeof Dialog>();
-    /**
-     * 编辑器
-     */
-    const refScreenshotPreview = ref<typeof Editor>();
+
+    const { previewElement } = useEditorPreview();
 
     /**
      * 下载
      */
     const handleClickDownalodScreenshot = () => {
       loading.value = true;
-      const el = refScreenshotPreview.value.getContentElement();
+      const el = previewElement();
       // 生成截图
       return screenshot(el, props.note.title)
         .catch((e) => {
@@ -67,7 +65,7 @@ const Screenshot = defineComponent({
      */
     const handleClickCopyImage = () => {
       loading.value = true;
-      const el = refScreenshotPreview.value.getContentElement();
+      const el = previewElement();
       // 生成截图
       return screenshotCopy(el)
         .then(() => {
@@ -130,7 +128,7 @@ const Screenshot = defineComponent({
       >
         <div class="note-share-content">
           <div class="note-share-content-preview">
-            <Editor ref={refScreenshotPreview} value={props.note.text || ''} type="preview" />
+            <EditorPerview value={props.note.text || ''} />
           </div>
           {loading.value && (
             <div class="note-share-content-loading">

@@ -1,2 +1,3 @@
 import { copyText } from './clipboard';
-export { copyText };
+import { useScroller } from './scroller';
+export { copyText, useScroller };

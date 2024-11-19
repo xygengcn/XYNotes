@@ -1,7 +1,7 @@
 import { defineComponent, ref, shallowRef } from 'vue';
-import './editor/index.scss';
+import '../tiptap/index.scss';
 import './app.scss';
-import { defineMarkdownEditor } from './editor/hook';
+import { defineMarkdownEditor } from '../tiptap';
 
 declare const __MARKDOWN__: string;
 
@@ -50,7 +50,7 @@ export default defineComponent({
           <button onClick={handleGetContent}>获取content</button>
         </div>
         {/* <MarkdownEditor modelValue={text.value} ref={editor} onCounter={onCounter} counter></MarkdownEditor> */}
-        <div class="markdown-editor" ref="editor"></div>
+        <div class="editor" ref="editor"></div>
       </div>
     );
   }

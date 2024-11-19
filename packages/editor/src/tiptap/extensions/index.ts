@@ -23,7 +23,7 @@ import { CharacterCountExtension } from './character-count';
 /**
  * 编辑器扩展
  */
-export const extensions = [
+export default [
   Text,
   Document,
   link.configure({

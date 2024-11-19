@@ -1,6 +1,6 @@
 import Drawer from '@/components/common/drawer';
 import Icon from '@/components/common/icon';
-import Loading from '@/components/common/loading';
+import { Loading } from '@xynotes/components';
 import NoteEditor from '@/components/note-editor';
 import NoteEditorCounter from '@/components/note-editor/counter';
 import NoteEditorTitle from '@/components/note-editor/title';

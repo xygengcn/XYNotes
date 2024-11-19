@@ -4,12 +4,12 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "main": "./dist/editor.js",
-  "module": "./dist/editor.js",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build --config vite.build.config.ts",
     "preview": "vite preview",
     "lint": "prettier .  --write"
   },
@@ -38,7 +38,6 @@
     "@tiptap/extension-task-list": "^2.4.0",
     "@tiptap/extension-text": "^2.4.0",
     "@tiptap/pm": "^2.8.0",
-    "@tiptap/vue-3": "^2.8.0",
     "eventemitter3": "^5.0.1",
     "lowlight": "^3.1.0",
     "markdown-it-mark": "^4.0.0",
@@ -48,6 +47,8 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
     "@vitejs/plugin-vue-jsx": "^4.0.0",
+    "@xynotes/components": "workspace:^",
+    "@xynotes/utils": "workspace:^",
     "prettier": "^2.8.7",
     "sass": "^1.62.0",
     "typescript": "^5.5.3",

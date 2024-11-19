@@ -5,7 +5,7 @@ import { defineComponent } from 'vue';
 import './index.scss';
 import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
 import is from '@/utils/is';
-import Loading from '@/components/common/loading';
+import { Loading } from '@xynotes/components';
 import { AppLoadStatus, useAppStore } from '@/store/app.store';
 
 export const DESKTOP_NAV_MENU_WIDTH = 64;
@@ -14,7 +14,7 @@ const DesktopNavMenu = defineComponent({
   name: 'DesktopNavMenu',
   setup() {
     const noteStore = useNotesStore();
-    const appStore =useAppStore()
+    const appStore = useAppStore();
 
     const desktopNavMenuList: IdesktopNavMenuItem[] = [
       {

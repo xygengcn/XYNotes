@@ -1,7 +1,7 @@
 import { Editor } from '@tiptap/core';
+import { useScroller } from '@xynotes/utils';
 import Eventemitter from 'eventemitter3';
-import { onBeforeUnmount, onMounted, shallowRef, getCurrentInstance } from 'vue';
-import { extensions } from './extensions';
+import { getCurrentInstance, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
 import './index.scss';
 
 type callback = ((...args: any) => void) | null;
@@ -11,8 +11,17 @@ type callback = ((...args: any) => void) | null;
  * @returns
  */
 export const defineMarkdownEditor = () => {
+  // 编辑器
   const editor = shallowRef<Editor>();
+
+  // 编辑器事件
   const editorEvent = new Eventemitter();
+
+  // 编辑器加载
+  const loading = ref(true);
+
+  // 缓存
+  const editorCache = ref();
 
   /**
    * 获取 Markdown 内容
@@ -57,6 +66,9 @@ export const defineMarkdownEditor = () => {
    * @returns
    */
   const setContent = (content: string) => {
+    if (loading.value) {
+      editorCache.value = content;
+    }
     return editor.value?.commands.setContent(content);
   };
 
@@ -71,8 +83,9 @@ export const defineMarkdownEditor = () => {
     };
   };
 
-  return (options: { defaultValue: string; editable?: boolean }) => {
+  return (options?: { defaultValue: string; editable?: boolean }) => {
     const instance = getCurrentInstance();
+    const { state } = useScroller('editor');
 
     // 编辑器事件
     let createdCallback: callback = null;
@@ -105,15 +118,20 @@ export const defineMarkdownEditor = () => {
     /**
      * 挂载
      */
-    onMounted(() => {
-      if (instance?.refs.editor && !editor.value) {
+    onMounted(async () => {
+      const el = instance?.refs.editor as HTMLDivElement;
+      if (el && !editor.value) {
+        el.classList.add('markdown-editor');
+        const extensions = (await import('./extensions')).default;
         editor.value = new Editor({
-          element: instance?.refs.editor as HTMLDivElement,
-          content: options.defaultValue,
+          element: el,
+          content: editorCache.value || options?.defaultValue || '',
           extensions: extensions,
-          editable: options.editable ?? true,
+          editable: options?.editable ?? true,
           onCreate() {
             editorEvent.emit('created', editor.value);
+            // 加载结束
+            loading.value = false;
           },
           onUpdate({ editor }) {
             // 改变
@@ -149,6 +167,8 @@ export const defineMarkdownEditor = () => {
     });
     return {
       editor,
+      loading,
+      state,
       onCreated,
       onChange,
       onBlur,
@@ -160,6 +180,77 @@ export const defineMarkdownEditor = () => {
       getCounter,
       getData,
       onUpload
+    };
+  };
+};
+
+/**
+ * 定制编辑器预览
+ * @returns
+ */
+export const defineMarkdownEditorPreview = () => {
+  // 编辑器
+  const editor = shallowRef<Editor>();
+
+  // 编辑器加载
+  const loading = ref(true);
+
+  // 缓存
+  const editorCache = ref();
+
+  /**
+   * 设置值
+   * @param content
+   * @returns
+   */
+  const setContent = (content: string) => {
+    if (loading.value) {
+      editorCache.value = content;
+    }
+    return editor.value?.commands.setContent(content);
+  };
+
+  return (options?: { defaultValue: string; editable?: boolean }) => {
+    const instance = getCurrentInstance();
+
+    /**
+     * 获取预览节点
+     * @returns
+     */
+    const previewElement = () => {
+      return editor.value?.view.dom as HTMLDivElement;
+    };
+
+    /**
+     * 挂载
+     */
+    onMounted(async () => {
+      const el = instance?.refs.editor as HTMLDivElement;
+      if (el && !editor.value) {
+        el.classList.add('markdown-editor');
+        const extensions = (await import('./extensions')).default;
+        editor.value = new Editor({
+          element: el,
+          content: editorCache.value || options?.defaultValue || '',
+          extensions: extensions,
+          editable: options?.editable ?? true,
+          onCreate() {
+            // 加载结束
+            loading.value = false;
+          }
+        });
+      }
+    });
+    onBeforeUnmount(() => {
+      if (instance?.refs.editor) {
+        editor.value?.destroy();
+      }
+    });
+    return {
+      editor,
+      loading,
+      setContent,
+      previewElement
     };
   };
 };

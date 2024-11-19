@@ -174,6 +174,7 @@ export class Note implements INote {
    */
   public update(note: Partial<INote>) {
     Object.assign(this, note);
+    this.counter = note.text.length;
   }
 
   /**

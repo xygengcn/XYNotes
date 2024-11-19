@@ -15,6 +15,7 @@ import router from './router';
 import './services/app-window';
 import './services/shortcut';
 import is from './utils/is';
+import "@xynotes/components/lib/style.css"
 
 /**
  * 注册中间件
