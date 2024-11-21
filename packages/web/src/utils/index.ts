@@ -22,28 +22,6 @@ export function highLight(keyword: string, text: string): string {
 }
 
 /**
- * compose函数
- * @param middlewares
- * @returns
- */
-export function compose(middlewares: Array<Function>) {
-  return function (...args: any) {
-    return dispatch(0);
-    function dispatch(i: number) {
-      let fn = middlewares[i];
-      if (!fn) {
-        return Promise.resolve(args);
-      }
-      return Promise.resolve(
-        fn(function next() {
-          return dispatch(i + 1);
-        }, ...args)
-      );
-    }
-  };
-}
-
-/**
  * 寻找节点
  * @param element
  * @returns

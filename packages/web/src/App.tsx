@@ -1,7 +1,7 @@
 import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
 import noteEventBus from './services/event-bus';
-import middlewareHook from './middlewares';
+import { useAppStore } from './store/app.store';
 import { useNotesStore } from './store/notes.store';
 import is from './utils/is';
 
@@ -9,13 +9,15 @@ const App = defineComponent({
   name: 'App',
   setup() {
     const noteStore = useNotesStore();
+    const appStore = useAppStore()
     const handleContextMenu = (e: Event) => {
       if (is.production()) {
         e.preventDefault();
       }
     };
     onBeforeMount(async () => {
-      middlewareHook.registerMiddleware('sync');
+      // 同步数据
+      appStore.sync()
       if (is.app()) {
         // 监听其他事件
         noteEventBus.on('note:update', (content) => {

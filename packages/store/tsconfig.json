@@ -24,10 +24,6 @@
   "exclude": ["node_modules", "dist"],
   "include": [
     "./src/**/*.ts",
-    "./src/**/*.d.ts",
-    "./test/**/*.ts",
-    "./test/*.ts",
-    "./examples/*.ts",
-    "./examples/**/*.ts"
+    "./src/**/*.d.ts"
   ]
 }

@@ -2,10 +2,10 @@
   "name": "@xynotes/utils",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "build": "rm -rf ./dist && tsc",
-    "postinstall": "npm run build"
+ote
   },
   "keywords": [],
   "author": "",
@@ -15,8 +15,16 @@
     "package.json"
   ],
   "exports": {
-    ".": "./dist/index.js",
-    "./clipboard/*": "./dist/clipboard.js"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    }
   },
   "devDependencies": {
     "@types/node": "^22.7.7",

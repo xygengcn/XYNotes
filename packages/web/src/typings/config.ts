@@ -7,7 +7,7 @@ export interface INoteListSort {
 }
 
 // 配置信息
-export interface IConfigs extends Record<string, unknown> {
+export interface IConfigs {
   sideContainerWidth: number;
   noteListSort: INoteListSort;
   configJson: IGlobalConfig;
@@ -15,9 +15,9 @@ export interface IConfigs extends Record<string, unknown> {
 }
 
 // 配置数据库
-export interface IConfigsColunm {
-  key: keyof IConfigs | symbol;
-  value: any;
+export interface IConfigsColunm<K extends keyof IConfigs = keyof IConfigs> {
+  key: K;
+  value: IConfigs[K];
 }
 
 /**

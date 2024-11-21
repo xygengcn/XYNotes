@@ -1,24 +1,25 @@
 import Drawer from '@/components/common/drawer';
 import Icon from '@/components/common/icon';
+import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
 import { Note } from '@/services/note';
+import { useAppStore } from '@/store/app.store';
 import { useConfigsStore } from '@/store/config.store';
 import { useNotesStore } from '@/store/notes.store';
 import { NoteListSortType } from '@/typings/enum/note';
 import { debounce } from '@/utils/debounce-throttle';
 import { computed, defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import './index.scss';
 import { SwipeList } from 'vue3-swipe-actions';
 import 'vue3-swipe-actions/dist/index.css';
-import Scroller from '@/components/common/scroller';
-import middlewareHook from '@/middlewares';
+import './index.scss';
 
 const MobileHome = defineComponent({
   name: 'MobileHome',
   setup() {
-    const store = useNotesStore();
+    const noteStore = useNotesStore();
     const configStore = useConfigsStore();
+    const appStore = useAppStore();
     const router = useRouter();
     /**
      * 关键词
@@ -50,11 +51,11 @@ const MobileHome = defineComponent({
      */
     const noteList = computed(() => {
       if (!keyword.value.trim()) {
-        return store.notesList.sort((a, b) => {
+        return noteStore.notesList.sort((a, b) => {
           return b[noteListSortType.value] - a[noteListSortType.value];
         });
       }
-      return store.notesList
+      return noteStore.notesList
         .filter((note) => {
           return (
             note.intro?.includes(keyword.value) ||
@@ -82,7 +83,7 @@ const MobileHome = defineComponent({
      * 新增
      */
     const handleClickAdd = () => {
-      store.addNote();
+      noteStore.addNote();
     };
 
     /**
@@ -103,7 +104,7 @@ const MobileHome = defineComponent({
      * 数据同步
      */
     const handleSyncList = () => {
-      middlewareHook.registerMiddleware('sync');
+      appStore.sync()
       visibleMoreDrawer.value = false;
     };
 
@@ -115,7 +116,7 @@ const MobileHome = defineComponent({
     };
 
     onBeforeMount(() => {
-      store.setActiveNoteId('');
+      noteStore.setActiveNoteId('');
     });
     return () => (
       <div class="mobile-home">
@@ -171,7 +172,7 @@ const MobileHome = defineComponent({
         </div>
         <div class="mobile-home-footer">
           <div class="mobile-home-footer-content">
-            <span>{store.noteListCount}个笔记</span>
+            <span>{noteStore.noteListCount}个笔记</span>
             <span class="mobile-home-footer-content-add" onClick={handleClickAdd}>
               <Icon type="mobile-add" size="2em"></Icon>
             </span>

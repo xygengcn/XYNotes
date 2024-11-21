@@ -1,4 +1,4 @@
-import middlewareHook from '@/middlewares';
+import apiEvent from '@/api';
 import { IConfigsColunm, INoteListSort } from '@/typings/config';
 import { NoteListSortType } from '@/typings/enum/note';
 import { debounce } from '@/utils/debounce-throttle';
@@ -15,7 +15,7 @@ export const SIDE_CONTAINER_MIN_WIDTH = 250;
 // 防抖保存左侧长度
 const debounceSaveSideContainerMaxWidth = debounce((width) => {
   console.info('[config] 保存左侧长度配置', width);
-  middlewareHook.registerMiddleware('saveConfig', { sideContainerWidth: width });
+  return apiEvent.apiSaveOrUpdateConfigs([{ key: 'sideContainerWidth', value: width }]);
 });
 
 export const useConfigsStore = defineStore('configs', {
@@ -47,7 +47,7 @@ export const useConfigsStore = defineStore('configs', {
         value: NoteListSortType.updated,
         label: '更新时间'
       };
-      return middlewareHook.registerMiddleware('saveConfig', { noteListSort: toRaw(this.noteListSort) });
+      return apiEvent.apiSaveOrUpdateConfigs([{ key: 'noteListSort', value: toRaw(this.noteListSort) }]);
     },
     /**
      * 配置保存
@@ -58,7 +58,7 @@ export const useConfigsStore = defineStore('configs', {
     saveGlobalConfig() {
       window.$config = { ...this.configJson };
       console.info('[config] 全局配置保存', this.configJson);
-      return middlewareHook.registerMiddleware('saveConfig', { configJson: { ...this.configJson } }).then(() => {
+      return apiEvent.apiSaveOrUpdateConfigs([{ key: 'configJson', value: this.configJson }]).then(() => {
         window.$ui.toast('保存成功');
       });
     },

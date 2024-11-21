@@ -15,7 +15,7 @@ import {
   tauriWriteFile,
   tauriClipboardWriteImage,
   tauriClipboardReadText
-} from './tauri';
+} from '@xynotes/tauri-api';
 
 /**
  * 创建窗口

@@ -1,9 +1,10 @@
-import middlewareHook from '@/middlewares';
+import apiEvent from '@/api';
+import noteEventBus from '@/services/event-bus';
 import { Note } from '@/services/note';
 import { INote } from '@/typings/note';
+import ArrayMap from '@/utils/array-map';
 import { defineStore } from 'pinia';
 import defaultJson from './default.json';
-import ArrayMap from '@/utils/array-map';
 
 export const useNotesStore = defineStore('notes', {
   state: () => ({
@@ -95,8 +96,15 @@ export const useNotesStore = defineStore('notes', {
      * @param note
      * @returns
      */
-    saveNoteListToDatabse(note: INote) {
-      return middlewareHook.registerMiddleware('saveNote', { note, onlineSync: !!note.onlineSyncAt });
+    async saveNoteListToDatabse(note: INote, onlineSyncAt: boolean) {
+      console.log('[apiSaveOrUpdateNote] param', note.nid, note.updatedAt);
+      const result = await apiEvent.apiSaveOrUpdateNote(note, !!onlineSyncAt);
+      console.log('[apiSaveOrUpdateNote] result', note.nid, result.updatedAt);
+      if (result) {
+        this.updateNote(result);
+      }
+      noteEventBus.broadcast('note:update', { note: result, action: 'update' });
+      return result;
     },
 
     /**
@@ -110,7 +118,7 @@ export const useNotesStore = defineStore('notes', {
     // 初始化默认数据
     saveDefaultData() {
       this.notesList.push(new Note(defaultJson as INote));
-      this.saveNoteListToDatabse(defaultJson as INote);
+      this.saveNoteListToDatabse(defaultJson as INote, false);
     }
   }
 });

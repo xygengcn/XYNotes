@@ -29,7 +29,7 @@ export default defineConfig(
           formats: ['cjs', 'es']
         },
         rollupOptions: {
-          external: ['vue', '@xynotes/components']
+          external: ['vue', '@xynotes/components','@xynotes/utils','eventemitter3']
         }
       }
     }) as UserConfig

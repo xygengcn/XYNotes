@@ -1,4 +1,7 @@
 import { defineStore } from 'pinia';
+import { useConfigsStore } from './config.store';
+import { useNotesStore } from './notes.store';
+import apiEvent from '@/api';
 
 /**
  * 加载状态
@@ -27,6 +30,37 @@ export const useAppStore = defineStore('app', {
     // 修改状态
     setLoadStatus(status: AppLoadStatus) {
       this.loadStatus = status;
+    },
+
+    /**
+     * 同步数据
+     */
+    async sync() {
+      const configs = useConfigsStore();
+      const note = useNotesStore();
+      this.setLoadStatus(AppLoadStatus.configsLoading);
+      // 同步配置
+      return apiEvent
+        .apiFetchConfigsData()
+        .then((config) => {
+          console.log('[sync] config', config);
+          configs.syncConfigs(config);
+          // 同步笔记信息
+          return apiEvent
+            .apiFetchNoteListData({ updateTime: 0, order: configs.noteListSort.value, pageSize: 50 })
+            .then((list) => {
+              if (list.length === 0) {
+                // 默认值
+                note.saveDefaultData();
+              } else {
+                note.setNoteList(list);
+              }
+            });
+        })
+        .finally(() => {
+          // 结束加载
+          this.setLoadStatus(AppLoadStatus.finish);
+        });
     }
   }
 });

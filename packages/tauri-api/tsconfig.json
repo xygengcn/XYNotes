@@ -25,9 +25,6 @@
   "include": [
     "./src/**/*.ts",
     "./src/**/*.d.ts",
-    "./test/**/*.ts",
-    "./test/*.ts",
-    "./examples/*.ts",
-    "./examples/**/*.ts"
+    "src/global.ts"
   ]
 }

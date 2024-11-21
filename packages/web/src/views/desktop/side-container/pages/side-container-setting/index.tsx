@@ -1,11 +1,10 @@
 import Button from '@/components/common/button';
 import database from '@/services/database';
-import middlewareHook from '@/middlewares';
+import { useAppStore } from '@/store/app.store';
 import { downloadFile, jsonFileReader } from '@/utils/file';
 import { defineComponent } from 'vue';
-import './index.scss';
-import { useAppStore } from '@/store/app.store';
 import { useRouter } from 'vue-router';
+import './index.scss';
 
 const DesktopSideContainerSetting = defineComponent({
   name: 'DesktopSideContainerSetting',
@@ -15,7 +14,7 @@ const DesktopSideContainerSetting = defineComponent({
 
     // 数据备份
     const handleBackup = () => {
-      console.error('[backup]', '数据备份');
+      console.info('[backup]', '数据备份');
       database
         .backup()
         .then((database) => {
@@ -38,7 +37,8 @@ const DesktopSideContainerSetting = defineComponent({
         .then((backupData: any) => {
           database.recovery(backupData.database).then(() => {
             window.$ui.toast('数据恢复恢复成功');
-            middlewareHook.registerMiddleware('recovery');
+            const app = useAppStore();
+            app.sync()
           });
         })
         .catch((e) => {
