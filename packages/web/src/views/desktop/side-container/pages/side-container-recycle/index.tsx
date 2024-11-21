@@ -26,7 +26,7 @@ const DesktopSideContainerRecycleContent = defineComponent({
               width: 300,
               content: '确定恢复这个笔记吗？',
               onSubmit: () => {
-                store.recovery(note);
+                store.recovery(note.toRaw());
                 window.$ui.toast('恢复成功');
               }
             });

@@ -1,4 +1,3 @@
-import apiEvent from '@/api';
 import { useNotesStore } from '@/store/notes.store';
 import { NoteStatus } from '@/typings/note';
 import { Editor, useEditor } from '@xynotes/editor';
@@ -54,12 +53,11 @@ const NoteEditor = defineComponent({
      */
     const handleQueryNoteDetail = async () => {
       fetchNoteLoading.value = true;
-      return apiEvent
-        .apiFetchNoteDetailData(props.nid)
+      return store
+        .queryNote(props.nid)
         .then((result) => {
           if (result?.nid === props.nid) {
             setContent(result.text || '');
-            store.updateNote(result);
             return;
           }
         })
@@ -98,12 +96,7 @@ const NoteEditor = defineComponent({
           {context.slots.header?.({ note: activeNote.value })}
         </div>
         <div class="note-editor-content">
-          <Editor
-            value={activeNote.value?.text || ''}
-            id={props.nid}
-            loading={fetchNoteLoading.value}
-            editable={true}
-          />
+          <Editor value={activeNote.value?.text || ''} id={props.nid} loading={fetchNoteLoading.value} />
         </div>
         <div class="note-editor-footer">{context.slots.footer?.({ note: activeNote.value })}</div>
       </div>

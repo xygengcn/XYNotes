@@ -1,7 +1,7 @@
 import database from '@/services/database';
 import { IConfigsColunm } from '@/typings/config';
 import { INote } from '@/typings/note';
-import { object } from '@/utils/object';
+import { omit } from '@xynotes/utils';
 
 /**
  * 本地数据保存
@@ -32,7 +32,7 @@ class ApiEventLocal {
   async apiSaveOrUpdateNote(note: INote, sync: boolean = false): Promise<INote> {
     return database.module('notes').then((model) => {
       // 转换数据格式
-      const noteTableAttr = object.omit(note, ['attachment']);
+      const noteTableAttr = omit(note, ['attachment']);
       if (!sync) {
         noteTableAttr.updatedAt = Date.now();
       }

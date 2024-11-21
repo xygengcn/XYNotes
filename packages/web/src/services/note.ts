@@ -1,10 +1,8 @@
-import apiEvent from '@/api';
 import { useNotesStore } from '@/store/notes.store';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@/typings/note';
 import { debounce } from '@/utils/debounce-throttle';
 import { downloadFile } from '@/utils/file';
 import { uuid } from 'js-lark';
-import noteEventBus from './event-bus';
 
 export class Note implements INote {
   // 笔记类型
@@ -139,8 +137,9 @@ export class Note implements INote {
       // 保存中
       this.status = NoteStatus.saving;
       const noteDetail = this.toRaw();
-      const store =useNotesStore()
-      return store.saveNoteListToDatabse({ ...noteDetail, status: 1 }, !!this.onlineSyncAt)
+      const store = useNotesStore();
+      return store
+        .saveNote({ ...noteDetail, status: 1 }, !!this.onlineSyncAt)
         .then((note) => {
           if (note) {
             console.log('[save] success', note);
@@ -157,8 +156,6 @@ export class Note implements INote {
     return Promise.resolve();
   }
 
-
-
   /**
    * 删除笔记
    */
@@ -168,11 +165,8 @@ export class Note implements INote {
       window.clearTimeout(this.__saveNoteDebouce);
     }
     const note = this.toRaw();
-    return apiEvent.apiDeleteNote(note).then(() => {
-      const store = useNotesStore();
-      store.deleteNote(note.nid);
-      noteEventBus.broadcast('note:update', { note, action: 'delete' });
-    });
+    const store = useNotesStore();
+    return store.deleteNote(note);
   }
 
   /**
@@ -197,7 +191,8 @@ export class Note implements INote {
    */
   public sync() {
     console.log('[note] sync', this.nid);
-    return apiEvent.apiSyncNote(this.toRaw()).then((note) => {
+    const store = useNotesStore();
+    return store.syncNote(this.toRaw()).then((note) => {
       this.update(note);
       window.$ui.toast('同步成功');
     });

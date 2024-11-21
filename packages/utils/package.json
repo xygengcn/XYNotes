@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-ote
+    "build": "rm -rf ./dist && tsc",
+    "postinstall": "npm run build"
   },
   "keywords": [],
   "author": "",

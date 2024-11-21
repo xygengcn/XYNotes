@@ -1,7 +1,9 @@
+import apiEvent from '@/api';
+import { INote } from '@/typings/note';
 import { defineStore } from 'pinia';
 import { useConfigsStore } from './config.store';
+import defaultJson from './default.json';
 import { useNotesStore } from './notes.store';
-import apiEvent from '@/api';
 
 /**
  * 加载状态
@@ -50,8 +52,8 @@ export const useAppStore = defineStore('app', {
             .apiFetchNoteListData({ updateTime: 0, order: configs.noteListSort.value, pageSize: 50 })
             .then((list) => {
               if (list.length === 0) {
-                // 默认值
-                note.saveDefaultData();
+                note.addNote(defaultJson as INote);
+                note.saveNote(defaultJson as INote, false);
               } else {
                 note.setNoteList(list);
               }

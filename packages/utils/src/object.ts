@@ -3,7 +3,7 @@
  * @param obj
  * @param attrs
  */
-function pick<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: Array<K>): Pick<T, K> {
+export function pick<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: Array<K>): Pick<T, K> {
   if (attrs?.length > 0) {
     const newObject = Object.create({});
     for (const attr of attrs) {
@@ -20,7 +20,7 @@ function pick<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: A
  * @param attrs
  * @returns
  */
-function omit<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: Array<K>): Omit<T, K> {
+export function omit<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: Array<K>): Omit<T, K> {
   if (attrs?.length > 0) {
     const newObject = structuredClone(obj);
     for (const attr of attrs) {
@@ -31,10 +31,3 @@ function omit<T extends Record<string, any>, K extends keyof T>(obj: T, attrs: A
   return obj;
 }
 
-/**
- * 对象函数
- */
-export const object = {
-  pick,
-  omit
-};

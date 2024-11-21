@@ -34,6 +34,7 @@
     "@vitejs/plugin-vue-jsx": "3.1.0",
     "@xynotes/components": "workspace:^",
     "@xynotes/editor": "workspace:^",
+    "@xynotes/utils": "workspace:^",
     "@xynotes/tauri-api": "workspace:^",
     "prettier": "^2.6.2",
     "rollup-plugin-visualizer": "^5.8.3",
