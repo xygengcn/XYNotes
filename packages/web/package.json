@@ -35,7 +35,7 @@
     "@xynotes/components": "workspace:^",
     "@xynotes/editor": "workspace:^",
     "@xynotes/utils": "workspace:^",
-    "@xynotes/tauri-api": "workspace:^",
+    "@xynotes/app-api": "workspace:^",
     "prettier": "^2.6.2",
     "rollup-plugin-visualizer": "^5.8.3",
     "sass": "^1.52.1",

@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import './index.scss';
 import { useRoute } from 'vue-router';
 import MinMax from '@/components/common/min-max';
-import is from '@/utils/is';
+import { is } from '@xynotes/utils';
 
 const DetailPage = defineComponent({
   name: 'DetailPage',

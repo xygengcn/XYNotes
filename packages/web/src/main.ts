@@ -1,4 +1,4 @@
-import "@xynotes/components/lib/style.css";
+import '@xynotes/components/dist/style.css';
 import 'overlayscrollbars/overlayscrollbars.css';
 import { createPinia } from 'pinia';
 import 'tippy.js/dist/tippy.css';
@@ -9,14 +9,13 @@ import './components/index';
 import VueContextMenu from './directive/contextmenu';
 import './registerServiceWorker';
 import router from './router';
-import './services/app-window';
 import './services/shortcut';
-import is from './utils/is';
-
+import { is } from '@xynotes/utils';
+import { openDevtools } from '@xynotes/app-api';
 
 // 开发环境
-if (is.development()) {
-  window.$appWindow.openDevtools(true);
+if (is.development() && is.app()) {
+  openDevtools(true);
 }
 
 // 注册pinia

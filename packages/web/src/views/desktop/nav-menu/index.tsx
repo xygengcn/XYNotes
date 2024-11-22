@@ -4,7 +4,7 @@ import { useNotesStore } from '@/store/notes.store';
 import { defineComponent } from 'vue';
 import './index.scss';
 import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
-import is from '@/utils/is';
+import { is } from '@xynotes/utils';
 import { Loading } from '@xynotes/components';
 import { AppLoadStatus, useAppStore } from '@/store/app.store';
 

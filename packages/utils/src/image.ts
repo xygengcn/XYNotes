@@ -1,6 +1,7 @@
-import html2canvas from 'html2canvas';
+import { showDirDialog, writeFile } from '@xynotes/app-api';
 import { copyBlob } from './clipboard';
 import { download } from './file';
+import html2canvas from 'html2canvas';
 import is from './is';
 
 /**
@@ -19,7 +20,7 @@ export async function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Prom
       const image = canvas.toDataURL('image/png'); // 导出图片
       // 兼容客户端
       if (is.app()) {
-        const path = await window.$appWindow.showDirDialog({
+        const path = await showDirDialog({
           title: filename,
           /**
            * TODO 因为中文名字会导致下载失败
@@ -30,7 +31,7 @@ export async function screenshot(dom: HTMLDivElement, filename = 'XYNote'): Prom
         });
         if (path) {
           const byte = await fetch(image).then((res) => res.arrayBuffer());
-          return window.$appWindow.writeFile(path, new Uint8Array(byte));
+          return writeFile(path, new Uint8Array(byte));
         }
         throw new Error('未选择路径');
       }

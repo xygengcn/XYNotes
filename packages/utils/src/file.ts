@@ -1,4 +1,5 @@
-import is from '@/utils/is';
+import { showDirDialog, writeTextFile } from '@xynotes/app-api';
+import is from './is';
 
 /**
  * 文件下载
@@ -22,11 +23,11 @@ export async function downloadFile(content: string, filename: string): Promise<v
   console.log('[downloadFile]', filename);
   // 兼容客户端
   if (is.app()) {
-    const path = await window.$appWindow.showDirDialog({
+    const path = await showDirDialog({
       title: filename,
       defaultPath: filename
     });
-    if (path) return window.$appWindow.writeTextFile(path, content);
+    if (path) return writeTextFile(path, content);
   } else {
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     return download(URL.createObjectURL(blob), filename);

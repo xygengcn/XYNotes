@@ -1,7 +1,7 @@
 import Button from '@/components/common/button';
 import database from '@/services/database';
 import { useAppStore } from '@/store/app.store';
-import { downloadFile, jsonFileReader } from '@/utils/file';
+import { downloadFile, jsonFileReader } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import './index.scss';

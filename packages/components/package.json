@@ -2,9 +2,9 @@
   "name": "@xynotes/components",
   "version": "1.0.0",
   "description": "",
-  "main": "./lib/index.cjs.js",
-  "module": "./lib/index.es.js",
-  "types": "./lib/index.d.ts",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "vite build --config vite.build.config.ts"

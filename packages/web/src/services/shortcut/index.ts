@@ -3,7 +3,7 @@
  */
 
 import { useNotesStore } from '@/store/notes.store';
-import is from '@/utils/is';
+import { is } from '@xynotes/utils';
 
 document.addEventListener('keydown', (e) => {
   // 新建笔记

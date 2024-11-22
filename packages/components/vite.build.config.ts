@@ -19,7 +19,7 @@ export default defineConfig(
         }
       },
       build: {
-        outDir: './lib',
+        outDir: './dist',
         emptyOutDir: true,
         target: 'esnext',
         lib: {

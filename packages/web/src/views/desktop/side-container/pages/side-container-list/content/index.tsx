@@ -7,7 +7,8 @@ import { IContextMenuProps } from '@/typings/contextmenu';
 import { NoteListSortType } from '@/typings/enum/note';
 import { computed, defineComponent } from 'vue';
 import './index.scss';
-import is from '@/utils/is';
+import { is } from '@xynotes/utils';
+import { exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
 
 const DesktopSideContainerListContent = defineComponent({
   name: 'DesktopSideContainerListContent',
@@ -70,9 +71,9 @@ const DesktopSideContainerListContent = defineComponent({
      */
     const handleSelectItem = (note: Note) => {
       if (is.app()) {
-        const has = window.$appWindow.hasAppWindow(note.nid);
+        const has = exsitAppWindow(note.nid);
         if (has) {
-          window.$appWindow.setWindowFocus(note.nid);
+          setWindowFocus(note.nid);
           store.setActiveNoteId(undefined);
           return;
         }

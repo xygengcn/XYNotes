@@ -22,27 +22,6 @@ export function highLight(keyword: string, text: string): string {
 }
 
 /**
- * 寻找节点
- * @param element
- * @returns
- */
-export function findParentWithNodrag(element: HTMLElement): string | boolean | null {
-  // 从当前元素开始向上遍历父级元素
-  let currentElement = element;
-  while (currentElement) {
-    // 检查当前元素是否有 data-nodrag 属性
-    if (currentElement.dataset.nodrag) {
-      // 如果有，返回当前元素
-      return currentElement.dataset.nodrag;
-    }
-    // 否则，继续向上查找
-    currentElement = currentElement.parentElement;
-  }
-  // 如果没有找到带有 data-nodrag 属性的父级元素，则返回 null
-  return null;
-}
-
-/**
  * 是不是字符串
  * @param str
  * @returns
@@ -74,20 +53,4 @@ export function blob2String(blob: Blob): Promise<string> {
 export function trim(str: string) {
   if (!isString(str)) return '';
   return str?.trim().replace(/\t/g, ' ') || '';
-}
-
-/**
- * 获取cookie
- * @param name
- * @returns
- */
-export function getCookie(name: string) {
-  const cookies = document.cookie.split('; ');
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].split('=');
-    if (cookie[0] === name) {
-      return decodeURIComponent(cookie[1]);
-    }
-  }
-  return '';
 }

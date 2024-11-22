@@ -1,7 +1,7 @@
 import { useNotesStore } from '@/store/notes.store';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@/typings/note';
 import { debounce } from '@/utils/debounce-throttle';
-import { downloadFile } from '@/utils/file';
+import { downloadFile } from '@xynotes/utils';
 import { uuid } from 'js-lark';
 
 export class Note implements INote {

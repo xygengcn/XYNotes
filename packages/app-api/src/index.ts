@@ -22,7 +22,7 @@ import {
  * @param options
  * @returns
  */
-function createWindow(options: { nid: string }) {
+export function createWindow(options: { nid: string }) {
   console.log('[createWindow]', options);
   const windowId = `nid-${options.nid}`;
   const windowLocationUrl = `/detail?nid=${options.nid}`;
@@ -37,7 +37,7 @@ function createWindow(options: { nid: string }) {
  * @param flag
  * @returns
  */
-function openDevtools(flag: boolean) {
+export function openDevtools(flag: boolean) {
   // tauri
   if (isTauriApp()) {
     return tauriOpenDevtools(flag);
@@ -48,7 +48,7 @@ function openDevtools(flag: boolean) {
  * 当前窗口聚焦
  * @returns
  */
-function setCurrentWindowFocus() {
+export function setCurrentWindowFocus() {
   // tauri
   if (isTauriApp()) {
     return tauriSetCurrentWindowFocus();
@@ -60,7 +60,7 @@ function setCurrentWindowFocus() {
  * @param nid
  * @returns
  */
-function setWindowFocus(nid: string) {
+export function setWindowFocus(nid: string) {
   // tauri
   if (isTauriApp()) {
     const label = `nid-${nid}`;
@@ -73,7 +73,7 @@ function setWindowFocus(nid: string) {
  * @param nid
  * @returns
  */
-function exsitAppWindow(nid: string): boolean {
+export function exsitAppWindow(nid: string): boolean {
   // tauri
   if (isTauriApp()) {
     const label = `nid-${nid}`;
@@ -87,7 +87,7 @@ function exsitAppWindow(nid: string): boolean {
  * 是不是最大化
  * @returns
  */
-function isMaximized(): Promise<boolean> {
+export function isMaximized(): Promise<boolean> | void {
   // tauri
   if (isTauriApp()) {
     return tauriIsMaximized();
@@ -98,7 +98,7 @@ function isMaximized(): Promise<boolean> {
  * 取消最大化
  * @returns
  */
-function unmaximize() {
+export function unmaximize() {
   // tauri
   if (isTauriApp()) {
     return tauriUnmaximize();
@@ -109,7 +109,7 @@ function unmaximize() {
  * 最大化
  * @returns
  */
-function maximize() {
+export function maximize() {
   // tauri
   if (isTauriApp()) {
     return tauriMaximize();
@@ -120,7 +120,7 @@ function maximize() {
  * 关闭窗口
  * @returns
  */
-function closeWindow() {
+export function closeWindow() {
   // tauri
   if (isTauriApp()) {
     return tauriCloseCurrentWindow();
@@ -131,7 +131,7 @@ function closeWindow() {
  * 最小化
  * @returns
  */
-function minimize() {
+export function minimize() {
   // tauri
   if (isTauriApp()) {
     return tauriMinimize();
@@ -144,7 +144,7 @@ function minimize() {
  * @param text
  * @returns
  */
-function writeTextFile(path: string, text: string) {
+export function writeTextFile(path: string, text: string) {
   // tauri
   if (isTauriApp()) {
     return tauriWriteTextFile(path, text);
@@ -157,7 +157,7 @@ function writeTextFile(path: string, text: string) {
  * @param data
  * @returns
  */
-function writeFile(path: string | URL, data: Uint8Array) {
+export function writeFile(path: string | URL, data: Uint8Array) {
   // tauri
   if (isTauriApp()) {
     /**
@@ -179,7 +179,7 @@ function writeFile(path: string | URL, data: Uint8Array) {
 /**
  * 选择弹窗
  */
-function showDirDialog(options: { title: string; defaultPath?: string }): Promise<string> {
+export function showDirDialog(options: { title: string; defaultPath?: string }): Promise<string | null> | void {
   // tauri
   if (isTauriApp()) {
     return tauriShowDirDialog(options);
@@ -191,7 +191,7 @@ function showDirDialog(options: { title: string; defaultPath?: string }): Promis
  * @param blob
  * @returns
  */
-function clipboardWriteImage(blob: Blob) {
+export function clipboardWriteImage(blob: Blob) {
   // tauri
   if (isTauriApp()) {
     return tauriClipboardWriteImage(blob);
@@ -202,38 +202,9 @@ function clipboardWriteImage(blob: Blob) {
  * 粘贴板读取
  * @returns
  */
-function clipboardReadText(): Promise<string> {
+export function clipboardReadText(): Promise<string> | void {
   // tauri
   if (isTauriApp()) {
     return tauriClipboardReadText();
   }
 }
-
-/**
- * 聚合
- */
-const appWindow = {
-  createWindow,
-  openDevtools,
-  setCurrentWindowFocus,
-  setWindowFocus,
-  hasAppWindow: exsitAppWindow,
-  isMaximized,
-  unmaximize,
-  maximize,
-  closeWindow,
-  minimize,
-  writeTextFile,
-  showDirDialog,
-  writeFile,
-  clipboardWriteImage,
-  clipboardReadText
-};
-
-// 注入
-window.$appWindow = appWindow;
-
-/**
- * 类型
- */
-export type IAppWindow = typeof appWindow;

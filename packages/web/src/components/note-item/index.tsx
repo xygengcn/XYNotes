@@ -1,10 +1,10 @@
 import { Note } from '@/services/note';
 import { useNotesStore } from '@/store/notes.store';
-import { highLight } from '@/utils';
+import { highLight } from '@xynotes/utils';
 import { DateFormat } from 'js-lark';
 import { PropType, computed, defineComponent, h, nextTick, ref, watch } from 'vue';
-import './index.scss';
 import Icon from '../common/icon';
+import './index.scss';
 
 const NoteItem = defineComponent({
   name: 'NoteItem',

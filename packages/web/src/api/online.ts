@@ -1,7 +1,7 @@
 import { IConfigsColunm } from '@/typings/config';
 import { INote } from '@/typings/note';
-import { getCookie } from '@/utils';
-import is from '@/utils/is';
+
+import { is,getCookie } from '@xynotes/utils';
 import { omit } from '@xynotes/utils';
 
 /**

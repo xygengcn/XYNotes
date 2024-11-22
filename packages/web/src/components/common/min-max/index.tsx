@@ -1,6 +1,7 @@
-import is from '@/utils/is';
+import { is } from '@xynotes/utils';
 import { PropType, defineComponent } from 'vue';
 import './index.scss';
+import { closeWindow, isMaximized, maximize, minimize, unmaximize } from '@xynotes/app-api';
 
 const MinMax = defineComponent({
   name: 'MinMax',
@@ -25,10 +26,10 @@ const MinMax = defineComponent({
       context.emit('fullscreen');
       if (props.type == 'window') {
         if (is.app()) {
-          if (await window.$appWindow.isMaximized()) {
-            window.$appWindow.unmaximize();
+          if (await isMaximized()) {
+            unmaximize();
           } else {
-            window.$appWindow.maximize();
+            maximize();
           }
         }
       }
@@ -42,7 +43,7 @@ const MinMax = defineComponent({
       if (props.disabled.includes('close')) return false;
       context.emit('close');
       if (is.app() && props.type == 'window') {
-        window.$appWindow.closeWindow();
+        closeWindow();
       }
     };
 
@@ -54,7 +55,7 @@ const MinMax = defineComponent({
       if (props.disabled.includes('min')) return false;
       context.emit('min');
       if (is.app() && props.type == 'window') {
-        window.$appWindow.minimize();
+        minimize();
       }
     };
 

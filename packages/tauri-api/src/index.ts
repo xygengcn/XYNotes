@@ -1,9 +1,10 @@
 import { invoke } from '@tauri-apps/api/core';
+import { Image } from '@tauri-apps/api/image';
 import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
+import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 import { save } from '@tauri-apps/plugin-dialog';
 import { writeFile, writeTextFile } from '@tauri-apps/plugin-fs';
-import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
-import { Image } from '@tauri-apps/api/image';
+
 
 /**
  * 判断是不是tauri客户端
@@ -49,7 +50,7 @@ export function tauriCreateWindow(options: { id: string; url: string }) {
   webview.once('tauri://error', function (e) {
     console.error('[createWindow] error', e);
   });
-  return webview;
+  return;
 }
 
 /**

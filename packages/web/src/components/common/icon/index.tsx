@@ -1,4 +1,4 @@
-import { isString } from '@/utils';
+import { isString } from '@xynotes/utils';
 import { computed, defineComponent } from 'vue';
 import './index.scss';
 
