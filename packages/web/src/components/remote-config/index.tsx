@@ -26,8 +26,10 @@ const RemoteConfigPage = defineComponent({
               <Switch
                 value={config.configJson.REMOTE_ONLINE_SYNC}
                 onChange={(value) => {
-                  config.configJson.REMOTE_ONLINE_SYNC = value;
-                  onChange();
+                  if (value && config.configJson.REMOTE_AUTHORIZATION && config.configJson.REMOTE_BASE_URL) {
+                    config.configJson.REMOTE_ONLINE_SYNC = value;
+                    onChange();
+                  }
                 }}
               ></Switch>
             </div>

@@ -58,7 +58,7 @@ export const useConfigsStore = defineStore('configs', {
     saveGlobalConfig() {
       window.$config = { ...this.configJson };
       console.info('[config] 全局配置保存', this.configJson);
-      return apiEvent.apiSaveOrUpdateConfigs([{ key: 'configJson', value: this.configJson }]).then(() => {
+      return apiEvent.apiSaveOrUpdateConfigs([{ key: 'configJson', value: toRaw(this.configJson) }]).then(() => {
         window.$ui.toast('保存成功');
       });
     },

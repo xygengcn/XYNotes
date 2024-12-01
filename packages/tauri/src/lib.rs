@@ -31,7 +31,7 @@ pub fn run() {
         })
         // 窗口事件
         .on_window_event(|window, event| match event {
-            WindowEvent::CloseRequested {} => {
+            WindowEvent::CloseRequested { .. } => {
                 println!("[WindowEvent] CloseRequested {}", window.label());
             }
             _ => {}

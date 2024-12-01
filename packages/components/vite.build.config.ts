@@ -25,12 +25,15 @@ export default defineConfig(
         lib: {
           name: 'components',
           fileName: (format) => `[name].${format}.js`,
-          entry: path.join(__dirname, 'src/index.ts'),
+          entry: {
+            index: path.join(__dirname, 'src/index.ts'),
+            'code-block': path.join(__dirname, 'src/components/code-block/index.tsx')
+          },
           formats: ['cjs', 'es']
         },
         rollupOptions: {
           external: ['vue', 'vue-router']
         }
       }
-    }) as UserConfig
+    } as UserConfig)
 );

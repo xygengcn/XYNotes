@@ -1,5 +1,5 @@
 import Drawer from '@/components/common/drawer';
-import Icon from '@/components/common/icon';
+import Icon from '@xynotes/components/src/icon';
 import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
 import { Note } from '@/services/note';
@@ -104,7 +104,7 @@ const MobileHome = defineComponent({
      * 数据同步
      */
     const handleSyncList = () => {
-      appStore.sync()
+      appStore.sync();
       visibleMoreDrawer.value = false;
     };
 

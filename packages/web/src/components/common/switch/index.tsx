@@ -9,7 +9,8 @@ const Switch = defineComponent({
   props: {
     value: {
       type: Boolean,
-      required: true
+      required: true,
+      default: false
     }
   },
   emits: ['change'],

@@ -1,5 +1,4 @@
-import Loading from './loading';
+import Icon from '@/components/icon';
+import Loading from '@/components/loading';
 
-export {
-  Loading
-}
+export { Loading, Icon };

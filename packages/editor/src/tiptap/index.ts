@@ -1,5 +1,5 @@
 import { Editor } from '@tiptap/core';
-import { useScroller } from '@xynotes/utils/dist/scroller';
+import { useScroller } from '@xynotes/utils';
 import Eventemitter from 'eventemitter3';
 import { getCurrentInstance, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
 import './index.scss';

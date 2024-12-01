@@ -1,11 +1,11 @@
 import { isString } from '@xynotes/utils';
-import { computed, defineComponent } from 'vue';
+import { computed, defineCustomElement } from 'vue';
 import './index.scss';
 
 /**
  * 图标组件
  */
-const Icon = defineComponent({
+const Icon = defineCustomElement({
   name: 'Icon',
   props: {
     type: {
@@ -40,4 +40,7 @@ const Icon = defineComponent({
     );
   }
 });
+
+customElements.define('custom-icon', Icon);
+
 export default Icon;

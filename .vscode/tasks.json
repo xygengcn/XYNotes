@@ -6,7 +6,7 @@
             "type": "shell",
             "command": "yarn dev",
             "options": {
-                "cwd": "${workspaceFolder}/packages/app/"
+                "cwd": "${workspaceFolder}/packages/tauri/"
             },
             "problemMatcher": []
         },
@@ -24,7 +24,7 @@
             "type": "shell",
             "command": "pnpm build",
             "options": {
-                "cwd": "${workspaceFolder}/packages/app/"
+                "cwd": "${workspaceFolder}/packages/tauri/"
             },
             "problemMatcher": []
         },

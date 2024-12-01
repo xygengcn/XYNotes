@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import Icon from '../common/icon';
+import Icon from '@xynotes/components/src/icon';
 import './index.scss';
 
 const IconNavMenu = defineComponent({

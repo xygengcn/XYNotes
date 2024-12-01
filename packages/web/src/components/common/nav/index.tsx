@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import './index.scss';
-import Icon from '../icon';
+import Icon from '@xynotes/components/src/icon';
 
 /**
  * 移动端导航栏

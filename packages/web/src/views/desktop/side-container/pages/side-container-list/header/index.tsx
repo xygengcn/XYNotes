@@ -1,4 +1,4 @@
-import Icon from '@/components/common/icon';
+import Icon from '@xynotes/components/src/icon';
 import Popover from '@/components/common/popover';
 import { useConfigsStore } from '@/store/config.store';
 import { useNotesStore } from '@/store/notes.store';

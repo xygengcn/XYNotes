@@ -3,7 +3,7 @@ import { Note } from '@/services/note';
 import { screenshot, screenshotCopy } from '@xynotes/utils';
 import { PropType, createApp, defineComponent, ref } from 'vue';
 import Dialog from '../common/dialog';
-import Icon from '../common/icon';
+import Icon from '@xynotes/components/src/icon';
 import { Loading } from '@xynotes/components';
 import Popover from '../common/popover';
 import './index.scss';
