@@ -26,8 +26,7 @@ export default defineConfig(
           name: 'components',
           fileName: (format) => `[name].${format}.js`,
           entry: {
-            index: path.join(__dirname, 'src/index.ts'),
-            'code-block': path.join(__dirname, 'src/components/code-block/index.tsx')
+            index: path.join(__dirname, 'src/index.ts')
           },
           formats: ['cjs', 'es']
         },
