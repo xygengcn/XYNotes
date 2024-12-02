@@ -1,8 +1,7 @@
 import { mergeAttributes } from '@tiptap/core';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { createLowlight, all } from 'lowlight';
-import { stopPropagation } from '@xynotes/utils';
-import { createCodeBlock } from './create-code-bolck';
+import { all, createLowlight } from 'lowlight';
+import { createCodeBlock } from './create-code-block';
 /**
  * 代码高亮模块
  */
@@ -40,13 +39,12 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           inputEl.value = node.attrs.language;
         }
       };
-      const { codeBlock, codeContent, input } = createCodeBlock(
+      const { codeBlock, codeContent, container, code } = createCodeBlock(
         node.attrs.language,
         node.textContent,
         editor.isEditable,
         onChange
       );
-      input.value = node.attrs.language || 'plaintext';
       for (const [key, value] of Object.entries(mergeAttributes(this.options.HTMLAttributes))) {
         if (value !== undefined && value !== null) {
           codeBlock.setAttribute(key, value);
@@ -57,6 +55,8 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
         dom: codeBlock,
         contentDOM: codeContent,
         update: (updatedNode) => {
+          // 代码更新
+          code.value = updatedNode.textContent;
           if (updatedNode.type !== this.type) {
             return false;
           }
@@ -67,12 +67,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           return true;
         },
         destroy() {
-          input.oninput = null;
-          input.onkeydown = null;
-          input.onkeyup = null;
-          input.onmousedown = null;
-          input.onmouseup = null;
-          input.onchange = null;
+          container.unmount();
         }
       };
     };

@@ -17,6 +17,7 @@
     display: flex;
     background-color: rgba(255, 255, 255, 0.06);
     height: 40px;
+    cursor: default;
 
     // 图标
     &-icon {
@@ -42,11 +43,13 @@
         background-color: #28c840;
       }
     }
+    // 语言
     &-lang {
       display: flex;
-      padding-left: 20px;
+      padding-left: 1.2rem;
       height: 30px;
       margin-top: 10px;
+      max-width: 50%;
 
       &-content {
         display: inline-block;
@@ -81,6 +84,7 @@
         }
 
         &-input {
+          width: 100%;
           font-family: inherit;
           font-size: 100%;
           color: #fff;
@@ -94,6 +98,25 @@
           background-color: transparent;
         }
       }
+    }
+    // 操作
+    &-opts{
+      flex:1;
+      display: flex;
+      justify-content: flex-end;
+      color: #adadad;
+      padding-right: 20px;
+      column-gap: 10px;
+      align-items: center;
+      span{
+        padding:4px;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover{
+          background-color: rgba($color: #fff, $alpha: 0.1);
+        }
+      }
+  
     }
   }
 
