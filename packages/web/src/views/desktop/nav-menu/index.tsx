@@ -1,12 +1,12 @@
 import logo from '@/assets/images/logo/logo.png';
 import MinMax from '@/components/common/min-max';
+import { AppLoadStatus, useAppStore } from '@/store/app.store';
 import { useNotesStore } from '@/store/notes.store';
+import { Loading } from '@xynotes/components';
+import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
 import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
-import { is } from '@xynotes/utils';
-import { Loading } from '@xynotes/components';
-import { AppLoadStatus, useAppStore } from '@/store/app.store';
 
 export const DESKTOP_NAV_MENU_WIDTH = 64;
 
@@ -69,7 +69,7 @@ const DesktopNavMenu = defineComponent({
         </div>
         <div class="desktop-nav-menu-bottom">
           <div class="desktop-nav-menu-bottom-loading" v-show={appStore.loadStatus !== AppLoadStatus.finish}>
-            <Loading color="var(--font-default-color)"></Loading>
+            <Loading />
           </div>
           <div class="desktop-nav-menu-bottom-version">
             <a

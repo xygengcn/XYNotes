@@ -1,5 +1,5 @@
 import Drawer from '@/components/common/drawer';
-import Icon from '@xynotes/components/src/icon';
+import { Icon } from '@xynotes/components';
 import { Loading } from '@xynotes/components';
 import NoteEditor from '@/components/note-editor';
 import NoteEditorCounter from '@/components/note-editor/counter';
@@ -107,7 +107,7 @@ const MobileDetail = defineComponent({
           ]
         ) : (
           <div class="mobile-detail-content">
-            <Loading></Loading>
+            <Loading type="circle"></Loading>
           </div>
         )}
         {/* 抽屉 */}

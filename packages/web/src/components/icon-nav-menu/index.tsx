@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue';
-import Icon from '@xynotes/components/src/icon';
+import { Icon } from '@xynotes/components';
 import './index.scss';
 
 const IconNavMenu = defineComponent({
@@ -41,7 +41,7 @@ const IconNavMenu = defineComponent({
         style={{ width: `${props.width}px`, height: `${props.height}px` }}
         onClick={handleClick}
       >
-        <Icon type={props.type} size={props.size} />
+        <Icon type={props.type} size={props.size} ></Icon>
       </span>
     );
   }

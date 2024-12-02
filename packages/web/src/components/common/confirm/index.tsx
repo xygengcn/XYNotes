@@ -1,7 +1,7 @@
 import { PropType, computed, createApp, defineComponent, ref } from 'vue';
 import Button, { ButtonSize, ButtonType } from '../button';
 import Dialog from '../dialog';
-import Icon from '@xynotes/components/src/icon';
+import { Icon } from '@xynotes/components';
 import './index.scss';
 
 interface IConfirmProps {

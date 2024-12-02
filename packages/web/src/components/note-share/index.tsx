@@ -3,7 +3,7 @@ import { Note } from '@/services/note';
 import { screenshot, screenshotCopy } from '@xynotes/utils';
 import { PropType, createApp, defineComponent, ref } from 'vue';
 import Dialog from '../common/dialog';
-import Icon from '@xynotes/components/src/icon';
+import { Icon } from '@xynotes/components';
 import { Loading } from '@xynotes/components';
 import Popover from '../common/popover';
 import './index.scss';
@@ -132,7 +132,7 @@ const Screenshot = defineComponent({
           </div>
           {loading.value && (
             <div class="note-share-content-loading">
-              <Loading text="加载中" />
+              <Loading text="加载中" type="circle" />
             </div>
           )}
         </div>

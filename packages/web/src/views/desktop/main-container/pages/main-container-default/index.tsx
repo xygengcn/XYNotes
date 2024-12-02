@@ -1,4 +1,4 @@
-import Icon from '@xynotes/components/src/icon';
+import { Icon } from '@xynotes/components';
 import NoteEditor from '@/components/note-editor';
 import { useNotesStore } from '@/store/notes.store';
 import { computed, defineComponent } from 'vue';

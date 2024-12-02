@@ -1,4 +1,4 @@
-import '@xynotes/components/dist/style.css';
+import '@xynotes/components/style.css';
 import 'overlayscrollbars/overlayscrollbars.css';
 import { createPinia } from 'pinia';
 import 'tippy.js/dist/tippy.css';

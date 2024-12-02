@@ -41,7 +41,7 @@ const Editor = defineComponent({
         <div class="editor-content" ref="editor" />
         {(props.loading || loading.value) && (
           <div class="editor-loading">
-            <Loading text="加载中" />
+            <Loading text="加载中" type="circle"/>
           </div>
         )}
       </div>

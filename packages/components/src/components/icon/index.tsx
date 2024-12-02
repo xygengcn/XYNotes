@@ -1,11 +1,11 @@
 import { isString } from '@xynotes/utils';
-import { computed, defineCustomElement } from 'vue';
+import { computed, defineComponent } from 'vue';
 import './index.scss';
 
 /**
  * 图标组件
  */
-const Icon = defineCustomElement({
+const Icon = defineComponent({
   name: 'Icon',
   props: {
     type: {
@@ -31,7 +31,7 @@ const Icon = defineCustomElement({
     });
     return () => (
       <i
-        class={['iconfont', `note-${props.type}`]}
+        class={['icon', 'iconfont', `note-${props.type}`]}
         style={style.value}
         onClick={(e) => {
           emit('click', e);
@@ -40,7 +40,5 @@ const Icon = defineCustomElement({
     );
   }
 });
-
-customElements.define('custom-icon', Icon);
 
 export default Icon;

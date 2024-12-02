@@ -1,5 +1,5 @@
 import Drawer from '@/components/common/drawer';
-import Icon from '@xynotes/components/src/icon';
+import { Icon } from '@xynotes/components';
 import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
 import { Note } from '@/services/note';

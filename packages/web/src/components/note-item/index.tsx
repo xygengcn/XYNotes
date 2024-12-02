@@ -3,7 +3,7 @@ import { useNotesStore } from '@/store/notes.store';
 import { highLight } from '@xynotes/utils';
 import { DateFormat } from 'js-lark';
 import { PropType, computed, defineComponent, h, nextTick, ref, watch } from 'vue';
-import Icon from '@xynotes/components/src/icon';
+import { Icon } from '@xynotes/components';
 import './index.scss';
 
 const NoteItem = defineComponent({

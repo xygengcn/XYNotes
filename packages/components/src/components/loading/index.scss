@@ -42,7 +42,13 @@
     font-size: 12px;
     height: 20px;
     margin-top: 10px;
+ 
+  }
+
+  .icon {
     color: #515151;
+    background-color: transparent;
+    animation: rotate 1.5s linear infinite;
   }
 }
 
@@ -69,5 +75,15 @@
   95%,
   100% {
     transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
