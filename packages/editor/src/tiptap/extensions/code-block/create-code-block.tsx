@@ -1,66 +1,16 @@
-import { Icon } from '@xynotes/components';
-import { copyText } from '@xynotes/utils';
-import { createApp, defineComponent, ref, PropType, Ref, inject, reactive } from 'vue';
+import { Node } from '@tiptap/pm/model';
+import { createApp, ref } from 'vue';
+import CodeBlockContainer from './container';
+import "./index.scss";
+import { isMindMapLanguage } from './mindmap';
 
-const CodeBlockContainer = defineComponent({
-  props: {
-    lang: {
-      type: String,
-      default: 'plaintext'
-    },
-    isEditable: {
-      type: Boolean,
-      default: true
-    }
-  },
-  emits: ['change'],
-  setup(props, { emit }) {
-    const code = inject<Ref<string>>('code');
-    const handleInputChange = (e) => {
-      emit('change', e);
-    };
-    /**
-     * 复制
-     */
-    const handleCopy = () => {
-      code?.value && copyText(code.value);
-    };
-    return {
-      handleInputChange,
-      handleCopy
-    };
-  },
-  render() {
-    return (
-      <>
-        <div class="markdown-editor-codeblock-header">
-          <div class="markdown-editor-codeblock-header-icon">
-            <i></i>
-            <i></i>
-            <i></i>
-          </div>
-          <div class="markdown-editor-codeblock-header-lang">
-            <div class="markdown-editor-codeblock-header-lang-content">
-              <input
-                class="markdown-editor-codeblock-header-lang-content-input"
-                type="text"
-                spellcheck={false}
-                value={this.lang}
-                onChange={this.handleInputChange}
-                disabled={!this.isEditable}
-              />
-            </div>
-          </div>
-          <div class="markdown-editor-codeblock-header-opts">
-            <span>
-              <Icon type="item-copy" onClick={this.handleCopy}></Icon>
-            </span>
-          </div>
-        </div>
-      </>
-    );
-  }
-});
+/**
+ * 是不是可以预览的语言
+ * @param lang
+ */
+const isPreviewLanguage = (lang: string) => {
+  return isMindMapLanguage(lang);
+};
 
 export function createCodeBlock(
   defaultLanguage: string,
@@ -87,18 +37,36 @@ export function createCodeBlock(
   container.mount(codeBlock);
 
   // 创建代码内容容器
-  const codeContent = document.createElement('code');
+  const codeContent = document.createElement('div');
   codeContent.className = 'markdown-editor-codeblock-content';
-  codeContent.textContent = code.value;
-  codeContent.setAttribute('spellcheck', 'false');
+
+  // 编辑器部分
+  const codeEditor = document.createElement('code');
+  codeEditor.className = 'markdown-editor-codeblock-content-code';
+  codeEditor.textContent = code.value;
+  codeEditor.setAttribute('spellcheck', 'false');
+  codeContent.appendChild(codeEditor);
+
+  // 预览部分
+  const codePreview = document.createElement('div');
+  codePreview.className = 'markdown-editor-codeblock-content-preview';
+  if (isPreviewLanguage(defaultLanguage)) {
+    codeContent.appendChild(codePreview);
+  }
 
   // 将头部容器和代码内容容器添加到根元素
   codeBlock.appendChild(codeContent);
 
+  //内容更新
+  const onUpdated = (node: Node) => {
+    console.log("[editor] code-block",node)
+  };
   return {
     codeBlock,
-    codeContent,
+    codeEditor,
+    codePreview,
     container,
-    code
+    code,
+    onUpdated
   };
 }

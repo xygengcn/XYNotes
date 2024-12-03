@@ -39,7 +39,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           inputEl.value = node.attrs.language;
         }
       };
-      const { codeBlock, codeContent, container, code } = createCodeBlock(
+      const { codeBlock, codeEditor, container, code,onUpdated } = createCodeBlock(
         node.attrs.language,
         node.textContent,
         editor.isEditable,
@@ -53,7 +53,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
       let originLanguage = node.attrs.language;
       return {
         dom: codeBlock,
-        contentDOM: codeContent,
+        contentDOM: codeEditor,
         update: (updatedNode) => {
           // 代码更新
           code.value = updatedNode.textContent;
@@ -64,6 +64,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
             originLanguage = updatedNode.attrs.language;
             codeBlock.setAttribute('data-language', originLanguage);
           }
+          onUpdated(updatedNode)
           return true;
         },
         destroy() {
