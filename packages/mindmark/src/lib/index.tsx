@@ -1,4 +1,15 @@
-import { defineComponent, getCurrentInstance, onMounted, onUpdated, ref, shallowRef } from 'vue';
+import {
+  defineComponent,
+  defineCustomElement,
+  getCurrentInstance,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  onUpdated,
+  ref,
+  render,
+  shallowRef
+} from 'vue';
 import { transformer } from './transformer';
 import { Markmap } from 'markmap-view';
 import './index.scss';
@@ -10,7 +21,9 @@ const useMindMark = (markdown: string, svg: SVGElement | null = null) => {
   const updated = (text: string) => {
     const { root } = transformer.transform(text);
     markmap.value?.setData(root);
-    markmap.value?.fit();
+    nextTick(() => {
+      markmap.value?.fit();
+    });
   };
 
   const vueInstance = getCurrentInstance();
@@ -42,7 +55,8 @@ const MindMark = defineComponent({
     }
   },
   setup(props) {
-    const { svgRef, updated } = useMindMark(props.markdown);
+    const { svgRef, updated, markmap } = useMindMark(props.markdown);
+
     // 更新
     onUpdated(() => {
       updated(props.markdown);
@@ -55,4 +69,71 @@ const MindMark = defineComponent({
   }
 });
 
-export { MindMark, useMindMark };
+const MindMarkElement = defineCustomElement({
+  name: 'MindMarkElement',
+  shadowRoot: false,
+  props: {
+    markdown: {
+      type: String,
+      default: '',
+      required: true
+    }
+  },
+  styles: [
+    `:host {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .mind-mark {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      --markmap-text-color: #fff !important;
+    }`
+  ],
+  setup(props) {
+    const { svgRef, updated, markmap } = useMindMark(props.markdown);
+    const root = ref();
+    // 更新
+    onUpdated(() => {
+      updated(props.markdown);
+    });
+
+    onMounted(() => {
+      const parentNode = root.value?.parentNode;
+      parentNode.fit = () => {
+        markmap.value?.fit();
+      };
+      const resizeObserver = new ResizeObserver(() => {
+        markmap.value?.fit();
+      });
+      resizeObserver.observe(root.value);
+      onBeforeUnmount(() => {
+        resizeObserver.unobserve(root.value);
+        markmap.value?.destroy();
+      });
+    });
+    return {
+      svgRef,
+      root
+    };
+  },
+  render() {
+    return (
+      <div class="mind-mark" width="100%" height="100%" style="display:flex" ref="root">
+        <svg ref="svgRef"></svg>
+      </div>
+    );
+  }
+});
+
+export { MindMark, useMindMark, MindMarkElement };

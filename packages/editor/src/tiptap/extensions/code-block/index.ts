@@ -24,8 +24,6 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
     return ({ node, editor, getPos }) => {
       const onChange = (e: Event) => {
         const inputEl = e.target as HTMLInputElement;
-        // 不发生变化则不更新
-        if (inputEl.value === node.attrs.language) return;
         // 可编辑
         if (editor.isEditable && typeof getPos === 'function') {
           editor.view.dispatch(
@@ -39,7 +37,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           inputEl.value = node.attrs.language;
         }
       };
-      const { codeBlock, codeEditor, container, code,onUpdated } = createCodeBlock(
+      const { codeBlock, codeEditor, container, code, onUpdated } = createCodeBlock(
         node.attrs.language,
         node.textContent,
         editor.isEditable,
@@ -50,7 +48,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           codeBlock.setAttribute(key, value);
         }
       }
-      let originLanguage = node.attrs.language;
+
       return {
         dom: codeBlock,
         contentDOM: codeEditor,
@@ -60,11 +58,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           if (updatedNode.type !== this.type) {
             return false;
           }
-          if (originLanguage !== updatedNode.attrs.language) {
-            originLanguage = updatedNode.attrs.language;
-            codeBlock.setAttribute('data-language', originLanguage);
-          }
-          onUpdated(updatedNode)
+          onUpdated(updatedNode);
           return true;
         },
         destroy() {

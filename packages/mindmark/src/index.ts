@@ -1,4 +1,4 @@
-import { MindMark, useMindMark } from './lib';
+import { MindMark, useMindMark, MindMarkElement } from './lib';
 import { transformer } from './lib/transformer';
 
-export { MindMark, transformer, useMindMark };
+export { MindMark, transformer, useMindMark, MindMarkElement };

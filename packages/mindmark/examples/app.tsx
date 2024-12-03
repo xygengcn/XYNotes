@@ -1,7 +1,8 @@
-import { MindMark } from '@/lib';
+import { MindMark, MindMarkElement } from '@/lib';
 import { defineComponent, ref } from 'vue';
-import "./app.scss"
+import './app.scss';
 declare const __MARKDOWN__: string;
+customElements.define('mind-mark', MindMarkElement);
 
 export default defineComponent({
   name: 'App',
@@ -13,7 +14,10 @@ export default defineComponent({
       <div class="app">
         <h1>MindMark</h1>
         <textarea v-model={text.value}></textarea>
-        <MindMark markdown={text.value}></MindMark>
+        <div class="app-content">
+          <MindMark markdown={text.value}></MindMark>
+          <mind-mark markdown={text.value}></mind-mark>
+        </div>
       </div>
     );
   }

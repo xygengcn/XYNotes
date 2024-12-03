@@ -1,8 +1,8 @@
 import { Node } from '@tiptap/pm/model';
 import { createApp, ref } from 'vue';
 import CodeBlockContainer from './container';
-import "./index.scss";
-import { isMindMapLanguage } from './mindmap';
+import './index.scss';
+import { createMindMap, isMindMapLanguage, mindMapRender } from './mindmap';
 
 /**
  * 是不是可以预览的语言
@@ -52,14 +52,30 @@ export function createCodeBlock(
   codePreview.className = 'markdown-editor-codeblock-content-preview';
   if (isPreviewLanguage(defaultLanguage)) {
     codeContent.appendChild(codePreview);
+    if (isMindMapLanguage(defaultLanguage)) {
+      createMindMap(codePreview, defaultCode);
+    }
   }
 
   // 将头部容器和代码内容容器添加到根元素
   codeBlock.appendChild(codeContent);
 
+  let originLanguage = defaultLanguage;
+
   //内容更新
   const onUpdated = (node: Node) => {
-    console.log("[editor] code-block",node)
+    if (originLanguage !== node.attrs.language) {
+      originLanguage = node.attrs.language;
+      codeBlock.setAttribute('data-language', originLanguage);
+      codePreview.innerHTML = '';
+      if (isMindMapLanguage(node.attrs.language)) {
+        createMindMap(codePreview, node.textContent);
+      }
+    } else {
+      if (isMindMapLanguage(node.attrs.language)) {
+        mindMapRender(codePreview, node.textContent);
+      }
+    }
   };
   return {
     codeBlock,
