@@ -1,7 +1,7 @@
-import { defineComponent, ref, shallowRef } from 'vue';
-import '../tiptap/index.scss';
+import { defineComponent, ref } from 'vue';
+import { defineMarkdownEditor } from '../src/index';
+import '../src/tiptap/index.scss';
 import './app.scss';
-import { defineMarkdownEditor } from '../tiptap';
 
 declare const __MARKDOWN__: string;
 
