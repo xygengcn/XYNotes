@@ -1,0 +1,33 @@
+{
+  "name": "@xynotes/mindmark",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --config vite.build.config.ts",
+    "postinstall": "pnpm run build",
+    "preview": "vite preview",
+    "lint": "prettier .  --write"
+  },
+  "dependencies": {
+    "markmap-common": "^0.17.1",
+    "markmap-lib": "^0.17.2",
+    "markmap-view": "^0.17.2",
+    "vue": "^3.4.31"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vitejs/plugin-vue-jsx": "^4.0.0",
+    "prettier": "^2.8.7",
+    "sass": "^1.62.0",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.5",
+    "vite-plugin-dts": "^3.9.1"
+  }
+}
