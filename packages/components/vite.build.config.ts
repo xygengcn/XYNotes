@@ -9,8 +9,8 @@ import dts from 'vite-plugin-dts';
 export default defineConfig(
   async () =>
     ({
-      plugins: [vue(), vueJsx(), dts()],
-      base: './',
+      plugins: [vue(), vueJsx(), dts({ entryRoot: './src' })],
+      base: './src',
       envPrefix: ['VITE_'],
       resolve: {
         alias: {
