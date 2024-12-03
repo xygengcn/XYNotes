@@ -1,5 +1,5 @@
 import { Icon } from '@xynotes/components';
-import { copyText } from '@xynotes/utils';
+import { copyText, stopPropagation } from '@xynotes/utils';
 import { Ref, defineComponent, inject } from 'vue';
 
 const CodeBlockContainer = defineComponent({
@@ -25,6 +25,7 @@ const CodeBlockContainer = defineComponent({
     const handleCopy = () => {
       code?.value && copyText(code.value);
     };
+
     return {
       code,
       handleInputChange,
@@ -48,6 +49,10 @@ const CodeBlockContainer = defineComponent({
                 spellcheck={false}
                 value={this.lang}
                 onChange={this.handleInputChange}
+                onkeydown={stopPropagation}
+                onkeyup={stopPropagation}
+                onMouseup={stopPropagation}
+                onMousedown={stopPropagation}
                 disabled={!this.isEditable}
               />
             </div>
