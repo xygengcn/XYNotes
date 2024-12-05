@@ -21,7 +21,7 @@ const Input = defineComponent({
     change: (value: string) => true,
     input: (value: string) => true,
     'update:value': (value: string) => true,
-    blur: (e: Event) => true
+    blur: (e: Event, origin: string) => true
   },
   setup(props, context) {
     /**
@@ -30,12 +30,19 @@ const Input = defineComponent({
     let inputTimeOut: number | null = null;
 
     /**
+     * 原始数据
+     */
+    let orignalValue = props.value;
+
+    /**
      * 输入
      * @param e
      */
     const handleInput = (e: Event) => {
       context.emit('input', (e.target as HTMLInputElement).value);
-      context.emit('update:value', (e.target as HTMLInputElement).value);
+      if (orignalValue !== (e.target as HTMLInputElement).value) {
+        context.emit('update:value', (e.target as HTMLInputElement).value);
+      }
       handleChange(e);
     };
     /**
@@ -44,7 +51,8 @@ const Input = defineComponent({
      */
     const handleBlur = (e: Event) => {
       inputTimeOut && clearTimeout(inputTimeOut);
-      context.emit('blur', e);
+      context.emit('blur', e, orignalValue);
+      orignalValue = (e.target as HTMLInputElement).value;
     };
 
     /**
@@ -57,7 +65,9 @@ const Input = defineComponent({
         clearTimeout(inputTimeOut);
       }
       inputTimeOut = window.setTimeout(() => {
-        context.emit('change', (e.target as HTMLInputElement).value);
+        if (orignalValue !== (e.target as HTMLInputElement).value) {
+          context.emit('change', (e.target as HTMLInputElement).value);
+        }
         inputTimeOut && clearTimeout(inputTimeOut);
       }, 500);
     };

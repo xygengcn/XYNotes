@@ -4,14 +4,7 @@ import { createApp, ref } from 'vue';
 import CodeBlockContainer from './container';
 import './index.scss';
 import './preview';
-import { isMindMapLanguage } from './preview/mindmap';
-/**
- * 是不是可以预览的语言
- * @param lang
- */
-const isPreviewLanguage = (lang: string) => {
-  return isMindMapLanguage(lang);
-};
+import { isPreviewLanguage } from './preview';
 
 /**
  * 创建view
@@ -55,9 +48,9 @@ export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Ev
   const codePreview = document.createElement('code-preview') as HTMLDivElement;
   const setCodePreview = (language: string, code: string) => {
     // @ts-ignore
-    codePreview.language = language;
+    codePreview.language = language || 'plaintext';
     // @ts-ignore
-    codePreview.code = code;
+    codePreview.code = code || '';
     // 设置隐藏
     if (isPreviewLanguage(language)) {
       codePreview.style.display = 'block';

@@ -4,8 +4,8 @@ import { isMindMapLanguage } from './mindmap';
  * 是不是可以预览的语言
  * @param lang
  */
-const isPreviewLanguage = (lang: string) => {
-  return isMindMapLanguage(lang);
+export const isPreviewLanguage = (lang: string) => {
+  return lang && isMindMapLanguage(lang);
 };
 
 /**

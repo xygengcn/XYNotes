@@ -163,6 +163,8 @@ export const defineMarkdownEditor = () => {
       if (instance?.refs.editor) {
         editor.value?.destroy();
         editorEvent.removeAllListeners();
+        // 重新创建会失败
+        editor.value = undefined;
       }
     });
     return {
