@@ -1,7 +1,7 @@
 import { mergeAttributes } from '@tiptap/core';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { all, createLowlight } from 'lowlight';
-import { createCodeBlock } from './create-code-block';
+import { createCodeBlockView } from './create-code-block';
 /**
  * 代码高亮模块
  */
@@ -37,10 +37,9 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           inputEl.value = node.attrs.language;
         }
       };
-      const { codeBlock, codeEditor, container, code, onUpdated } = createCodeBlock(
-        node.attrs.language,
-        node.textContent,
-        editor.isEditable,
+      const { codeBlock, codeEditor, container, code, onUpdated } = createCodeBlockView(
+        node,
+        editor,
         onChange
       );
       for (const [key, value] of Object.entries(mergeAttributes(this.options.HTMLAttributes))) {

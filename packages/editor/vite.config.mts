@@ -1,10 +1,9 @@
-import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
-import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vite';
 
 const markdown = readFileSync(join(__dirname, './readme.md'), 'utf-8');
 

@@ -1,3 +1,4 @@
+@import '@/styles/function.scss';
 :root {
   // code颜色
   --markdown-editor-codeblock-bg-color: #262335;
@@ -121,6 +122,11 @@
 
   &-content {
     display: flex;
+    @include mobile {
+      & {
+        flex-direction: column;
+      }
+    }
     &-code {
       display: inline-block;
       box-sizing: border-box;
@@ -133,9 +139,8 @@
         background: #e8e8e84d;
       }
     }
-    &-preview {
+    code-preview {
       flex: 1;
-      overflow: auto;
     }
   }
 }

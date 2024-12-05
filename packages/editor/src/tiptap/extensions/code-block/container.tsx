@@ -14,7 +14,7 @@ const CodeBlockContainer = defineComponent({
     }
   },
   emits: ['change'],
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const code = inject<Ref<string>>('code');
     const handleInputChange = (e) => {
       emit('change', e);
