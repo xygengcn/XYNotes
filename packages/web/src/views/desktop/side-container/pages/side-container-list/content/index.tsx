@@ -51,6 +51,9 @@ const DesktopSideContainerListContent = defineComponent({
       console.log('[contextmenu] 右键笔记', options, note);
       if (note && options.menu) {
         switch (options.menu.value) {
+          case 'sync':
+            note.sync();
+            break;
           case 'delete':
             window.$ui.confirm({
               type: 'warn',
@@ -85,7 +88,13 @@ const DesktopSideContainerListContent = defineComponent({
       <Scroller class="desktop-side-container-list-content">
         <div
           class="desktop-side-container-list-content-list"
-          v-contextmenu={{ menuList: [{ label: '删除', value: 'delete' }], onSelect: handleContextmenu }}
+          v-contextmenu={{
+            menuList: [
+              { label: '同步', value: 'sync' },
+              { label: '删除', value: 'delete' }
+            ],
+            onSelect: handleContextmenu
+          }}
         >
           {noteList.value.map((note, index) => {
             return (
