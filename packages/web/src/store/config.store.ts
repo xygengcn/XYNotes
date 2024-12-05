@@ -28,7 +28,9 @@ export const useConfigsStore = defineStore('configs', {
       label: '更新时间'
     } as INoteListSort,
     // 全局配置原始数据
-    configJson: {} as IGlobalConfig
+    configJson: {
+      SHORTCUT_KEY_SHOW: ''
+    } as IGlobalConfig
   }),
   actions: {
     /**

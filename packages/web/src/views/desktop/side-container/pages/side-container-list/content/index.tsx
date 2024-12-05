@@ -72,9 +72,9 @@ const DesktopSideContainerListContent = defineComponent({
      * 选中
      * @param note
      */
-    const handleSelectItem = (note: Note) => {
+    const handleSelectItem = async (note: Note) => {
       if (is.app()) {
-        const has = exsitAppWindow(note.nid);
+        const has = await exsitAppWindow(note.nid);
         if (has) {
           setWindowFocus(note.nid);
           store.setActiveNoteId(undefined);

@@ -4,7 +4,7 @@ import { WebviewWindow } from '@tauri-apps/api/webviewWindow';
 import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 import { save } from '@tauri-apps/plugin-dialog';
 import { writeFile, writeTextFile } from '@tauri-apps/plugin-fs';
-
+import { isRegistered, register, ShortcutEvent, unregisterAll } from '@tauri-apps/plugin-global-shortcut';
 
 /**
  * 判断是不是tauri客户端
@@ -23,14 +23,22 @@ export function tauriShowCurrentWindow() {
 }
 
 /**
+ * 获取显示主窗口
+ */
+export async function tauriShowMainWindow() {
+  const appWindow = await WebviewWindow.getByLabel('main');
+  return appWindow.show();
+}
+
+/**
  * 创建窗口
  * @param options
  * @returns
  */
-export function tauriCreateWindow(options: { id: string; url: string }) {
+export async function tauriCreateWindow(options: { id: string; url: string }) {
   console.log('[tauri-createWindow]', options);
   // 获取窗口
-  let webview = WebviewWindow.getByLabel(options.id);
+  let webview = await WebviewWindow.getByLabel(options.id);
   if (webview) {
     webview.show();
     webview.setFocus();
@@ -75,9 +83,12 @@ export function tauriSetCurrentWindowFocus() {
  * 窗口聚焦
  * @param label
  */
-export function tauriSetWindowFocus(label: string) {
-  const appWindow = WebviewWindow.getByLabel(label);
-  return appWindow?.setFocus();
+export async function tauriSetWindowFocus(label: string) {
+  const appWindow = await WebviewWindow.getByLabel(label);
+  if (appWindow) {
+    appWindow.show();
+    appWindow.setFocus();
+  }
 }
 
 /**
@@ -149,8 +160,8 @@ export function tauriCloseCurrentWindow() {
   /**
    * 如果是主窗口，则隐藏，否则关闭
    */
-  if (appWindow.label === 'main') {
-    return appWindow.hide();
+  if (WebviewWindow.length > 1 && appWindow.label === 'main') {
+    return appWindow.minimize();
   }
   return appWindow.close();
 }
@@ -179,3 +190,21 @@ export async function tauriClipboardWriteImage(blob: Blob) {
  * 粘贴板读取文本
  */
 export const tauriClipboardReadText = clipboard.readText;
+
+/**
+ * 注册快捷键
+ */
+export const tauriRegisterShortcut = async (key: string, handler: (event: ShortcutEvent) => void) => {
+  const isKeyRegistered = await isRegistered(key);
+
+  if (isKeyRegistered) {
+    return Promise.reject('快捷键冲突');
+  }
+
+  return register(key, handler);
+};
+
+/**
+ * 取消所有快捷键
+ */
+export const tauriUnRegisterAll = unregisterAll;

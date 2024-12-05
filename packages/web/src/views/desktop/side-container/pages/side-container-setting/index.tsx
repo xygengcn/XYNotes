@@ -38,7 +38,7 @@ const DesktopSideContainerSetting = defineComponent({
           database.recovery(backupData.database).then(() => {
             window.$ui.toast('数据恢复恢复成功');
             const app = useAppStore();
-            app.sync()
+            app.sync();
           });
         })
         .catch((e) => {
@@ -51,6 +51,7 @@ const DesktopSideContainerSetting = defineComponent({
     const handleEditConfig = () => {
       router.push('/setting/config');
     };
+
     return () => (
       <div class="desktop-side-container-setting">
         <div class="desktop-side-container-setting-header" data-tauri-drag-region>
@@ -74,7 +75,7 @@ const DesktopSideContainerSetting = defineComponent({
             </span>
           </div>
           <div class="desktop-side-container-setting-content-item">
-            <span class="desktop-side-container-setting-content-item-left">远程配置</span>
+            <span class="desktop-side-container-setting-content-item-left">基础配置</span>
             <span class="desktop-side-container-setting-content-item-right">
               <Button size="min" onClick={handleEditConfig}>
                 配置

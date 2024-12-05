@@ -30,4 +30,6 @@ export interface IGlobalConfig {
   REMOTE_ONLINE_SYNC: boolean;
   // 在线认证Authorization
   REMOTE_AUTHORIZATION: string;
+  // 显示主界面快捷键
+  SHORTCUT_KEY_SHOW: string;
 }

@@ -1,20 +1,23 @@
 import {
-  tauriCreateWindow,
   isTauriApp,
-  tauriOpenDevtools,
-  tauriSetCurrentWindowFocus,
-  tauriSetWindowFocus,
+  tauriClipboardReadText,
+  tauriClipboardWriteImage,
+  tauriCloseCurrentWindow,
+  tauriCreateWindow,
   tauriGetWindow,
   tauriIsMaximized,
-  tauriUnmaximize,
   tauriMaximize,
-  tauriCloseCurrentWindow,
   tauriMinimize,
-  tauriWriteTextFile,
+  tauriOpenDevtools,
+  tauriRegisterShortcut,
+  tauriSetCurrentWindowFocus,
+  tauriSetWindowFocus,
   tauriShowDirDialog,
+  tauriShowMainWindow,
+  tauriUnmaximize,
+  tauriUnRegisterAll,
   tauriWriteFile,
-  tauriClipboardWriteImage,
-  tauriClipboardReadText
+  tauriWriteTextFile
 } from '@xynotes/tauri-api';
 
 /**
@@ -73,13 +76,13 @@ export function setWindowFocus(nid: string) {
  * @param nid
  * @returns
  */
-export function exsitAppWindow(nid: string): boolean {
+export async function exsitAppWindow(nid: string): Promise<boolean> {
   // tauri
   if (isTauriApp()) {
     const label = `nid-${nid}`;
-    return !!tauriGetWindow(label);
+    const webwindow = await tauriGetWindow(label);
+    return !!webwindow;
   }
-
   return false;
 }
 
@@ -206,5 +209,42 @@ export function clipboardReadText(): Promise<string> | void {
   // tauri
   if (isTauriApp()) {
     return tauriClipboardReadText();
+  }
+}
+
+/**
+ * 注册快捷键
+ * @param key
+ * @param handler
+ * @returns
+ */
+export function registerShortcut(key: string, handler: (event: any) => void) {
+  // tauri
+  if (isTauriApp()) {
+    return tauriRegisterShortcut(key, handler);
+  }
+}
+
+/**
+ * 注册快捷键
+ * @param key
+ * @param handler
+ * @returns
+ */
+export function unregisterAllShortcut() {
+  // tauri
+  if (isTauriApp()) {
+    return tauriUnRegisterAll();
+  }
+}
+
+/**
+ * 显示主界面
+ * @returns
+ */
+export function showMainWindow() {
+  // tauri
+  if (isTauriApp()) {
+    return tauriShowMainWindow();
   }
 }

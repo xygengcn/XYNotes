@@ -1,0 +1,13 @@
+.shortcut-input {
+  color: #8e8e8e;
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 1em;
+  background: #fff;
+  padding-block: 0px;
+  padding-inline: 0px;
+  &::placeholder {
+    color: #cccccc;
+  }
+}

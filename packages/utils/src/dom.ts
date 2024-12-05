@@ -26,3 +26,15 @@ export function findParentWithNodrag(element: HTMLElement): string | boolean | n
 export function stopPropagation(e: Event) {
   e.stopPropagation();
 }
+
+/**
+ * 阻止事件的默认行为
+ *
+ * 此函数用于在事件处理中阻止默认行为，例如阻止表单提交或链接跳转等
+ * 它接受一个事件对象作为参数，并调用其preventDefault方法来阻止默认行为
+ *
+ * @param e 事件对象，包含事件特定的信息和方法
+ */
+export function preventDefault(e: Event) {
+  e.preventDefault();
+}
