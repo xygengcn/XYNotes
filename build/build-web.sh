@@ -40,18 +40,8 @@ else
     mkdir -p $productDir
 fi
 
-# 打包编辑器
-cd $process_directory/packages/core
-npm run build
-
-# 错误则退出
-if [ $? -ne 0 ]; then
-    echo "[error] 编译器打包失败！"
-    exit 1
-fi
 # 打包web应用
-cd $process_directory/packages/web
-npm run build
+pnpm --stream -r build
 
 # 判断是否正确打包
 if [ $? -ne 0 ]; then
@@ -59,14 +49,17 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# 产物地址
+dist="$process_directory/packages/web/dist"
+
 # 判断产物是否存在
-if [ ! -d "./dist" ]; then
+if [ ! -d $dist ]; then
     echo "[error] 产物不存在！"
     exit 1
 fi
 
 # 复制产物到build文件夹
-cp -r ./dist/* $productDir
+cp -r $dist/* $productDir
 
 # 读取配置文件路径
 config_file="$process_directory/.config/.conf.ini"

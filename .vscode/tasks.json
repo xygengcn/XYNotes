@@ -22,7 +22,7 @@
         {
             "label": "Build-App",
             "type": "shell",
-            "command": "pnpm build",
+            "command": "pnpm build:dev",
             "options": {
                 "cwd": "${workspaceFolder}/packages/tauri/"
             },
@@ -31,7 +31,7 @@
         {
             "label": "Build-Web",
             "type": "shell",
-            "command": "pnpm build",
+            "command": "pnpm --stream -r build",
             "options": {
                 "cwd": "${workspaceFolder}/packages/web/"
             },
