@@ -1,11 +1,11 @@
 import { mergeAttributes } from '@tiptap/core';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { all, createLowlight } from 'lowlight';
+import { common, createLowlight } from 'lowlight';
 import { createCodeBlockView } from './create-code-block';
 /**
  * 代码高亮模块
  */
-const lowlight = createLowlight(all);
+const lowlight = createLowlight(common);
 const CodeBlockExtension = CodeBlockLowlight.extend({
   addOptions() {
     return {
