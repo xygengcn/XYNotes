@@ -1,13 +1,13 @@
 import Drawer from '@/components/common/drawer';
-import { Icon } from '@xynotes/components';
 import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
-import { Note } from '@/services/note';
-import { useAppStore } from '@/store/app.store';
-import { useConfigsStore } from '@/store/config.store';
-import { useNotesStore } from '@/store/notes.store';
+import { Note } from '@xynotes/store';
 import { NoteListSortType } from '@/typings/enum/note';
 import { debounce } from '@/utils/debounce-throttle';
+import { Icon } from '@xynotes/components';
+import { syncApp } from '@xynotes/store/app';
+import { configsStoreState } from '@xynotes/store/configs';
+import { addNote, noteListCount, notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
 import { computed, defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SwipeList } from 'vue3-swipe-actions';
@@ -17,9 +17,6 @@ import './index.scss';
 const MobileHome = defineComponent({
   name: 'MobileHome',
   setup() {
-    const noteStore = useNotesStore();
-    const configStore = useConfigsStore();
-    const appStore = useAppStore();
     const router = useRouter();
     /**
      * 关键词
@@ -38,34 +35,20 @@ const MobileHome = defineComponent({
       const target = e.target as HTMLInputElement;
       keyword.value = target.value.trimStart();
     });
-
-    /**
-     * 排序类型
-     */
-    const noteListSortType = computed(() => {
-      return configStore?.noteListSort?.value || NoteListSortType.updated;
-    });
-
     /**
      * 笔记列表
      */
     const noteList = computed(() => {
       if (!keyword.value.trim()) {
-        return noteStore.notesList.sort((a, b) => {
-          return b[noteListSortType.value] - a[noteListSortType.value];
-        });
+        return notesListBySort.value;
       }
-      return noteStore.notesList
-        .filter((note) => {
-          return (
-            note.intro?.includes(keyword.value) ||
-            note.text?.includes(keyword.value) ||
-            note.title?.includes(keyword.value)
-          );
-        })
-        .sort((a, b) => {
-          return b[noteListSortType.value] - a[noteListSortType.value];
-        });
+      return notesListBySort.value.filter((note) => {
+        return (
+          note.intro?.includes(keyword.value) ||
+          note.text?.includes(keyword.value) ||
+          note.title?.includes(keyword.value)
+        );
+      });
     });
     /**
      * 点击
@@ -83,7 +66,7 @@ const MobileHome = defineComponent({
      * 新增
      */
     const handleClickAdd = () => {
-      noteStore.addNote();
+      addNote();
     };
 
     /**
@@ -104,7 +87,7 @@ const MobileHome = defineComponent({
      * 数据同步
      */
     const handleSyncList = () => {
-      appStore.sync();
+      syncApp();
       visibleMoreDrawer.value = false;
     };
 
@@ -116,7 +99,7 @@ const MobileHome = defineComponent({
     };
 
     onBeforeMount(() => {
-      noteStore.setActiveNoteId('');
+      setActiveNoteId('');
     });
     return () => (
       <div class="mobile-home">
@@ -172,7 +155,7 @@ const MobileHome = defineComponent({
         </div>
         <div class="mobile-home-footer">
           <div class="mobile-home-footer-content">
-            <span>{noteStore.noteListCount}个笔记</span>
+            <span>{noteListCount.value}个笔记</span>
             <span class="mobile-home-footer-content-add" onClick={handleClickAdd}>
               <Icon type="mobile-add" size="2em"></Icon>
             </span>

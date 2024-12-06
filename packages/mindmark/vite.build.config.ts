@@ -9,8 +9,18 @@ import dts from 'vite-plugin-dts';
 export default defineConfig(
   async () =>
     ({
-      plugins: [vue(), vueJsx(), dts({ entryRoot: './src' })],
-      base: path.join(__dirname,'./src'),
+      plugins: [
+        vue({
+          template: {
+            compilerOptions: {
+              isCustomElement: (tag) => tag.includes('-')
+            }
+          }
+        }),
+        vueJsx(),
+        dts({ entryRoot: './src' })
+      ],
+      base: path.join(__dirname, './src'),
       envPrefix: ['VITE_'],
       resolve: {
         alias: {
@@ -29,8 +39,8 @@ export default defineConfig(
           formats: ['cjs', 'es']
         },
         rollupOptions: {
-          external: ['vue', '@xynotes/components','@xynotes/utils','eventemitter3']
+          external: ['vue', '@xynotes/components', '@xynotes/utils', 'eventemitter3']
         }
       }
-    }) as UserConfig
+    } as UserConfig)
 );

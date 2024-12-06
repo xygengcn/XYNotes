@@ -1,22 +1,16 @@
-import { Icon } from '@xynotes/components';
 import NoteEditor from '@/components/note-editor';
-import { useNotesStore } from '@/store/notes.store';
-import { computed, defineComponent } from 'vue';
-import './index.scss';
-import DesktopMainContainerDefaultRight from './right-bar';
 import NoteEditorCounter from '@/components/note-editor/counter';
 import NoteEditorTitle from '@/components/note-editor/title';
+import { Icon } from '@xynotes/components';
+import { activeNote } from '@xynotes/store/note';
+import { defineComponent } from 'vue';
+import './index.scss';
+import DesktopMainContainerDefaultRight from './right-bar';
 
 const DesktopMainContainerDefault = defineComponent({
   name: 'DesktopMainContainerDefault',
   setup() {
-    const store = useNotesStore();
-    /**
-     * 当前选中笔记
-     */
-    const activeNote = computed(() => {
-      return store.activeNote;
-    });
+  
     return () => (
       <div class="desktop-main-container-default">
         {activeNote.value && (

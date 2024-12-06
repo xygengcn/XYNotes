@@ -24,7 +24,13 @@ export default defineConfig({
       gzipSize: true,
       brotliSize: true
     }) as PluginOption,
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes('-')
+        }
+      }
+    }),
     vueJsx(),
     VitePWA({
       base: '/',

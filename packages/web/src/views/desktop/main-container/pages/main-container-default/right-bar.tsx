@@ -1,6 +1,6 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
-import { Note } from '@/services/note';
+import { Note } from '@xynotes/store';
 import { copyText } from '@xynotes/utils';
 import { is } from '@xynotes/utils';
 import { PropType, defineComponent } from 'vue';

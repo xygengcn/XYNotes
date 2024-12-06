@@ -1,15 +1,13 @@
+import { syncApp } from '@xynotes/store/app';
+import { notesStoreState, updateNote } from '@xynotes/store/note';
+import { is } from '@xynotes/utils';
 import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
 import noteEventBus from './services/event-bus';
-import { useAppStore } from './store/app.store';
-import { useNotesStore } from './store/notes.store';
-import { is } from '@xynotes/utils';
 
 const App = defineComponent({
   name: 'App',
   setup() {
-    const noteStore = useNotesStore();
-    const appStore = useAppStore();
     const handleContextMenu = (e: Event) => {
       if (is.production()) {
         e.preventDefault();
@@ -17,17 +15,17 @@ const App = defineComponent({
     };
     onBeforeMount(async () => {
       // 同步数据
-      appStore.sync();
+      syncApp();
       if (is.app()) {
         // 监听其他事件
         noteEventBus.on('note:update', (content) => {
           if (content.action === 'update') {
             if (is.mainWindow()) {
-              noteStore.updateNote(content.note);
+              updateNote(content.note);
               return;
             }
-            if (noteStore.activeNoteId === content.note.nid) {
-              noteStore.updateNote(content.note);
+            if (notesStoreState.value.activeNoteId === content.note.nid) {
+              updateNote(content.note);
             }
           }
         });

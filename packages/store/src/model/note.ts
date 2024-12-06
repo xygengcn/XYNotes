@@ -1,8 +1,6 @@
-import { useNotesStore } from '@/store/notes.store';
-import { INote, INoteAttachment, NoteStatus, NoteType } from '@/typings/note';
-import { debounce } from '@/utils/debounce-throttle';
-import { downloadFile } from '@xynotes/utils';
-import { uuid } from 'js-lark';
+import { deleteNote, saveNote, syncNote } from '@/state/note';
+import { INote, NoteType, NoteStatus, INoteAttachment } from '@/typings/note';
+import { debounce, downloadFile, uuid } from '@xynotes/utils';
 
 export class Note implements INote {
   // 笔记类型
@@ -47,7 +45,7 @@ export class Note implements INote {
   public onlineSyncAt: number = 0;
 
   // 保存节流
-  private __saveNoteDebouce: number;
+  private __saveNoteDebouce: number | undefined = undefined;
   private __saveNoteDebouceFn: (...args: any[]) => number;
 
   constructor(note?: INote) {
@@ -137,9 +135,7 @@ export class Note implements INote {
       // 保存中
       this.status = NoteStatus.saving;
       const noteDetail = this.toRaw();
-      const store = useNotesStore();
-      return store
-        .saveNote({ ...noteDetail, status: 1 }, !!this.onlineSyncAt)
+      return saveNote({ ...noteDetail, status: 1 }, !!this.onlineSyncAt)
         .then((note) => {
           if (note) {
             console.log('[save] success', note);
@@ -165,8 +161,7 @@ export class Note implements INote {
       window.clearTimeout(this.__saveNoteDebouce);
     }
     const note = this.toRaw();
-    const store = useNotesStore();
-    return store.deleteNote(note);
+    return deleteNote(note);
   }
 
   /**
@@ -193,8 +188,7 @@ export class Note implements INote {
    */
   public sync() {
     console.log('[note] sync', this.nid);
-    const store = useNotesStore();
-    return store.syncNote(this.toRaw()).then((note) => {
+    return syncNote(this.toRaw()).then((note) => {
       this.update(note);
       window.$ui.toast('同步成功');
     });

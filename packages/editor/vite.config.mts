@@ -9,7 +9,19 @@ const markdown = readFileSync(join(__dirname, './readme.md'), 'utf-8');
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx()],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => {
+            return ['mind-mark', 'code-preview'].includes(tag);
+          }
+        }
+      }
+    }),
+    ,
+    vueJsx()
+  ],
   define: {
     __MARKDOWN__: JSON.stringify(markdown)
   },

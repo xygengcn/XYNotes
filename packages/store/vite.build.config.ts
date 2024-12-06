@@ -9,20 +9,7 @@ import dts from 'vite-plugin-dts';
 export default defineConfig(
   async () =>
     ({
-      plugins: [
-        vue({
-          template: {
-            compilerOptions: {
-              isCustomElement: (tag) => {
-                return ['mind-mark', 'code-preview'].includes(tag);
-              }
-            }
-          }
-        }),
-        ,
-        vueJsx(),
-        dts({ entryRoot: './src' })
-      ],
+      plugins: [vue(), vueJsx(), dts({ entryRoot: './src' })],
       base: path.join(__dirname, './src'),
       envPrefix: ['VITE_'],
       resolve: {
@@ -38,7 +25,12 @@ export default defineConfig(
         lib: {
           name: 'components',
           fileName: (format) => `[name].${format}.js`,
-          entry: path.join(__dirname, 'src/index.ts'),
+          entry: {
+            index: path.join(__dirname, 'src/index.ts'),
+            configs: path.join(__dirname, 'src/state/configs.ts'),
+            note: path.join(__dirname, 'src/state/note.ts'),
+            app: path.join(__dirname, 'src/state/app.ts')
+          },
           formats: ['cjs', 'es']
         },
         rollupOptions: {

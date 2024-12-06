@@ -1,6 +1,5 @@
 import Button from '@/components/common/button';
-import database from '@/services/database';
-import { useAppStore } from '@/store/app.store';
+import { backupAppData, recoveryAppData } from '@xynotes/store/app';
 import { downloadFile, jsonFileReader } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
@@ -15,19 +14,9 @@ const DesktopSideContainerSetting = defineComponent({
     // 数据备份
     const handleBackup = () => {
       console.info('[backup]', '数据备份');
-      database
-        .backup()
-        .then((database) => {
-          const appStore = useAppStore();
-          const backupData = {
-            version: appStore.version,
-            database
-          };
-          downloadFile(JSON.stringify(backupData), 'database.json');
-        })
-        .catch((e) => {
-          console.error('[backup]', e);
-        });
+      return backupAppData().then((backupData) => {
+        downloadFile(JSON.stringify(backupData), 'database.json');
+      });
     };
 
     // 数据恢复
@@ -35,10 +24,8 @@ const DesktopSideContainerSetting = defineComponent({
       console.log('[recovery] 数据恢复');
       return jsonFileReader()
         .then((backupData: any) => {
-          database.recovery(backupData.database).then(() => {
-            window.$ui.toast('数据恢复恢复成功');
-            const app = useAppStore();
-            app.sync();
+          recoveryAppData(backupData.database).then(() => {
+            window.$ui.toast('数据恢复成功');
           });
         })
         .catch((e) => {

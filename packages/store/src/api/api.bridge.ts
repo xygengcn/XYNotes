@@ -1,4 +1,4 @@
-import { IConfigsColunm } from '@/typings/config';
+import { IConfigsColunm } from '@/typings/configs';
 import { INote } from '@/typings/note';
 /**
  * 所有数据处理事件api 抽象类

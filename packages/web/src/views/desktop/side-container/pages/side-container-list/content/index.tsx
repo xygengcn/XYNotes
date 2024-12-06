@@ -1,14 +1,12 @@
 import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
-import { Note } from '@/services/note';
-import { useConfigsStore } from '@/store/config.store';
-import { useNotesStore } from '@/store/notes.store';
 import { IContextMenuProps } from '@/typings/contextmenu';
-import { NoteListSortType } from '@/typings/enum/note';
+import { exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
+import { Note } from '@xynotes/store';
+import { notesListBySort, setActiveNoteId } from '@xynotes/store/note';
+import { is } from '@xynotes/utils';
 import { computed, defineComponent } from 'vue';
 import './index.scss';
-import { is } from '@xynotes/utils';
-import { exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
 
 const DesktopSideContainerListContent = defineComponent({
   name: 'DesktopSideContainerListContent',
@@ -16,29 +14,14 @@ const DesktopSideContainerListContent = defineComponent({
     keyword: String
   },
   setup(props) {
-    const store = useNotesStore();
-    const configStore = useConfigsStore();
-
-    /**
-     * 排序类型
-     */
-    const noteListSortType = computed(() => {
-      return configStore.noteListSort?.value || NoteListSortType.updated;
-    });
     // 笔记列表
     const noteList = computed(() => {
       if (!props.keyword.trim()) {
-        return store.notesList.sort((a, b) => {
-          return b[noteListSortType.value] - a[noteListSortType.value];
-        });
+        return notesListBySort.value;
       }
-      return store.notesList
-        .filter((note) => {
-          return note.text.includes(props.keyword) || note.title.includes(props.keyword);
-        })
-        .sort((a, b) => {
-          return b[noteListSortType.value] - a[noteListSortType.value];
-        });
+      return notesListBySort.value.filter((note) => {
+        return note.text.indexOf(props.keyword) > -1 || note.title.indexOf(props.keyword) > -1;
+      });
     });
 
     /**
@@ -77,11 +60,11 @@ const DesktopSideContainerListContent = defineComponent({
         const has = await exsitAppWindow(note.nid);
         if (has) {
           setWindowFocus(note.nid);
-          store.setActiveNoteId(undefined);
+          setActiveNoteId(undefined);
           return;
         }
       }
-      store.setActiveNoteId(note.nid);
+      setActiveNoteId(note.nid);
     };
 
     return () => (

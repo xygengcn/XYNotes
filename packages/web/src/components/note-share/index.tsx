@@ -1,5 +1,5 @@
 import VueContextMenu from '@/directive/contextmenu';
-import { Note } from '@/services/note';
+import { Note } from '@xynotes/store';
 import { screenshot, screenshotCopy } from '@xynotes/utils';
 import { PropType, createApp, defineComponent, ref } from 'vue';
 import Dialog from '../common/dialog';

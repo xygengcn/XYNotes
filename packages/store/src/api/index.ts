@@ -1,15 +1,20 @@
-import database from '@/services/database';
-import { IConfigsColunm } from '@/typings/config';
+import database from '@/database';
+import { IConfigsColunm } from '@/typings/configs';
 import { INote } from '@/typings/note';
 import ApiBridge from './api.bridge';
 import apiEventLocal from './local';
 import apiEventOnline from './online';
+import { configsStoreState } from '@/state/configs';
 
 /**
  * 事件继承，所有数据处理都经过这里
  */
 
 class ApiEvent implements ApiBridge {
+  /**
+   * 实例
+   */
+  static api = new ApiEvent();
   /**
    * 拉取笔记数据
    * @param remoteBaseUrl 远程地址
@@ -24,7 +29,7 @@ class ApiEvent implements ApiBridge {
     return apiEventLocal
       .apiFetchNoteListData()
       .then((localResult) => {
-        if (window.$config?.REMOTE_ONLINE_SYNC === true) {
+        if (configsStoreState.value.REMOTE_ONLINE_SYNC === true) {
           return apiEventOnline.apiFetchNoteListData(content).then((onlineResult) => {
             return localResult.concat(onlineResult);
           });
@@ -37,14 +42,14 @@ class ApiEvent implements ApiBridge {
   }
 
   // 拉取笔记细节
-  async apiFetchNoteDetailData(nid: string): Promise<INote> {
+  async apiFetchNoteDetailData(nid: string): Promise<INote | null> {
     // 本地数据
     const localNote = await apiEventLocal.apiFetchNoteDetailData(nid).catch(() => null);
 
     // 线上数据
-    let onlineNote = null;
+    let onlineNote: INote | null = null;
 
-    if (window.$config?.REMOTE_ONLINE_SYNC === true) {
+    if (configsStoreState.value.REMOTE_ONLINE_SYNC === true) {
       onlineNote = await apiEventOnline.apiFetchNoteDetailData(nid).catch(() => null);
     }
 
@@ -59,7 +64,7 @@ class ApiEvent implements ApiBridge {
     }
 
     // 本地数据比线上数据新
-    if (localNote.updatedAt > onlineNote.onlineSyncAt) {
+    if (onlineNote.onlineSyncAt && localNote.updatedAt > onlineNote.onlineSyncAt) {
       return { ...localNote, onlineSyncAt: onlineNote.onlineSyncAt };
     }
 
@@ -70,7 +75,7 @@ class ApiEvent implements ApiBridge {
   async apiSaveOrUpdateNote(note: INote, onlineSync: boolean): Promise<INote> {
     const content = structuredClone(note);
     return apiEventLocal.apiSaveOrUpdateNote(content).then((local) => {
-      if (window.$config?.REMOTE_ONLINE_SYNC === true && onlineSync) {
+      if (configsStoreState.value.REMOTE_ONLINE_SYNC === true && onlineSync) {
         return apiEventOnline
           .apiSaveOrUpdateNote(local)
           .then((result) => {
@@ -87,7 +92,7 @@ class ApiEvent implements ApiBridge {
   // 删除笔记
   async apiDeleteNote(note: INote): Promise<boolean> {
     return apiEventLocal.apiDeleteNote(note).then((result) => {
-      if (window.$config?.REMOTE_ONLINE_SYNC === true) {
+      if (configsStoreState.value.REMOTE_ONLINE_SYNC === true) {
         return apiEventOnline.apiDeleteNote(note);
       }
       return result;
@@ -96,7 +101,7 @@ class ApiEvent implements ApiBridge {
 
   // 同步笔记
   async apiSyncNote(note: INote): Promise<INote> {
-    if (window.$config?.REMOTE_ONLINE_SYNC === true) {
+    if (configsStoreState.value.REMOTE_ONLINE_SYNC === true) {
       return apiEventOnline.apiSyncNote(note).then((online) => {
         return apiEventLocal.apiSaveOrUpdateNote(note, true).then(() => {
           return online;
@@ -119,5 +124,4 @@ class ApiEvent implements ApiBridge {
     });
   }
 }
-const apiEvent = new ApiEvent();
-export default apiEvent;
+export default ApiEvent;

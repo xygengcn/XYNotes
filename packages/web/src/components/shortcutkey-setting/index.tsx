@@ -1,4 +1,4 @@
-import { useConfigsStore } from '@/store/config.store';
+import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { registerShortcut, showMainWindow, unregisterAllShortcut } from '@xynotes/app-api';
 import { defineComponent } from 'vue';
 import Card from '../common/card';
@@ -8,7 +8,6 @@ import './index.scss';
 const ShortcutkeysSetting = defineComponent({
   name: 'ShortcutkeysSetting',
   setup() {
-    const config = useConfigsStore();
     /**
      * 数据修改
      * @param obj
@@ -21,7 +20,7 @@ const ShortcutkeysSetting = defineComponent({
           showMainWindow();
         })
           .then(() => {
-            config.saveGlobalConfig();
+            setConfig('SHORTCUT_KEY_SHOW', value);
           })
           .catch((e) => {
             console.error('[shortcut] setting', e);
@@ -38,7 +37,7 @@ const ShortcutkeysSetting = defineComponent({
             <div class="shortcutkeys-setting-container-li-value">
               <ShortcutInput
                 placeholder="按下键盘"
-                v-model:value={config.configJson.SHORTCUT_KEY_SHOW}
+                v-model:value={configsStoreState.value.SHORTCUT_KEY_SHOW}
                 onInput={onInputChangeToSaveConfig}
               ></ShortcutInput>
             </div>

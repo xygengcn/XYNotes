@@ -1,7 +1,7 @@
-import { defineConfig, type PluginOption } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath } from 'url';
+import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import manifestJson from './mainifest';
 import packageConfig from './package.json';
@@ -15,7 +15,13 @@ export default defineConfig({
     emptyOutDir: true
   },
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes('-')
+        }
+      }
+    }),
     vueJsx(),
     VitePWA({
       base: '/',

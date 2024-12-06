@@ -1,4 +1,4 @@
-import { Note } from '@/services/note';
+import { Note } from '@xynotes/store';
 import { TimeFormat } from 'js-lark';
 import { defineComponent, PropType } from 'vue';
 import './index.scss';

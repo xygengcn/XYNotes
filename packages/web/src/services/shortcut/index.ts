@@ -2,15 +2,14 @@
  * 快捷键管理
  */
 
-import { useNotesStore } from '@/store/notes.store';
+import { activeNote, addNote, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 
 document.addEventListener('keydown', (e) => {
   // 新建笔记
   if ((e.metaKey || e.ctrlKey) && e.key === 'n' && is.mainWindow()) {
-    const store = useNotesStore();
-    const note = store.addNote();
-    store.setActiveNoteId(note.nid);
+    const note = addNote();
+    setActiveNoteId(note.nid);
     e.stopPropagation();
     e.preventDefault();
     return;
@@ -25,10 +24,9 @@ document.addEventListener('keydown', (e) => {
 
   // 屏蔽保存快捷键
   if ((e.metaKey || e.ctrlKey) && e.key === 's') {
-    const store = useNotesStore();
     e.preventDefault();
     e.stopPropagation();
-    store.activeNote?.save(true);
+    activeNote.value?.save(true);
     return;
   }
 });

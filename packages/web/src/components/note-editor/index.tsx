@@ -1,8 +1,8 @@
-import { useNotesStore } from '@/store/notes.store';
-import { NoteStatus } from '@/typings/note';
 import { Editor, useEditor } from '@xynotes/editor';
 import '@xynotes/editor/dist/style.css';
-import { computed, defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
+import { NoteStatus } from '@xynotes/store';
+import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
+import { defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
 import './index.scss';
 
 const NoteEditor = defineComponent({
@@ -19,19 +19,7 @@ const NoteEditor = defineComponent({
      */
     const fetchNoteLoading = ref(false);
 
-    /**
-     * store
-     */
-    const store = useNotesStore();
-
     const { onChange, getContent, onBlur, setContent, state, getCounter } = useEditor();
-
-    /**
-     * 当前笔记
-     */
-    const activeNote = computed(() => {
-      return store.activeNote;
-    });
 
     /**
      * 监听nid变化
@@ -53,8 +41,7 @@ const NoteEditor = defineComponent({
      */
     const handleQueryNoteDetail = async () => {
       fetchNoteLoading.value = true;
-      return store
-        .queryNote(props.nid)
+      return queryNote(props.nid)
         .then((result) => {
           if (result?.nid === props.nid) {
             setContent(result.text || '');
@@ -85,8 +72,8 @@ const NoteEditor = defineComponent({
     });
 
     onBeforeMount(() => {
-      if (!store.activeNoteId && props.nid) {
-        store.setActiveNoteId(props.nid);
+      if (!notesStoreState.value.activeNoteId && props.nid) {
+        setActiveNoteId(props.nid);
       }
     });
 

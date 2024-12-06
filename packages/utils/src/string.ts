@@ -54,3 +54,17 @@ export function trim(str: string) {
   if (!isString(str)) return '';
   return str?.trim().replace(/\t/g, ' ') || '';
 }
+
+/**
+ * 生成唯一值
+ * @returns
+ */
+export function uuid(): string {
+  if (window.crypto?.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+  const blob = URL.createObjectURL(new Blob());
+  const blobArr = blob.toString().split('/');
+  URL.revokeObjectURL(blob);
+  return (blobArr?.length && blobArr[blobArr.length - 1]) || window.btoa(new Date().getTime().toString());
+}

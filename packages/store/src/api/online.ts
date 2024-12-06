@@ -1,8 +1,7 @@
-import { IConfigsColunm } from '@/typings/config';
+import { configsStoreState } from '@/state/configs';
+import { IConfigsColunm } from '@/typings/configs';
 import { INote } from '@/typings/note';
-
-import { is,getCookie } from '@xynotes/utils';
-import { omit } from '@xynotes/utils';
+import { getCookie, is, omit } from '@xynotes/utils';
 
 /**
  * 在线数据保存
@@ -15,20 +14,16 @@ class ApiEventOnline {
   private onlineSyncErrorCount: number = 0;
 
   // 基础拉取
-  private async fetch<T extends any = any>(url: string, body: any = {}): Promise<T> {
-    if (
-      window.$config?.REMOTE_ONLINE_SYNC === false ||
-      !is.url(window.$config?.REMOTE_BASE_URL) ||
-      this.ignoreOnlineSync
-    ) {
-      return Promise.resolve(null);
+  private async fetch<T extends unknown = any>(url: string, body: any = {}): Promise<T> {
+    if (configsStoreState.value.REMOTE_ONLINE_SYNC === false || !is.url(configsStoreState.value.REMOTE_BASE_URL) || this.ignoreOnlineSync) {
+      return Promise.resolve(null as any);
     }
-    const uri = new URL(url, window.$config.REMOTE_BASE_URL);
+    const uri = new URL(url, configsStoreState.value.REMOTE_BASE_URL);
     return fetch(uri, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: window.$config.REMOTE_AUTHORIZATION || getCookie('Authorization') || '',
+        Authorization: configsStoreState.value.REMOTE_AUTHORIZATION || getCookie('Authorization') || '',
         'X-App-DeviceId': '',
         'X-App-Source': 'Note_Service'
       },

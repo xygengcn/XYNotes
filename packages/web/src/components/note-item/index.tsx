@@ -1,9 +1,9 @@
-import { Note } from '@/services/note';
-import { useNotesStore } from '@/store/notes.store';
+import { Icon } from '@xynotes/components';
+import { Note } from '@xynotes/store';
+import { activeNote, notesStoreState } from '@xynotes/store/note';
 import { highLight } from '@xynotes/utils';
 import { DateFormat } from 'js-lark';
-import { PropType, computed, defineComponent, h, nextTick, ref, watch } from 'vue';
-import { Icon } from '@xynotes/components';
+import { PropType, defineComponent, h, nextTick, ref, watch } from 'vue';
 import './index.scss';
 
 const NoteItem = defineComponent({
@@ -26,8 +26,6 @@ const NoteItem = defineComponent({
     select: (note: Note) => true
   },
   setup(props, context) {
-    const store = useNotesStore();
-
     /**
      * 节点
      */
@@ -36,16 +34,9 @@ const NoteItem = defineComponent({
     /**
      * 选中
      */
-    const activeNoteId = computed(() => {
-      return store.activeNoteId;
-    });
-
-    /**
-     * 选中
-     */
     const handleClickSelect = async () => {
-      if (store.activeNote) {
-        await store.activeNote.save(true);
+      if (activeNote.value) {
+        await activeNote.value.save(true);
       }
       context.emit('select', props.note);
     };
@@ -54,7 +45,7 @@ const NoteItem = defineComponent({
       () => props.sortIndex,
       () => {
         nextTick(() => {
-          if (activeNoteId.value === props.note.nid) {
+          if (notesStoreState.value.activeNoteId === props.note.nid) {
             refNote.value?.scrollIntoView({ behavior: 'smooth' });
           }
         });
@@ -63,7 +54,11 @@ const NoteItem = defineComponent({
 
     return () => (
       <div
-        class={['note-item', 'note-item-index-' + props.sortIndex, { active: activeNoteId.value === props.note?.nid }]}
+        class={[
+          'note-item',
+          'note-item-index-' + props.sortIndex,
+          { active: notesStoreState.value.activeNoteId === props.note?.nid }
+        ]}
         ref={refNote}
         onClick={handleClickSelect}
       >
