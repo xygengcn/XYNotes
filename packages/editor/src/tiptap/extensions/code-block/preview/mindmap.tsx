@@ -11,7 +11,7 @@ export function isMindMapLanguage(lang: string) {
   if (match && !customElements.get('mind-mark')) {
     import('@xynotes/mindmark').then(({ MindMarkElement }) => {
       // 定义自定义元素
-      customElements.define('mind-mark', MindMarkElement);
+      !customElements.get('mind-mark') && customElements.define('mind-mark', MindMarkElement);
     });
   }
   return match;
