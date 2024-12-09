@@ -212,7 +212,7 @@ export const defineMarkdownEditorPreview = () => {
     return editor.value?.commands.setContent(content);
   };
 
-  return (options?: { defaultValue: string; editable?: boolean }) => {
+  return (options?: { defaultValue: string }) => {
     const instance = getCurrentInstance();
 
     /**
@@ -235,7 +235,7 @@ export const defineMarkdownEditorPreview = () => {
           element: el,
           content: editorCache.value || options?.defaultValue || '',
           extensions: extensions,
-          editable: options?.editable ?? true,
+          editable: false,
           onCreate() {
             // 加载结束
             loading.value = false;
