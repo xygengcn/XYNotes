@@ -10,7 +10,7 @@ export default defineConfig(
   async () =>
     ({
       plugins: [vue(), vueJsx(), dts({ entryRoot: './src' })],
-      base: './src',
+      base: path.join(__dirname, './src'),
       envPrefix: ['VITE_'],
       resolve: {
         alias: {

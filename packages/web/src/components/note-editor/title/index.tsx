@@ -1,6 +1,5 @@
-import Input from '@/components/common/input';
-import { Note } from '@xynotes/store';
-import { NoteStatus } from '@/typings/note';
+import { Input } from '@xynotes/components';
+import { Note, NoteStatus } from '@xynotes/store';
 import { defineComponent, PropType } from 'vue';
 import './index.scss';
 

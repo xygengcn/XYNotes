@@ -142,8 +142,9 @@
       width: 100%;
       padding: 20px 16px 16px;
       text-align: initial;
+      height: max-content;
     }
-    code-preview {
+    &-preview {
       flex: 1;
     }
   }

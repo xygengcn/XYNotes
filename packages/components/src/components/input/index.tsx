@@ -18,10 +18,10 @@ const Input = defineComponent({
     }
   },
   emits: {
-    change: (value: string) => true,
-    input: (value: string) => true,
-    'update:value': (value: string) => true,
-    blur: (e: Event, origin: string) => true
+    change: (_value: string) => true,
+    input: (_value: string) => true,
+    'update:value': (_value: string) => true,
+    blur: (_e: Event, _value: string) => true
   },
   setup(props, context) {
     /**

@@ -1,4 +1,4 @@
-import { IContextMenuItem, IContextMenuProps } from '@/typings/contextmenu';
+import { IContextMenuItem, IContextMenuProps } from './contextmenu';
 import vClickOutside from 'click-outside-vue3';
 import { PropType, Transition, createApp, defineComponent, onMounted, ref } from 'vue';
 import './index.scss';
@@ -11,7 +11,7 @@ const ContextMenuComponent = defineComponent({
   name: 'ContextMenuComponent',
   emits: {
     close: () => true,
-    select: (options: IContextMenuProps) => true
+    select: (options: IContextMenuProps) => options
   },
   directives: {
     clickOutside: vClickOutside.directive
@@ -37,7 +37,7 @@ const ContextMenuComponent = defineComponent({
 
       context.emit('select', {
         menu: props.menuList[target.dataset.index || 0],
-        key: target.dataset.key
+        key: target.dataset.key || ''
       });
       handleClose();
     };
@@ -89,9 +89,9 @@ const ContextMenuComponent = defineComponent({
  */
 export default function contextMenu(menuList: IContextMenuItem[], onSubmit: (options: IContextMenuProps) => void) {
   const selection = window.getSelection();
-  let range: Range = null;
-  if (selection.rangeCount > 0) {
-    range = selection.getRangeAt(0).cloneRange();
+  let range: Range | null = null;
+  if (selection?.rangeCount && selection.rangeCount > 0) {
+    range = selection?.getRangeAt(0).cloneRange();
   }
   const instance = document.querySelector('#contextmenu');
   if (instance) {
@@ -104,7 +104,7 @@ export default function contextMenu(menuList: IContextMenuItem[], onSubmit: (opt
     menuList,
     onSelect(options: IContextMenuProps) {
       const selection = window.getSelection();
-      if (selection.rangeCount > 0) {
+      if (selection?.rangeCount && selection.rangeCount > 0 && range) {
         selection.addRange(range);
       }
       onSubmit?.({ ...options, range });

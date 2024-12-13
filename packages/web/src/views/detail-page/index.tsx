@@ -2,7 +2,7 @@ import NoteEditor from '@/components/note-editor';
 import { defineComponent } from 'vue';
 import './index.scss';
 import { useRoute } from 'vue-router';
-import MinMax from '@/components/common/min-max';
+import MinMax from '@/components/min-max';
 import { is } from '@xynotes/utils';
 
 const DetailPage = defineComponent({

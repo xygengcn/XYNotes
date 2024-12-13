@@ -11,6 +11,7 @@
     "strictNullChecks": false,
     "experimentalDecorators": true,
     "skipLibCheck": true,
+    "noUnusedParameters": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,

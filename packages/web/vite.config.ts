@@ -31,7 +31,11 @@ export default defineConfig({
         }
       }
     }),
-    vueJsx(),
+    vueJsx({
+      isCustomElement: (tag) => {
+        return ['mind-mark', 'code-preview'].includes(tag);
+      }
+    }),
     VitePWA({
       base: '/',
       devOptions: { enabled: false },

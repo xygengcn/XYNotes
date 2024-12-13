@@ -19,8 +19,11 @@ export default defineConfig({
         }
       }
     }),
-    ,
-    vueJsx()
+    vueJsx({
+      isCustomElement: (tag) => {
+        return ['mind-mark', 'code-preview'].includes(tag);
+      }
+    })
   ],
   define: {
     __MARKDOWN__: JSON.stringify(markdown)

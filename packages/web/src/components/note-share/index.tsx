@@ -1,13 +1,10 @@
-import VueContextMenu from '@/directive/contextmenu';
+import { Dialog, Icon, Loading, Popover, VueContextMenu } from '@xynotes/components';
+import { EditorPerview, useEditorPreview } from '@xynotes/editor';
 import { Note } from '@xynotes/store';
 import { screenshot, screenshotCopy } from '@xynotes/utils';
 import { PropType, createApp, defineComponent, ref } from 'vue';
-import Dialog from '../common/dialog';
-import { Icon } from '@xynotes/components';
-import { Loading } from '@xynotes/components';
-import Popover from '../common/popover';
+import MinMax from '../min-max';
 import './index.scss';
-import { EditorPerview, useEditorPreview } from '@xynotes/editor';
 
 interface IScreenshotProps {
   width?: string;
@@ -96,9 +93,10 @@ const Screenshot = defineComponent({
         class="note-share-dialog"
         onClose={handleClose}
         v-slots={{
-          title: () => {
+          title: ({ onClose, onFullScreen }) => {
             return (
               <div class="note-share-title">
+                <MinMax type="dialog" disabled={['min']} onClose={onClose} onFullscreen={onFullScreen}></MinMax>
                 <h3>{props.note.title}</h3>
                 <div class="note-share-title-right">
                   <Popover position="left">

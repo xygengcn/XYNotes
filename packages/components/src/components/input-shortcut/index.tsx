@@ -2,6 +2,10 @@ import { preventDefault } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
 
+/**
+ * 快捷键输入
+ */
+
 const ShortcutInput = defineComponent({
   name: 'ShortcutInput',
   props: {
@@ -15,8 +19,8 @@ const ShortcutInput = defineComponent({
     }
   },
   emits: {
-    'update:value': (value: string) => true,
-    input: (value: string, origin: string) => {}
+    'update:value': (value: string) => value,
+    input: (_value: string, _origin: string) => {}
   },
   setup(props, context) {
     /**

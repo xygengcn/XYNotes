@@ -6,7 +6,7 @@ import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';
 import App from './App';
 import './components/index';
-import VueContextMenu from './directive/contextmenu';
+import { VueContextMenu } from '@xynotes/components';
 import './registerServiceWorker';
 import router from './router';
 import './services/shortcut';

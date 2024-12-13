@@ -1,4 +1,4 @@
-import Button from '@/components/common/button';
+import { Button } from '@xynotes/components';
 import { backupAppData, recoveryAppData } from '@xynotes/store/app';
 import { downloadFile, jsonFileReader } from '@xynotes/utils';
 import { defineComponent } from 'vue';

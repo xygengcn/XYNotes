@@ -1,11 +1,9 @@
-import Input from '@/components/common/input';
-import Switch from '@/components/common/switch';
+import { Card, Input, Switch } from '@xynotes/components';
 import { IConfigs } from '@xynotes/store';
+import { syncApp } from '@xynotes/store/app';
 import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { defineComponent } from 'vue';
-import Card from '../common/card';
 import './index.scss';
-import { syncApp } from '@xynotes/store/app';
 
 const RemoteConfigPage = defineComponent({
   name: 'RemoteConfigPage',

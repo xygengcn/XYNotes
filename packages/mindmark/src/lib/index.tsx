@@ -71,7 +71,7 @@ const MindMark = defineComponent({
 
 const MindMarkElement = defineCustomElement({
   name: 'MindMarkElement',
-  shadowRoot: false,
+  shadowRoot: true,
   props: {
     markdown: {
       type: String,
@@ -81,8 +81,7 @@ const MindMarkElement = defineCustomElement({
   },
   styles: [
     `:host {
-      display: flex;
-      flex-direction: column;
+      display: block;
       width: 100%;
       height: 100%;
       box-sizing: border-box;

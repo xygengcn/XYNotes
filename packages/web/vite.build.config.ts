@@ -12,7 +12,8 @@ export default defineConfig({
   base: '/',
   build: {
     outDir: 'dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    chunkSizeWarningLimit: 500
   },
   plugins: [
     vue({
@@ -22,7 +23,9 @@ export default defineConfig({
         }
       }
     }),
-    vueJsx(),
+    vueJsx({
+      isCustomElement: (tag) => tag.includes('-')
+    }),
     VitePWA({
       base: '/',
       devOptions: { enabled: false },

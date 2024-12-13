@@ -1,10 +1,9 @@
-import Drawer from '@/components/common/drawer';
 import NoteEditor from '@/components/note-editor';
 import NoteEditorCounter from '@/components/note-editor/counter';
 import NoteEditorTitle from '@/components/note-editor/title';
 import showShareNoteDialog from '@/components/note-share';
 import { useThemeColor } from '@/services/theme';
-import { Icon, Loading } from '@xynotes/components';
+import { Drawer, Icon, Loading } from '@xynotes/components';
 import { activeNote, setActiveNoteId } from '@xynotes/store/note';
 import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

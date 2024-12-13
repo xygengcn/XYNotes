@@ -1,4 +1,4 @@
-import { INote } from '@/typings/note';
+import { INote } from '@xynotes/store';
 
 type Handler<T extends (...args: any) => any = (...args: any[]) => any> = (...val: Parameters<T>) => void;
 
