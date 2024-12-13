@@ -246,6 +246,8 @@ export const defineMarkdownEditorPreview = () => {
     onBeforeUnmount(() => {
       if (instance?.refs.editor) {
         editor.value?.destroy();
+        // 重新创建会失败
+        editor.value = undefined;
       }
     });
     return {
