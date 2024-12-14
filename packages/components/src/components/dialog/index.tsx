@@ -1,5 +1,4 @@
 import { PropType, StyleValue, Transition, computed, defineComponent, ref } from 'vue';
-import MinMax from '../min-max';
 import './index.scss';
 
 /**
@@ -93,29 +92,6 @@ const Dialog = defineComponent({
     };
   },
   render() {
-    /**
-     * 标题
-     * @returns
-     */
-    const Title = () => {
-      if (this.$slots.title || this.$props.title) {
-        return (
-          <div class="dialog-header">
-            <MinMax
-              type="dialog"
-              disabled={['min']}
-              onClose={this.handleClose}
-              onFullscreen={this.handleScreen}
-            ></MinMax>
-            <div class="dialog-header-content">
-              {this.$slots.title ? this.$slots.title() : <h3>{this.$props.title}</h3>}
-            </div>
-          </div>
-        );
-      }
-      return null;
-    };
-
     return (
       <Transition name="fade">
         <div class="dialog">
@@ -131,7 +107,19 @@ const Dialog = defineComponent({
           )}
           <Transition name="zoom">
             <div class="dialog-wrap" ref="refDialogWrap" style={this.wrapStyle}>
-              <Title></Title>
+              {this.$slots.title ? (
+                <div class="dialog-header">
+                  {this.$slots.title({ onClose: this.handleClose, onFullScreen: this.handleScreen })}
+                </div>
+              ) : (
+                this.$props.title && (
+                  <div class="dialog-header">
+                    <div class="dialog-header-content">
+                      <h3>{this.$props.title}</h3>
+                    </div>
+                  </div>
+                )
+              )}
               <div class={['dialog-content', this.$props.customClass]}>{this.$slots.default?.()}</div>
             </div>
           </Transition>

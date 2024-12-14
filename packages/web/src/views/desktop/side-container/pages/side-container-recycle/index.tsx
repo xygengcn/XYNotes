@@ -1,7 +1,7 @@
 import NoteItem from '@/components/note-item';
 import { defineComponent } from 'vue';
 import './index.scss';
-import { IContextMenuProps } from '@/typings/contextmenu';
+import { IContextMenuProps } from '@xynotes/components';
 import Scroller from '@/components/common/scroller';
 import { notesStoreState, recovery } from '@xynotes/store/note';
 

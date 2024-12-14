@@ -1,5 +1,6 @@
-import contextMenu from '@/components/common/contextmenu';
-import { IContextMenuOptions } from '@/typings/contextmenu';
+import { IContextMenuOptions } from './contextmenu';
+import contextMenu from './container';
+
 import { App } from 'vue';
 
 /**
@@ -30,7 +31,7 @@ function rect(dialog: DOMRect, pointEvent: MouseEvent) {
     left
   };
 }
-export default function VueContextMenu(app: App) {
+export default function VueContextMenu(app: App<any>) {
   app.directive('contextmenu', {
     mounted(el, binding) {
       /**
@@ -46,7 +47,7 @@ export default function VueContextMenu(app: App) {
         e.preventDefault();
 
         // 右键目标
-        let target = e.target as HTMLElement;
+        let target: HTMLElement | null = e.target as HTMLElement;
 
         // 索引
         let contextMenuKey = '';
@@ -73,8 +74,9 @@ export default function VueContextMenu(app: App) {
         }
       };
     },
-    beforeUnmount(el, binding, vnode) {
+    beforeUnmount(el, binding) {
       const options = (binding.value || {}) as IContextMenuOptions;
+      // @ts-ignore
       options.onSelect = null;
       // 移除监听
       if (el.oncontextmenu) {

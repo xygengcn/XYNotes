@@ -1,5 +1,5 @@
 import logo from '@/assets/images/logo/logo.png';
-import MinMax from '@/components/common/min-max';
+import MinMax from '@/components/min-max';
 import { AppLoadStatus } from '@xynotes/store';
 import { Loading } from '@xynotes/components';
 import { is } from '@xynotes/utils';

@@ -16,7 +16,7 @@ const Card = defineComponent({
   setup(props, context) {
     return () => (
       <div class="card" style={{ borderRadius: props.borderRadius }}>
-        {context.slots.default()}
+        {context.slots.default?.()}
       </div>
     );
   }

@@ -19,6 +19,7 @@ import ParagraphExtension from './paragraph';
 import StrikeExtension from './strike';
 import { TaskItemExtension, TaskListExtension } from './task-list';
 import { CharacterCountExtension } from './character-count';
+import LinkExtension from './link';
 
 /**
  * 编辑器扩展
@@ -26,14 +27,7 @@ import { CharacterCountExtension } from './character-count';
 export default [
   Text,
   Document,
-  link.configure({
-    openOnClick: false,
-    HTMLAttributes: {
-      class: 'markdown-editor-link',
-      target: '_blank',
-      rel: 'noopener noreferrer'
-    }
-  }),
+  LinkExtension,
   TableRow,
   TableHeader,
   TableCell,

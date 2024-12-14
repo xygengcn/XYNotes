@@ -14,6 +14,7 @@ import { isPreviewLanguage } from './preview';
  * @returns
  */
 export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Event) => void) {
+  console.log("[editor] code-block")
   const defaultLanguage = node.attrs.language;
   const defaultCode = node.textContent;
   // 创建根元素
@@ -61,7 +62,10 @@ export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Ev
   setCodePreview(defaultLanguage, defaultCode);
 
   // 将头部容器和代码内容容器添加到根元素
-  codeContent.appendChild(codePreview);
+  const div =document.createElement("div")
+  div.className = 'markdown-editor-codeblock-content-preview';
+  div.appendChild(codePreview)
+  codeContent.appendChild(div);
   codeBlock.appendChild(codeContent);
 
   // 上一个语言

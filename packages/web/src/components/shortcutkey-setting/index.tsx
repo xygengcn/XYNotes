@@ -1,8 +1,7 @@
 import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { registerShortcut, showMainWindow, unregisterAllShortcut } from '@xynotes/app-api';
 import { defineComponent } from 'vue';
-import Card from '../common/card';
-import ShortcutInput from '../common/input-shortcut';
+import { ShortcutInput, Card } from '@xynotes/components';
 import './index.scss';
 
 const ShortcutkeysSetting = defineComponent({

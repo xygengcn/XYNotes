@@ -1,6 +1,5 @@
 import Vue, { VNode } from 'vue';
-import Confirm from '@/components/common/confirm';
-import { IContextMenuOptions } from './contextmenu';
+import { Confirm, Toast } from '@xynotes/components';
 declare global {
   interface Window {
     debounceMap: Map;

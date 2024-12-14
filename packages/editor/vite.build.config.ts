@@ -19,8 +19,11 @@ export default defineConfig(
             }
           }
         }),
-        ,
-        vueJsx(),
+        vueJsx({
+          isCustomElement: (tag) => {
+            return ['mind-mark', 'code-preview'].includes(tag);
+          }
+        }),
         dts({ entryRoot: './src' })
       ],
       base: path.join(__dirname, './src'),

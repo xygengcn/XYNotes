@@ -1,7 +1,7 @@
 import { PropType, computed, createApp, defineComponent, ref } from 'vue';
-import Button, { ButtonSize, ButtonType } from '../button';
+import Button, { type ButtonSize, type ButtonType } from '../button';
 import Dialog from '../dialog';
-import { Icon } from '@xynotes/components';
+import Icon from '../icon';
 import './index.scss';
 
 interface IConfirmProps {
@@ -57,7 +57,7 @@ const ConfirmComponent = defineComponent({
     /**
      * 获取弹窗
      */
-    const refContext = ref<typeof Dialog>(null);
+    const refContext = ref<typeof Dialog | null>(null);
 
     /**
      * 样式

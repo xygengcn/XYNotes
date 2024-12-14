@@ -1,13 +1,10 @@
-import Drawer from '@/components/common/drawer';
 import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
-import { Note } from '@xynotes/store';
-import { NoteListSortType } from '@/typings/enum/note';
 import { debounce } from '@/utils/debounce-throttle';
-import { Icon } from '@xynotes/components';
+import { Drawer, Icon } from '@xynotes/components';
+import { Note } from '@xynotes/store';
 import { syncApp } from '@xynotes/store/app';
-import { configsStoreState } from '@xynotes/store/configs';
-import { addNote, noteListCount, notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
+import { addNote, noteListCount, notesListBySort, setActiveNoteId } from '@xynotes/store/note';
 import { computed, defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SwipeList } from 'vue3-swipe-actions';

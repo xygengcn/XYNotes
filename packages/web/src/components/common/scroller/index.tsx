@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 
 const Scroller = defineComponent({
   name: 'Scroller',
-  setup(props, context) {
+  setup(_props, context) {
     return () => (
       <OverlayScrollbarsComponent element="div" options={{ scrollbars: { autoHide: 'leave', visibility: 'auto' } }}>
         {context.slots.default?.()}

@@ -27,11 +27,11 @@ const Drawer = defineComponent({
       () => props.visible,
       () => {
         if (props.visible) {
-          refContent.value.classList.remove(`drawer-content-${props.position}__close`);
-          refContent.value.classList.add(`drawer-content-${props.position}__open`);
+          refContent.value?.classList.remove(`drawer-content-${props.position}__close`);
+          refContent.value?.classList.add(`drawer-content-${props.position}__open`);
         } else {
-          refContent.value.classList.remove(`drawer-content-${props.position}__open`);
-          refContent.value.classList.add(`drawer-content-${props.position}__close`);
+          refContent.value?.classList.remove(`drawer-content-${props.position}__open`);
+          refContent.value?.classList.add(`drawer-content-${props.position}__close`);
         }
       }
     );
@@ -40,7 +40,7 @@ const Drawer = defineComponent({
       <div class={{ drawer: true, 'drawer-close': !props.visible }}>
         <div class="drawer-shadow" onClick={handleClose}></div>
         <div ref={refContent} class={['drawer-content', `drawer-content-${props.position}`]}>
-          {context.slots.default()}
+          {context.slots.default?.()}
         </div>
       </div>
     );

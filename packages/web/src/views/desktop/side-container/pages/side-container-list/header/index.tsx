@@ -1,11 +1,9 @@
-import Popover from '@/components/common/popover';
-import { Icon } from '@xynotes/components';
+import { Icon, Popover } from '@xynotes/components';
+import { INoteListSort, NoteListSortType } from '@xynotes/store';
 import { configsStoreState, setConfig } from '@xynotes/store/configs';
-import { NoteListSortType } from '@/typings/enum/note';
-import { INoteListSort } from '@xynotes/store';
+import { noteListCount } from '@xynotes/store/note';
 import { computed, defineComponent } from 'vue';
 import './index.scss';
-import { noteListCount } from '@xynotes/store/note';
 
 const DesktopSideContainerListHeader = defineComponent({
   name: 'DesktopSideContainerListHeader',

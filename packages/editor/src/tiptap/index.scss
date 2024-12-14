@@ -11,6 +11,11 @@
   --markdown-editor-theme-color: #f3bb41;
   --markdown-editor-gray-color: #e8e8e8;
 
+  user-select: text;
+  * {
+    user-select: text;
+  }
+
   // 默认选择颜色
   ::selection {
     background: #edb94645;
