@@ -14,11 +14,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "18.15.3",
     "click-outside-vue3": "^4.0.1",
     "vue": "3.5.13"
   },
   "devDependencies": {
+    "@types/node": "18.15.3",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "@xynotes/utils": "workspace:^",
@@ -31,11 +31,9 @@
     ".": {
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "development": "./src/index.ts"
     },
-    "./style.css": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
-    }
+    "./style.css": "./dist/style.css"
   }
 }

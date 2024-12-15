@@ -14,17 +14,20 @@ import Confirm from './components/confirm';
 
 export {
   Button,
-  Card, Dialog, Drawer, Icon,
+  Card,
+  Dialog,
+  Drawer,
+  Icon,
   Input,
   Loading,
   Confirm,
   Popover,
   ShortcutInput,
   Switch,
-  Toast, VueContextMenu,
+  Toast,
+  VueContextMenu,
   type ButtonSize,
   type ButtonType,
   type IContextMenuOptions,
   type IContextMenuProps
 };
-

@@ -35,9 +35,6 @@ importers:
 
   packages/components:
     dependencies:
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
       click-outside-vue3:
         specifier: ^4.0.1
         version: 4.0.1
@@ -45,6 +42,9 @@ importers:
         specifier: 3.5.13
         version: 3.5.13(typescript@5.5.4)
     devDependencies:
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
       '@vitejs/plugin-vue':
         specifier: ^4.2.3
         version: 4.6.2(vite@4.5.5(@types/node@18.15.3)(sass@1.77.8)(terser@5.36.0))(vue@3.5.13(typescript@5.5.4))

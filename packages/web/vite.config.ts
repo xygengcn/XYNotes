@@ -73,6 +73,7 @@ export default defineConfig({
     })
   ],
   resolve: {
+    conditions: ['development'],
     alias: [
       {
         find: /^~(.*)$/,
