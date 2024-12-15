@@ -5,6 +5,7 @@ import { ArrayMap } from '@xynotes/utils';
 import { computed, readonly, ref } from 'vue';
 import { configsStoreState } from './configs';
 import { NoteListSortType } from '@/typings/configs';
+import { deleteNoteEvent, onNoteUpdate, updateNoteEvent } from '@xynotes/transport/web';
 
 const state = ref({
   // 当前选中笔记，当前编辑笔记
@@ -70,6 +71,7 @@ export const setNoteList = (list: INote[]) => {
  * 更新笔记
  */
 export const updateNote = (note: INote) => {
+  console.log('[store] update:action', note.nid);
   const originNote = state.value.notesList.find((n) => note.nid === n.nid);
   if (originNote) {
     originNote.update(note);
@@ -94,13 +96,15 @@ export const addNote = (detail?: INote) => {
  * @returns
  */
 export const saveNote = async (note: INote, onlineSyncAt: boolean) => {
-  console.log('[apiSaveOrUpdateNote] param', note.nid, note.updatedAt);
+  console.log('[store] save', note.nid, note.updatedAt);
   const result = await ApiEvent.api.apiSaveOrUpdateNote(note, !!onlineSyncAt);
-  console.log('[apiSaveOrUpdateNote] result', note.nid, result.updatedAt);
+  console.log('[store] save:result', note.nid, result.updatedAt);
   if (result) {
-    updateNote(result);
+    /**
+     * 通知事件
+     */
+    updateNoteEvent(result);
   }
-  // noteEventBus.broadcast('note:update', { note: result, action: 'update' });
   return result;
 };
 
@@ -121,7 +125,7 @@ export const deleteNote = async (note: INote): Promise<any> => {
     // 插入回收
     find && state.value.recycleList.push(find[0]);
     // 广播
-    // noteEventBus.broadcast('note:update', { note, action: 'delete' });
+    deleteNoteEvent(note);
   });
 };
 
@@ -131,11 +135,11 @@ export const deleteNote = async (note: INote): Promise<any> => {
  * @returns
  */
 export const syncNote = async (note: INote) => {
-  console.log('[note] sync', note.nid);
-  return ApiEvent.api.apiSyncNote(note).then((note) => {
-    note && updateNote(note);
+  console.log('[note] sync:action', note.nid);
+  return ApiEvent.api.apiSyncNote(note).then((result) => {
     window.$ui.toast('同步成功');
-    return note;
+    result && updateNote(result);
+    return result || note;
   });
 };
 
@@ -161,3 +165,11 @@ export const recovery = (note: INote) => {
 };
 
 export const notesStoreState = readonly(state);
+
+/**
+ * 监听笔记事件
+ */
+onNoteUpdate((note) => {
+  console.log('[store] update:event', note.nid);
+  updateNote(note);
+});

@@ -23,6 +23,6 @@
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost", "ESNext"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx","src/**/*.d.ts", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx", "../tauri-api/src/index.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx","src/**/*.d.ts", "src/**/*.vue"],
   "exclude": ["node_modules"]
 }

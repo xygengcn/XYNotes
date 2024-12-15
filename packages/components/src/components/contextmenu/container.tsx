@@ -68,9 +68,11 @@ const ContextMenuComponent = defineComponent({
             <div class="contextmenu-content" onClick={this.handleClick}>
               {this.menuList.map((item, index) => {
                 return (
-                  <div class="contextmenu-content-item" data-key={item.value} data-index={index}>
-                    {item.label}
-                  </div>
+                  (item.visible ?? true) && (
+                    <div class="contextmenu-content-item" data-key={item.value} data-index={index}>
+                      {item.label}
+                    </div>
+                  )
                 );
               })}
             </div>

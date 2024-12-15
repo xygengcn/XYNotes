@@ -7,3 +7,4 @@ dev-dist
 target
 release
 .config
+vite.build.config.ts.timestamp.*.mjs

@@ -1,0 +1,44 @@
+{
+  "name": "@xynotes/transport",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "vite build --config vite.build.config.ts",
+    "postinstall": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./web": {
+      "import": "./dist/web.es.js",
+      "require": "./dist/web.cjs.js",
+      "types": "./dist/web/index.d.ts"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.7",
+    "@xynotes/store": "workspace:^",
+    "@xynotes/utils": "workspace:^",
+    "eslint": "8.4.1",
+    "prettier": "2.5.1",
+    "typescript": "5.7.2",
+    "vite": "5.0.5",
+    "vite-plugin-dts": "^3.9.1"
+  },
+  "dependencies": {
+    "eventemitter3": "^5.0.1",
+    "vue": "3.5.13"
+  }
+}

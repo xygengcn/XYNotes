@@ -31,7 +31,7 @@ export default defineConfig(
           formats: ['cjs', 'es']
         },
         rollupOptions: {
-          external: ['vue', 'vue-router']
+          external: ['vue', 'vue-router', '@xynotes/utils']
         }
       }
     } as UserConfig)

@@ -3,7 +3,7 @@
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
     "sourceMap": true,
@@ -19,7 +19,13 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","examples/**/*.ts", "examples/**/*.d.ts", "examples/**/*.tsx", "examples/**/*.vue"],
-  "exclude": ["src/vditor/*"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": ["node_modules", "dist"],
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.d.ts",
+    "./test/**/*.ts",
+    "./test/*.ts",
+    "./examples/*.ts",
+    "./examples/**/*.ts"
+  ]
 }

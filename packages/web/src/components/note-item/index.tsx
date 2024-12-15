@@ -1,7 +1,7 @@
 import { Icon } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { activeNote, notesStoreState } from '@xynotes/store/note';
-import { highLight } from '@xynotes/utils';
+import { highLight, preventDefault } from '@xynotes/utils';
 import { DateFormat } from 'js-lark';
 import { PropType, defineComponent, h, nextTick, ref, watch } from 'vue';
 import './index.scss';
@@ -23,7 +23,7 @@ const NoteItem = defineComponent({
     }
   },
   emits: {
-    select: (note: Note) => true
+    select: (note: Note) => note
   },
   setup(props, context) {
     /**
@@ -35,7 +35,7 @@ const NoteItem = defineComponent({
      * 选中
      */
     const handleClickSelect = async () => {
-      if (activeNote.value) {
+      if (activeNote.value && activeNote.value?.nid !== props.note.nid) {
         await activeNote.value.save(true);
       }
       context.emit('select', props.note);
@@ -61,6 +61,7 @@ const NoteItem = defineComponent({
         ]}
         ref={refNote}
         onClick={handleClickSelect}
+        onDblClick={preventDefault}
       >
         <div class="note-item-header">
           <span

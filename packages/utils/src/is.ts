@@ -1,12 +1,15 @@
-
 const is = {
   // 是不是客户端
   app(): boolean {
+    return this.tauriApp();
+  },
+  // 是不是tauri应用
+  tauriApp() {
     return !!window.__TAURI_INTERNALS__;
   },
   // 是不是主窗口
   mainWindow(): boolean {
-    if (this.app()) {
+    if (this.tauriApp()) {
       return window.__TAURI_INTERNALS__.metadata.currentWindow?.label === 'main';
     }
     return false;

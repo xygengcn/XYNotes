@@ -1,7 +1,7 @@
 import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
 import { IContextMenuProps } from '@xynotes/components';
-import { exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
+import { createWindow, exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
 import { Note } from '@xynotes/store';
 import { notesListBySort, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
@@ -36,6 +36,9 @@ const DesktopSideContainerListContent = defineComponent({
         switch (options.menu.value) {
           case 'sync':
             note.sync();
+            break;
+          case 'split':
+            createWindow({ nid: note.nid });
             break;
           case 'delete':
             window.$ui.confirm({
@@ -74,6 +77,7 @@ const DesktopSideContainerListContent = defineComponent({
           v-contextmenu={{
             menuList: [
               { label: '同步', value: 'sync' },
+              { label: '分屏', value: 'split', visible: is.app() },
               { label: '删除', value: 'delete' }
             ],
             onSelect: handleContextmenu

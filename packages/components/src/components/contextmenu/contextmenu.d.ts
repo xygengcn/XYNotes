@@ -5,6 +5,7 @@
 export interface IContextMenuItem {
   label: string;
   value: string;
+  visible?: boolean;
 }
 
 export interface IContextMenuProps {

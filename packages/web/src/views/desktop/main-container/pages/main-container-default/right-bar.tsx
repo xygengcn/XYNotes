@@ -52,7 +52,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
         visible: is.app(),
         action: (note: Note) => {
           if (note) {
-            handleSplitScreen(note);
+            createWindow({ nid: note.nid });
           }
         }
       },
@@ -83,11 +83,6 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       }
     ];
-
-    // 新开页面
-    const handleSplitScreen = (note: Note) => {
-      createWindow({ nid: note.nid });
-    };
 
     return () => (
       <div class="desktop-main-container-default-content-right" data-tauri-drag-region>
