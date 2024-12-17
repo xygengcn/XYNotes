@@ -97,7 +97,7 @@ const MobileDetail = defineComponent({
           ]
         ) : (
           <div class="mobile-detail-content">
-            <Loading type="circle"></Loading>
+            <Loading></Loading>
           </div>
         )}
         {/* 抽屉 */}

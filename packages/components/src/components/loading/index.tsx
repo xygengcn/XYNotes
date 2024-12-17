@@ -14,29 +14,14 @@ const Loading = defineComponent({
       default: '#515151'
     },
     type: {
-      type: String as PropType<'icon' | 'circle'>,
-      default: 'icon' // icon | circle
+      type: String as PropType<'icon'>,
+      default: 'icon' // icon
     }
   },
   setup(props) {
-    if (props.type === 'icon') {
-      return () => (
-        <div class="loading">
-          <Icon type="loading"></Icon>
-          <div class="loading-text" v-show={props.text}>
-            <span>{props.text}</span>
-          </div>
-        </div>
-      );
-    }
     return () => (
       <div class="loading">
-        <div class="loading-loader">
-          <div class="circle" style={{ backgroundColor: props.color }}></div>
-          <div class="circle" style={{ backgroundColor: props.color }}></div>
-          <div class="circle" style={{ backgroundColor: props.color }}></div>
-          <div class="circle" style={{ backgroundColor: props.color }}></div>
-        </div>
+        <Icon type="loading"></Icon>
         <div class="loading-text" v-show={props.text}>
           <span>{props.text}</span>
         </div>

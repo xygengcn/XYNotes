@@ -5,44 +5,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  &-loader {
-    --components-loading-size: 1.5rem;
-    width: var(--components-loading-size);
-    height: var(--components-loading-size);
-    position: relative;
-    animation: spin988 2s linear infinite;
-    .circle {
-      width: calc(var(--components-loading-size) / 2.2);
-      height: calc(var(--components-loading-size) / 2.2);
-      background-color: #333;
-      border-radius: 50%;
-      position: absolute;
-    }
-    .circle:nth-child(1) {
-      top: 0;
-      left: 0;
-    }
 
-    .circle:nth-child(2) {
-      top: 0;
-      right: 0;
-    }
-
-    .circle:nth-child(3) {
-      bottom: 0;
-      left: 0;
-    }
-
-    .circle:nth-child(4) {
-      bottom: 0;
-      right: 0;
-    }
-  }
   &-text {
     font-size: 12px;
     height: 20px;
     margin-top: 10px;
- 
   }
 
   .icon {

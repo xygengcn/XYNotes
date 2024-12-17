@@ -23,7 +23,7 @@ const EditorPerview = defineComponent({
         <div class="editor-preview-content" ref="editor" />
         {loading.value && (
           <div class="editor-preview-loading">
-            <Loading text="加载中" type="circle" />
+            <Loading text="加载中" />
           </div>
         )}
       </div>

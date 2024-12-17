@@ -25,12 +25,6 @@ export default defineComponent({
               <Loading text="正在加载中"></Loading>
             </td>
           </tr>
-          <tr>
-            <td width="100px">加载</td>
-            <td>
-            <Loading text="正在加载中" type="circle"></Loading>
-            </td>
-          </tr>
         </table>
       </div>
     );

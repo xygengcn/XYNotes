@@ -1,6 +1,6 @@
-import Icon from '@/components/icon';
-import Loading from '@/components/loading';
-import Toast from '@/components/toast';
+import Icon from './components/icon';
+import Loading from './components/loading';
+import Toast from './components/toast';
 import Button, { ButtonSize, ButtonType } from './components/button';
 import Card from './components/card';
 import { IContextMenuOptions, IContextMenuProps, VueContextMenu } from './components/contextmenu';

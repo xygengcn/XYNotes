@@ -3,7 +3,7 @@ import showShareNoteDialog from '@/components/note-share';
 import { Note } from '@xynotes/store';
 import { copyText } from '@xynotes/utils';
 import { is } from '@xynotes/utils';
-import { PropType, defineComponent } from 'vue';
+import { type PropType, defineComponent } from 'vue';
 import './index.scss';
 import { createWindow } from '@xynotes/app-api';
 

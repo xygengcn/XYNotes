@@ -2,7 +2,7 @@ import { Dialog, Icon, Loading, Popover } from '@xynotes/components';
 import { EditorPerview, useEditorPreview } from '@xynotes/editor';
 import { Note } from '@xynotes/store';
 import { screenshot, screenshotCopy } from '@xynotes/utils';
-import { PropType, defineComponent, ref } from 'vue';
+import { type PropType, defineComponent, ref } from 'vue';
 import MinMax from '../min-max';
 import './index.scss';
 
@@ -126,7 +126,7 @@ export default defineComponent({
           </div>
           {loading.value && (
             <div class="note-share-content-loading">
-              <Loading text="加载中" type="circle" />
+              <Loading text="加载中" />
             </div>
           )}
         </div>

@@ -5,6 +5,7 @@
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build --config vite.build.config.ts",
@@ -29,10 +30,10 @@
   },
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts",
-      "development": "./src/index.ts"
+      "types": "./dist/index.d.ts"
     },
     "./style.css": "./dist/style.css"
   }

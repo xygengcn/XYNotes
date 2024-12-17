@@ -1,5 +1,5 @@
 import { getDeviceType } from 'js-lark';
-import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
+import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
