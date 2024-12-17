@@ -57,5 +57,14 @@
     "vite": "^5.3.5",
     "vite-plugin-dts": "^3.9.1",
     "vue-tsc": "^2.0.26"
+  },
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./style.css": "./dist/style.css"
   }
 }

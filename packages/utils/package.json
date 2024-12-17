@@ -17,11 +17,13 @@
   ],
   "exports": {
     ".": {
+      "development":"./src/index.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./*": {
+      "development":"./src/*.ts",
       "import": "./dist/*.js",
       "require": "./dist/*.js",
       "types": "./dist/*.d.ts"
