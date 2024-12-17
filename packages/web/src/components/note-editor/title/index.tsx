@@ -1,6 +1,7 @@
 import { Input } from '@xynotes/components';
-import { Note, NoteStatus } from '@xynotes/store';
-import { defineComponent, PropType } from 'vue';
+import { NoteStatus } from '@xynotes/typings';
+import { Note } from '@xynotes/store';
+import { defineComponent, type PropType } from 'vue';
 import './index.scss';
 
 const NoteEditorTitle = defineComponent({

@@ -1,5 +1,5 @@
 import { IConfigsColunm } from '@/typings/configs';
-import { INote } from '@/typings/note';
+import { INote } from '@xynotes/typings';
 /**
  * 所有数据处理事件api 抽象类
  */

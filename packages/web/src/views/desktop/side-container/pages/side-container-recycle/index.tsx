@@ -1,15 +1,13 @@
 import NoteItem from '@/components/note-item';
 import { defineComponent } from 'vue';
 import './index.scss';
-import { IContextMenuProps } from '@xynotes/components';
+import { type IContextMenuProps } from '@xynotes/components';
 import Scroller from '@/components/common/scroller';
 import { notesStoreState, recovery } from '@xynotes/store/note';
 
 const DesktopSideContainerRecycleContent = defineComponent({
   name: 'DesktopSideContainerRecycleContent',
   setup() {
-
-
     /**
      * 右键
      * @param cmdKey

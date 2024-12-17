@@ -1,5 +1,5 @@
 import ApiEvent from '@/api';
-import { INote } from '@/typings/note';
+import { INote } from '@xynotes/typings';
 import { readonly, ref } from 'vue';
 import { syncConfigs } from './configs';
 import defaultJson from './default.json';

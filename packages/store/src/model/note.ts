@@ -1,5 +1,5 @@
 import { deleteNote, saveNote, syncNote } from '@/state/note';
-import { INote, NoteType, NoteStatus, INoteAttachment } from '@/typings/note';
+import { INote, NoteType, NoteStatus, INoteAttachment } from '@xynotes/typings';
 import { debounce, downloadFile, uuid } from '@xynotes/utils';
 
 export class Note implements INote {

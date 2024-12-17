@@ -1,6 +1,6 @@
 import { Editor, useEditor } from '@xynotes/editor';
 import '@xynotes/editor/style.css';
-import { NoteStatus } from '@xynotes/store';
+import { NoteStatus } from '@xynotes/typings';
 import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
 import { defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
 import './index.scss';

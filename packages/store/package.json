@@ -23,6 +23,7 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "@vitejs/plugin-vue-jsx": "^4.0.0",
     "@xynotes/transport": "workspace:^",
+    "@xynotes/typings": "workspace:^",
     "@xynotes/utils": "workspace:^",
     "prettier": "^2.8.7",
     "sass": "^1.62.0",

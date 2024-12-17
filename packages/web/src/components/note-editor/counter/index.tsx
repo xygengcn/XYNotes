@@ -1,6 +1,6 @@
 import { Note } from '@xynotes/store';
 import { TimeFormat } from 'js-lark';
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, type PropType } from 'vue';
 import './index.scss';
 
 /**

@@ -1,4 +1,4 @@
-import type { INote } from '@xynotes/store';
+import type { INote } from '@xynotes/typings';
 import EventEmitter from 'eventemitter3';
 import { getCurrentInstance, onBeforeUnmount } from 'vue';
 import { Broadcast } from './broadcast-channel';

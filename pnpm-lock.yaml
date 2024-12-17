@@ -246,6 +246,9 @@ importers:
       '@xynotes/transport':
         specifier: workspace:^
         version: link:../transport
+      '@xynotes/typings':
+        specifier: workspace:^
+        version: link:../typings
       '@xynotes/utils':
         specifier: workspace:^
         version: link:../utils
@@ -312,9 +315,9 @@ importers:
       '@types/node':
         specifier: ^22.7.7
         version: 22.7.7
-      '@xynotes/store':
+      '@xynotes/typings':
         specifier: workspace:^
-        version: link:../store
+        version: link:../typings
       '@xynotes/utils':
         specifier: workspace:^
         version: link:../utils
@@ -333,6 +336,21 @@ importers:
       vite-plugin-dts:
         specifier: ^3.9.1
         version: 3.9.1(@types/node@22.7.7)(rollup@4.19.1)(typescript@5.7.2)(vite@5.0.5(@types/node@22.7.7)(sass@1.77.8)(terser@5.36.0))
+
+  packages/typings:
+    devDependencies:
+      prettier:
+        specifier: ^2.8.7
+        version: 2.8.8
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vite:
+        specifier: ^5.3.5
+        version: 5.3.5(@types/node@22.7.7)(sass@1.77.8)(terser@5.36.0)
+      vite-plugin-dts:
+        specifier: ^3.9.1
+        version: 3.9.1(@types/node@22.7.7)(rollup@4.19.1)(typescript@5.7.2)(vite@5.3.5(@types/node@22.7.7)(sass@1.77.8)(terser@5.36.0))
 
   packages/utils:
     dependencies:
@@ -413,6 +431,9 @@ importers:
       '@xynotes/store':
         specifier: workspace:^
         version: link:../store
+      '@xynotes/typings':
+        specifier: workspace:^
+        version: link:../typings
       '@xynotes/utils':
         specifier: workspace:^
         version: link:../utils
@@ -9021,7 +9042,7 @@ snapshots:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.7
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   semver@5.7.2: {}
 

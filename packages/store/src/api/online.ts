@@ -1,6 +1,6 @@
 import { configsStoreState } from '@/state/configs';
 import { IConfigsColunm } from '@/typings/configs';
-import { INote } from '@/typings/note';
+import { INote } from '@xynotes/typings';
 import { getCookie, is, omit } from '@xynotes/utils';
 
 /**
@@ -15,7 +15,11 @@ class ApiEventOnline {
 
   // 基础拉取
   private async fetch<T extends unknown = any>(url: string, body: any = {}): Promise<T> {
-    if (configsStoreState.value.REMOTE_ONLINE_SYNC === false || !is.url(configsStoreState.value.REMOTE_BASE_URL) || this.ignoreOnlineSync) {
+    if (
+      configsStoreState.value.REMOTE_ONLINE_SYNC === false ||
+      !is.url(configsStoreState.value.REMOTE_BASE_URL) ||
+      this.ignoreOnlineSync
+    ) {
       return Promise.resolve(null as any);
     }
     const uri = new URL(url, configsStoreState.value.REMOTE_BASE_URL);

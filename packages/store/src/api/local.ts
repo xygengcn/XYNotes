@@ -1,6 +1,6 @@
 import database from '@/database';
 import { IConfigsColunm } from '@/typings/configs';
-import { INote } from '@/typings/note';
+import { INote } from '@xynotes/typings';
 import { omit } from '@xynotes/utils';
 
 /**

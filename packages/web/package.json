@@ -36,6 +36,7 @@
     "@xynotes/components": "workspace:^",
     "@xynotes/editor": "workspace:^",
     "@xynotes/store": "workspace:^",
+    "@xynotes/typings": "workspace:^",
     "@xynotes/utils": "workspace:^",
     "prettier": "^2.6.2",
     "rollup-plugin-visualizer": "^5.8.3",

@@ -1,6 +1,6 @@
 import ApiEvent from '@/api';
 import { Note } from '@/model/note';
-import { INote } from '@/typings/note';
+import { INote } from '@xynotes/typings';
 import { ArrayMap } from '@xynotes/utils';
 import { computed, readonly, ref } from 'vue';
 import { configsStoreState } from './configs';

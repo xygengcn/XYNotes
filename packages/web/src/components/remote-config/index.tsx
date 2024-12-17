@@ -1,5 +1,5 @@
 import { Card, Input, Switch } from '@xynotes/components';
-import { IConfigs } from '@xynotes/store';
+import { type IConfigs } from '@xynotes/store';
 import { syncApp } from '@xynotes/store/app';
 import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { defineComponent } from 'vue';

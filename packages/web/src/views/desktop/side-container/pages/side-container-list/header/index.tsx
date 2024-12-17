@@ -1,5 +1,5 @@
 import { Icon, Popover } from '@xynotes/components';
-import { INoteListSort, NoteListSortType } from '@xynotes/store';
+import { type INoteListSort, NoteListSortType } from '@xynotes/store';
 import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { noteListCount } from '@xynotes/store/note';
 import { computed, defineComponent } from 'vue';
@@ -8,8 +8,6 @@ import './index.scss';
 const DesktopSideContainerListHeader = defineComponent({
   name: 'DesktopSideContainerListHeader',
   setup() {
-
-
     // 切换排序
     const handleChangeSortType = (sort: INoteListSort) => {
       console.info('[sort]', sort);
