@@ -1,6 +1,6 @@
 import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
-import { debounce } from '@/utils/debounce-throttle';
+import { debounce } from '@xynotes/utils';
 import { Drawer, Icon } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { syncApp } from '@xynotes/store/app';
