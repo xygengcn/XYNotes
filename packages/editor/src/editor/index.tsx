@@ -1,4 +1,4 @@
-import { defineMarkdownEditor } from '@/tiptap';
+import { defineMarkdownEditor } from '@editor/tiptap';
 import { Loading } from '@xynotes/components';
 import { defineComponent, nextTick, ref, watch } from 'vue';
 import './index.scss';

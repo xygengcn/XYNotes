@@ -3,6 +3,7 @@
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",
+    "composite": true,
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
@@ -16,7 +17,7 @@
     "declaration": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@editor/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","examples/**/*.ts", "examples/**/*.d.ts", "examples/**/*.tsx", "examples/**/*.vue"],

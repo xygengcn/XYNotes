@@ -1,6 +1,6 @@
-import { IContextMenuProps } from '@/typings/contextmenu';
-import { trim } from '@/utils';
-import { readText } from '@/utils/clipboard';
+import { IContextMenuProps } from '@editor/typings/contextmenu';
+import { trim } from '@editor/utils';
+import { readText } from '@editor/utils/clipboard';
 import { PropType, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import Loading from '../../../web/src/components/common/loading';
 import Scroller from '../../../web/src/components/common/scroller';

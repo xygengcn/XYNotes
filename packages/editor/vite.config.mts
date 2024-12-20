@@ -35,7 +35,7 @@ export default defineConfig({
         replacement: '$1'
       },
       {
-        find: '@',
+        find: '@editor',
         replacement: fileURLToPath(new URL('./src', import.meta.url))
       }
     ]
