@@ -1,5 +1,5 @@
 import { is } from '@xynotes/utils';
-import { PropType, defineComponent } from 'vue';
+import { type PropType, defineComponent } from 'vue';
 import './index.scss';
 import { closeWindow, isMaximized, maximize, minimize, unmaximize } from '@xynotes/app-api';
 

@@ -14,6 +14,7 @@
   "scripts": {
     "dev": "vite --port=8080 --mode development",
     "build": "vite build --config vite.build.config.ts --mode production",
+    "build:app": "vite build --config vite.app.config.ts --mode production",
     "start": "vite preview"
   },
   "dependencies": {

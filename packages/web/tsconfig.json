@@ -33,6 +33,7 @@
   "exclude": ["node_modules"],
   "references": [
     { "path": "./node_modules/@xynotes/components/tsconfig.json" },
-    { "path": "./node_modules/@xynotes/editor/tsconfig.json" }
+    { "path": "./node_modules/@xynotes/editor/tsconfig.json" },
+    { "path": "./node_modules/@xynotes/app-api/tsconfig.json" }
   ]
 }

@@ -7,6 +7,7 @@
     "rootDir": "./src",
     "baseUrl": "./src",
     "strict": true,
+    "composite": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,17 +15,15 @@
     "removeComments": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "declaration": true,
     "strictNullChecks": false,
     "skipLibCheck": true,
     "lib": ["esnext", "dom"],
-    "types": ["node"]
+    "types": ["node"],
+    "customConditions": ["development"]
   },
   "exclude": ["node_modules", "dist"],
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.d.ts",
-    "src/global.ts"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "src/global.ts"],
+  "references": [{ "path": "./node_modules/@xynotes/tauri-api/tsconfig.json" }]
 }

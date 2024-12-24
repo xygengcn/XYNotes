@@ -11,6 +11,7 @@ import { isRegistered, register, ShortcutEvent, unregisterAll } from '@tauri-app
  * @returns
  */
 export function isTauriApp(): boolean {
+  // @ts-ignore
   return window.__TAURI_INTERNALS__;
 }
 

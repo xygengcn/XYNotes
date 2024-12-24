@@ -9,6 +9,8 @@ fn open_devtools(app_handle: tauri::AppHandle, label: String, flag: bool) {
         window.close_devtools();
     }
 }
+use tauri::image::Image;
+use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::Manager;
 use tauri::{ActivationPolicy, WindowEvent};
 
@@ -26,6 +28,25 @@ pub fn run() {
             // mac
             #[cfg(target_os = "macos")]
             {
+                let _tray = TrayIconBuilder::new()
+                    .icon(Image::from_path("./icons/tray.png")?)
+                    .on_tray_icon_event(|tray, event| match event {
+                        TrayIconEvent::Click {
+                            button: MouseButton::Left,
+                            button_state: MouseButtonState::Up,
+                            ..
+                        } => {
+                            println!("left click pressed and released");
+                            // in this example, let's show and focus the main window when the tray is clicked
+                            let app = tray.app_handle();
+                            if let Some(window) = app.get_webview_window("main") {
+                                let _ = window.show();
+                                let _ = window.set_focus();
+                            }
+                        }
+                        _ => {}
+                    })
+                    .build(app)?;
                 app.set_activation_policy(ActivationPolicy::Accessory);
             }
             Ok(())

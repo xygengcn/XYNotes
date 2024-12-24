@@ -2,6 +2,7 @@ import { syncApp } from '@xynotes/store/app';
 import { is } from '@xynotes/utils';
 import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
+import { autoRegisterAppShortcut } from './services/shortcut';
 
 const App = defineComponent({
   name: 'App',
@@ -13,7 +14,9 @@ const App = defineComponent({
     };
     onBeforeMount(async () => {
       // 同步数据
-      syncApp();
+      syncApp().then(() => {
+        autoRegisterAppShortcut();
+      });
     });
 
     return () => (

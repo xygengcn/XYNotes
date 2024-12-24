@@ -3,6 +3,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "allowJs": true,
+    "composite": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "baseUrl": "./src",
@@ -14,17 +15,14 @@
     "removeComments": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "declaration": true,
     "strictNullChecks": false,
     "skipLibCheck": true,
     "lib": ["esnext", "dom"],
-    "types": ["node"]
+    "types": ["node"],
+    "customConditions": ["development"]
   },
   "exclude": ["node_modules", "dist"],
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.d.ts",
-    "src/global.ts"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "src/global.ts"]
 }

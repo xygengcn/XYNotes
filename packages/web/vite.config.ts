@@ -15,13 +15,7 @@ export default defineConfig({
     emptyOutDir: true
   },
   plugins: [
-    vue({
-      template: {
-        compilerOptions: {
-          isCustomElement: (tag) => tag.includes('-')
-        }
-      }
-    }),
+    vue(),
     vueJsx({
       isCustomElement: (tag) => {
         return ['mind-mark', 'code-preview'].includes(tag);

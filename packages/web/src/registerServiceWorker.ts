@@ -1,14 +1,9 @@
 /* eslint-disable no-console */
+import { is } from '@xynotes/utils';
 import { register } from 'register-service-worker';
-function unregister() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then((registration) => {
-      registration.unregister();
-    });
-  }
-}
+
 // @ts-ignore
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && !is.app()) {
   register(`sw.js`, {
     ready() {
       console.log('正在加载离线缓存...');
@@ -30,7 +25,11 @@ if (process.env.NODE_ENV === 'production') {
       console.log('应用程序正在脱机模式下运行...');
     },
     error(error) {
-      unregister();
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.unregister();
+        });
+      }
       console.error('注册时出错：', error);
     }
   });

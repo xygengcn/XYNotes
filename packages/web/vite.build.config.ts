@@ -18,15 +18,11 @@ export default defineConfig({
     chunkSizeWarningLimit: 500
   },
   plugins: [
-    vue({
-      template: {
-        compilerOptions: {
-          isCustomElement: (tag) => tag.includes('-')
-        }
-      }
-    }),
+    vue(),
     vueJsx({
-      isCustomElement: (tag) => tag.includes('-')
+      isCustomElement: (tag) => {
+        return ['mind-mark', 'code-preview'].includes(tag);
+      }
     }),
     VitePWA({
       base: '/',

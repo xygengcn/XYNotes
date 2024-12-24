@@ -35,7 +35,7 @@ const ShortcutInput = defineComponent({
     const onKeydown = (e) => {
       console.info('[shortcut]', e);
       // 阻止事件冒泡
-      e.stopPropagation();
+      // e.stopPropagation();
       // 阻止默认事件
       e.preventDefault();
 
@@ -81,6 +81,7 @@ const ShortcutInput = defineComponent({
         class="shortcut-input"
         onKeydown={onKeydown}
         onInput={onInput}
+        value={props.value}
         type="text"
         placeholder={props.placeholder}
       ></input>

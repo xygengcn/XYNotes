@@ -7,7 +7,10 @@
   background: #fff;
   padding-block: 0px;
   padding-inline: 0px;
+  position: relative;
+  font-family: var(--font-family-regular);
   &::placeholder {
     color: #cccccc;
+    font-size: 0.8em;
   }
 }

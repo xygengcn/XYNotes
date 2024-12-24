@@ -15,5 +15,13 @@
     "@types/node": "^22.7.7",
     "@xynotes/tauri-api": "workspace:^",
     "typescript": "5.7.2"
+  },
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   }
 }
