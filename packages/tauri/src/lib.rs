@@ -9,7 +9,7 @@ fn open_devtools(app_handle: tauri::AppHandle, label: String, flag: bool) {
         window.close_devtools();
     }
 }
-use tauri::image::Image;
+// use tauri::image::Image;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::Manager;
 use tauri::{ActivationPolicy, WindowEvent};
@@ -28,8 +28,9 @@ pub fn run() {
             // mac
             #[cfg(target_os = "macos")]
             {
-                let _tray = TrayIconBuilder::new()
-                    .icon(Image::from_path("./icons/tray.png")?)
+                let _tray = TrayIconBuilder::with_id("system")
+                    // 静态资源无法获取
+                    // .icon(Image::from_path("./icons/tray.png")?)
                     .on_tray_icon_event(|tray, event| match event {
                         TrayIconEvent::Click {
                             button: MouseButton::Left,
