@@ -33,6 +33,7 @@ export function createWindow(options: { nid: string }) {
   if (isTauriApp()) {
     return tauriCreateWindow({ id: windowId, url: windowLocationUrl });
   }
+  return window.open(windowLocationUrl, '_blank', 'height=600,width=800');
 }
 
 /**

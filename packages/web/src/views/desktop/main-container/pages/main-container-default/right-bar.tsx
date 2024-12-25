@@ -1,11 +1,10 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
+import { createWindow } from '@xynotes/app-api';
 import { Note } from '@xynotes/store';
 import { copyText } from '@xynotes/utils';
-import { is } from '@xynotes/utils';
 import { type PropType, defineComponent } from 'vue';
 import './index.scss';
-import { createWindow } from '@xynotes/app-api';
 
 const DesktopMainContainerDefaultRight = defineComponent({
   name: 'DesktopMainContainerDefaultRight',
@@ -49,7 +48,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
       {
         title: '分屏',
         icon: 'item-splitscreen',
-        visible: is.app(),
+        visible: true,
         action: (note: Note) => {
           if (note) {
             createWindow({ nid: note.nid });
