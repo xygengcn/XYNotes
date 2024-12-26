@@ -9,5 +9,57 @@
     margin: 0.7em 0;
     font-weight: 600;
     cursor: text;
+    position: relative;
+    &::after {
+      position: absolute;
+      left: -25px;
+      font-size: 10px;
+      color: #ccc;
+    }
+  }
+  h1 {
+    &:hover {
+      &::after {
+        content: 'H1';
+        top: 4px;
+      }
+    }
+  }
+  h2 {
+    &:hover {
+      &::after {
+        content: 'H2';
+        top: 4px;
+      }
+    }
+  }
+  h3 {
+    &:hover {
+      &::after {
+        content: 'H3';
+        top: 4px;
+      }
+    }
+  }
+  h4 {
+    &:hover {
+      &::after {
+        content: 'H4';
+      }
+    }
+  }
+  h5 {
+    &:hover {
+      &::after {
+        content: 'H5';
+      }
+    }
+  }
+  h6 {
+    &:hover {
+      &::after {
+        content: 'H6';
+      }
+    }
   }
 }
