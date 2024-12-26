@@ -38,7 +38,7 @@ export const defineMarkdownEditor = () => {
    * @returns 返回结构数据
    */
   const getData = () => {
-    return editor.value?.storage.markdown.getData();
+    return editor.value?.getJSON()
   };
 
   /**

@@ -19,7 +19,7 @@ const NoteEditor = defineComponent({
      */
     const fetchNoteLoading = ref(false);
 
-    const { onChange, getContent, onBlur, setContent, state, getCounter } = useEditor();
+    const { onChange, getContent, onBlur, setContent, state, getCounter, getData } = useEditor();
 
     /**
      * 监听nid变化
@@ -60,6 +60,7 @@ const NoteEditor = defineComponent({
     onChange(() => {
       const counter = getCounter();
       activeNote.value.set({ text: getContent(), status: NoteStatus.draft, counter: counter.words });
+      console.log(1111, getData());
       activeNote.value.save(false);
     });
 

@@ -5,8 +5,8 @@ import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { defineComponent } from 'vue';
 import './index.scss';
 
-const RemoteConfigPage = defineComponent({
-  name: 'RemoteConfigPage',
+const RemoteConfigSetting = defineComponent({
+  name: 'RemoteConfigSetting',
   setup() {
     /**
      * 数据修改
@@ -69,4 +69,4 @@ const RemoteConfigPage = defineComponent({
   }
 });
 
-export default RemoteConfigPage;
+export default RemoteConfigSetting;

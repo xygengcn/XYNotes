@@ -105,6 +105,7 @@ export class Note implements INote {
 
       // 笔记最新更新时间
       updatedAt: this.updatedAt,
+      
       // 简要信息
       intro: this.intro,
 

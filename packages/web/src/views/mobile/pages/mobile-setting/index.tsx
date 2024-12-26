@@ -1,4 +1,4 @@
-import RemoteConfigPage from '@/components/remote-config';
+import RemoteConfigPage from '@/components/remote-setting';
 import { Nav } from '@xynotes/components';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
