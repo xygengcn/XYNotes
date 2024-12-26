@@ -1,9 +1,8 @@
 import NoteItem from '@/components/note-item';
+import { type IContextMenuProps, Scroller } from '@xynotes/components';
+import { notesStoreState, recovery } from '@xynotes/store/note';
 import { defineComponent } from 'vue';
 import './index.scss';
-import { type IContextMenuProps } from '@xynotes/components';
-import Scroller from '@/components/common/scroller';
-import { notesStoreState, recovery } from '@xynotes/store/note';
 
 const DesktopSideContainerRecycleContent = defineComponent({
   name: 'DesktopSideContainerRecycleContent',

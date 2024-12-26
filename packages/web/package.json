@@ -21,14 +21,12 @@
     "click-outside-vue3": "^4.0.1",
     "html2canvas": "^1.4.1",
     "js-lark": "^0.0.2",
-    "overlayscrollbars": "^2.4.5",
-    "overlayscrollbars-vue": "^0.5.6",
     "register-service-worker": "^1.7.2",
-    "vue-tippy": "^6.3.1",
     "tippy.js": "^6.3.7",
-    "vue3-swipe-actions": "^0.0.1",
     "vue": "3.5.13",
-    "vue-router": "4.2.5"
+    "vue-router": "4.2.5",
+    "vue-tippy": "^6.3.1",
+    "vue3-swipe-actions": "^0.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

@@ -1,5 +1,5 @@
 import '@xynotes/components/style.css';
-import 'overlayscrollbars/overlayscrollbars.css';
+
 import 'tippy.js/dist/tippy.css';
 import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';

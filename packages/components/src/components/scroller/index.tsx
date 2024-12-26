@@ -1,5 +1,6 @@
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue';
 import { defineComponent } from 'vue';
+import 'overlayscrollbars/overlayscrollbars.css';
 
 const Scroller = defineComponent({
   name: 'Scroller',

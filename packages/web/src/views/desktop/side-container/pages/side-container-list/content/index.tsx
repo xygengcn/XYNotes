@@ -1,7 +1,6 @@
-import Scroller from '@/components/common/scroller';
 import NoteItem from '@/components/note-item';
-import { type IContextMenuProps } from '@xynotes/components';
 import { createWindow, exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
+import { type IContextMenuProps, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { notesListBySort, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';

@@ -38,6 +38,12 @@ importers:
       click-outside-vue3:
         specifier: ^4.0.1
         version: 4.0.1
+      overlayscrollbars:
+        specifier: ^2.4.5
+        version: 2.9.2
+      overlayscrollbars-vue:
+        specifier: ^0.5.6
+        version: 0.5.9(overlayscrollbars@2.9.2)(vue@3.5.13(typescript@5.7.2))
       vue:
         specifier: 3.5.13
         version: 3.5.13(typescript@5.7.2)
@@ -388,12 +394,6 @@ importers:
       js-lark:
         specifier: ^0.0.2
         version: 0.0.2
-      overlayscrollbars:
-        specifier: ^2.4.5
-        version: 2.9.2
-      overlayscrollbars-vue:
-        specifier: ^0.5.6
-        version: 0.5.9(overlayscrollbars@2.9.2)(vue@3.5.13(typescript@5.7.2))
       register-service-worker:
         specifier: ^1.7.2
         version: 1.7.2
