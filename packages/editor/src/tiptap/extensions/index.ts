@@ -1,5 +1,5 @@
 import Document from '@tiptap/extension-document';
-import link from '@tiptap/extension-link';
+import HistoryExtension from '@tiptap/extension-history';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
@@ -9,23 +9,24 @@ import { Markdown } from 'tiptap-markdown';
 import BlockquoteExtension from './blockquote';
 import BoldExtension from './bold';
 import { BulletListExtension, ListItemExtension } from './bullet-list';
+import { CharacterCountExtension } from './character-count';
 import CodeExtension from './code';
 import CodeBlockExtension from './code-block';
 import HeadingExtension from './heading';
 import HighlightExtension from './highlight';
 import ImageExtension from './image';
 import ItalicExtension from './italic';
+import LinkExtension from './link';
 import ParagraphExtension from './paragraph';
 import StrikeExtension from './strike';
 import { TaskItemExtension, TaskListExtension } from './task-list';
-import { CharacterCountExtension } from './character-count';
-import LinkExtension from './link';
 
 /**
  * 编辑器扩展
  */
 export default [
   Text,
+  HistoryExtension,
   Document,
   LinkExtension,
   TableRow,
