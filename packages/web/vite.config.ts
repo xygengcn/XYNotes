@@ -18,7 +18,7 @@ export default defineConfig({
     vue(),
     vueJsx({
       isCustomElement: (tag) => {
-        return ['mind-mark', 'code-preview'].includes(tag);
+        return ['mind-mark', 'code-preview', 'img-viewer'].includes(tag);
       }
     }),
     VitePWA({
