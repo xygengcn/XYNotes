@@ -38,7 +38,7 @@ export const defineMarkdownEditor = () => {
    * @returns 返回结构数据
    */
   const getData = () => {
-    return editor.value?.getJSON()
+    return editor.value?.getJSON();
   };
 
   /**
@@ -58,6 +58,14 @@ export const defineMarkdownEditor = () => {
    */
   const setEditable = (value: boolean) => {
     return editor.value?.setEditable(value);
+  };
+
+  /**
+   * 设置图片
+   * @param options
+   */
+  const setImage = (options: { src: string; alt?: string; title?: string }) => {
+    return editor.value?.commands.setImage(options);
   };
 
   /**
@@ -181,7 +189,8 @@ export const defineMarkdownEditor = () => {
       setContent,
       getCounter,
       getData,
-      onUpload
+      onUpload,
+      setImage
     };
   };
 };

@@ -1,3 +1,4 @@
+import { mergeAttributes } from '@tiptap/core';
 import { Image, ImageOptions } from '@tiptap/extension-image';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 
@@ -8,6 +9,20 @@ const ImageExtension = Image.extend<ImageOptions & { upload?: (files: FileList, 
       HTMLAttributes: {
         class: 'markdown-editor-image'
       }
+    };
+  },
+  addNodeView() {
+    return ({ node }) => {
+      const dom = document.createElement('img-viewer') as HTMLImageElement;
+      dom.classList.add('markdown-editor-image');
+      for (const [key, value] of Object.entries(mergeAttributes(this.options.HTMLAttributes, node.attrs))) {
+        if (value !== undefined && value !== null) {
+          dom.setAttribute(key, value);
+        }
+      }
+      return {
+        dom
+      };
     };
   },
   addProseMirrorPlugins() {

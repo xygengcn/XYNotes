@@ -14,14 +14,14 @@ export default defineConfig(
           template: {
             compilerOptions: {
               isCustomElement: (tag) => {
-                return ['mind-mark', 'code-preview'].includes(tag);
+                return ['mind-mark', 'code-preview','img-viewer'].includes(tag);
               }
             }
           }
         }),
         vueJsx({
           isCustomElement: (tag) => {
-            return ['mind-mark', 'code-preview'].includes(tag);
+            return ['mind-mark', 'code-preview','img-viewer'].includes(tag);
           }
         }),
         dts({ entryRoot: './src' })

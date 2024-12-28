@@ -5,6 +5,7 @@ import { IContextMenuOptions, IContextMenuProps, VueContextMenu } from './compon
 import Dialog from './components/dialog';
 import Drawer from './components/drawer';
 import Icon from './components/icon';
+import { imageViewer, Viewer } from './components/image-viewer';
 import Input from './components/input';
 import ShortcutInput from './components/input-shortcut';
 import Loading from './components/loading';
@@ -18,11 +19,10 @@ export {
   Button,
   Card, Confirm, Dialog,
   Drawer,
-  Icon,
-  Input,
+  Icon, imageViewer, Input,
   Loading, Nav, Popover, Scroller, ShortcutInput,
   Switch,
-  Toast,
+  Toast, Viewer,
   VueContextMenu,
   type ButtonSize,
   type ButtonType,

@@ -4,8 +4,8 @@
     "useDefineForClassFields": true,
     "module": "esnext",
     "composite": true,
-    "moduleResolution": "node",
-    "strict": true,
+    "moduleResolution": "bundler",
+    "strict": false,
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
@@ -18,7 +18,8 @@
     "baseUrl": "./",
     "paths": {
       "@editor/*": ["src/*"]
-    }
+    },
+    "customConditions": ["development"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","examples/**/*.ts", "examples/**/*.d.ts", "examples/**/*.tsx", "examples/**/*.vue"],
   "exclude": ["src/vditor/*"],
