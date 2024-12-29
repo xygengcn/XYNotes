@@ -12,10 +12,12 @@ const ImageExtension = Image.extend<ImageOptions & { upload?: (files: FileList, 
     };
   },
   addNodeView() {
-    return ({ node }) => {
+    return ({ node, editor }) => {
       const dom = document.createElement('img-viewer') as HTMLImageElement;
       dom.classList.add('markdown-editor-image');
-      for (const [key, value] of Object.entries(mergeAttributes(this.options.HTMLAttributes, node.attrs))) {
+      for (const [key, value] of Object.entries(
+        mergeAttributes(this.options.HTMLAttributes, node.attrs, { isEditable: editor.isEditable })
+      )) {
         if (value !== undefined && value !== null) {
           dom.setAttribute(key, value);
         }

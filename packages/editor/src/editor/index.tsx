@@ -3,9 +3,9 @@ import { Loading } from '@xynotes/components';
 import { defineComponent, nextTick, ref, watch } from 'vue';
 import './index.scss';
 
-const useEditor = defineMarkdownEditor();
+export const useEditor = defineMarkdownEditor();
 
-const Editor = defineComponent({
+export const Editor = defineComponent({
   name: 'Editor',
   props: {
     id: {
@@ -41,12 +41,10 @@ const Editor = defineComponent({
         <div class="editor-content" ref="editor" />
         {(props.loading || loading.value) && (
           <div class="editor-loading">
-            <Loading text="加载中"/>
+            <Loading text="加载中" />
           </div>
         )}
       </div>
     );
   }
 });
-
-export { Editor, useEditor };

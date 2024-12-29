@@ -1,7 +1,7 @@
 import { Editor, useEditor } from '@xynotes/editor';
 import '@xynotes/editor/style.css';
-import { NoteStatus } from '@xynotes/typings';
 import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
+import { NoteStatus } from '@xynotes/typings';
 import { defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
 import './index.scss';
 
@@ -19,7 +19,7 @@ const NoteEditor = defineComponent({
      */
     const fetchNoteLoading = ref(false);
 
-    const { onChange, getContent, onBlur, setContent, state, getCounter, getData } = useEditor();
+    const { onChange, getContent, onBlur, setContent, state, getCounter, onUpload, setImage } = useEditor();
 
     /**
      * 监听nid变化
@@ -60,7 +60,6 @@ const NoteEditor = defineComponent({
     onChange(() => {
       const counter = getCounter();
       activeNote.value.set({ text: getContent(), status: NoteStatus.draft, counter: counter.words });
-      console.log(1111, getData());
       activeNote.value.save(false);
     });
 
@@ -76,6 +75,13 @@ const NoteEditor = defineComponent({
       if (!notesStoreState.value.activeNoteId && props.nid) {
         setActiveNoteId(props.nid);
       }
+    });
+
+    onUpload((files: FileList) => {
+      setImage({
+        src: URL.createObjectURL(files[0]),
+        alt: files[0].name
+      });
     });
 
     return () => (
