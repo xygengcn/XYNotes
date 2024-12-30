@@ -1,8 +1,7 @@
 import { Icon } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { activeNote, notesStoreState } from '@xynotes/store/note';
-import { highLight, preventDefault } from '@xynotes/utils';
-import { DateFormat } from 'js-lark';
+import { dateFormat, highLight, preventDefault } from '@xynotes/utils';
 import { type PropType, defineComponent, h, nextTick, ref, watch } from 'vue';
 import './index.scss';
 
@@ -79,7 +78,7 @@ const NoteItem = defineComponent({
           })}
         </div>
         <div class="note-item-content">
-          <div class="note-item-content__time">{DateFormat(props.note?.updatedAt)}</div>
+          <div class="note-item-content__time">{dateFormat(props.note?.updatedAt)}</div>
           {h('div', {
             class: 'note-item-content__text',
             innerHTML: highLight(props.keyword, (props.note.intro || props.note.text)?.slice(0, 80))

@@ -1,4 +1,4 @@
-import { getDeviceType } from 'js-lark';
+import { is } from '@xynotes/utils';
 import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
@@ -104,7 +104,7 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   routes,
   history: createWebHistory(),
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_to, _from, savedPosition) {
     if (savedPosition) {
       return savedPosition;
     } else {
@@ -112,20 +112,20 @@ const router = createRouter({
     }
   }
 });
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   if (to.meta?.device == 'desktop') {
-    if (getDeviceType() === 'mobile') {
+    if (is.mobile()) {
       return next({ name: 'mobile-home' });
     }
-    if (getDeviceType() === 'tablet' && Math.abs(Number(window.orientation)) !== 90) {
+    if (is.tablet() && Math.abs(Number(window.orientation)) !== 90) {
       return next({ name: 'mobile-home' });
     }
   }
   if (to.meta?.device == 'mobile') {
-    if (getDeviceType() === 'desktop') {
+    if (is.desktop()) {
       return next({ name: 'desktop-list' });
     }
-    if (getDeviceType() === 'tablet' && Math.abs(Number(window.orientation)) === 90) {
+    if (is.tablet() && Math.abs(Number(window.orientation)) === 90) {
       return next({ name: 'desktop-list' });
     }
   }

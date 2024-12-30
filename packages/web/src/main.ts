@@ -1,5 +1,4 @@
 import '@xynotes/components/style.css';
-
 import 'tippy.js/dist/tippy.css';
 import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';
@@ -17,15 +16,24 @@ if (is.development() && is.app()) {
   openDevtools(true);
 }
 
+// 创建
 const app = createApp(App);
 
+// 右键
 app.use(VueContextMenu);
 
 // 指令
-app.use(VueTippy, {
-  directive: 'tippy'
-});
+if (is.desktop()) {
+  app.use(VueTippy, {
+    directive: 'tippy'
+  });
+} else {
+  // pad端不需要这个
+  app.directive('tippy', {});
+}
 
+// 路由
 app.use(router);
 
+// 挂载
 app.mount('#app');
