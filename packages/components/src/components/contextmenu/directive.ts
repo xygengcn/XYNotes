@@ -2,6 +2,7 @@ import { IContextMenuOptions } from './contextmenu';
 import contextMenu from './container';
 
 import { App } from 'vue';
+import { is } from '@xynotes/utils';
 
 /**
  * 计算右键位置
@@ -32,57 +33,61 @@ function rect(dialog: DOMRect, pointEvent: MouseEvent) {
   };
 }
 export default function VueContextMenu(app: App<any>) {
-  app.directive('contextmenu', {
-    mounted(el, binding) {
-      /**
-       * 获取参数
-       */
-      const { menuList, onSelect } = (binding.value || {}) as IContextMenuOptions;
-      if (!menuList?.length) {
-        return;
-      }
-      // 监听右键
-      el.oncontextmenu = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
+  if (is.desktop()) {
+    app.directive('contextmenu', {
+      mounted(el, binding) {
+        /**
+         * 获取参数
+         */
+        const { menuList, onSelect } = (binding.value || {}) as IContextMenuOptions;
+        if (!menuList?.length) {
+          return;
+        }
+        // 监听右键
+        el.oncontextmenu = (e) => {
+          e.stopPropagation();
+          e.preventDefault();
 
-        // 右键目标
-        let target: HTMLElement | null = e.target as HTMLElement;
+          // 右键目标
+          let target: HTMLElement | null = e.target as HTMLElement;
 
-        // 索引
-        let contextMenuKey = '';
+          // 索引
+          let contextMenuKey = '';
 
-        while (target && el.contains(target) && !contextMenuKey) {
-          if (target.dataset?.contextmenukey) {
-            contextMenuKey = target.dataset.contextmenukey;
-            break;
+          while (target && el.contains(target) && !contextMenuKey) {
+            if (target.dataset?.contextmenukey) {
+              contextMenuKey = target.dataset.contextmenukey;
+              break;
+            }
+            target = target.parentElement;
           }
-          target = target.parentElement;
-        }
 
-        contextMenuKey = contextMenuKey || el.dataset?.contextmenukey;
+          contextMenuKey = contextMenuKey || el.dataset?.contextmenukey;
 
-        // 没有索引
-        if (contextMenuKey) {
-          const el = contextMenu(menuList, (options) => {
-            onSelect?.({ ...options, key: contextMenuKey });
-          });
-          const menuRect = el.getBoundingClientRect();
-          const { left, top } = rect(menuRect, e);
-          el.style.left = left + 'px';
-          el.style.top = top + 'px';
+          // 没有索引
+          if (contextMenuKey) {
+            const el = contextMenu(menuList, (options) => {
+              onSelect?.({ ...options, key: contextMenuKey });
+            });
+            const menuRect = el.getBoundingClientRect();
+            const { left, top } = rect(menuRect, e);
+            el.style.left = left + 'px';
+            el.style.top = top + 'px';
+          }
+        };
+      },
+      beforeUnmount(el, binding) {
+        const options = (binding.value || {}) as IContextMenuOptions;
+        // @ts-ignore
+        options.onSelect = null;
+        // 移除监听
+        if (el.oncontextmenu) {
+          el.removeEventListener('contextmenu', el.oncontextmenu);
+          el.oncontextmenu = null;
         }
-      };
-    },
-    beforeUnmount(el, binding) {
-      const options = (binding.value || {}) as IContextMenuOptions;
-      // @ts-ignore
-      options.onSelect = null;
-      // 移除监听
-      if (el.oncontextmenu) {
-        el.removeEventListener('contextmenu', el.oncontextmenu);
-        el.oncontextmenu = null;
       }
-    }
-  });
+    });
+  } else {
+    app.directive('contextmenu', {});
+  }
 }

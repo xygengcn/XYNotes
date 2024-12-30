@@ -56,6 +56,22 @@ const is = {
    */
   tablet() {
     return deviceType === 'tablet';
+  },
+  /**
+   * 竖屏
+   */
+  portrait() {
+    return (
+      window.screen.orientation.type === 'portrait-primary' || window.screen.orientation.type === 'portrait-secondary'
+    );
+  },
+  /**
+   * 横屏
+   */
+  landscape() {
+    return (
+      window.screen.orientation.type === 'landscape-primary' || window.screen.orientation.type === 'landscape-secondary'
+    );
   }
 };
 

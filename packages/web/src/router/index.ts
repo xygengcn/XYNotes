@@ -117,7 +117,7 @@ router.beforeEach((to, _from, next) => {
     if (is.mobile()) {
       return next({ name: 'mobile-home' });
     }
-    if (is.tablet() && Math.abs(Number(window.orientation)) !== 90) {
+    if (is.tablet() && is.portrait()) {
       return next({ name: 'mobile-home' });
     }
   }
@@ -125,11 +125,18 @@ router.beforeEach((to, _from, next) => {
     if (is.desktop()) {
       return next({ name: 'desktop-list' });
     }
-    if (is.tablet() && Math.abs(Number(window.orientation)) === 90) {
+    if (is.tablet() && is.landscape()) {
       return next({ name: 'desktop-list' });
     }
   }
   next();
+});
+
+/**
+ * 刷新页面
+ */
+window.screen.orientation.addEventListener('change', () => {
+  window.location.reload();
 });
 
 export default router;

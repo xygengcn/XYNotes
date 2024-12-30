@@ -6,7 +6,6 @@ import defaultJson from './default.json';
 import { AppLoadStatus } from '@/typings/app';
 import { addNote, saveNote, setNoteList } from './note';
 import database from '@/database';
-import { downloadFile } from '@xynotes/utils';
 
 declare const __APP_VERSION__: string;
 
@@ -32,6 +31,7 @@ export const syncApp = async () => {
       return ApiEvent.api
         .apiFetchNoteListData({ updateTime: 0, order: configs.NOTE_LIST_SORT.value, pageSize: 50 })
         .then((list) => {
+          console.log('[sync] notes', list.length);
           if (list.length === 0) {
             addNote(defaultJson as INote);
             saveNote(defaultJson as INote, false);

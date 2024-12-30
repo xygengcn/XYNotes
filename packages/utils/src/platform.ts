@@ -29,3 +29,6 @@ export function getDeviceType(): 'mobile' | 'desktop' | 'tablet' {
  * 设备型号
  */
 export const deviceType = getDeviceType();
+
+
+
