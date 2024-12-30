@@ -46,6 +46,16 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       },
       {
+        title: 'Markdown下载',
+        icon: 'item-markdown',
+        visible: true,
+        action: (note: Note) => {
+          if (note) {
+            note.toMarkdown();
+          }
+        }
+      },
+      {
         title: '分屏',
         icon: 'item-splitscreen',
         visible: true,

@@ -1,3 +1,5 @@
+import { deviceType } from './platform';
+
 const is = {
   // 是不是客户端
   app(): boolean {
@@ -33,6 +35,43 @@ const is = {
       } catch (error) {}
     }
     return false;
+  },
+  /**
+   * 是不是移动端
+   * @returns
+   */
+  mobile() {
+    return deviceType === 'mobile';
+  },
+  /**
+   * 是不是桌面
+   * @returns
+   */
+  desktop() {
+    return deviceType === 'desktop';
+  },
+  /**
+   * 是不是平板
+   * @returns
+   */
+  tablet() {
+    return deviceType === 'tablet';
+  },
+  /**
+   * 竖屏
+   */
+  portrait() {
+    return (
+      window.screen.orientation.type === 'portrait-primary' || window.screen.orientation.type === 'portrait-secondary'
+    );
+  },
+  /**
+   * 横屏
+   */
+  landscape() {
+    return (
+      window.screen.orientation.type === 'landscape-primary' || window.screen.orientation.type === 'landscape-secondary'
+    );
   }
 };
 

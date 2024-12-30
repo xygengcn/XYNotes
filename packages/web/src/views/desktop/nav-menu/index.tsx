@@ -5,7 +5,7 @@ import { Loading } from '@xynotes/components';
 import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
-import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
+import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
 import { addNote } from '@xynotes/store/note';
 import { appStoreState } from '@xynotes/store/app';
 

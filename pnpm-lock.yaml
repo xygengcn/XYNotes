@@ -396,9 +396,6 @@ importers:
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1
-      js-lark:
-        specifier: ^0.0.2
-        version: 0.0.2
       register-service-worker:
         specifier: ^1.7.2
         version: 1.7.2
@@ -4228,10 +4225,6 @@ packages:
   jju@1.4.0:
     resolution:
       { integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA== }
-
-  js-lark@0.0.2:
-    resolution:
-      { integrity: sha512-Gz5uf+ZGb4+MsGh2hfKvyYOELGW5MCE7EUd9fqA5g+/0/FAlO7AZvCvQB5fdA0WAChGpMOyxAObYwMPfwuSzRg== }
 
   js-tokens@4.0.0:
     resolution:
@@ -9365,8 +9358,6 @@ snapshots:
       minimatch: 3.1.2
 
   jju@1.4.0: {}
-
-  js-lark@0.0.2: {}
 
   js-tokens@4.0.0: {}
 

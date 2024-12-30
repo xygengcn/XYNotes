@@ -1,5 +1,5 @@
 import IconNavMenu from '@/components/icon-nav-menu';
-import { PropType, defineComponent } from 'vue';
+import { type PropType, defineComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
 

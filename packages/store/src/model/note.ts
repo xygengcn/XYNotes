@@ -105,7 +105,7 @@ export class Note implements INote {
 
       // 笔记最新更新时间
       updatedAt: this.updatedAt,
-      
+
       // 简要信息
       intro: this.intro,
 
@@ -181,6 +181,14 @@ export class Note implements INote {
   public toJson() {
     const str = JSON.stringify(this.toRaw());
     return downloadFile(str || '', `${this.title || 'XYNote'}.json`);
+  }
+
+  /**
+   * markdown文件
+   * @returns
+   */
+  public toMarkdown() {
+    return downloadFile(this.text || '', `${this.title || 'XYNote'}.md`);
   }
 
   /**

@@ -8,6 +8,8 @@ export * from './string';
 export * from './dom';
 export * from './cookie';
 export * from './image';
+export * from './time';
+export * from './platform';
 export * from './debounce-throttle'
 
 declare global {
