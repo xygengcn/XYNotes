@@ -62,7 +62,9 @@ const is = {
    */
   portrait() {
     return (
-      window.screen.orientation.type === 'portrait-primary' || window.screen.orientation.type === 'portrait-secondary'
+      window.screen.orientation?.type === 'portrait-primary' ||
+      window.screen.orientation?.type === 'portrait-secondary' ||
+      Math.abs(window.orientation) !== 0
     );
   },
   /**
@@ -70,7 +72,9 @@ const is = {
    */
   landscape() {
     return (
-      window.screen.orientation.type === 'landscape-primary' || window.screen.orientation.type === 'landscape-secondary'
+      window.screen.orientation?.type === 'landscape-primary' ||
+      window.screen.orientation?.type === 'landscape-secondary' ||
+      Math.abs(window.orientation) !== 0
     );
   }
 };

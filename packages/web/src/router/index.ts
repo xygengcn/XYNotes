@@ -135,7 +135,7 @@ router.beforeEach((to, _from, next) => {
 /**
  * 刷新页面
  */
-window.screen.orientation.addEventListener('change', () => {
+window.screen.orientation?.addEventListener('change', () => {
   window.location.reload();
 });
 
