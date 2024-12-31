@@ -46,6 +46,13 @@ const MobileDetail = defineComponent({
     };
 
     /**
+     * 下载markdown
+     */
+    const handleClickDownload = () => {
+      activeNote.value?.toMarkdown();
+    };
+
+    /**
      * 删除
      */
     const handleClickDelete = () => {
@@ -125,6 +132,12 @@ const MobileDetail = defineComponent({
                 <Icon type="item-sync" size={24} onClick={handleClickSync}></Icon>
               </span>
               <span class="mobile-detail-drawer-item-text">同步</span>
+            </div>
+            <div class="mobile-detail-drawer-item">
+              <span class="mobile-detail-drawer-item-icon">
+                <Icon type="item-markdown" size={24} onClick={handleClickDownload}></Icon>
+              </span>
+              <span class="mobile-detail-drawer-item-text">下载</span>
             </div>
           </div>
         </Drawer>
