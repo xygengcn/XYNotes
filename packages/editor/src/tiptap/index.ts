@@ -21,7 +21,7 @@ export const defineMarkdownEditor = () => {
   const loading = ref(true);
 
   // 缓存
-  const editorCache = ref();
+  const editorCache = ref('');
 
   /**
    * 获取 Markdown 内容
@@ -130,11 +130,11 @@ export const defineMarkdownEditor = () => {
       const el = instance?.refs.editor as HTMLDivElement;
       if (el && !editor.value) {
         el.classList.add('markdown-editor');
-        const extensions = (await import('./extensions')).default;
+        const { CommonExtension, EditorExtension } = await import('./extensions');
         editor.value = new Editor({
           element: el,
           content: editorCache.value || options?.defaultValue || '',
-          extensions: extensions,
+          extensions: [...CommonExtension(), ...EditorExtension()],
           editable: options?.editable ?? true,
           onCreate() {
             editorEvent.emit('created', editor.value);
@@ -152,6 +152,7 @@ export const defineMarkdownEditor = () => {
             editorEvent.emit('focus', editor.value);
           }
         });
+
         /**
          * 图片粘贴上传
          */
@@ -239,11 +240,11 @@ export const defineMarkdownEditorPreview = () => {
       const el = instance?.refs.editor as HTMLDivElement;
       if (el && !editor.value) {
         el.classList.add('markdown-editor');
-        const extensions = (await import('./extensions')).default;
+        const { CommonExtension } = await import('./extensions');
         editor.value = new Editor({
           element: el,
           content: editorCache.value || options?.defaultValue || '',
-          extensions: extensions,
+          extensions: CommonExtension(),
           editable: false,
           onCreate() {
             // 加载结束

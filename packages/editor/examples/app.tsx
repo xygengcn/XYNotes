@@ -1,11 +1,9 @@
 import { defineComponent, ref } from 'vue';
-import { defineMarkdownEditor } from '../src/index';
+import { Editor, useEditor } from '../src/index';
 import '../src/tiptap/index.scss';
 import './app.scss';
 
 declare const __MARKDOWN__: string;
-
-const useMarkdownEditor = defineMarkdownEditor();
 
 export default defineComponent({
   name: 'App',
@@ -16,7 +14,7 @@ export default defineComponent({
     const inputText = ref('');
 
     // 编辑器
-    const { insertContent, setContent, getContent } = useMarkdownEditor({ defaultValue: text.value });
+    const { insertContent, setContent, getContent } = useEditor({ defaultValue: text.value });
 
     /**
      * 处理输入事件
@@ -49,8 +47,7 @@ export default defineComponent({
           <button onClick={handleReset}>初始化</button>
           <button onClick={handleGetContent}>获取content</button>
         </div>
-        {/* <MarkdownEditor modelValue={text.value} ref={editor} onCounter={onCounter} counter></MarkdownEditor> */}
-        <div class="editor" ref="editor"></div>
+        <Editor value={text.value}></Editor>
       </div>
     );
   }

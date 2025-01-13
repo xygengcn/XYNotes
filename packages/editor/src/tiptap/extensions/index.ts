@@ -22,9 +22,9 @@ import StrikeExtension from './strike';
 import { TaskItemExtension, TaskListExtension } from './task-list';
 
 /**
- * 编辑器扩展
+ * 通用编辑器扩展
  */
-export default [
+export const CommonExtension = () => [
   Text,
   HistoryExtension,
   Document,
@@ -72,3 +72,11 @@ export default [
   // 字数
   CharacterCountExtension
 ];
+
+/**
+ * 可编辑
+ */
+export const EditorExtension = () => {
+  const extension = [];
+  return extension;
+};

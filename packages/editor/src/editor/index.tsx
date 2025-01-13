@@ -1,6 +1,7 @@
-import { defineMarkdownEditor } from '@editor/tiptap';
+import { defineMarkdownEditor } from "@editor/tiptap";
 import { Loading } from '@xynotes/components';
-import { defineComponent, nextTick, ref, watch } from 'vue';
+import { defineComponent, nextTick, watch } from 'vue';
+import { EditorBubbleMenu } from './bubble-menu';
 import './index.scss';
 
 export const useEditor = defineMarkdownEditor();
@@ -22,7 +23,7 @@ export const Editor = defineComponent({
   },
   setup(props) {
     // 初始化编辑器
-    const { loading } = useEditor({ defaultValue: props.value });
+    const { loading, editor } = useEditor({ defaultValue: props.value });
     /**
      * 监听id
      */
@@ -37,8 +38,9 @@ export const Editor = defineComponent({
     );
 
     return () => (
-      <div class="editor" data-id={props.id} data-nodrag>
+      <div class={{ editor: true, test: editor.value?.isActive('bold') }} data-id={props.id} data-nodrag>
         <div class="editor-content" ref="editor" />
+        {editor.value && <EditorBubbleMenu editor={editor.value} />}
         {(props.loading || loading.value) && (
           <div class="editor-loading">
             <Loading text="加载中" />

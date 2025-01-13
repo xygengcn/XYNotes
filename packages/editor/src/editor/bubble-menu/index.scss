@@ -1,0 +1,27 @@
+.editor-menu {
+  background-color: #ffffff;
+  border: 1px solid #fdfdfd;
+  border-radius: 6px;
+  box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  column-gap: 4px;
+  span {
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 14px;
+    transition: all 0.3s;
+    border-radius: 4px;
+    &:hover {
+      background-color: #dcdcdc;
+    }
+
+    &.active {
+      color: #f3bb41;
+    }
+  }
+}
