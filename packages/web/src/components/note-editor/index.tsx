@@ -19,7 +19,7 @@ const NoteEditor = defineComponent({
      */
     const fetchNoteLoading = ref(false);
 
-    const { onChange, getContent, onBlur, setContent, state, getCounter, onUpload, setImage } = useEditor();
+    const { onChange, getContent, onBlur, setContent, state, getCounter, onUpload, setImage, editor } = useEditor();
 
     /**
      * 监听nid变化
@@ -87,7 +87,12 @@ const NoteEditor = defineComponent({
     return () => (
       <div class="note-editor">
         <div class="note-editor-header" data-content-top={state.top === 0}>
-          {context.slots.header?.({ note: activeNote.value })}
+          {context.slots.header?.({
+            note: activeNote.value,
+            onEnter: () => {
+              editor.value.commands.focus();
+            }
+          })}
         </div>
         <div class="note-editor-content">
           <Editor value={activeNote.value?.text || ''} id={props.nid} loading={fetchNoteLoading.value} />

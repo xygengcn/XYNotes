@@ -4,7 +4,7 @@ const LinkExtension = Link.extend({
   addOptions() {
     return {
       ...this.parent?.(),
-      openOnClick: false,
+      openOnClick: true,
       HTMLAttributes: {
         class: 'markdown-editor-link',
         target: '_blank',

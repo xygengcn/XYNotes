@@ -20,6 +20,7 @@ const Input = defineComponent({
   emits: {
     change: (_value: string) => true,
     input: (_value: string) => true,
+    enter: (_e: Event) => true,
     'update:value': (_value: string) => true,
     blur: (_e: Event, _value: string) => true
   },
@@ -72,6 +73,16 @@ const Input = defineComponent({
       }, 500);
     };
 
+    /**
+     * 键盘按下
+     * @param e
+     */
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        context.emit('enter', e);
+      }
+    };
+
     onBeforeUnmount(() => {
       inputTimeOut && clearTimeout(inputTimeOut);
     });
@@ -85,6 +96,7 @@ const Input = defineComponent({
             value={props.value}
             onInput={handleInput}
             onBlur={handleBlur}
+            onKeydown={handleKeyDown}
             placeholder={props.placeholder}
           />
         </div>

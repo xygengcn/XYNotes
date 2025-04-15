@@ -12,7 +12,7 @@ const NoteEditorTitle = defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup(props, context) {
     /*
      * 修改标题
      * @param title
@@ -24,10 +24,14 @@ const NoteEditorTitle = defineComponent({
       }
     };
 
+    const handleEnter = () => {
+      context.emit('enter');
+    };
+
     return () => (
       <div class="note-editor-title" v-show={props.note}>
         <div class="note-editor-title-content">
-          <Input value={props.note?.title} onChange={handleChangeTitle} />
+          <Input value={props.note?.title} onChange={handleChangeTitle} onEnter={handleEnter} />
         </div>
       </div>
     );

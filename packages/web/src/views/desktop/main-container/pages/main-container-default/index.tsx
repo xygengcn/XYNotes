@@ -10,7 +10,6 @@ import DesktopMainContainerDefaultRight from './right-bar';
 const DesktopMainContainerDefault = defineComponent({
   name: 'DesktopMainContainerDefault',
   setup() {
-  
     return () => (
       <div class="desktop-main-container-default">
         {activeNote.value && (
@@ -18,7 +17,10 @@ const DesktopMainContainerDefault = defineComponent({
             <div class="desktop-main-container-default-content-left">
               <NoteEditor nid={activeNote.value.nid}>
                 {{
-                  header: ({ note }) => [<NoteEditorCounter note={note} />, <NoteEditorTitle note={note} />]
+                  header: ({ note, onEnter }) => [
+                    <NoteEditorCounter note={note} />,
+                    <NoteEditorTitle note={note} onEnter={onEnter} />
+                  ]
                 }}
               </NoteEditor>
             </div>
