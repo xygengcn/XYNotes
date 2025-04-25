@@ -1,5 +1,6 @@
 import '@xynotes/components/style.css';
 import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
 import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';
 import App from './App';
