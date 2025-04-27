@@ -47,7 +47,7 @@ export const EditorBubbleMenu = defineComponent({
       );
     });
     onBeforeUnmount(() => {
-      editor.value.unregisterPlugin(key);
+      editor.value?.unregisterPlugin(key);
     });
     return () => (
       <div class="editor-menu" ref={root}>

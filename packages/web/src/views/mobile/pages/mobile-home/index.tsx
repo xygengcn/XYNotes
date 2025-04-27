@@ -49,7 +49,7 @@ const MobileHome = defineComponent({
     /**
      * 点击
      */
-    const handleClickItem = (note: Note) => {
+    const handleSelectItem = (note: Note) => {
       return router.push({
         name: 'mobile-detail',
         params: {
@@ -62,7 +62,8 @@ const MobileHome = defineComponent({
      * 新增
      */
     const handleClickAdd = () => {
-      addNote();
+      const note = addNote();
+      handleSelectItem(note);
     };
 
     /**
@@ -126,7 +127,7 @@ const MobileHome = defineComponent({
                       class="mobile-home-content-list-scroll-item"
                       note={props.item}
                       sortIndex={props.index}
-                      onSelect={handleClickItem}
+                      onSelect={handleSelectItem}
                       keyword={keyword.value}
                     ></NoteItem>
                   );

@@ -216,6 +216,7 @@ export const defineMarkdownEditorPreview = () => {
    * @returns
    */
   const setContent = (content: string) => {
+    console.log('[editor] setContent', content, loading.value);
     if (loading.value) {
       editorCache.value = content;
     }

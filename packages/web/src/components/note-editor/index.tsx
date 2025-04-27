@@ -43,9 +43,8 @@ const NoteEditor = defineComponent({
       fetchNoteLoading.value = true;
       return queryNote(props.nid)
         .then((result) => {
-          if (result?.nid === props.nid) {
+          if (result?.nid === activeNote.value?.nid) {
             setContent(result.text || '');
-            return;
           }
         })
         .finally(() => {
