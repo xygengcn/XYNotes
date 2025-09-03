@@ -3,8 +3,18 @@
   &-title {
     display: flex;
     width: 100%;
+    align-items: center;
     h3 {
       flex: 1;
+      font-size: 16px;
+      line-height: 18px;
+      flex: 1;
+      margin: 0px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      margin-left: 10px;
     }
 
     // 菜单

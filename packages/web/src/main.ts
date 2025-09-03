@@ -1,53 +1,40 @@
-import middlewareHook from '@/middlewares';
-import { configSaveDefautlMiddleware } from '@/middlewares/config.middleware';
-import { deleteNoteDefaultMiddleware, saveNoteDefaultMiddleware } from '@/middlewares/note.middleware';
-import perloadDefaultMiddleware from '@/middlewares/preload.middleware';
-import 'overlayscrollbars/overlayscrollbars.css';
-import { createPinia } from 'pinia';
+import '@xynotes/components/style.css';
 import 'tippy.js/dist/tippy.css';
+import 'tippy.js/themes/light.css';
 import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';
 import App from './App';
 import './components/index';
-import VueContextMenu from './directive/contextmenu';
+import { VueContextMenu } from '@xynotes/components';
 import './registerServiceWorker';
 import router from './router';
-import './services/app-window';
 import './services/shortcut';
-import is from './utils/is';
-
-/**
- * 注册中间件
- */
-middlewareHook.useMiddleware('sync', perloadDefaultMiddleware());
-
-middlewareHook.useMiddleware('saveConfig', configSaveDefautlMiddleware());
-
-middlewareHook.useMiddleware('saveNote', saveNoteDefaultMiddleware());
-
-middlewareHook.useMiddleware('deleteNote', deleteNoteDefaultMiddleware());
-
-middlewareHook.useMiddleware('recovery', perloadDefaultMiddleware());
+import { is } from '@xynotes/utils';
+import { openDevtools } from '@xynotes/app-api';
 
 // 开发环境
-if (is.development()) {
-  window.$appWindow.openDevtools(true);
+if (is.development() && is.app()) {
+  openDevtools(true);
 }
 
-// 注册pinia
-const pinia = createPinia();
-
+// 创建
 const app = createApp(App);
-// 注册pinia
-app.use(pinia);
 
+// 右键
 app.use(VueContextMenu);
 
 // 指令
-app.use(VueTippy, {
-  directive: 'tippy'
-});
+if (is.desktop()) {
+  app.use(VueTippy, {
+    directive: 'tippy'
+  });
+} else {
+  // pad端不需要这个
+  app.directive('tippy', {});
+}
 
+// 路由
 app.use(router);
 
+// 挂载
 app.mount('#app');

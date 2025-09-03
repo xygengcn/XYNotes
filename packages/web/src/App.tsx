@@ -1,35 +1,22 @@
+import { syncApp } from '@xynotes/store/app';
+import { is } from '@xynotes/utils';
 import { defineComponent, onBeforeMount } from 'vue';
 import './app.scss';
-import noteEventBus from './services/event-bus';
-import middlewareHook from './middlewares';
-import { useNotesStore } from './store/notes.store';
-import is from './utils/is';
+import { autoRegisterAppShortcut } from './services/shortcut';
 
 const App = defineComponent({
   name: 'App',
   setup() {
-    const noteStore = useNotesStore();
     const handleContextMenu = (e: Event) => {
       if (is.production()) {
         e.preventDefault();
       }
     };
     onBeforeMount(async () => {
-      middlewareHook.registerMiddleware('sync');
-      if (is.app()) {
-        // 监听其他事件
-        noteEventBus.on('note:update', (content) => {
-          if (content.action === 'update') {
-            if (is.mainWindow()) {
-              noteStore.updateNote(content.note);
-              return;
-            }
-            if (noteStore.activeNoteId === content.note.nid) {
-              noteStore.updateNote(content.note);
-            }
-          }
-        });
-      }
+      // 同步数据
+      syncApp().then(() => {
+        autoRegisterAppShortcut();
+      });
     });
 
     return () => (

@@ -1,8 +1,8 @@
-import Nav from '@/components/common/nav';
-import RemoteConfigPage from '@/components/remote-config';
+import RemoteConfigPage from '@/components/remote-setting';
+import { Nav } from '@xynotes/components';
 import { defineComponent } from 'vue';
-import './index.scss';
 import { useRouter } from 'vue-router';
+import './index.scss';
 
 const MobileRemoteConfig = defineComponent({
   name: 'MobileRemoteConfig',

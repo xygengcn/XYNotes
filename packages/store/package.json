@@ -1,0 +1,56 @@
+{
+  "name": "@xynotes/store",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --config vite.build.config.ts",
+    "postinstall": "pnpm run build",
+    "lint": "prettier .  --write"
+  },
+  "dependencies": {
+    "ts-database": "0.0.4",
+    "vue": "3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vitejs/plugin-vue-jsx": "^4.0.0",
+    "@xynotes/transport": "workspace:^",
+    "@xynotes/typings": "workspace:^",
+    "@xynotes/utils": "workspace:^",
+    "prettier": "^2.8.7",
+    "sass": "^1.62.0",
+    "typescript": "5.7.2",
+    "vite": "^5.3.5",
+    "vite-plugin-dts": "^3.9.1"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js"
+    },
+    "./configs": {
+      "require": "./dist/configs.cjs.js",
+      "types": "./dist/state/configs.d.ts",
+      "import": "./dist/configs.es.js"
+    },
+    "./app": {
+      "require": "./dist/app.cjs.js",
+      "types": "./dist/state/app.d.ts",
+      "import": "./dist/app.es.js"
+    },
+    "./note": {
+      "require": "./dist/note.cjs.js",
+      "types": "./dist/state/note.d.ts",
+      "import": "./dist/note.es.js"
+    }
+  }
+}

@@ -1,9 +1,10 @@
-import { App, DirectiveBinding } from 'vue';
-import { tippy } from 'vue-tippy';
-import { IContextMenuOptions } from './contextmenu';
+import { type tippy } from 'vue-tippy';
+import { type IContextMenuOptions } from '@xynotes/components';
 declare module 'vue' {
   interface HTMLAttributes {
     'v-contextmenu'?: IContextMenuOptions;
     'v-tippy'?: tippy;
   }
 }
+
+export {};

@@ -1,5 +1,5 @@
-import Confirm from './common/confirm';
-import Toast from './common/toast';
+
+import { Confirm, Toast } from '@xynotes/components';
 
 /**
  * ui赋值

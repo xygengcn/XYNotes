@@ -1,7 +1,7 @@
-import { Note } from '@/services/note';
-import { TimeFormat } from 'js-lark';
-import { defineComponent, PropType } from 'vue';
+import { Note } from '@xynotes/store';
+import { defineComponent, type PropType } from 'vue';
 import './index.scss';
+import { timeFormat } from '@xynotes/utils';
 
 /**
  * 字数
@@ -19,7 +19,7 @@ const NoteEditorCounter = defineComponent({
     return () => (
       <div class="note-editor-counter" data-tauri-drag-region>
         <span class="note-editor-counter-time" data-tauri-drag-region>
-          {TimeFormat(props.note?.updatedAt, 'yyyy年MM月dd HH:mm')}
+          {timeFormat(props.note?.updatedAt, 'yyyy年MM月dd HH:mm')}
         </span>
         {!!props.note?.counter && (
           <span class="note-editor-counter-count" data-tauri-drag-region>

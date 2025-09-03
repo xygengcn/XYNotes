@@ -1,11 +1,9 @@
-import Button from '@/components/common/button';
-import database from '@/services/database';
-import middlewareHook from '@/middlewares';
-import { downloadFile, jsonFileReader } from '@/utils/file';
+import { Button } from '@xynotes/components';
+import { backupAppData, recoveryAppData } from '@xynotes/store/app';
+import { downloadFile, jsonFileReader } from '@xynotes/utils';
 import { defineComponent } from 'vue';
-import './index.scss';
-import { useAppStore } from '@/store/app.store';
 import { useRouter } from 'vue-router';
+import './index.scss';
 
 const DesktopSideContainerSetting = defineComponent({
   name: 'DesktopSideContainerSetting',
@@ -15,20 +13,10 @@ const DesktopSideContainerSetting = defineComponent({
 
     // 数据备份
     const handleBackup = () => {
-      console.error('[backup]', '数据备份');
-      database
-        .backup()
-        .then((database) => {
-          const appStore = useAppStore();
-          const backupData = {
-            version: appStore.version,
-            database
-          };
-          downloadFile(JSON.stringify(backupData), 'database.json');
-        })
-        .catch((e) => {
-          console.error('[backup]', e);
-        });
+      console.info('[backup]', '数据备份');
+      return backupAppData().then((backupData) => {
+        downloadFile(JSON.stringify(backupData), 'database.json');
+      });
     };
 
     // 数据恢复
@@ -36,9 +24,8 @@ const DesktopSideContainerSetting = defineComponent({
       console.log('[recovery] 数据恢复');
       return jsonFileReader()
         .then((backupData: any) => {
-          database.recovery(backupData.database).then(() => {
-            window.$ui.toast('数据恢复恢复成功');
-            middlewareHook.registerMiddleware('recovery');
+          recoveryAppData(backupData.database).then(() => {
+            window.$ui.toast('数据恢复成功');
           });
         })
         .catch((e) => {
@@ -51,6 +38,7 @@ const DesktopSideContainerSetting = defineComponent({
     const handleEditConfig = () => {
       router.push('/setting/config');
     };
+
     return () => (
       <div class="desktop-side-container-setting">
         <div class="desktop-side-container-setting-header" data-tauri-drag-region>
@@ -74,7 +62,7 @@ const DesktopSideContainerSetting = defineComponent({
             </span>
           </div>
           <div class="desktop-side-container-setting-content-item">
-            <span class="desktop-side-container-setting-content-item-left">远程配置</span>
+            <span class="desktop-side-container-setting-content-item-left">基础配置</span>
             <span class="desktop-side-container-setting-content-item-right">
               <Button size="min" onClick={handleEditConfig}>
                 配置

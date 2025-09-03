@@ -1,11 +1,11 @@
 {
   "name": "@xynotes/tauri",
-  "version": "4.0.7",
+  "version": "4.0.15",
   "description": "",
   "scripts": {
     "dev": "tauri dev",
     "build:dev": "tauri build --debug",
-    "build": "tauri build",
+    "build:app": "tauri build",
     "icon": "tauri icon logo.png"
   },
   "keywords": [],

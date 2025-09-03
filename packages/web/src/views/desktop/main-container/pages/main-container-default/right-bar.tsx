@@ -1,9 +1,9 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
-import { Note } from '@/services/note';
-import { copyText } from '@/utils/clipboard';
-import is from '@/utils/is';
-import { PropType, defineComponent } from 'vue';
+import { createWindow } from '@xynotes/app-api';
+import { Note } from '@xynotes/store';
+import { copyText } from '@xynotes/utils';
+import { type PropType, defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopMainContainerDefaultRight = defineComponent({
@@ -46,12 +46,22 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       },
       {
-        title: '分屏',
-        icon: 'item-splitscreen',
-        visible: is.app(),
+        title: 'Markdown下载',
+        icon: 'item-markdown',
+        visible: true,
         action: (note: Note) => {
           if (note) {
-            handleSplitScreen(note);
+            note.toMarkdown();
+          }
+        }
+      },
+      {
+        title: '分屏',
+        icon: 'item-splitscreen',
+        visible: true,
+        action: (note: Note) => {
+          if (note) {
+            createWindow({ nid: note.nid });
           }
         }
       },
@@ -82,11 +92,6 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       }
     ];
-
-    // 新开页面
-    const handleSplitScreen = (note: Note) => {
-      window.$appWindow?.createWindow({ nid: note.nid });
-    };
 
     return () => (
       <div class="desktop-main-container-default-content-right" data-tauri-drag-region>

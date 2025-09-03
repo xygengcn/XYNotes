@@ -1,10 +1,12 @@
-import { defineConfig, type PluginOption } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath } from 'url';
+import { defineConfig, PluginOption } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import manifestJson from './mainifest';
 import packageConfig from './package.json';
+import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 const appVersion = packageConfig.version;
 
@@ -12,11 +14,16 @@ export default defineConfig({
   base: '/',
   build: {
     outDir: 'dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    chunkSizeWarningLimit: 500
   },
   plugins: [
     vue(),
-    vueJsx(),
+    vueJsx({
+      isCustomElement: (tag) => {
+        return ['mind-mark', 'code-preview', 'img-viewer'].includes(tag);
+      }
+    }),
     VitePWA({
       base: '/',
       devOptions: { enabled: false },
@@ -51,7 +58,14 @@ export default defineConfig({
           }
         ]
       }
-    })
+    }),
+    // 数据分析
+    visualizer({
+      filename: path.join(__dirname, 'dist', 'stats.html'),
+      open: false, //注意这里要设置为true，否则无效
+      gzipSize: true,
+      brotliSize: true
+    }) as PluginOption
   ],
   resolve: {
     alias: [
