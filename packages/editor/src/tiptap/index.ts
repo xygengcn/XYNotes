@@ -74,10 +74,10 @@ export const defineMarkdownEditor = () => {
    * @returns
    */
   const setContent = (content: string) => {
-    if (loading.value) {
+    if (loading.value || !editor.value) {
       editorCache.value = content;
     }
-    return editor.value?.commands.setContent(content);
+    return editor.value?.chain().setContent(content).run();
   };
 
   /**
@@ -128,6 +128,7 @@ export const defineMarkdownEditor = () => {
      */
     onMounted(async () => {
       const el = instance?.refs.editor as HTMLDivElement;
+      console.log('[editor] create', el);
       if (el && !editor.value) {
         el.classList.add('markdown-editor');
         const { CommonExtension, EditorExtension } = await import('./extensions');
@@ -163,7 +164,9 @@ export const defineMarkdownEditor = () => {
         });
       }
     });
+
     onBeforeUnmount(() => {
+      console.log('[editor] before unmount', instance?.refs.editor);
       createdCallback && editorEvent.off('created', createdCallback);
       changeCallback && editorEvent.off('change', changeCallback);
       blurCallback && editorEvent.off('blur', blurCallback);
@@ -176,6 +179,7 @@ export const defineMarkdownEditor = () => {
         editor.value = undefined;
       }
     });
+
     return {
       editor,
       loading,
@@ -250,6 +254,7 @@ export const defineMarkdownEditorPreview = () => {
           onCreate() {
             // 加载结束
             loading.value = false;
+            console.log('[editor] created');
           }
         });
       }

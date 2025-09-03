@@ -1,4 +1,4 @@
-import { defineMarkdownEditor } from "@editor/tiptap";
+import { defineMarkdownEditor } from '@editor/tiptap';
 import { Loading } from '@xynotes/components';
 import { defineComponent, nextTick, watch } from 'vue';
 import { EditorBubbleMenu } from './bubble-menu';

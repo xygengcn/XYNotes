@@ -2,7 +2,7 @@ import { Editor, useEditor } from '@xynotes/editor';
 import '@xynotes/editor/style.css';
 import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
 import { NoteStatus } from '@xynotes/typings';
-import { defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
+import { defineComponent, nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 import './index.scss';
 
 const NoteEditor = defineComponent({
@@ -32,8 +32,7 @@ const NoteEditor = defineComponent({
         nextTick(() => {
           handleQueryNoteDetail();
         });
-      },
-      { immediate: true }
+      }
     );
 
     /**
@@ -43,8 +42,12 @@ const NoteEditor = defineComponent({
       fetchNoteLoading.value = true;
       return queryNote(props.nid)
         .then((result) => {
+          console.log('[拉取最新内容]', props.nid, activeNote.value?.nid, result);
           if (result?.nid === activeNote.value?.nid) {
             setContent(result.text || '');
+          }
+          if (!result) {
+            setContent(activeNote.value?.text);
           }
         })
         .finally(() => {
@@ -60,6 +63,14 @@ const NoteEditor = defineComponent({
       const counter = getCounter();
       activeNote.value.set({ text: getContent(), status: NoteStatus.draft, counter: counter.words });
       activeNote.value.save(false);
+    });
+
+    /**
+     * 挂载
+     */
+    onMounted(() => {
+      // 加载完在拉取
+      handleQueryNoteDetail();
     });
 
     /**
