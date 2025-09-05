@@ -1,15 +1,51 @@
-import { mergeAttributes } from '@tiptap/core';
-import { Image, ImageOptions } from '@tiptap/extension-image';
-import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { mergeAttributes, Node, nodeInputRule } from '@tiptap/core';
+import { Plugin, PluginKey, TextSelection } from '@tiptap/pm/state';
 
-const ImageExtension = Image.extend<ImageOptions & { upload?: (files: FileList, event: Event) => void }>({
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    image: {
+      /**
+       * Add an image
+       * @param options The image attributes
+       * @example
+       * editor
+       *   .commands
+       *   .setImage({ src: 'https://tiptap.dev/logo.png', alt: 'tiptap', title: 'tiptap logo' })
+       */
+      insertImage: (options: { src: string; alt?: string; title?: string }) => ReturnType;
+    };
+  }
+}
+
+/**
+ * Matches an image to a ![image](src "title") on input.
+ */
+export const inputRegex = /(?:^|\s)(!\[(.+|:?)]\((\S+)(?:(?:\s+)["'](\S+)["'])?\))$/;
+
+const ImageExtension = Node.create({
+  name: 'image',
+
+  draggable: true,
+  inline() {
+    return true;
+  },
+
   addAttributes() {
     return {
-      ...this.parent?.(),
-      HTMLAttributes: {
-        class: 'markdown-editor-image'
+      src: {
+        default: null
+      },
+      alt: {
+        default: null
+      },
+      title: {
+        default: null
       }
     };
+  },
+
+  group() {
+    return 'inline';
   },
   addNodeView() {
     return ({ node, editor }) => {
@@ -27,39 +63,49 @@ const ImageExtension = Image.extend<ImageOptions & { upload?: (files: FileList, 
       };
     };
   },
-  addProseMirrorPlugins() {
+  parseHTML() {
     return [
-      new Plugin({
-        key: new PluginKey(`img-handler`),
-        props: {
-          handlePaste: (_view, event) => {
-            const editable = this.editor.isEditable;
-            const { clipboardData } = event;
-            if (!editable || !clipboardData || clipboardData.files.length === 0) {
-              return false;
-            }
-            if (typeof this.options.upload === 'function') {
-              this.options.upload(clipboardData.files, event);
-            }
-            // @ts-ignore
-            this.editor.emit('upload', clipboardData.files, event);
-            return true;
-          },
-          handleDrop: (_view, event) => {
-            if (!(event instanceof DragEvent) || !this.editor.isEditable) {
-              return false;
-            }
-            const { files } = event.dataTransfer ?? {};
-            if (!files || files.length <= 0) {
-              return false;
-            }
-            if (typeof this.options.upload === 'function') {
-              this.options.upload(files, event);
-            }
-            // @ts-ignore
-            this.editor.emit('upload', files, event);
-            return true;
-          }
+      {
+        tag: this.options.allowBase64 ? 'img[src]' : 'img[src]:not([src^="data:"])'
+      }
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ['img', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)];
+  },
+
+  addCommands() {
+    return {
+      insertImage:
+        (options) =>
+        ({ commands, tr, editor, dispatch }) => {
+          commands.insertContent({
+            type: this.name,
+            attrs: { ...options, inline: true }
+          });
+          // 插入新的文本节点
+          // const { selection } = tr;
+          // const position = selection.$anchor.pos;
+          // const text = editor.schema.text(' ');
+          // commands.insertContentAt(position + 1, text);
+          // 将选区移动到新段落的起始位置
+          const newSelection = TextSelection.create(tr.doc, tr.selection.$from.end());
+          tr.setSelection(newSelection);
+          if (dispatch) tr.scrollIntoView();
+          return true;
+        }
+    };
+  },
+  addInputRules() {
+    return [
+      nodeInputRule({
+        find: inputRegex,
+        type: this.type,
+        getAttributes: (match) => {
+          const [, , alt, src, title] = match;
+
+          return { src, alt, title };
         }
       })
     ];

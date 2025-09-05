@@ -65,7 +65,7 @@ export const defineMarkdownEditor = () => {
    * @param options
    */
   const setImage = (options: { src: string; alt?: string; title?: string }) => {
-    return editor.value?.commands.setImage(options);
+    return editor.value?.commands.insertImage(options);
   };
 
   /**

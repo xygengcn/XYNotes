@@ -20,6 +20,7 @@ import LinkExtension from './link';
 import ParagraphExtension from './paragraph';
 import StrikeExtension from './strike';
 import { TaskItemExtension, TaskListExtension } from './task-list';
+import PasteExtension from './paste-event';
 
 /**
  * 通用编辑器扩展
@@ -70,7 +71,9 @@ export const CommonExtension = () => [
   // 高亮
   HighlightExtension,
   // 字数
-  CharacterCountExtension
+  CharacterCountExtension,
+  // 粘贴事件
+  PasteExtension
 ];
 
 /**
