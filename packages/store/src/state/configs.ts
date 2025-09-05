@@ -1,6 +1,7 @@
 import { readonly, ref, toRaw } from 'vue';
 import { IConfigs, NoteListSortType } from '../typings/configs';
 import ApiEvent from '@/api';
+import { Cookie, is } from '@xynotes/utils';
 
 /**
  * 配置
@@ -19,6 +20,17 @@ const state = ref<IConfigs>({
   // 显示主界面快捷键
   SHORTCUT_KEY_SHOW: ''
 });
+
+/**
+ * 检查是否已配置在线同步
+ * @returns
+ */
+export function isCheckOnlineSync(): boolean {
+  if (state.value.REMOTE_ONLINE_SYNC === true && is.url(state.value.REMOTE_BASE_URL)) {
+    return true;
+  }
+  return false;
+}
 
 /**
  * 保存配置
@@ -43,11 +55,11 @@ export const setConfig = <K extends keyof IConfigs = keyof IConfigs>(
 export const syncConfigs = async () => {
   return ApiEvent.api.apiFetchConfigsData().then((configList) => {
     console.log('[sync] configs', configList);
-    const configs = configList.reduce((obj,i)=>{
-      obj[i.key] =i.value
-      return obj
-    },{})
-    state.value ={...state.value,...configs}
+    const configs = configList.reduce((obj, i) => {
+      obj[i.key] = i.value;
+      return obj;
+    }, {});
+    state.value = { ...state.value, ...configs };
     return state.value;
   });
 };

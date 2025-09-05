@@ -1,11 +1,20 @@
-import { configsStoreState } from '@/state/configs';
+import { configsStoreState, isCheckOnlineSync } from '@/state/configs';
 import { IConfigsColunm } from '@/typings/configs';
 import { INote } from '@xynotes/typings';
-import { getCookie, is, omit } from '@xynotes/utils';
+import { Cookie, omit } from '@xynotes/utils';
+import axios, { AxiosError } from 'axios';
 
 /**
  * 在线数据保存
  */
+
+// 定义API响应格式
+interface ApiResponse<T> {
+  code: number;
+  data: T;
+  message: string;
+  userMsg: string;
+}
 
 class ApiEventOnline {
   // 由于网络多次失败问题，会停止网络同步状态
@@ -15,57 +24,60 @@ class ApiEventOnline {
 
   // 基础拉取
   private async fetch<T extends unknown = any>(url: string, body: any = {}): Promise<T> {
-    if (
-      configsStoreState.value.REMOTE_ONLINE_SYNC === false ||
-      !is.url(configsStoreState.value.REMOTE_BASE_URL) ||
-      this.ignoreOnlineSync
-    ) {
+    // 忽略同步
+    if (isCheckOnlineSync() && this.ignoreOnlineSync) {
       return Promise.resolve(null as any);
     }
-    const uri = new URL(url, configsStoreState.value.REMOTE_BASE_URL);
-    return fetch(uri, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: configsStoreState.value.REMOTE_AUTHORIZATION || getCookie('Authorization') || '',
-        'X-App-DeviceId': '',
-        'X-App-Source': 'Note_Service'
-      },
-      body: JSON.stringify(body)
-    })
-      .then(async (response) => {
-        if (!response.ok) {
-          throw response;
-        }
-        const body = await response.json();
-        if (body.code === 200) {
+
+    // 获取基础URL
+    const baseURL = configsStoreState.value.REMOTE_BASE_URL;
+    return axios
+      .post<ApiResponse<T>>(url, body, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: configsStoreState.value.REMOTE_AUTHORIZATION || Cookie.getCookie('Authorization') || '',
+          'X-App-DeviceId': '',
+          'X-App-Source': 'Note_Service'
+        },
+        baseURL,
+        timeout: 1000 // 1秒超时
+      })
+      .then((response) => {
+        const data = response.data;
+        if (data.code === 200) {
           this.onlineSyncErrorCount = 0;
           this.ignoreOnlineSync = false;
-          return body.data;
+          return data.data;
         }
-        body.userMsg && window.$ui.toast(body.userMsg);
-        throw body;
+        data.userMsg && window.$ui.toast(data.userMsg);
+        throw data;
       })
-      .catch(async (e) => {
+      .catch((error: AxiosError) => {
         // 记录失败次数
         this.onlineSyncErrorCount++;
         if (this.onlineSyncErrorCount >= 3) {
           this.ignoreOnlineSync = true;
           console.error('[online] fetch 触发熔断机制', this.onlineSyncErrorCount);
         }
-        console.error('[online] fetch', this.onlineSyncErrorCount, 'Error:', e);
-        if (e instanceof Response) {
-          const body = await e.json().catch(() => e);
+        console.error('[online] fetch', this.onlineSyncErrorCount, 'Error:', error);
+
+        if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+          window.$ui.toast('请求超时，请检查网络连接');
+          throw new Error('请求超时');
+        }
+
+        if (error.response) {
+          const response = error.response;
           throw {
-            ...e,
-            status: e.status,
-            message: e.statusText,
-            data: body
+            status: response.status,
+            message: response.statusText,
+            data: response.data
           };
         }
-        throw e;
+        throw error;
       });
   }
+
   // 拉取笔记数据
   async apiFetchNoteListData(content: {
     updateTime: number;
@@ -144,5 +156,6 @@ class ApiEventOnline {
   // 更新配置
   async apiSaveOrUpdateConfigs(configs: IConfigsColunm[]): Promise<any> {}
 }
+
 const apiEventOnline = new ApiEventOnline();
 export default apiEventOnline;

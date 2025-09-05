@@ -1,10 +1,10 @@
 import database from '@/database';
+import { isCheckOnlineSync } from '@/state/configs';
 import { IConfigsColunm } from '@/typings/configs';
 import { INote } from '@xynotes/typings';
 import ApiBridge from './api.bridge';
 import apiEventLocal from './local';
 import apiEventOnline from './online';
-import { configsStoreState } from '@/state/configs';
 
 /**
  * 事件继承，所有数据处理都经过这里
@@ -29,7 +29,7 @@ class ApiEvent implements ApiBridge {
     return apiEventLocal
       .apiFetchNoteListData()
       .then((localResult) => {
-        if (configsStoreState.value.REMOTE_ONLINE_SYNC === true) {
+        if (isCheckOnlineSync()) {
           return apiEventOnline.apiFetchNoteListData(content).then((onlineResult) => {
             return localResult.concat(onlineResult);
           });
@@ -49,7 +49,7 @@ class ApiEvent implements ApiBridge {
     // 线上数据
     let onlineNote: INote | null = null;
 
-    if (configsStoreState.value.REMOTE_ONLINE_SYNC === true) {
+    if (isCheckOnlineSync()) {
       onlineNote = await apiEventOnline.apiFetchNoteDetailData(nid).catch(() => null);
     }
 
@@ -75,7 +75,7 @@ class ApiEvent implements ApiBridge {
   async apiSaveOrUpdateNote(note: INote, onlineSync: boolean): Promise<INote> {
     const content = structuredClone(note);
     return apiEventLocal.apiSaveOrUpdateNote(content).then((local) => {
-      if (configsStoreState.value.REMOTE_ONLINE_SYNC === true && onlineSync) {
+      if (isCheckOnlineSync() && onlineSync) {
         return apiEventOnline
           .apiSaveOrUpdateNote(local)
           .then((result) => {
@@ -92,7 +92,7 @@ class ApiEvent implements ApiBridge {
   // 删除笔记
   async apiDeleteNote(note: INote): Promise<boolean> {
     return apiEventLocal.apiDeleteNote(note).then((result) => {
-      if (configsStoreState.value.REMOTE_ONLINE_SYNC === true) {
+      if (isCheckOnlineSync()) {
         return apiEventOnline.apiDeleteNote(note);
       }
       return result;
@@ -102,7 +102,7 @@ class ApiEvent implements ApiBridge {
   // 同步笔记
   async apiSyncNote(note: INote): Promise<INote | null> {
     // 同步线上
-    if (configsStoreState.value.REMOTE_ONLINE_SYNC === true) {
+    if (isCheckOnlineSync()) {
       return apiEventOnline.apiSyncNote(note).then((online) => {
         return apiEventLocal.apiSaveOrUpdateNote(note, true).then(() => {
           return online;
