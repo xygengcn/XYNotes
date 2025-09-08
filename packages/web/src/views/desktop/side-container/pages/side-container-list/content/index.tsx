@@ -1,6 +1,6 @@
 import NoteItem from '@/components/note-item';
 import { createWindow, exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
-import { type IContextMenuProps, Scroller } from '@xynotes/components';
+import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { notesListBySort, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
@@ -30,7 +30,6 @@ const DesktopSideContainerListContent = defineComponent({
      */
     const handleContextmenu = (options: IContextMenuProps) => {
       const note = options.key && noteList.value.find((n) => n.nid === options.key);
-      console.log('[contextmenu] 右键笔记', options, note);
       if (note && options.menu) {
         switch (options.menu.value) {
           case 'sync':
@@ -73,6 +72,7 @@ const DesktopSideContainerListContent = defineComponent({
       <Scroller class="desktop-side-container-list-content">
         <div
           class="desktop-side-container-list-content-list"
+          v-show={noteList.value.length > 0}
           v-contextmenu={{
             menuList: [
               { label: '同步', value: 'sync' },
@@ -96,6 +96,12 @@ const DesktopSideContainerListContent = defineComponent({
             );
           })}
         </div>
+        {noteList.value.length === 0 && (
+          <div class="desktop-side-container-list-content-blank">
+            <Icon type="logo" size={100}></Icon>
+            <span>快来创建你的第一个笔记吧!</span>
+          </div>
+        )}
       </Scroller>
     );
   }

@@ -9,7 +9,7 @@ const EditorPerview = defineComponent({
   name: 'EditorPerview',
   props: {
     value: {
-      type: String,
+      type: [String, Object],
       required: true,
       default: ''
     }

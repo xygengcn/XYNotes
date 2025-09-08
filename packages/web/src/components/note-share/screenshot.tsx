@@ -122,7 +122,7 @@ export default defineComponent({
       >
         <div class="note-share-content">
           <div class="note-share-content-preview">
-            <EditorPerview value={props.note.text || ''} />
+            <EditorPerview value={props.note.content || props.note.text || ''} />
           </div>
           {loading.value && (
             <div class="note-share-content-loading">

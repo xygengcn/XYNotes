@@ -96,9 +96,7 @@ export const addNote = (detail?: INote) => {
  * @returns
  */
 export const saveNote = async (note: INote, onlineSyncAt: boolean) => {
-  console.log('[store] save', note.nid, note.updatedAt);
   const result = await ApiEvent.api.apiSaveOrUpdateNote(note, !!onlineSyncAt);
-  console.log('[store] save:result', note.nid, result.updatedAt);
   if (result) {
     /**
      * 通知事件

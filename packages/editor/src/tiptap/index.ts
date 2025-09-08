@@ -267,7 +267,7 @@ export const defineMarkdownEditorPreview = () => {
    * @param content
    * @returns
    */
-  const setContent = (content: string) => {
+  const setContent = (content: Content) => {
     console.log('[editor] setContent', content, loading.value);
     if (loading.value) {
       editorCache.value = content;
@@ -275,7 +275,7 @@ export const defineMarkdownEditorPreview = () => {
     return editor.value?.commands.setContent(content);
   };
 
-  return (options?: { defaultValue: string }) => {
+  return (options?: { defaultValue: Content }) => {
     const instance = getCurrentInstance();
 
     /**

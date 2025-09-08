@@ -43,7 +43,6 @@ const NoteEditor = defineComponent({
       fetchNoteLoading.value = true;
       return queryNote(props.nid)
         .then((result) => {
-          console.log('[拉取最新内容]', props.nid, activeNote.value?.nid, result);
           if (result?.nid === activeNote.value?.nid) {
             setContent(result.content || result.text || '');
           }
