@@ -14,16 +14,14 @@ datasource db {
 }
 
 model Note {
-  nid           String   @id
-  title         String
-  type          String
-  order         Int      @default(0)
-  text          String?
-  createdAt     Int
-  updatedAt     Int
-  intro         String?
-  status        Float
-  author        String?
-  attachment    String?
-  onlineSyncAt  Int?
+  nid       String  @id
+  title     String
+  type      String
+  order     Int     @default(0)
+  text      String?
+  createdAt Int
+  updatedAt Int
+  intro     String?
+  status    Float
+  author    String?
 }

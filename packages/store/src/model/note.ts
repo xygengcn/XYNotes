@@ -1,6 +1,7 @@
 import { deleteNote, saveNote, syncNote } from '@/state/note';
 import { INote, NoteType, NoteStatus, INoteAttachment } from '@xynotes/typings';
 import { debounce, downloadFile, uuid } from '@xynotes/utils';
+import { toRaw } from 'vue';
 
 export class Note implements INote {
   // 笔记类型
@@ -13,6 +14,9 @@ export class Note implements INote {
 
   // 笔记内容
   public text: string = '';
+
+  // 笔记内容
+  public content: JSON = null;
 
   // 笔记创建时间
   public createdAt: number = Date.now();
@@ -38,9 +42,6 @@ export class Note implements INote {
   // 笔记附件
   public attachment: Array<INoteAttachment> = [];
 
-  // 字数
-  public counter: number = 0;
-
   // 同步时间
   public onlineSyncAt: number = 0;
 
@@ -51,17 +52,16 @@ export class Note implements INote {
   constructor(note?: INote) {
     if (note) {
       Object.assign(this, note);
-      this.counter = this.text.length;
     } else {
       Object.assign(this, {
         nid: uuid(),
         title: '示例',
-        text: '这里也有一些内容在这里呢！',
-        intro: '这里也有一些内容在这里呢！',
+        text: '',
+        intro: '',
+        content: null,
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime()
       });
-      this.counter = this.text.length;
     }
 
     // 节流保存函数
@@ -74,7 +74,7 @@ export class Note implements INote {
    * 设置值
    * @param note
    */
-  public set(note: Partial<Exclude<INote, 'updatedAt'>> & { counter?: number }): void {
+  public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
     if (note.status === NoteStatus.draft || this.status === NoteStatus.draft) {
       Object.assign(this, note, {
         // 截取前50作简要信息
@@ -99,6 +99,9 @@ export class Note implements INote {
 
       // 笔记内容
       text: this.text,
+
+      // 笔记内容
+      content: toRaw(this.content),
 
       // 笔记创建时间
       createdAt: this.createdAt,
@@ -170,9 +173,6 @@ export class Note implements INote {
    */
   public update(note: Partial<INote>) {
     Object.assign(this, note);
-    if (note.text) {
-      this.counter = note.text.length;
-    }
   }
 
   /**

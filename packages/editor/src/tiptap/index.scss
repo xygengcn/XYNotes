@@ -32,6 +32,7 @@
   .tiptap {
     outline: none;
     min-height: 100%;
+    caret-color: var(--markdown-editor-theme-color);
   }
 
   // 表格

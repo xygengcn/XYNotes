@@ -1,16 +1,42 @@
-import { Editor } from '@tiptap/core';
+import { Content, Editor } from '@tiptap/core';
 import { useScroller } from '@xynotes/utils';
 import Eventemitter from 'eventemitter3';
-import { getCurrentInstance, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
+import { getCurrentInstance, onBeforeUnmount, onMounted, ref, ShallowRef, shallowRef } from 'vue';
 import './index.scss';
 
 type callback = ((...args: any) => void) | null;
 
 /**
+ * defineMarkdownEditor返回函数的返回类型
+ */
+export interface MarkdownEditorInstance {
+  editor: ShallowRef<Editor | undefined>;
+  loading: ReturnType<typeof ref<boolean>>;
+  state: { top: number; bottom: number };
+  onCreated: (cb: (editor: Editor) => void) => void;
+  onChange: (cb: (editor: Editor) => void) => void;
+  onBlur: (cb: (editor: Editor) => void) => void;
+  onFocus: (cb: (editor: Editor) => void) => void;
+  onUpload: (cb: (file: FileList, e: Event, editor: Editor) => void) => void;
+  getMarkdown: () => string | undefined;
+  insertContent: (value: string) => ReturnType<Editor['commands']['insertContent']> | undefined;
+  setEditable: (value: boolean) => ReturnType<Editor['setEditable']> | undefined;
+  setContent: (content: Content) => boolean | undefined;
+  getCounter: () => { characters: number; words: number };
+  getData: () => ReturnType<Editor['getJSON']> | undefined;
+  getContent: () => ReturnType<Editor['getJSON']> | undefined;
+  setImage: (options: {
+    src: string;
+    alt?: string;
+    title?: string;
+  }) => ReturnType<Editor['commands']['insertImage']> | undefined;
+}
+
+/**
  * 定制编辑器
  * @returns
  */
-export const defineMarkdownEditor = () => {
+export function defineMarkdownEditor() {
   // 编辑器
   const editor = shallowRef<Editor>();
 
@@ -21,7 +47,16 @@ export const defineMarkdownEditor = () => {
   const loading = ref(true);
 
   // 缓存
-  const editorCache = ref('');
+  const editorCache = ref<Content>('');
+
+  /**
+   * 获取 Markdown 内容
+   *
+   * @returns 返回 Markdown 文本内容
+   */
+  const getMarkdown = () => {
+    return editor.value?.storage.markdown.getMarkdown();
+  };
 
   /**
    * 获取 Markdown 内容
@@ -29,7 +64,7 @@ export const defineMarkdownEditor = () => {
    * @returns 返回 Markdown 文本内容
    */
   const getContent = () => {
-    return editor.value?.storage.markdown.getMarkdown();
+    return editor.value?.getJSON();
   };
 
   /**
@@ -73,7 +108,7 @@ export const defineMarkdownEditor = () => {
    * @param content
    * @returns
    */
-  const setContent = (content: string) => {
+  const setContent = (content: Content): boolean | undefined => {
     if (loading.value || !editor.value) {
       editorCache.value = content;
     }
@@ -91,7 +126,7 @@ export const defineMarkdownEditor = () => {
     };
   };
 
-  return (options?: { defaultValue: string; editable?: boolean }) => {
+  return (options?: { defaultValue: string; editable?: boolean }): MarkdownEditorInstance => {
     const instance = getCurrentInstance();
     const { state } = useScroller('editor');
 
@@ -188,17 +223,18 @@ export const defineMarkdownEditor = () => {
       onChange,
       onBlur,
       onFocus,
-      getContent,
+      getMarkdown,
       insertContent,
       setEditable,
       setContent,
       getCounter,
       getData,
       onUpload,
+      getContent,
       setImage
     };
   };
-};
+}
 
 /**
  * 定制编辑器预览

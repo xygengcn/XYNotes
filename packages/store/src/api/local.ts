@@ -32,13 +32,12 @@ class ApiEventLocal {
   async apiSaveOrUpdateNote(note: INote, sync: boolean = false): Promise<INote> {
     return database.module('notes').then((model) => {
       // 转换数据格式
-      const noteTableAttr = omit(note, ['attachment']);
+      const noteTableAttr: INote = omit(note, ['attachment']);
       if (!sync) {
         noteTableAttr.updatedAt = Date.now();
       }
       return model.bulkCreate([noteTableAttr]).then(() => {
         return {
-          ...note,
           ...noteTableAttr
         };
       });

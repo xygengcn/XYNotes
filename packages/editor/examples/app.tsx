@@ -14,7 +14,7 @@ export default defineComponent({
     const inputText = ref('');
 
     // 编辑器
-    const { insertContent, setContent, getContent } = useEditor({ defaultValue: text.value });
+    const { insertContent, setContent, getMarkdown } = useEditor({ defaultValue: text.value });
 
     /**
      * 处理输入事件
@@ -36,7 +36,7 @@ export default defineComponent({
      * 获取编辑器内容并打印到控制台
      */
     const handleGetContent = () => {
-      console.log('content:', getContent());
+      console.log('content:', getMarkdown());
     };
 
     return () => (

@@ -1,4 +1,4 @@
-import { Editor, useEditor } from '@xynotes/editor';
+import { Editor, useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 import '@xynotes/editor/style.css';
 import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
 import { NoteStatus } from '@xynotes/typings';
@@ -19,7 +19,8 @@ const NoteEditor = defineComponent({
      */
     const fetchNoteLoading = ref(false);
 
-    const { onChange, getContent, onBlur, setContent, state, getCounter, onUpload, setImage, editor } = useEditor();
+    const { onChange, onBlur, setContent, getContent, state, getMarkdown, onUpload, setImage, editor } =
+      useEditor() as MarkdownEditorInstance;
 
     /**
      * 监听nid变化
@@ -27,7 +28,7 @@ const NoteEditor = defineComponent({
     watch(
       () => props.nid,
       () => {
-        setContent(activeNote.value?.text || '');
+        setContent(activeNote.value?.content || activeNote.value?.text || '');
         // 拉取最新的
         nextTick(() => {
           handleQueryNoteDetail();
@@ -44,10 +45,10 @@ const NoteEditor = defineComponent({
         .then((result) => {
           console.log('[拉取最新内容]', props.nid, activeNote.value?.nid, result);
           if (result?.nid === activeNote.value?.nid) {
-            setContent(result.text || '');
+            setContent(result.content || result.text || '');
           }
           if (!result) {
-            setContent(activeNote.value?.text);
+            setContent(activeNote.value.content || activeNote.value?.text);
           }
         })
         .finally(() => {
@@ -60,8 +61,13 @@ const NoteEditor = defineComponent({
      * @param value
      */
     onChange(() => {
-      const counter = getCounter();
-      activeNote.value.set({ text: getContent(), status: NoteStatus.draft, counter: counter.words });
+      const text = getMarkdown();
+      activeNote.value.set({
+        content: getContent() as object,
+        text: '',
+        status: NoteStatus.draft,
+        intro: text?.trim()?.slice(0, 50)
+      });
       activeNote.value.save(false);
     });
 
@@ -77,7 +83,12 @@ const NoteEditor = defineComponent({
      * 失去焦点
      */
     onBlur(() => {
-      activeNote.value.set({ text: getContent() });
+      const text = getMarkdown();
+      activeNote.value.set({
+        content: getContent() as object,
+        text: '',
+        intro: text?.trim()?.slice(0, 50)
+      });
       activeNote.value.save(false);
     });
 

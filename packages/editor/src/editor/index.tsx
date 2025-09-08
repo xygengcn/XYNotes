@@ -1,10 +1,11 @@
-import { defineMarkdownEditor } from '@editor/tiptap';
+import { defineMarkdownEditor, type MarkdownEditorInstance } from '@editor/tiptap';
 import { Loading } from '@xynotes/components';
 import { defineComponent, nextTick, watch } from 'vue';
 import { EditorBubbleMenu } from './bubble-menu';
 import './index.scss';
 
-export const useEditor = defineMarkdownEditor();
+export const useEditor: (options?: { defaultValue: string; editable?: boolean }) => MarkdownEditorInstance =
+  defineMarkdownEditor();
 
 export const Editor = defineComponent({
   name: 'Editor',

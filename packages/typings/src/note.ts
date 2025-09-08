@@ -31,8 +31,11 @@ export interface INote {
   // 排序
   order: number;
 
-  // 笔记内容
+  // 笔记内容markdown
   text: string;
+
+  // 笔记内容Json
+  content: object;
 
   // 笔记创建时间
   createdAt: number;
@@ -50,7 +53,7 @@ export interface INote {
   author: string;
 
   // 笔记附件
-  attachment: Array<INoteAttachment>;
+  attachment?: Array<INoteAttachment>;
 
   // 在线同步时间
   onlineSyncAt?: number;

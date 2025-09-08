@@ -2,7 +2,6 @@ import ApiEvent from '@/api';
 import { INote } from '@xynotes/typings';
 import { readonly, ref } from 'vue';
 import { syncConfigs } from './configs';
-import defaultJson from './default.json';
 import { AppLoadStatus } from '@/typings/app';
 import { addNote, saveNote, setNoteList } from './note';
 import database from '@/database';
@@ -32,10 +31,7 @@ export const syncApp = async () => {
         .apiFetchNoteListData({ updateTime: 0, order: configs.NOTE_LIST_SORT.value, pageSize: 50 })
         .then((list) => {
           console.log('[sync] notes', list.length);
-          if (list.length === 0) {
-            addNote(defaultJson as INote);
-            saveNote(defaultJson as INote, false);
-          } else {
+          if (list.length > 0) {
             setNoteList(list);
           }
         });

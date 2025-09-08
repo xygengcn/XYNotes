@@ -79,7 +79,7 @@ const ImageExtension = Node.create({
     return {
       insertImage:
         (options) =>
-        ({ commands, tr, editor, dispatch }) => {
+        ({ commands, tr, dispatch }) => {
           commands.insertContent({
             type: this.name,
             attrs: { ...options, inline: true }

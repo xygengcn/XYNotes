@@ -3,26 +3,27 @@ img-viewer {
   -webkit-user-drag: element;
   display: inline-block;
   max-width: 100%;
+  padding: 1px;
 
   .img-viewer {
     width: max-content;
     height: max-content;
-    border: 1px solid #f7f7f7;
-    border-radius: 4px;
+    border: 1px solid var(--markdown-editor-gray-color);
+    border-radius: 8px;
     max-width: 100%;
     // 本地标识
     &-blob {
       position: relative;
       z-index: 0;
       &::after {
-        content: 'Blob';
+        content: '未上传';
         z-index: 1;
         position: absolute;
         top: 0;
         left: 0;
         font-size: 10px;
-        color: #ccc;
-        background-color: #eee;
+        color: var(--markdown-editor-theme-color);
+        background-color: #fff;
         padding: 2px 4px;
         border-radius: 4px;
       }

@@ -39,7 +39,6 @@
       "import": "./dist/index.es.js"
     },
     "./configs": {
-      "require": "./dist/configs.cjs.js",
       "types": "./dist/state/configs.d.ts",
       "import": "./dist/configs.es.js"
     },
