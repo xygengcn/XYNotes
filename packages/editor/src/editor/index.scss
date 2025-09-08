@@ -37,9 +37,9 @@
 
   div[data-tippy-root] {
     .tippy-box {
-      background-color: none !important;
+      background-color: transparent;
       box-shadow: none !important;
-      color:#282828 !important;
+      color: #282828 !important;
     }
     .tippy-arrow {
       display: none;

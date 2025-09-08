@@ -66,7 +66,7 @@ const NoteEditor = defineComponent({
       const text = getMarkdown();
       activeNote.value.set({
         content: getContent() as object,
-        text: '',
+        text,
         status: NoteStatus.draft,
         intro: text?.trim()?.slice(0, 50) || ''
       });
@@ -88,7 +88,7 @@ const NoteEditor = defineComponent({
       const text = getMarkdown();
       activeNote.value.set({
         content: getContent() as object,
-        text: '',
+        text,
         intro: text?.trim()?.slice(0, 50) || ''
       });
       activeNote.value.save(false);

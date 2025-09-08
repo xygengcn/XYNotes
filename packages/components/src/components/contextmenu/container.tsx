@@ -113,7 +113,7 @@ export default function contextMenu(menuList: IContextMenuItem[], onSubmit: (opt
     },
     onClose() {
       app.unmount();
-      el && document.body.removeChild(el);
+      el && document.body.contains(el) && document.body.removeChild(el);
     }
   });
   app.mount(el);

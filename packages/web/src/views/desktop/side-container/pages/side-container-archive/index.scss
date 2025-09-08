@@ -33,9 +33,13 @@
   }
 
   &-blank {
-    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 14px;
+    flex-direction: column;
     color: var(--font-default-color);
-    font-size: 12px;
-    text-align: center;
+    gap: 10px;
   }
 }

@@ -1,5 +1,5 @@
 import NoteItem from '@/components/note-item';
-import { type IContextMenuProps, Scroller } from '@xynotes/components';
+import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import type { Note } from '@xynotes/store';
 import { fetchNoteArchiveList, notesStoreState, recovery } from '@xynotes/store/note';
 import { computed, defineComponent, onBeforeMount } from 'vue';
@@ -95,7 +95,10 @@ const DesktopSideContainerArchiveContent = defineComponent({
           </div>
         </Scroller>
         {notesStoreState.value.archiveNoteList.length === 0 && (
-          <div class="desktop-side-container-archive-blank">暂无缓存数据</div>
+          <div class="desktop-side-container-archive-blank">
+            <Icon type="list-empty" size={100}></Icon>
+            <span>暂无归档笔记</span>
+          </div>
         )}
       </div>
     );

@@ -6,7 +6,9 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "baseUrl": "./src",
+    "moduleResolution": "bundler",
     "strict": false,
+    "composite": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,12 +16,12 @@
     "removeComments": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
     "declaration": true,
     "strictNullChecks": false,
     "skipLibCheck": true,
     "lib": ["esnext", "dom"],
-    "types": ["node"]
+    "types": ["node"],
+    "customConditions": ["development"]
   },
   "exclude": ["node_modules", "dist"],
   "include": [

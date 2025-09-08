@@ -99,7 +99,7 @@ const DesktopSideContainerListContent = defineComponent({
         </div>
         {noteList.value.length === 0 && (
           <div class="desktop-side-container-list-content-blank">
-            <Icon type="logo" size={100}></Icon>
+            <Icon type="list-empty" size={100}></Icon>
             <span>快来创建你的第一个笔记吧!</span>
           </div>
         )}

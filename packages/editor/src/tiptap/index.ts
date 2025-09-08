@@ -110,7 +110,7 @@ export function defineMarkdownEditor() {
 
    * @returns 
    */
-  const focus = () => editor.value?.chain().focus().run();
+  const focus = () => editor.value?.commands.focus();
 
   /**
    * 设置值
@@ -121,7 +121,7 @@ export function defineMarkdownEditor() {
     if (loading.value || !editor.value) {
       editorCache.value = content;
     }
-    return editor.value?.chain().setContent(content).run();
+    return editor.value?.commands.setContent(content, { emitUpdate: false });
   };
 
   /**

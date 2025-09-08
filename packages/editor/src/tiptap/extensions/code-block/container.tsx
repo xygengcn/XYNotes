@@ -35,7 +35,7 @@ const CodeBlockContainer = defineComponent({
   render() {
     return (
       <>
-        <div class="markdown-editor-codeblock-header">
+        <div class="markdown-editor-codeblock-header" contenteditable="false">
           <div class="markdown-editor-codeblock-header-icon">
             <i></i>
             <i></i>
