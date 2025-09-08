@@ -19,7 +19,7 @@ const NoteEditor = defineComponent({
      */
     const fetchNoteLoading = ref(false);
 
-    const { onChange, onBlur, setContent, getContent, state, getMarkdown, onUpload, setImage, editor } =
+    const { onChange, onBlur, setContent, getContent, state, getMarkdown, onUpload, setImage, editor, focus } =
       useEditor() as MarkdownEditorInstance;
 
     /**
@@ -53,6 +53,9 @@ const NoteEditor = defineComponent({
         })
         .finally(() => {
           fetchNoteLoading.value = false;
+          nextTick(() => {
+            focus();
+          });
         });
     };
 
@@ -66,7 +69,7 @@ const NoteEditor = defineComponent({
         content: getContent() as object,
         text: '',
         status: NoteStatus.draft,
-        intro: text?.trim()?.slice(0, 50)
+        intro: text?.trim()?.slice(0, 50) || ''
       });
       activeNote.value.save(false);
     });
@@ -87,7 +90,7 @@ const NoteEditor = defineComponent({
       activeNote.value.set({
         content: getContent() as object,
         text: '',
-        intro: text?.trim()?.slice(0, 50)
+        intro: text?.trim()?.slice(0, 50) || ''
       });
       activeNote.value.save(false);
     });

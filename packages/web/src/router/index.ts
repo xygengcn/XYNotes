@@ -43,10 +43,10 @@ const routes: Array<RouteRecordRaw> = [
         ]
       },
       {
-        path: 'recycle',
-        name: 'desktop-recycle',
+        path: 'archive',
+        name: 'desktop-archive',
         components: {
-          side: () => import('@/views/desktop/side-container/pages/side-container-recycle'),
+          side: () => import('@/views/desktop/side-container/pages/side-container-archive'),
           main: () => import('@/views/desktop/main-container/pages/main-container-default')
         },
         meta: {

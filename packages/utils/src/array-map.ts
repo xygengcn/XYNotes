@@ -180,7 +180,9 @@ export default class ArrayMap<T extends { [key: string]: any }> {
    */
   delete(key: string) {
     this._map.delete(key);
-    this._array = this._array.filter((i) => i[this.keyProperty] === key);
+    this._array = this._array.filter((i) => {
+      return i[this.keyProperty] !== key;
+    });
   }
 
   /**

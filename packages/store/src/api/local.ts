@@ -1,6 +1,6 @@
 import database from '@/database';
 import { IConfigsColunm } from '@/typings/configs';
-import { INote } from '@xynotes/typings';
+import { INote, NoteStatus } from '@xynotes/typings';
 import { omit } from '@xynotes/utils';
 
 /**
@@ -46,6 +46,21 @@ class ApiEventLocal {
   // 删除笔记
   async apiDeleteNote(note: INote): Promise<boolean> {
     return database.module('notes').then((model) => {
+      return model.destory(note.nid).then(() => true);
+    });
+  }
+
+  // 添加归档
+  async apiAddNoteArchive(note: INote): Promise<boolean> {
+    // 转换数据格式
+    const noteTableAttr: INote = omit(note, ['attachment']);
+    return database.module('notes_archive').then((model) => {
+      return model.bulkCreate([noteTableAttr]).then(() => true);
+    });
+  }
+  // 移除归档
+  async apiRemoteNoteArchive(note: INote): Promise<boolean> {
+    return database.module('notes_archive').then((model) => {
       return model.destory(note.nid).then(() => true);
     });
   }

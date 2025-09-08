@@ -76,10 +76,7 @@ export class Note implements INote {
    */
   public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
     if (note.status === NoteStatus.draft || this.status === NoteStatus.draft) {
-      Object.assign(this, note, {
-        // 截取前50作简要信息
-        intro: note?.text?.trim()?.slice(0, 50) || this.intro
-      });
+      Object.assign(this, note);
     }
   }
 

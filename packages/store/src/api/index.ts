@@ -1,7 +1,7 @@
 import database from '@/database';
 import { isCheckOnlineSync } from '@/state/configs';
 import { IConfigsColunm } from '@/typings/configs';
-import { INote } from '@xynotes/typings';
+import { INote, NoteStatus } from '@xynotes/typings';
 import ApiBridge from './api.bridge';
 import apiEventLocal from './local';
 import apiEventOnline from './online';
@@ -92,6 +92,10 @@ class ApiEvent implements ApiBridge {
   // 删除笔记
   async apiDeleteNote(note: INote): Promise<boolean> {
     return apiEventLocal.apiDeleteNote(note).then((result) => {
+      // 添加到归档
+      apiEventLocal.apiAddNoteArchive({ ...note, status: NoteStatus.archive }).catch(() => null);
+
+      // 在线同步
       if (isCheckOnlineSync()) {
         return apiEventOnline.apiDeleteNote(note);
       }
@@ -117,6 +121,19 @@ class ApiEvent implements ApiBridge {
         return null;
       });
     }
+  }
+
+  // 拉取归档
+  async apiFetchArchiveList(): Promise<INote[]> {
+    return database.module('notes_archive').then((model) => {
+      return model.findAll();
+    });
+  }
+  // 移除归档
+  async apiRemoteNoteArchive(note: INote): Promise<INote> {
+    return apiEventLocal
+      .apiRemoteNoteArchive(note)
+      .then(() => this.apiSaveOrUpdateNote({ ...note, status: NoteStatus.normal }, true));
   }
 
   // 拉取配置

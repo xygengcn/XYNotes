@@ -2,6 +2,7 @@
  * 笔记所有字段
  */
 export enum NoteStatus {
+  archive = -1, // 归档状态
   draft = 0, // 草稿状态
   saving = 0.5, // 正在保存
   normal = 1, // 保存状态

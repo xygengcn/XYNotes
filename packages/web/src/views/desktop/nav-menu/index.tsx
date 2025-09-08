@@ -6,7 +6,7 @@ import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
 import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
-import { addNote } from '@xynotes/store/note';
+import { addNote, setActiveNoteId } from '@xynotes/store/note';
 import { appStoreState } from '@xynotes/store/app';
 
 export const DESKTOP_NAV_MENU_WIDTH = 64;
@@ -20,8 +20,10 @@ const DesktopNavMenu = defineComponent({
         icon: 'nav-editing',
         name: 'desktop-edit',
         visible: true,
+        path: '/',
         action: () => {
-          addNote();
+          const note = addNote();
+          setActiveNoteId(note.nid);
         }
       },
       {
@@ -32,11 +34,11 @@ const DesktopNavMenu = defineComponent({
         path: '/'
       },
       {
-        title: '回收',
+        title: '归档',
         icon: 'nav-recycle',
-        name: 'desktop-recycle',
+        name: 'desktop-archive',
         visible: true,
-        path: '/recycle',
+        path: '/archive',
         size: 18
       },
       {

@@ -30,6 +30,7 @@ export interface MarkdownEditorInstance {
     alt?: string;
     title?: string;
   }) => ReturnType<Editor['commands']['insertImage']> | undefined;
+  focus: () => void;
 }
 
 /**
@@ -55,6 +56,7 @@ export function defineMarkdownEditor() {
    * @returns 返回 Markdown 文本内容
    */
   const getMarkdown = () => {
+    // @ts-ignore
     return editor.value?.storage.markdown.getMarkdown();
   };
 
@@ -104,6 +106,13 @@ export function defineMarkdownEditor() {
   };
 
   /**
+   * 聚焦
+
+   * @returns 
+   */
+  const focus = () => editor.value?.chain().focus().run();
+
+  /**
    * 设置值
    * @param content
    * @returns
@@ -121,7 +130,9 @@ export function defineMarkdownEditor() {
    */
   const getCounter = () => {
     return {
+      // @ts-ignore
       characters: editor.value?.storage.characterCount.characters() || 0,
+      // @ts-ignore
       words: editor.value?.storage.characterCount.words() || 0
     };
   };
@@ -231,7 +242,8 @@ export function defineMarkdownEditor() {
       getData,
       onUpload,
       getContent,
-      setImage
+      setImage,
+      focus
     };
   };
 }
