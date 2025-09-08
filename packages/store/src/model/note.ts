@@ -1,4 +1,4 @@
-import { deleteNote, saveNote, syncNote } from '@/state/note';
+import { archiveNote, removeNote, saveNote, syncNote } from '@/state/note';
 import { INote, NoteType, NoteStatus, INoteAttachment } from '@xynotes/typings';
 import { debounce, downloadFile, uuid } from '@xynotes/utils';
 import { toRaw } from 'vue';
@@ -156,13 +156,22 @@ export class Note implements INote {
   /**
    * 删除笔记
    */
-  public delete(): Promise<any> {
+  public archive(): Promise<any> {
     // 清除定时器
     if (this.__saveNoteDebouce) {
       window.clearTimeout(this.__saveNoteDebouce);
     }
     const note = this.toRaw();
-    return deleteNote(note);
+    return archiveNote(note);
+  }
+
+  /**
+   * 移除笔记
+   */
+  public remove() {
+    if (this.status === NoteStatus.archive) {
+      removeNote(this.toRaw());
+    }
   }
 
   /**

@@ -1,4 +1,4 @@
-.desktop-main-container-default {
+.desktop-main-container-archive {
   height: 100%;
 
   &-content {
@@ -9,6 +9,7 @@
     &-left {
       flex: 1;
       overflow: hidden;
+      padding-top: 20px;
     }
 
     // 右侧工具栏

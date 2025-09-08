@@ -90,14 +90,14 @@ class ApiEvent implements ApiBridge {
   }
 
   // 删除笔记
-  async apiDeleteNote(note: INote): Promise<boolean> {
-    return apiEventLocal.apiDeleteNote(note).then((result) => {
+  async apiArchiveNote(note: INote): Promise<boolean> {
+    return apiEventLocal.apiArchiveNote(note).then((result) => {
       // 添加到归档
       apiEventLocal.apiAddNoteArchive({ ...note, status: NoteStatus.archive }).catch(() => null);
 
       // 在线同步
       if (isCheckOnlineSync()) {
-        return apiEventOnline.apiDeleteNote(note);
+        return apiEventOnline.apiArchiveNote(note);
       }
       return result;
     });
@@ -130,10 +130,15 @@ class ApiEvent implements ApiBridge {
     });
   }
   // 移除归档
-  async apiRemoteNoteArchive(note: INote): Promise<INote> {
+  async apiRecoveryNote(note: INote): Promise<INote> {
     return apiEventLocal
       .apiRemoteNoteArchive(note)
       .then(() => this.apiSaveOrUpdateNote({ ...note, status: NoteStatus.normal }, true));
+  }
+
+  // 移除归档
+  async apiRemoteNoteArchive(note: INote): Promise<boolean> {
+    return apiEventLocal.apiRemoteNoteArchive(note);
   }
 
   // 拉取配置

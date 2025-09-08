@@ -1,12 +1,18 @@
 import NoteItem from '@/components/note-item';
 import { type IContextMenuProps, Scroller } from '@xynotes/components';
+import type { Note } from '@xynotes/store';
 import { fetchNoteArchiveList, notesStoreState, recovery } from '@xynotes/store/note';
-import { defineComponent, onBeforeMount } from 'vue';
+import { computed, defineComponent, onBeforeMount } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
 
 const DesktopSideContainerArchiveContent = defineComponent({
   name: 'DesktopSideContainerArchiveContent',
   setup() {
+    // 路由
+    const router = useRouter();
+    const route = useRoute();
+    const nid = computed(() => route.params?.nid as string);
     /**
      * 右键
      * @param cmdKey
@@ -27,6 +33,16 @@ const DesktopSideContainerArchiveContent = defineComponent({
                 window.$ui.toast('恢复成功');
               }
             });
+          case 'delete':
+            window.$ui.confirm({
+              type: 'warn',
+              width: 300,
+              content: '确定永久移除这个笔记吗？',
+              onSubmit: () => {
+                recovery(note.toRaw());
+                window.$ui.toast('移除成功');
+              }
+            });
             break;
         }
       }
@@ -35,6 +51,14 @@ const DesktopSideContainerArchiveContent = defineComponent({
     onBeforeMount(() => {
       fetchNoteArchiveList();
     });
+
+    /**
+     * 选中
+     * @param note
+     */
+    const handleSelectItem = async (note: Note) => {
+      router.push(`/archive/preview/${note.nid}`);
+    };
 
     return () => (
       <div class="desktop-side-container-archive" data-tauri-drag-region>
@@ -48,14 +72,23 @@ const DesktopSideContainerArchiveContent = defineComponent({
           <div
             class="desktop-side-container-archive-list"
             v-contextmenu={{
-              menuList: [{ label: '恢复', value: 'recovery' }],
+              menuList: [
+                { label: '恢复', value: 'recovery' },
+                { label: '移除', value: 'delete' }
+              ],
               onSelect: handleContextmenu
             }}
           >
             {notesStoreState.value.archiveNoteList.map((note, index) => {
               return (
                 <div class="desktop-side-container-archive-list-item" data-contextmenukey={note.nid}>
-                  <NoteItem note={note} key={note.nid} sortIndex={index} />
+                  <NoteItem
+                    note={note}
+                    key={note.nid}
+                    sortIndex={index}
+                    onSelect={handleSelectItem}
+                    active={nid.value === note.nid}
+                  />
                 </div>
               );
             })}

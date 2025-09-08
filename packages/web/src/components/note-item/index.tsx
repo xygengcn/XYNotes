@@ -19,6 +19,10 @@ const NoteItem = defineComponent({
     keyword: {
       type: String,
       default: ''
+    },
+    active: {
+      type: Boolean,
+      default: false
     }
   },
   emits: {
@@ -53,11 +57,7 @@ const NoteItem = defineComponent({
 
     return () => (
       <div
-        class={[
-          'note-item',
-          'note-item-index-' + props.sortIndex,
-          { active: notesStoreState.value.activeNoteId === props.note?.nid }
-        ]}
+        class={['note-item', 'note-item-index-' + props.sortIndex, { active: props.active }]}
         ref={refNote}
         onClick={handleClickSelect}
         onDblClick={preventDefault}

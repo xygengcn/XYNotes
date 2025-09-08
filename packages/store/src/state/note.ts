@@ -107,12 +107,12 @@ export const saveNote = async (note: INote, onlineSyncAt: boolean) => {
 };
 
 /**
- * 删除笔记
+ * 归档笔记
  * @param note
  * @returns
  */
-export const deleteNote = async (note: INote): Promise<any> => {
-  return ApiEvent.api.apiDeleteNote(note).then(() => {
+export const archiveNote = async (note: INote): Promise<void> => {
+  return ApiEvent.api.apiArchiveNote(note).then(() => {
     const nid = note.nid;
     if (state.value.activeNoteId !== nid) {
       state.value.activeNoteId = '';
@@ -162,7 +162,17 @@ export const recovery = (note: INote) => {
   state.value.noteList.push(new Note(note));
   console.log('恢复笔记', state.value.archiveNoteList);
   // 同步到数据库
-  ApiEvent.api.apiRemoteNoteArchive(note);
+  ApiEvent.api.apiRecoveryNote(note);
+};
+
+/**
+ * 删除笔记
+ * @param note
+ * @returns
+ */
+export const removeNote = async (note: INote) => {
+  state.value.archiveNoteList.delete(note.nid);
+  return await ApiEvent.api.apiRemoteNoteArchive(note);
 };
 
 /**

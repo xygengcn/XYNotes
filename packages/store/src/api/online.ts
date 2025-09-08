@@ -122,7 +122,7 @@ class ApiEventOnline {
   }
 
   // 删除笔记
-  async apiDeleteNote(note: INote): Promise<boolean> {
+  async apiArchiveNote(note: INote): Promise<boolean> {
     return this.fetch('/note/detail/delete', { nid: note.nid })
       .then((result) => {
         console.log('[online] delete', result);

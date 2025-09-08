@@ -44,7 +44,7 @@ class ApiEventLocal {
     });
   }
   // 删除笔记
-  async apiDeleteNote(note: INote): Promise<boolean> {
+  async apiArchiveNote(note: INote): Promise<boolean> {
     return database.module('notes').then((model) => {
       return model.destory(note.nid).then(() => true);
     });

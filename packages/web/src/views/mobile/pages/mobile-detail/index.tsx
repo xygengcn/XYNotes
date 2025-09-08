@@ -62,7 +62,7 @@ const MobileDetail = defineComponent({
           width: 300,
           content: '确定删除这个笔记吗？',
           onSubmit: () => {
-            activeNote.value.delete();
+            activeNote.value.archive();
             router.back();
           }
         });

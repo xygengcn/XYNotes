@@ -27,7 +27,7 @@ const DesktopMainContainerDefault = defineComponent({
             <DesktopMainContainerDefaultRight note={activeNote.value} />
           </div>
         )}
-        <div class="desktop-main-container-default__default" v-show={!activeNote.value} data-tauri-drag-region>
+        <div class="desktop-main-container-default-blank" v-show={!activeNote.value} data-tauri-drag-region>
           <Icon type="logo" size={200} data-tauri-drag-region></Icon>
         </div>
       </div>

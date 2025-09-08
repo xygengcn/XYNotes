@@ -45,13 +45,27 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'archive',
         name: 'desktop-archive',
-        components: {
-          side: () => import('@/views/desktop/side-container/pages/side-container-archive'),
-          main: () => import('@/views/desktop/main-container/pages/main-container-default')
-        },
         meta: {
           device: 'desktop'
-        }
+        },
+        children: [
+          {
+            path: '',
+            name: 'desktop-archive-default',
+            components: {
+              side: () => import('@/views/desktop/side-container/pages/side-container-archive'),
+              main: () => import('@/views/desktop/main-container/pages/main-container-archive')
+            }
+          },
+          {
+            path: 'preview/:nid',
+            name: 'desktop-archive-preview',
+            components: {
+              side: () => import('@/views/desktop/side-container/pages/side-container-archive'),
+              main: () => import('@/views/desktop/main-container/pages/main-container-archive')
+            }
+          }
+        ]
       }
     ],
     meta: {

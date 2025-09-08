@@ -2,7 +2,7 @@ import NoteItem from '@/components/note-item';
 import { createWindow, exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
 import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
-import { notesListBySort, setActiveNoteId } from '@xynotes/store/note';
+import { notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 import { computed, defineComponent } from 'vue';
 import './index.scss';
@@ -38,13 +38,13 @@ const DesktopSideContainerListContent = defineComponent({
           case 'split':
             createWindow({ nid: note.nid });
             break;
-          case 'delete':
+          case 'archive':
             window.$ui.confirm({
               type: 'warn',
               width: 300,
-              content: `确定删除《${note.title}》这个笔记吗？`,
+              content: `归档后的笔记不再支持编辑，确定归档《${note.title}》这个笔记吗？`,
               onSubmit: () => {
-                note.delete();
+                note.archive();
               }
             });
             break;
@@ -77,7 +77,7 @@ const DesktopSideContainerListContent = defineComponent({
             menuList: [
               { label: '同步', value: 'sync' },
               { label: '分屏', value: 'split', visible: is.app() },
-              { label: '删除', value: 'delete' }
+              { label: '归档', value: 'archive' }
             ],
             onSelect: handleContextmenu
           }}
@@ -91,6 +91,7 @@ const DesktopSideContainerListContent = defineComponent({
                   sortIndex={index}
                   keyword={props.keyword}
                   onSelect={handleSelectItem}
+                  active={notesStoreState.value.activeNoteId === note?.nid}
                 />
               </div>
             );

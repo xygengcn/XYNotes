@@ -31,7 +31,7 @@ export default abstract class ApiBridge {
    * @param note
    * @returns
    */
-  abstract apiDeleteNote(note: INote): Promise<any>;
+  abstract apiArchiveNote(note: INote): Promise<any>;
 
   /**
    * 拉取设置配置

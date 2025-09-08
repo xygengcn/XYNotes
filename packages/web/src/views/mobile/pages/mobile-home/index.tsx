@@ -2,7 +2,7 @@ import NoteItem from '@/components/note-item';
 import { Drawer, Icon, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { syncApp } from '@xynotes/store/app';
-import { addNote, noteListCount, notesListBySort, setActiveNoteId } from '@xynotes/store/note';
+import { addNote, noteListCount, notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
 import { computed, defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -75,7 +75,7 @@ const MobileHome = defineComponent({
         width: 300,
         content: '确定删除这个笔记吗？',
         onSubmit: () => {
-          note?.delete();
+          note?.archive();
         }
       });
     };
@@ -129,6 +129,7 @@ const MobileHome = defineComponent({
                       sortIndex={props.index}
                       onSelect={handleSelectItem}
                       keyword={keyword.value}
+                      active={notesStoreState.value.activeNoteId === props.item?.nid}
                     ></NoteItem>
                   );
                 },

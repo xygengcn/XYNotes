@@ -1,13 +1,11 @@
 import IconNavMenu from '@/components/icon-nav-menu';
-import showShareNoteDialog from '@/components/note-share';
-import { createWindow } from '@xynotes/app-api';
 import { Note } from '@xynotes/store';
 import { copyText } from '@xynotes/utils';
 import { type PropType, defineComponent } from 'vue';
 import './index.scss';
 
-const DesktopMainContainerDefaultRight = defineComponent({
-  name: 'DesktopMainContainerDefaultRight',
+const DesktopMainContainerArchiveRight = defineComponent({
+  name: 'DesktopMainContainerArchiveRight',
   props: {
     note: {
       type: Object as PropType<Note>,
@@ -16,14 +14,6 @@ const DesktopMainContainerDefaultRight = defineComponent({
   },
   setup(props) {
     const menuList = [
-      {
-        title: '预览',
-        icon: 'item-preview',
-        visible: true,
-        action: (note: Note) => {
-          note && showShareNoteDialog(note);
-        }
-      },
       {
         title: '复制',
         icon: 'item-copy',
@@ -55,37 +45,18 @@ const DesktopMainContainerDefaultRight = defineComponent({
           }
         }
       },
+
       {
-        title: '分屏',
-        icon: 'item-splitscreen',
-        visible: true,
-        action: (note: Note) => {
-          if (note) {
-            createWindow({ nid: note.nid });
-          }
-        }
-      },
-      {
-        title: '同步',
-        icon: 'item-sync',
-        visible: true,
-        action: (note: Note) => {
-          if (note) {
-            note.sync();
-          }
-        }
-      },
-      {
-        title: '归档',
+        title: '移除',
         icon: 'item-delete',
         visible: true,
         action: (note: Note) => {
           if (note) {
             window.$ui.confirm({
               type: 'warn',
-              content: `归档后的笔记不再支持编辑，确定归档《${note.title}》这个笔记吗？`,
+              content: `确定移除《${note.title}》这个笔记吗？`,
               onSubmit: () => {
-                note.archive();
+                note.remove();
               }
             });
           }
@@ -94,12 +65,12 @@ const DesktopMainContainerDefaultRight = defineComponent({
     ];
 
     return () => (
-      <div class="desktop-main-container-default-content-right" data-tauri-drag-region>
+      <div class="desktop-main-container-archive-content-right" data-tauri-drag-region>
         {menuList.map((menu) => {
           return (
             menu.visible && (
               <div
-                class="desktop-main-container-default-content-right-menu"
+                class="desktop-main-container-archive-content-right-menu"
                 v-tippy={{ placement: 'left', content: menu.title }}
               >
                 <IconNavMenu
@@ -120,4 +91,4 @@ const DesktopMainContainerDefaultRight = defineComponent({
   }
 });
 
-export default DesktopMainContainerDefaultRight;
+export default DesktopMainContainerArchiveRight;
