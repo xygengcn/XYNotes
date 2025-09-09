@@ -1,28 +1,44 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "allowJs": true,
-    "composite": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "baseUrl": "./src",
-    "strict": true,
-    "noImplicitAny": false,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "noUnusedLocals": true,
-    "removeComments": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "declaration": true,
-    "strictNullChecks": false,
-    "skipLibCheck": true,
-    "lib": ["esnext"],
-    "types": ["node"]
+      "target": "es6",
+      "module": "CommonJS",
+      "allowJs": true,
+      "outDir": "./dist",
+      "rootDir": "./",
+      "strict": true,
+      "noImplicitAny": false,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": "./",
+      "noUnusedLocals": true,
+      "removeComments": true,
+      "experimentalDecorators": true,
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "declaration": true,
+      "strictNullChecks": false,
+      "lib": [
+          "esnext"
+      ],
+      "types": [
+          "node"
+      ],
+      "paths": {
+          "@/*": [
+              "./src/*"
+          ]
+      }
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "src/global.ts"]
+  "exclude": [
+      "node_modules",
+      "build"
+  ],
+  "include": [
+      "./src/**/*.ts",
+      "./src/**/*.d.ts",
+      "./test/**/*.ts",
+      "./test/*.ts",
+      "./examples/*.ts",
+      "./examples/**/*.ts"
+  ]
 }

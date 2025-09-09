@@ -1,6 +1,28 @@
 {
-  "watch": ["src"],
-  "ext": "ts",
-  "ignore": ["src/**/*.spec.ts"],
-  "exec": "node --loader ts-node/esm src/index.ts"
+  "restartable": "rs",
+  "ignore": [
+      ".git",
+      "node_modules/",
+      "dist/",
+      ".vscode/"
+  ],
+  "watch": [
+      "src/",
+      "examples/"
+  ],
+  "script": "./src/index.ts",
+  "execMap": {
+      "ts": "node  -r tsconfig-paths/register -r ts-node/register"
+  },
+  "env": {
+      "NODE_ENV": "development"
+  },
+  "options": {
+      "extensions": [
+          "js",
+          "ts"
+      ],
+      "exec": "node"
+  },
+  "ext": "js,json,ts"
 }

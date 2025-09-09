@@ -13,15 +13,42 @@ datasource db {
   url      = "file:./notes.db"
 }
 
-model Note {
-  nid       String  @id
-  title     String
-  type      String
-  order     Int     @default(0)
-  text      String?
-  createdAt Int
-  updatedAt Int
-  intro     String?
-  status    Float
-  author    String?
+// 配置中心
+model NoteTable {
+  // 笔记id
+  nid String @id
+
+  // 笔记标题
+  title String
+
+  // 笔记类型
+  type String
+
+  // 排序
+  order Int
+
+  // 笔记内容
+  text String
+
+  // 笔记内容（富文本）
+  content String
+
+  // 简要信息
+  intro String
+
+  // 笔记状态
+  status Int
+
+  // 笔记作者
+  author String
+
+  // 笔记创建时间
+  createdAt DateTime? @default(now())
+
+  // 更新时间
+  updatedAt DateTime? @default(now()) @updatedAt
+
+  @@index([author])
+  @@index([nid])
+  @@map("note_list")
 }

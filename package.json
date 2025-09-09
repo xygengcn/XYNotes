@@ -16,7 +16,6 @@
     "build-version": "./build/build-version.sh",
     "clean-install": "rm -rf ./{packages,services}/*/node_modules node_modules && pnpm i"
   },
-  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
