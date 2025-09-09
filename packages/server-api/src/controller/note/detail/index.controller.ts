@@ -1,21 +1,14 @@
-import { isString } from '@/utils';
+import { isString, parseJson } from '@/utils';
 import { notePrismaClient } from '@/database';
 import { logger } from '@/logger';
 import { INote, NoteStatus } from '@/typings';
 import { type Context, Controller, Param, Post } from 'koa-api-plus';
-
+import stringify from 'fast-safe-stringify';
 @Controller()
 export default class NoteDetailController {
   @Post('/query')
   public async query(@Param.Body() content: { nid: string }, @Param.Context() ctx: Context) {
     logger.info(content, '[detail] query');
-    // 创建者id
-    if (!ctx.auth?.userId) {
-      return Promise.reject({
-        code: 'NOTE_AUTH_FAILED',
-        userMsg: '没有权限'
-      });
-    }
 
     // 校验nid
     if (!isString(content?.nid)) {
@@ -30,10 +23,10 @@ export default class NoteDetailController {
       })
       .then((result) => {
         // 废弃的不拉取
-        if (result?.author === ctx.auth?.userId && result.status !== NoteStatus.deprecated) {
+        if (result && result?.status !== NoteStatus.deprecated) {
           return {
             ...result,
-            content: result.content ? JSON.parse(result.content) : null,
+            content: result.content ? parseJson(result.content) : null,
             createdAt: result.createdAt.getTime(),
             updatedAt: result.updatedAt.getTime(),
             onlineSyncAt: result.updatedAt.getTime()
@@ -51,16 +44,10 @@ export default class NoteDetailController {
    * @param message
    */
   @Post('/save')
-  public async save(@Param.Body() content: { note: INote }, @Param.Context() ctx: Context): Promise<INote> {
+  public async save(@Param.Body() content: { note: INote }): Promise<INote> {
     logger.info(content, '[detail] save');
     const note = content.note;
-    // 创建者id
-    if (!ctx.auth?.userId) {
-      return Promise.reject({
-        code: 500,
-        userMsg: '没有权限'
-      });
-    }
+
     // 校验nid
     if (!isString(note?.nid)) {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: 'nid参数不对' });
@@ -76,11 +63,11 @@ export default class NoteDetailController {
     return notePrismaClient.noteTable
       .upsert({
         create: {
-          content: note.content ? JSON.stringify(note.content) : '',
+          content: note.content ? stringify(note.content) : '',
           text: note.text,
           title: note.title,
           intro: note.intro || '',
-          author: ctx.auth.userId,
+          author: 'admin',
           updatedAt: note.updatedAt ? new Date(note.updatedAt) : new Date(),
           order: note.order || 0,
           status: note.status ?? 1,
@@ -90,11 +77,11 @@ export default class NoteDetailController {
           createdAt: note.createdAt ? new Date(note.createdAt) : new Date()
         },
         update: {
-          content: note.content ? JSON.stringify(note.content) : '',
+          content: note.content ? stringify(note.content) : '',
           text: note.text,
           title: note.title,
           intro: note.intro,
-          author: ctx.auth.userId,
+          author: 'admin',
           updatedAt: note.updatedAt ? new Date(note.updatedAt) : new Date(),
           order: note.order,
           status: note.status,
@@ -107,7 +94,7 @@ export default class NoteDetailController {
       .then((result) => {
         return {
           ...result,
-          content: result.content ? JSON.parse(result.content) : null,
+          content: result.content ? parseJson(result.content) : null,
           createdAt: result.createdAt.getTime(),
           updatedAt: result.updatedAt.getTime(),
           onlineSyncAt: result.updatedAt.getTime()
@@ -127,16 +114,10 @@ export default class NoteDetailController {
    * @param message
    */
   @Post('/sync')
-  public async sync(@Param.Body() content: { note: INote }, @Param.Context() ctx: Context): Promise<INote> {
+  public async sync(@Param.Body() content: { note: INote }): Promise<INote> {
     logger.info(content, '[detail] save');
     const note = content.note;
-    // 创建者id
-    if (!ctx.auth?.userId) {
-      return Promise.reject({
-        code: 'NOTE_AUTH_FAILED',
-        userMsg: '没有权限'
-      });
-    }
+
     // 校验nid
     if (!isString(note?.nid)) {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: 'nid参数不对' });
@@ -167,11 +148,11 @@ export default class NoteDetailController {
       return notePrismaClient.noteTable
         .create({
           data: {
-            content: note.content ? JSON.stringify(note.content) : '',
+            content: note.content ? stringify(note.content) : '',
             text: note.text,
             title: note.title,
             intro: note.intro || '',
-            author: ctx.auth.userId,
+            author: 'admin',
             updatedAt: new Date(note.updatedAt),
             order: note.order || 0,
             status: note.status ?? 1,
@@ -183,7 +164,7 @@ export default class NoteDetailController {
         .then((result) => {
           return {
             ...result,
-            content: result.content ? JSON.parse(result.content) : null,
+            content: result.content ? parseJson(result.content) : null,
             createdAt: result.createdAt.getTime(),
             updatedAt: result.updatedAt.getTime(),
             onlineSyncAt: result.updatedAt.getTime()
@@ -205,11 +186,11 @@ export default class NoteDetailController {
     return notePrismaClient.noteTable
       .update({
         data: {
-          content: note.content ? JSON.stringify(note.content) : '',
+          content: note.content ? stringify(note.content) : '',
           text: note.text,
           title: note.title,
           intro: note.intro,
-          author: ctx.auth.userId,
+          author: 'admin',
           updatedAt: new Date(note.updatedAt),
           order: note.order,
           status: 1,
@@ -222,7 +203,7 @@ export default class NoteDetailController {
       .then((result) => {
         return {
           ...result,
-          content: result.content ? JSON.parse(result.content) : null,
+          content: result.content ? parseJson(result.content) : null,
           createdAt: result.createdAt.getTime(),
           updatedAt: result.updatedAt.getTime(),
           onlineSyncAt: result.updatedAt.getTime()
@@ -243,10 +224,7 @@ export default class NoteDetailController {
    * @returns
    */
   @Post('/delete')
-  public async deletePost(
-    @Param.Body() content: { nid: string; force: boolean },
-    @Param.Context() ctx: Context
-  ): Promise<{ result: boolean }> {
+  public async deletePost(@Param.Body() content: { nid: string; force: boolean }): Promise<{ result: boolean }> {
     logger.info(content, '[detail] delete');
     if (typeof content?.nid === 'undefined') {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: '参数不对' });
@@ -265,12 +243,12 @@ export default class NoteDetailController {
 
     if (note) {
       // 是不是作者
-      if (note.author !== ctx.auth.userId) {
-        return Promise.reject({
-          code: 'NOTE_NOT_AUTH',
-          userMsg: '无权限删除'
-        });
-      }
+      // if (note.author !== ctx.auth.userId) {
+      //   return Promise.reject({
+      //     code: 'NOTE_NOT_AUTH',
+      //     userMsg: '无权限删除'
+      //   });
+      // }
       // 是不是强制删除
       if (content.force) {
         return notePrismaClient.noteTable.delete({ where: { nid: content.nid } }).then(() => {

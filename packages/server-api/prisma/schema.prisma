@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./notes.db"
+  url      = "file:../data/db/notes.db"
 }
 
 // 配置中心

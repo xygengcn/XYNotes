@@ -2,6 +2,13 @@ import { Api } from 'koa-api-plus';
 import { join } from 'path';
 import { logger } from './logger';
 import { KoaLogMiddleware } from './middleware/koa-middleware';
+import { CorsMiddleware } from './middleware/cors-middleware';
+import { StaticAssetsMiddleware } from './middleware/static-middleware';
+import { ensureDir } from './utils';
+
+// 上传文件夹目录
+const uploadDir = join(process.cwd(), '/data/assets');
+ensureDir(uploadDir);
 
 /**
  * 开启接口
@@ -12,8 +19,38 @@ const api = new Api({
   baseUrl: join(__dirname, './controller'),
   responseOptions: {
     allowErrorStatusCode: true
+  },
+  koaBody: {
+    multipart: true,
+    formidable: {
+      maxFileSize: 5 * 1024 * 1024, // 默认5M
+      allowEmptyFiles: false,
+      // 缓存目录
+      uploadDir: uploadDir,
+      filename(name, ext, part, form) {
+        return `${Date.now()}_${part.originalFilename}`.replace(/\s+/g, '_');
+      }
+    },
+
+    onError(error, ctx) {
+      logger.error(error, '[koaBody]');
+      ctx.status = 200;
+      ctx.body = {
+        code: (error as any)?.code || 500,
+        data: null,
+        userMsg: '上传失败',
+        error: error?.message || null,
+        updateTime: Date.now()
+      };
+    }
   }
 });
+
+// CORS 中间件
+api.use(CorsMiddleware());
+
+// 静态资源中间件
+api.use(StaticAssetsMiddleware());
 
 // 日志中间件
 api.use(

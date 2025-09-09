@@ -1,6 +1,7 @@
 import { notePrismaClient } from '@/database';
 import { logger } from '@/logger';
 import { INote, NoteStatus } from '@/typings';
+import { parseJson } from '@/utils';
 import { type Context, Controller, Param, Post } from 'koa-api-plus';
 
 @Controller()
@@ -16,16 +17,8 @@ export default class NoteListController {
     @Param.Context() ctx: Context
   ): Promise<INote[]> {
     logger.info(content, '[list] query');
-    const userId: string = ctx.auth?.userId;
-    // 获取作者的
-    if (!userId) {
-      return Promise.reject({
-        code: 500,
-        userMsg: '没有权限'
-      });
-    }
     const where = {
-      author: userId,
+      author: 'admin',
       status: {
         // 排除废弃的笔记
         not: NoteStatus.deprecated
@@ -60,7 +53,7 @@ export default class NoteListController {
         const list = result.map((i) => {
           return {
             ...i,
-            content: i.content ? JSON.parse(i.content) : null,
+            content: i.content ? parseJson(i.content) : null,
             createdAt: i.createdAt.getTime(),
             updatedAt: i.updatedAt.getTime(),
             onlineSyncAt: i.updatedAt.getTime()

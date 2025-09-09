@@ -55,3 +55,16 @@ export type INote = NoteTable & {
   // 笔记同步时间
   onlineSyncAt: number;
 };
+
+/**
+ * 上传文件类型
+ */
+export interface IFile {
+  lastModifiedDate: Date;
+  filepath: string;
+  newFilename: string;
+  originalFilename: string;
+  mimetype: string;
+  hashAlgorithm: boolean;
+  size: number;
+}

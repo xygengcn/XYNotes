@@ -114,3 +114,6 @@ public
 # Prisma
 prisma/*.db
 prisma/*.db-*
+
+# assets
+data

@@ -5,11 +5,9 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf ./dist && tsc --project tsconfig.build.json",
-    "build:prod": "rm -rf ./dist && tsc --project tsconfig.build.json && npm run prisma:generate",
+    "build": "rm -rf ./dist && tsc --project tsconfig.build.json && cp ./prisma/schema.prisma ./dist/prisma/schema.prisma",
     "dev": "nodemon src/index.ts",
     "start": "node dist/index.js",
-    "start:prod": "NODE_ENV=production node dist/index.js",
     "postinstall": "npm run build",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
@@ -20,8 +18,11 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.20.0",
+    "fast-json-parse": "^1.0.3",
+    "fast-safe-stringify": "^2.1.1",
     "koa-api-plus": "^1.0.12",
-    "pino": "^9.5.0"
+    "pino": "^9.5.0",
+    "pino-pretty": "^13.1.1"
   },
   "devDependencies": {
     "@types/node": "^22.7.7",
