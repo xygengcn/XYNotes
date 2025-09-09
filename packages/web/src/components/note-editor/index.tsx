@@ -4,6 +4,7 @@ import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynote
 import { NoteStatus } from '@xynotes/typings';
 import { defineComponent, nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 import './index.scss';
+import { ApiEvent } from '@xynotes/store';
 
 const NoteEditor = defineComponent({
   name: 'NoteEditor',
@@ -100,11 +101,24 @@ const NoteEditor = defineComponent({
       }
     });
 
+    /**
+     * 处理文件上传
+     */
     onUpload((files: FileList) => {
-      setImage({
-        src: URL.createObjectURL(files[0]),
-        alt: files[0].name
-      });
+      if (!files.length) {
+        return;
+      }
+      for (const file of files) {
+        // 图片
+        if (file.type.startsWith('image/')) {
+          ApiEvent.api.apiFetchResourceUpload(file).then(({ url, name }) => {
+            setImage({
+              src: url,
+              alt: name
+            });
+          });
+        }
+      }
     });
 
     return () => (

@@ -23,7 +23,7 @@ class ApiEventOnline {
   private onlineSyncErrorCount: number = 0;
 
   // 基础拉取
-  private async fetch<T extends unknown = any>(url: string, body: any = {}): Promise<T> {
+  private async fetch<T extends unknown = any>(url: string, body: any = {}, configs: any = {}): Promise<T> {
     // 忽略同步
     if (isCheckOnlineSync() && this.ignoreOnlineSync) {
       return Promise.resolve(null as any);
@@ -37,7 +37,8 @@ class ApiEventOnline {
           'Content-Type': 'application/json',
           Authorization: configsStoreState.value.REMOTE_AUTHORIZATION || Cookie.getCookie('Authorization') || '',
           'X-App-DeviceId': '',
-          'X-App-Source': 'Note_Service'
+          'X-App-Source': 'Note_Service',
+          ...(configs.headers || {})
         },
         baseURL,
         timeout: 1000 // 1秒超时
@@ -155,6 +156,25 @@ class ApiEventOnline {
 
   // 更新配置
   async apiSaveOrUpdateConfigs(configs: IConfigsColunm[]): Promise<any> {}
+
+  // 上传文件
+  async apiFetchResourceUpload(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('origin', location.origin);
+    // 开始上传
+    return this.fetch('/note/assets/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        console.log('[上传失败]', e);
+      });
+  }
 }
 
 const apiEventOnline = new ApiEventOnline();

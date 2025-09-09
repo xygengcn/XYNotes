@@ -153,5 +153,10 @@ class ApiEvent implements ApiBridge {
       return model.bulkCreate(configs);
     });
   }
+
+  // 上传文件
+  async apiFetchResourceUpload(file: File): Promise<{ url: string; size: number; name: string; mimeType: string }> {
+    return apiEventOnline.apiFetchResourceUpload(file);
+  }
 }
 export default ApiEvent;
