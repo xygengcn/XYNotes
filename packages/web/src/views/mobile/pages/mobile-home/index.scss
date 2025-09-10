@@ -68,6 +68,22 @@
         }
       }
     }
+
+    &-blank {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      font-size: 14px;
+      flex-direction: column;
+      color: var(--font-default-color);
+      gap: 10px;
+      &-text {
+        .icon {
+          margin: 0px 4px;
+        }
+      }
+    }
   }
 
   // 底部
