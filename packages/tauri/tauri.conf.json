@@ -1,6 +1,6 @@
 {
   "productName": "XY笔记",
-  "version": "4.0.7",
+  "version": "4.0.19",
   "identifier": "com.xynotes.dev",
   "build": {
     "beforeDevCommand": "",
@@ -28,7 +28,11 @@
     "security": {
       "csp": null
     },
-    "macOSPrivateApi": true
+    "macOSPrivateApi": true,
+    "trayIcon": {
+      "id": "system",
+      "iconPath": "icons/tray.png"
+    }
   },
   "bundle": {
     "active": true,
@@ -38,7 +42,8 @@
       "icons/128x128.png",
       "icons/128x128@2x.png",
       "icons/icon.icns",
-      "icons/icon.ico"
+      "icons/icon.ico",
+      "icons/tray.png"
     ]
   }
 }

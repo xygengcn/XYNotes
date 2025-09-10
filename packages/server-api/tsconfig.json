@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+      "target": "es6",
+      "module": "CommonJS",
+      "allowJs": true,
+      "outDir": "./dist",
+      "rootDir": "./",
+      "strict": true,
+      "noImplicitAny": false,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": "./",
+      "noUnusedLocals": true,
+      "removeComments": true,
+      "experimentalDecorators": true,
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "declaration": true,
+      "strictNullChecks": false,
+      "lib": [
+          "esnext"
+      ],
+      "types": [
+          "node"
+      ],
+      "paths": {
+          "@/*": [
+              "./src/*"
+          ]
+      }
+  },
+  "exclude": [
+      "node_modules",
+      "build"
+  ],
+  "include": [
+      "./src/**/*.ts",
+      "./src/**/*.d.ts",
+      "./test/**/*.ts",
+      "./test/*.ts",
+      "./examples/*.ts",
+      "./examples/**/*.ts"
+  ]
+}

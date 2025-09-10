@@ -1,7 +1,7 @@
-import Input from '@/components/common/input';
-import { Note } from '@/services/note';
-import { NoteStatus } from '@/typings/note';
-import { defineComponent, PropType } from 'vue';
+import { Input } from '@xynotes/components';
+import { NoteStatus } from '@xynotes/typings';
+import { Note } from '@xynotes/store';
+import { defineComponent, type PropType } from 'vue';
 import './index.scss';
 
 const NoteEditorTitle = defineComponent({
@@ -12,7 +12,7 @@ const NoteEditorTitle = defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup(props, context) {
     /*
      * 修改标题
      * @param title
@@ -24,10 +24,14 @@ const NoteEditorTitle = defineComponent({
       }
     };
 
+    const handleEnter = () => {
+      context.emit('enter');
+    };
+
     return () => (
       <div class="note-editor-title" v-show={props.note}>
         <div class="note-editor-title-content">
-          <Input value={props.note?.title} onChange={handleChangeTitle} />
+          <Input value={props.note?.title} onChange={handleChangeTitle} onEnter={handleEnter} />
         </div>
       </div>
     );

@@ -1,4 +1,4 @@
-import { debounce } from '@/utils/debounce-throttle';
+import { debounce } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
 

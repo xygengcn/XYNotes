@@ -1,9 +1,9 @@
-import { debounce } from '@/utils/debounce-throttle';
-import { App } from 'vue';
+import { debounce } from '@xynotes/utils';
+import { type App } from 'vue';
 
 export default function VueDebounce(app: App) {
   app.directive('debounce', {
-    mounted: (el, binding, vnode) => {
+    mounted: (el, binding, _vnode) => {
       el.debounceFn = debounce(binding.value);
       el.addEventListener('click', el.debounceFn);
     },

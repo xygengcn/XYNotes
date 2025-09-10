@@ -1,29 +1,29 @@
 import logo from '@/assets/images/logo/logo.png';
-import MinMax from '@/components/common/min-max';
-import { useNotesStore } from '@/store/notes.store';
+import MinMax from '@/components/min-max';
+import { AppLoadStatus } from '@xynotes/store';
+import { Loading } from '@xynotes/components';
+import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
-import DesktopNavMenuItem, { IdesktopNavMenuItem } from './nav-menu-item';
-import is from '@/utils/is';
-import Loading from '@/components/common/loading';
-import { AppLoadStatus, useAppStore } from '@/store/app.store';
+import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
+import { addNote, setActiveNoteId } from '@xynotes/store/note';
+import { appStoreState } from '@xynotes/store/app';
 
 export const DESKTOP_NAV_MENU_WIDTH = 64;
 
 const DesktopNavMenu = defineComponent({
   name: 'DesktopNavMenu',
   setup() {
-    const noteStore = useNotesStore();
-    const appStore =useAppStore()
-
     const desktopNavMenuList: IdesktopNavMenuItem[] = [
       {
         title: '新增',
         icon: 'nav-editing',
         name: 'desktop-edit',
         visible: true,
+        path: '/',
         action: () => {
-          noteStore.addNote();
+          const note = addNote();
+          setActiveNoteId(note.nid);
         }
       },
       {
@@ -34,11 +34,11 @@ const DesktopNavMenu = defineComponent({
         path: '/'
       },
       {
-        title: '回收',
+        title: '归档',
         icon: 'nav-recycle',
-        name: 'desktop-recycle',
+        name: 'desktop-archive',
         visible: true,
-        path: '/recycle',
+        path: '/archive',
         size: 18
       },
       {
@@ -68,8 +68,8 @@ const DesktopNavMenu = defineComponent({
           </div>
         </div>
         <div class="desktop-nav-menu-bottom">
-          <div class="desktop-nav-menu-bottom-loading" v-show={appStore.loadStatus !== AppLoadStatus.finish}>
-            <Loading color="var(--font-default-color)"></Loading>
+          <div class="desktop-nav-menu-bottom-loading" v-show={appStoreState.value.loadStatus !== AppLoadStatus.finish}>
+            <Loading />
           </div>
           <div class="desktop-nav-menu-bottom-version">
             <a

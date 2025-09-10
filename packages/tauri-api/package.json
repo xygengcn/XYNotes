@@ -1,0 +1,33 @@
+{
+  "name": "@xynotes/tauri-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./dist && tsc --project tsconfig.build.json",
+    "postinstall": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tauri-apps/api": "2.1.1",
+    "@tauri-apps/plugin-clipboard-manager": "2.0.1",
+    "@tauri-apps/plugin-dialog": "2.0.1",
+    "@tauri-apps/plugin-fs": "2.0.3",
+    "@tauri-apps/plugin-global-shortcut": "2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.7",
+    "typescript": "5.7.2"
+  },
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}

@@ -9,5 +9,10 @@
     height: max-content;
     width: 100%;
     max-width: 680px;
+    min-height: 100%;
+
+    & > div {
+      margin-bottom: 2rem;
+    }
   }
 }

@@ -1,0 +1,37 @@
+{
+  "name": "@xynotes/typings",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "vite build --config vite.build.config.ts",
+    "postinstall": "npm run build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^2.8.7",
+    "typescript": "5.7.2",
+    "vite": "^5.3.5",
+    "vite-plugin-dts": "^3.9.1"
+  },
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js"
+    },
+    "./note": {
+      "development": "./src/note.ts",
+      "require": "./dist/note.cjs.js",
+      "types": "./dist/note.d.ts",
+      "import": "./dist/note.es.js"
+    }
+  }
+}

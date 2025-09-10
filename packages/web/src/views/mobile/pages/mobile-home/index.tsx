@@ -1,24 +1,18 @@
-import Drawer from '@/components/common/drawer';
-import Icon from '@/components/common/icon';
 import NoteItem from '@/components/note-item';
-import { Note } from '@/services/note';
-import { useConfigsStore } from '@/store/config.store';
-import { useNotesStore } from '@/store/notes.store';
-import { NoteListSortType } from '@/typings/enum/note';
-import { debounce } from '@/utils/debounce-throttle';
+import { Drawer, Icon, Scroller } from '@xynotes/components';
+import { Note } from '@xynotes/store';
+import { syncApp } from '@xynotes/store/app';
+import { addNote, noteListCount, notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
+import { debounce } from '@xynotes/utils';
 import { computed, defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import './index.scss';
 import { SwipeList } from 'vue3-swipe-actions';
 import 'vue3-swipe-actions/dist/index.css';
-import Scroller from '@/components/common/scroller';
-import middlewareHook from '@/middlewares';
+import './index.scss';
 
 const MobileHome = defineComponent({
   name: 'MobileHome',
   setup() {
-    const store = useNotesStore();
-    const configStore = useConfigsStore();
     const router = useRouter();
     /**
      * 关键词
@@ -37,39 +31,25 @@ const MobileHome = defineComponent({
       const target = e.target as HTMLInputElement;
       keyword.value = target.value.trimStart();
     });
-
-    /**
-     * 排序类型
-     */
-    const noteListSortType = computed(() => {
-      return configStore?.noteListSort?.value || NoteListSortType.updated;
-    });
-
     /**
      * 笔记列表
      */
     const noteList = computed(() => {
       if (!keyword.value.trim()) {
-        return store.notesList.sort((a, b) => {
-          return b[noteListSortType.value] - a[noteListSortType.value];
-        });
+        return notesListBySort.value;
       }
-      return store.notesList
-        .filter((note) => {
-          return (
-            note.intro?.includes(keyword.value) ||
-            note.text?.includes(keyword.value) ||
-            note.title?.includes(keyword.value)
-          );
-        })
-        .sort((a, b) => {
-          return b[noteListSortType.value] - a[noteListSortType.value];
-        });
+      return notesListBySort.value.filter((note) => {
+        return (
+          note.intro?.includes(keyword.value) ||
+          note.text?.includes(keyword.value) ||
+          note.title?.includes(keyword.value)
+        );
+      });
     });
     /**
      * 点击
      */
-    const handleClickItem = (note: Note) => {
+    const handleSelectItem = (note: Note) => {
       return router.push({
         name: 'mobile-detail',
         params: {
@@ -82,7 +62,8 @@ const MobileHome = defineComponent({
      * 新增
      */
     const handleClickAdd = () => {
-      store.addNote();
+      const note = addNote();
+      handleSelectItem(note);
     };
 
     /**
@@ -94,7 +75,7 @@ const MobileHome = defineComponent({
         width: 300,
         content: '确定删除这个笔记吗？',
         onSubmit: () => {
-          note?.delete();
+          note?.archive();
         }
       });
     };
@@ -103,7 +84,7 @@ const MobileHome = defineComponent({
      * 数据同步
      */
     const handleSyncList = () => {
-      middlewareHook.registerMiddleware('sync');
+      syncApp();
       visibleMoreDrawer.value = false;
     };
 
@@ -115,7 +96,7 @@ const MobileHome = defineComponent({
     };
 
     onBeforeMount(() => {
-      store.setActiveNoteId('');
+      setActiveNoteId('');
     });
     return () => (
       <div class="mobile-home">
@@ -146,8 +127,9 @@ const MobileHome = defineComponent({
                       class="mobile-home-content-list-scroll-item"
                       note={props.item}
                       sortIndex={props.index}
-                      onSelect={handleClickItem}
+                      onSelect={handleSelectItem}
                       keyword={keyword.value}
+                      active={notesStoreState.value.activeNoteId === props.item?.nid}
                     ></NoteItem>
                   );
                 },
@@ -171,7 +153,7 @@ const MobileHome = defineComponent({
         </div>
         <div class="mobile-home-footer">
           <div class="mobile-home-footer-content">
-            <span>{store.noteListCount}个笔记</span>
+            <span>{noteListCount.value}个笔记</span>
             <span class="mobile-home-footer-content-add" onClick={handleClickAdd}>
               <Icon type="mobile-add" size="2em"></Icon>
             </span>

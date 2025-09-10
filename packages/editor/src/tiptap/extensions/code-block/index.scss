@@ -1,0 +1,153 @@
+@import '@editor/styles/function.scss';
+:root {
+  // code颜色
+  --markdown-editor-codeblock-bg-color: #262335;
+}
+.markdown-editor-codeblock {
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  height: max-content;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background-color: var(--markdown-editor-codeblock-bg-color);
+  max-height: 65vh;
+
+  & + & {
+    margin-top: 0.8rem;
+  }
+
+  &-header {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.06);
+    height: 40px;
+    cursor: default;
+
+    // 图标
+    &-icon {
+      display: flex;
+      align-items: center;
+      padding-left: 1rem;
+      column-gap: 0.5rem;
+      cursor: default;
+      i {
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin: 8px 0px;
+        border-radius: 50%;
+      }
+      // 第一个i元素
+      i:nth-child(1) {
+        background-color: #ff5f57;
+      }
+      i:nth-child(2) {
+        background-color: #febc2e;
+      }
+      i:nth-child(3) {
+        background-color: #28c840;
+      }
+    }
+    // 语言
+    &-lang {
+      display: flex;
+      padding-left: 1.2rem;
+      height: 30px;
+      margin-top: 10px;
+      max-width: 50%;
+
+      &-content {
+        display: inline-block;
+        transition: all 0.15s ease-in-out;
+        background-color: rgb(38, 35, 53);
+        padding: 0px 12px 0px 16px;
+        border-radius: 8px 8px 0px 0px;
+        position: relative;
+
+        &::before,
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          bottom: 0;
+          background-color: transparent;
+          width: 8px;
+          height: 8px;
+          box-shadow: rgb(38, 35, 53) 1px 0px 0px 0px, rgb(38, 35, 53) 3px 4px 0px 0px;
+          overflow: hidden;
+        }
+
+        &::before {
+          left: -8px;
+          border-bottom-right-radius: 8px;
+        }
+
+        &::after {
+          right: -8px;
+          border-bottom-right-radius: 12px;
+          transform: scaleX(-1);
+        }
+
+        &-input {
+          width: 100%;
+          font-family: inherit;
+          font-size: 100%;
+          color: #fff;
+          height: 30px;
+          line-height: 30px;
+          appearance: none;
+          outline: none;
+          padding: 0;
+          margin: 0;
+          border: none;
+          background-color: transparent;
+        }
+      }
+    }
+    // 操作
+    &-opts {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      color: #adadad;
+      padding-right: 20px;
+      column-gap: 10px;
+      align-items: center;
+      span {
+        padding: 4px;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover {
+          background-color: rgba($color: #fff, $alpha: 0.1);
+        }
+      }
+    }
+  }
+
+  &-content {
+    display: flex;
+    // 选中颜色
+    ::selection {
+      background: rgba($color: #fff, $alpha: 0.2) !important;
+    }
+    @include mobile {
+      & {
+        flex-direction: column;
+      }
+    }
+    &-code {
+      display: inline-block;
+      box-sizing: border-box;
+      flex: 1;
+      width: 100%;
+      padding: 20px 16px 16px;
+      text-align: initial;
+      height: max-content;
+    }
+    &-preview {
+      flex: 1;
+    }
+  }
+}

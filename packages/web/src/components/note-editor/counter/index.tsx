@@ -1,6 +1,7 @@
-import { Note } from '@/services/note';
-import { TimeFormat } from 'js-lark';
-import { defineComponent, PropType } from 'vue';
+import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
+import { Note } from '@xynotes/store';
+import { timeFormat } from '@xynotes/utils';
+import { defineComponent, nextTick, ref, watch, type PropType } from 'vue';
 import './index.scss';
 
 /**
@@ -16,14 +17,30 @@ const NoteEditorCounter = defineComponent({
     }
   },
   setup(props) {
+    const { getCounter, onCreated, onChange } = useEditor() as MarkdownEditorInstance;
+    const counter = ref<{ characters: number; words: number }>({ characters: 0, words: 0 });
+    onChange(() => {
+      counter.value = getCounter();
+    });
+    onCreated(() => {
+      counter.value = getCounter();
+    });
+    watch(
+      () => props.note?.nid,
+      () => {
+        nextTick(() => {
+          counter.value = getCounter();
+        });
+      }
+    );
     return () => (
       <div class="note-editor-counter" data-tauri-drag-region>
         <span class="note-editor-counter-time" data-tauri-drag-region>
-          {TimeFormat(props.note?.updatedAt, 'yyyy年MM月dd HH:mm')}
+          {timeFormat(props.note?.updatedAt, 'yyyy年MM月dd HH:mm')}
         </span>
-        {!!props.note?.counter && (
+        {!!props.note && (
           <span class="note-editor-counter-count" data-tauri-drag-region>
-            统计: {props.note?.counter}
+            统计: {counter.value.characters}
           </span>
         )}
       </div>

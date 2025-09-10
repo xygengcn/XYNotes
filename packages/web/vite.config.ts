@@ -5,8 +5,6 @@ import { fileURLToPath } from 'url';
 import { VitePWA } from 'vite-plugin-pwa';
 import manifestJson from './mainifest';
 import packageConfig from './package.json';
-import path from 'path';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 const appVersion = packageConfig.version;
 
@@ -17,15 +15,12 @@ export default defineConfig({
     emptyOutDir: true
   },
   plugins: [
-    // 数据分析
-    visualizer({
-      filename: path.join(__dirname, 'dist', 'stats.html'),
-      open: false, //注意这里要设置为true，否则无效
-      gzipSize: true,
-      brotliSize: true
-    }) as PluginOption,
     vue(),
-    vueJsx(),
+    vueJsx({
+      isCustomElement: (tag) => {
+        return ['mind-mark', 'code-preview', 'img-viewer'].includes(tag);
+      }
+    }),
     VitePWA({
       base: '/',
       devOptions: { enabled: false },
@@ -63,6 +58,7 @@ export default defineConfig({
     })
   ],
   resolve: {
+    conditions: ['development'],
     alias: [
       {
         find: /^~(.*)$/,
@@ -71,6 +67,10 @@ export default defineConfig({
       {
         find: '@',
         replacement: fileURLToPath(new URL('./src', import.meta.url))
+      },
+      {
+        find: '@editor',
+        replacement: fileURLToPath(new URL('../editor/src', import.meta.url))
       }
     ]
   },
