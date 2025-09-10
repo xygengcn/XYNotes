@@ -20,6 +20,11 @@ const MobileHome = defineComponent({
     const keyword = ref('');
 
     /**
+     * 列表数据ref
+     */
+    const swipeListRef = ref<InstanceType<typeof SwipeList> | null>(null);
+
+    /**
      * 是否显示抽屉
      */
     const visibleMoreDrawer = ref(false);
@@ -75,6 +80,7 @@ const MobileHome = defineComponent({
         width: 300,
         content: '确定删除这个笔记吗？',
         onSubmit: () => {
+          swipeListRef.value?.closeActions();
           note?.archive();
         }
       });
@@ -114,9 +120,9 @@ const MobileHome = defineComponent({
           </div>
         </div>
         <div class="mobile-home-content">
-          <Scroller class="mobile-home-content-list">
+          <Scroller class="mobile-home-content-list" v-show={noteList.value.length > 0}>
             <SwipeList
-              ref="swipeList"
+              ref={swipeListRef}
               class="mobile-home-content-list-scroll"
               items={noteList.value}
               item-key="id"
@@ -150,6 +156,12 @@ const MobileHome = defineComponent({
               }}
             />
           </Scroller>
+          <div class="mobile-home-content-blank" v-show={noteList.value.length === 0 && !keyword.value.trim()}>
+            <Icon type="list-empty" size={100}></Icon>
+            <div class="mobile-home-content-blank-text">
+              点击下方<Icon type="mobile-add" size="1em"></Icon>创建你的第一个笔记吧!
+            </div>
+          </div>
         </div>
         <div class="mobile-home-footer">
           <div class="mobile-home-footer-content">
