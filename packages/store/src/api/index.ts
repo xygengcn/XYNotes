@@ -5,6 +5,7 @@ import { INote, NoteStatus } from '@xynotes/typings';
 import ApiBridge from './api.bridge';
 import apiEventLocal from './local';
 import apiEventOnline from './online';
+import { IUploadFile } from '@/typings/assets';
 
 /**
  * 事件继承，所有数据处理都经过这里
@@ -155,7 +156,7 @@ class ApiEvent implements ApiBridge {
   }
 
   // 上传文件
-  async apiFetchResourceUpload(file: File): Promise<{ url: string; size: number; name: string; mimeType: string }> {
+  async apiFetchResourceUpload(file: File): Promise<IUploadFile> {
     return apiEventOnline.apiFetchResourceUpload(file);
   }
 }

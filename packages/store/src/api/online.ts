@@ -1,4 +1,5 @@
 import { configsStoreState, isCheckOnlineSync } from '@/state/configs';
+import { IUploadFile } from '@/typings/assets';
 import { IConfigsColunm } from '@/typings/configs';
 import { INote } from '@xynotes/typings';
 import { Cookie, omit } from '@xynotes/utils';
@@ -158,7 +159,7 @@ class ApiEventOnline {
   async apiSaveOrUpdateConfigs(configs: IConfigsColunm[]): Promise<any> {}
 
   // 上传文件
-  async apiFetchResourceUpload(file: File) {
+  async apiFetchResourceUpload(file: File): Promise<IUploadFile> {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('origin', location.origin);

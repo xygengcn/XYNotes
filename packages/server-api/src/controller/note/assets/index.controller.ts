@@ -15,7 +15,7 @@ export default class NoteAssetsController {
   async upload(
     @Param.Body() options: { type: string; origin: string },
     @Param.Files() requestFile: { file: IFile }
-  ): Promise<{ url: string; size: number; name: string; mimeType: string }> {
+  ): Promise<{ originUrl: string; size: number; name: string; mimeType: string }> {
     logger.info(options, '[resource] upload');
     // 判断空
     if (!requestFile?.file) {
@@ -35,7 +35,7 @@ export default class NoteAssetsController {
     }
 
     return {
-      url: options.origin + '/resources/assets/' + file.newFilename,
+      originUrl: options.origin + '/resources/assets/' + file.newFilename,
       size: file.size,
       name: file.originalFilename,
       mimeType: file.mimetype
