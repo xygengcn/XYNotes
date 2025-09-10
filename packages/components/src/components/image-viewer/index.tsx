@@ -2,6 +2,8 @@ import { isBlobUrl } from '@xynotes/utils';
 import 'photoswipe/style.css';
 import { defineComponent, defineCustomElement, ref } from 'vue';
 import './index.scss';
+import ErrorPng from './img-error.png';
+
 export const Viewer = defineComponent({
   name: 'Viewer',
   props: {
@@ -13,7 +15,12 @@ export const Viewer = defineComponent({
   },
   setup(props) {
     const loaded = ref(false);
+
+    // 加载失败
+    const error = ref(false);
+
     const onClick = (e) => {
+      if (error.value) return;
       const img = e.target as HTMLImageElement;
       imageViewer([{ src: img.src, width: img.naturalWidth, height: img.naturalHeight }]);
     };
@@ -23,17 +30,19 @@ export const Viewer = defineComponent({
     };
     const onError = () => {
       loaded.value = false;
+      error.value = true;
     };
     return () => (
       <div
         class={{
           'img-viewer': true,
-          'img-viewer-blob': props.iseditable === 'true' && loaded.value && isBlobUrl(props.src)
+          'img-viewer-blob': props.iseditable === 'true' && loaded.value && isBlobUrl(props.src),
+          'img-viewer-error': error.value
         }}
         contenteditable="false"
       >
         <img
-          src={props.src}
+          src={error.value ? ErrorPng : props.src}
           alt={props.alt}
           width={props.width || 'auto'}
           heigth={props.heigth || 'auto'}
