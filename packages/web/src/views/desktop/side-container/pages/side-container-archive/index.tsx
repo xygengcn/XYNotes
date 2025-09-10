@@ -1,7 +1,7 @@
 import NoteItem from '@/components/note-item';
 import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import type { Note } from '@xynotes/store';
-import { fetchNoteArchiveList, notesStoreState, recovery } from '@xynotes/store/note';
+import { fetchNoteArchiveList, notesStoreState, recovery, removeNote } from '@xynotes/store/note';
 import { computed, defineComponent, onBeforeMount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
@@ -39,7 +39,7 @@ const DesktopSideContainerArchiveContent = defineComponent({
               width: 300,
               content: '确定永久移除这个笔记吗？',
               onSubmit: () => {
-                recovery(note.toRaw());
+                removeNote(note.toRaw());
                 window.$ui.toast('移除成功');
               }
             });

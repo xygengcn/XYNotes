@@ -3,7 +3,6 @@ import { join } from 'path';
 import { logger } from './logger';
 import { KoaLogMiddleware } from './middleware/koa-middleware';
 import { CorsMiddleware } from './middleware/cors-middleware';
-import { StaticAssetsMiddleware } from './middleware/static-middleware';
 import { ensureDir } from './utils';
 
 // 上传文件夹目录
@@ -48,9 +47,6 @@ const api = new Api({
 
 // CORS 中间件
 api.use(CorsMiddleware());
-
-// 静态资源中间件
-api.use(StaticAssetsMiddleware());
 
 // 日志中间件
 api.use(

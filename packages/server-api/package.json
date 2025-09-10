@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf ./dist && tsc --project tsconfig.build.json && cp ./prisma/schema.prisma ./dist/prisma/schema.prisma",
+    "build": "rm -rf ./dist && tsc --project tsconfig.build.json && mkdir ./dist/prisma && cp ./prisma/schema.prisma ./dist/prisma/schema.prisma",
     "dev": "nodemon src/index.ts",
     "start": "node dist/index.js",
     "postinstall": "npm run build",

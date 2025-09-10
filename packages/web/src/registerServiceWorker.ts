@@ -16,9 +16,12 @@ if (process.env.NODE_ENV === 'production' && !is.app()) {
     },
     updatefound() {
       console.log('正在官网加载新版本...');
-      window.$ui?.toast('新版已准备好，请刷新后使用！');
     },
     updated() {
+      window.$ui?.toast('新版已准备好，即将刷新！');
+      setTimeout(() => {
+        window.location.reload();
+      }, 800);
       console.log('新版已准备好，请刷新后使用！');
     },
     offline() {
