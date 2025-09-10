@@ -2,7 +2,7 @@
 
 XY 笔记本是 XY 博客新尝试的一个轻量级的本地笔记本，是一款基于 vue 框架的笔记本，数据存储本地浏览器，默认支持 markdown 语法，支持图标数学等语法，支持即时渲染，支持截图分享等。
 
-网站使用：https://notes.xygeng.cn/#/
+网站使用：[https://demo.notes.xygeng.cn](https://demo.notes.xygeng.cn)
 
 ## 功能：
 
