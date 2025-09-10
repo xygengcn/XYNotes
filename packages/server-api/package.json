@@ -1,0 +1,43 @@
+{
+  "name": "@xynotes/server-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./dist && tsc --project tsconfig.build.json && mkdir ./dist/prisma && cp ./prisma/schema.prisma ./dist/prisma/schema.prisma",
+    "dev": "nodemon src/index.ts",
+    "start": "node dist/index.js",
+    "postinstall": "npm run build",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "fast-json-parse": "^1.0.3",
+    "fast-safe-stringify": "^2.1.1",
+    "koa-api-plus": "^1.0.12",
+    "pino": "^9.5.0",
+    "pino-pretty": "^13.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.7",
+    "nodemon": "^3.1.7",
+    "prisma": "^5.20.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "5.7.2"
+  },
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}

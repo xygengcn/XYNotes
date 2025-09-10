@@ -1,9 +1,9 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
-import { Note } from '@/services/note';
-import { copyText } from '@/utils/clipboard';
-import is from '@/utils/is';
-import { PropType, defineComponent } from 'vue';
+import { createWindow } from '@xynotes/app-api';
+import { Note } from '@xynotes/store';
+import { copyText } from '@xynotes/utils';
+import { type PropType, defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopMainContainerDefaultRight = defineComponent({
@@ -46,12 +46,22 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       },
       {
-        title: '分屏',
-        icon: 'item-splitscreen',
-        visible: is.app(),
+        title: 'Markdown下载',
+        icon: 'item-markdown',
+        visible: true,
         action: (note: Note) => {
           if (note) {
-            handleSplitScreen(note);
+            note.toMarkdown();
+          }
+        }
+      },
+      {
+        title: '分屏',
+        icon: 'item-splitscreen',
+        visible: true,
+        action: (note: Note) => {
+          if (note) {
+            createWindow({ nid: note.nid });
           }
         }
       },
@@ -66,27 +76,22 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       },
       {
-        title: '删除',
+        title: '归档',
         icon: 'item-delete',
         visible: true,
         action: (note: Note) => {
           if (note) {
             window.$ui.confirm({
               type: 'warn',
-              content: `确定删除《${note.title}》这个笔记吗？`,
+              content: `归档后的笔记不再支持编辑，确定归档《${note.title}》这个笔记吗？`,
               onSubmit: () => {
-                note.delete();
+                note.archive();
               }
             });
           }
         }
       }
     ];
-
-    // 新开页面
-    const handleSplitScreen = (note: Note) => {
-      window.$appWindow?.createWindow({ nid: note.nid });
-    };
 
     return () => (
       <div class="desktop-main-container-default-content-right" data-tauri-drag-region>

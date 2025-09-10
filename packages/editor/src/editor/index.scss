@@ -1,58 +1,48 @@
-@import './icon/iconfont.css';
-@import './style/atom-one-dark.min.css';
-@import './extensions/index.scss';
+@import '../tiptap/index.scss';
 
-.markdown-editor {
-  color: #24292e;
+.editor {
+  width: 100%;
   height: 100%;
-  font-family: 'Helvetica Neue,Luxi Sans,DejaVu Sans,Hiragino Sans GB,Microsoft Yahei,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",Segoe UI Symbol,"Android Emoji",EmojiSymbols';
+  position: relative;
+  font-size: var(--font-normal-size);
 
-  // 主题色
-  --markdown-editor-theme-color: #f3bb41;
-  --markdown-editor-gray-color: #e8e8e8;
-
-  // 默认选择颜色
-  ::selection {
-    background: #edb94645;
+  * {
+    user-select: text;
+    -webkit-user-select: auto;
   }
 
-  // 非编辑状态下可以不设置height
-  &[data-editable='false'] {
-    .tiptap {
-      min-height: 0;
-    }
+  [contenteditable] {
+    -webkit-user-select: auto;
+    user-select: all;
   }
 
-  // 容器
-  .tiptap {
-    outline: none;
-    min-height: 100%;
-  }
-
-  // 表格
-  &-table {
-    margin: 0.2em 0px;
-    border-collapse: collapse;
-    box-sizing: border-box;
-    border-radius: 4px;
+  // 主体
+  &-content {
     width: 100%;
-
-    tr {
-      position: relative;
-      border: 1px solid var(--markdown-editor-gray-color);
-    }
-
-    th,
-    td {
-      position: relative;
-      min-width: 50px;
-      padding: 0.25em 0.5em;
-      border: 1px solid var(--markdown-editor-gray-color);
+    min-height: 100%;
+    overflow: auto;
+    border: none;
+    .tiptap {
+      padding: var(--note-item-content-padding);
     }
   }
 
-  // 链接
-  &-link {
-    color: var(--markdown-editor-theme-color);
+  &-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  div[data-tippy-root] {
+    .tippy-box {
+      background-color: transparent;
+      box-shadow: none !important;
+      color: #282828 !important;
+    }
+    .tippy-arrow {
+      display: none;
+    }
   }
 }

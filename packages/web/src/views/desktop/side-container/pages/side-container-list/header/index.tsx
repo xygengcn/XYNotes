@@ -1,28 +1,23 @@
-import Icon from '@/components/common/icon';
-import Popover from '@/components/common/popover';
-import { useConfigsStore } from '@/store/config.store';
-import { useNotesStore } from '@/store/notes.store';
-import { INoteListSort } from '@/typings/config';
-import { NoteListSortType } from '@/typings/enum/note';
+import { Icon, Popover } from '@xynotes/components';
+import { type INoteListSort, NoteListSortType } from '@xynotes/store';
+import { configsStoreState, setConfig } from '@xynotes/store/configs';
+import { noteListCount } from '@xynotes/store/note';
 import { computed, defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopSideContainerListHeader = defineComponent({
   name: 'DesktopSideContainerListHeader',
   setup() {
-    const store = useNotesStore();
-    const configStore = useConfigsStore();
-
     // 切换排序
     const handleChangeSortType = (sort: INoteListSort) => {
       console.info('[sort]', sort);
-      configStore.setNoteListSort(sort);
+      setConfig('NOTE_LIST_SORT', sort);
     };
 
     // 排序
     const noteListSort = computed(() => {
       return (
-        configStore.noteListSort || {
+        configsStoreState.value.NOTE_LIST_SORT || {
           value: NoteListSortType.updated,
           label: '更新时间'
         }
@@ -36,7 +31,7 @@ const DesktopSideContainerListHeader = defineComponent({
         </div>
         <div class="desktop-side-container-list-header-bottom" data-tauri-drag-region>
           <div class="desktop-side-container-list-header-bottom-left" data-tauri-drag-region>
-            {store.noteListCount}条笔记
+            {noteListCount.value}条笔记
           </div>
           <div class="desktop-side-container-list-header-bottom-right">
             <Popover

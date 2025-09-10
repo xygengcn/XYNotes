@@ -1,5 +1,5 @@
 import { Transition, defineComponent, ref, Suspense } from 'vue';
-import { RouteLocationNormalizedLoaded, useRouter } from 'vue-router';
+import { type RouteLocationNormalizedLoaded, useRouter } from 'vue-router';
 import './index.scss';
 
 const AppView = defineComponent({

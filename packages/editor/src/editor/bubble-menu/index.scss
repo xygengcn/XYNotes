@@ -1,0 +1,31 @@
+.editor-menu {
+  background-color: #ffffff;
+  border: 1px solid #fdfdfd;
+  border-radius: 6px;
+  box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.2);
+  padding: 4px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  > span {
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    transition: all 0.3s;
+    border-radius: 4px;
+
+    &.heading {
+      font-weight: 500;
+    }
+    &:hover {
+      color: #f3bb41;
+      background-color: #f5f5f5;
+    }
+
+    &.active {
+      color: #f3bb41;
+    }
+  }
+}

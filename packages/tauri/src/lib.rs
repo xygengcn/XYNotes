@@ -9,12 +9,15 @@ fn open_devtools(app_handle: tauri::AppHandle, label: String, flag: bool) {
         window.close_devtools();
     }
 }
+// use tauri::image::Image;
+use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::Manager;
 use tauri::{ActivationPolicy, WindowEvent};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_shell::init())
@@ -25,13 +28,33 @@ pub fn run() {
             // mac
             #[cfg(target_os = "macos")]
             {
+                let _tray = TrayIconBuilder::with_id("system")
+                    // 静态资源无法获取
+                    // .icon(Image::from_path("./icons/tray.png")?)
+                    .on_tray_icon_event(|tray, event| match event {
+                        TrayIconEvent::Click {
+                            button: MouseButton::Left,
+                            button_state: MouseButtonState::Up,
+                            ..
+                        } => {
+                            println!("left click pressed and released");
+                            // in this example, let's show and focus the main window when the tray is clicked
+                            let app = tray.app_handle();
+                            if let Some(window) = app.get_webview_window("main") {
+                                let _ = window.show();
+                                let _ = window.set_focus();
+                            }
+                        }
+                        _ => {}
+                    })
+                    .build(app)?;
                 app.set_activation_policy(ActivationPolicy::Accessory);
             }
             Ok(())
         })
         // 窗口事件
         .on_window_event(|window, event| match event {
-            WindowEvent::CloseRequested {} => {
+            WindowEvent::CloseRequested { .. } => {
                 println!("[WindowEvent] CloseRequested {}", window.label());
             }
             _ => {}

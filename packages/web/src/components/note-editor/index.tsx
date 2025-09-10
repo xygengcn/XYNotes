@@ -1,9 +1,11 @@
-import apiEvent from '@/api';
-import Editor from '@/components/common/editor-plus';
-import { useNotesStore } from '@/store/notes.store';
-import { NoteStatus } from '@/typings/note';
-import { computed, defineComponent, nextTick, onBeforeMount, ref, watch } from 'vue';
+import { Editor, useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
+import '@xynotes/editor/style.css';
+import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
+import { NoteStatus } from '@xynotes/typings';
+import { defineComponent, nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 import './index.scss';
+import { ApiEvent } from '@xynotes/store';
+import { isCheckOnlineSync } from '@xynotes/store/configs';
 
 const NoteEditor = defineComponent({
   name: 'NoteEditor',
@@ -11,34 +13,16 @@ const NoteEditor = defineComponent({
     nid: {
       type: String,
       required: true
-    },
-    titleVisible: {
-      type: Boolean,
-      default: true
     }
   },
   setup(props, context) {
-    /**
-     * 编辑器
-     */
-    const refEditor = ref<typeof Editor>();
-
     /**
      * loading
      */
     const fetchNoteLoading = ref(false);
 
-    /**
-     * store
-     */
-    const store = useNotesStore();
-
-    /**
-     * 当前笔记
-     */
-    const activeNote = computed(() => {
-      return store.activeNote;
-    });
+    const { onChange, onBlur, setContent, getContent, state, getMarkdown, onUpload, setImage, editor, focus } =
+      useEditor() as MarkdownEditorInstance;
 
     /**
      * 监听nid变化
@@ -46,13 +30,12 @@ const NoteEditor = defineComponent({
     watch(
       () => props.nid,
       () => {
-        refEditor.value?.setValue(activeNote.value?.text || '');
+        setContent(activeNote.value?.content || activeNote.value?.text || '');
         // 拉取最新的
         nextTick(() => {
           handleQueryNoteDetail();
         });
-      },
-      { immediate: true }
+      }
     );
 
     /**
@@ -60,17 +43,20 @@ const NoteEditor = defineComponent({
      */
     const handleQueryNoteDetail = async () => {
       fetchNoteLoading.value = true;
-      return apiEvent
-        .apiFetchNoteDetailData(props.nid)
+      return queryNote(props.nid)
         .then((result) => {
-          if (result?.nid === props.nid) {
-            refEditor.value.setValue(result.text || '');
-            store.updateNote(result);
-            return;
+          if (result?.nid === activeNote.value?.nid) {
+            setContent(result.content || result.text || '');
+          }
+          if (!result) {
+            setContent(activeNote.value.content || activeNote.value?.text);
           }
         })
         .finally(() => {
           fetchNoteLoading.value = false;
+          nextTick(() => {
+            focus();
+          });
         });
     };
 
@@ -78,58 +64,83 @@ const NoteEditor = defineComponent({
      * 修改数据
      * @param value
      */
-    const handleChangeValue = (value: string) => {
-      activeNote.value.set({ text: value, status: NoteStatus.draft });
+    onChange(() => {
+      const text = getMarkdown();
+      activeNote.value.set({
+        content: getContent() as object,
+        text,
+        status: NoteStatus.draft,
+        intro: text?.trim()?.slice(0, 50) || ''
+      });
       activeNote.value.save(false);
-    };
+    });
+
+    /**
+     * 挂载
+     */
+    onMounted(() => {
+      // 加载完在拉取
+      handleQueryNoteDetail();
+    });
 
     /**
      * 失去焦点
      */
-    const handleEditorBlur = (value: string) => {
-      activeNote.value.set({ text: value });
+    onBlur(() => {
+      const text = getMarkdown();
+      activeNote.value.set({
+        content: getContent() as object,
+        text,
+        intro: text?.trim()?.slice(0, 50) || ''
+      });
       activeNote.value.save(false);
-    };
+    });
 
-    /**
-     * 事件
-     * @param text
-     */
-    const handleEditorPaste = (text: string) => {
-      activeNote.value.set({ status: NoteStatus.draft, text });
-    };
     onBeforeMount(() => {
-      if (!store.activeNoteId && props.nid) {
-        store.setActiveNoteId(props.nid);
+      if (!notesStoreState.value.activeNoteId && props.nid) {
+        setActiveNoteId(props.nid);
       }
     });
 
     /**
-     * 上传
-     * @param files
+     * 处理文件上传
      */
-    const handleUpload = (files) => {
-      // 处理图片上传
-    };
+    onUpload((files: FileList) => {
+      if (!files.length) {
+        return;
+      }
+      for (const file of files) {
+        // 图片
+        if (file.type.startsWith('image/')) {
+          if (isCheckOnlineSync()) {
+            ApiEvent.api.apiFetchResourceUpload(file).then(({ originUrl, name }) => {
+              setImage({
+                src: originUrl,
+                alt: name
+              });
+            });
+          } else {
+            setImage({
+              src: URL.createObjectURL(file),
+              alt: file.name
+            });
+          }
+        }
+      }
+    });
+
     return () => (
       <div class="note-editor">
-        <div class="note-editor-header" data-content-top={refEditor.value?.scrollerState.top === 0}>
-          {context.slots.header?.({ note: activeNote.value })}
+        <div class="note-editor-header" data-content-top={state.top === 0}>
+          {context.slots.header?.({
+            note: activeNote.value,
+            onEnter: () => {
+              editor.value.commands.focus();
+            }
+          })}
         </div>
         <div class="note-editor-content">
-          <Editor
-            value={activeNote.value?.text || ''}
-            id={props.nid}
-            ref={refEditor}
-            loading={fetchNoteLoading.value}
-            onChange={handleChangeValue}
-            onBlur={handleEditorBlur}
-            onPaste={handleEditorPaste}
-            onUpload={handleUpload}
-            onCounter={(count: number) => {
-              activeNote.value.counter = count;
-            }}
-          />
+          <Editor value={activeNote.value?.text || ''} id={props.nid} loading={fetchNoteLoading.value} />
         </div>
         <div class="note-editor-footer">{context.slots.footer?.({ note: activeNote.value })}</div>
       </div>

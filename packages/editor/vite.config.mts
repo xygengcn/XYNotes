@@ -1,36 +1,32 @@
-import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
-import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vite';
 
 const markdown = readFileSync(join(__dirname, './readme.md'), 'utf-8');
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx(), dts({ include: ['./src/**/**.ts', './src/**/**.tsx'] })],
-  define: {
-    __MARKDOWN__: JSON.stringify(markdown)
-  },
-  build: {
-    outDir: 'dist',
-    lib: {
-      entry: './src/index.ts',
-      name: 'MarkdownEditor',
-      formats: ['es', 'cjs']
-    },
-    emptyOutDir: true,
-    rollupOptions: {
-      external: ['vue'],
-      output: {
-        exports: 'named',
-        globals: {
-          vue: 'Vue'
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => {
+            return ['mind-mark', 'code-preview','img-viewer'].includes(tag);
+          }
         }
       }
-    }
+    }),
+    vueJsx({
+      isCustomElement: (tag) => {
+        return ['mind-mark', 'code-preview','img-viewer'].includes(tag);
+      }
+    })
+  ],
+  define: {
+    __MARKDOWN__: JSON.stringify(markdown)
   },
   resolve: {
     alias: [
@@ -39,7 +35,7 @@ export default defineConfig({
         replacement: '$1'
       },
       {
-        find: '@',
+        find: '@editor',
         replacement: fileURLToPath(new URL('./src', import.meta.url))
       }
     ]

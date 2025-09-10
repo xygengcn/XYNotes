@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "composite": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "skipLibCheck": false,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "noImplicitAny": false,
+    "declaration": true,
+    "baseUrl": "./"
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
+}

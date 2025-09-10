@@ -1,0 +1,45 @@
+.desktop-side-container-archive {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  &-header {
+    width: 100%;
+    display: flex;
+    height: 64px;
+    color: var(--font-default-color);
+    align-items: center;
+    padding: 0px 20px;
+    border-bottom: 1px solid var(--border-default-color);
+    h3 {
+      margin: 0;
+      font-weight: 400;
+    }
+  }
+
+  &-scroll {
+    flex: 1;
+  }
+  &-list {
+    height: 100%;
+    padding: 10px;
+    &-item {
+      width: 100%;
+      content-visibility: auto;
+      overflow: hidden;
+    }
+  }
+
+  &-blank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 14px;
+    flex-direction: column;
+    color: var(--font-default-color);
+    gap: 10px;
+  }
+}

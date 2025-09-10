@@ -1,9 +1,16 @@
-import { SIDE_CONTAINER_MAX_WIDTH, SIDE_CONTAINER_MIN_WIDTH, useConfigsStore } from '@/store/config.store';
+import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { computed, defineComponent, nextTick, onMounted, ref } from 'vue';
 import './index.scss';
 import DesktopMainContainer from './main-container';
 import DesktopNavMenu, { DESKTOP_NAV_MENU_WIDTH } from './nav-menu';
 import DesktopSideContainer from './side-container';
+import { debounce } from '@xynotes/utils';
+
+// 最大值
+export const SIDE_CONTAINER_MAX_WIDTH = 500;
+
+// 最小值
+export const SIDE_CONTAINER_MIN_WIDTH = 250;
 
 const Desktop = defineComponent({
   name: 'Desktop',
@@ -14,16 +21,18 @@ const Desktop = defineComponent({
     const refDrapLine = ref<HTMLDivElement>();
 
     /**
-     * store
-     */
-    const store = useConfigsStore();
-    const configStore = useConfigsStore();
-
-    /**
      * 列表栏长度
      */
     const sideContainerWidth = computed(() => {
-      return store.sideContainerWidth;
+      return configsStoreState.value.SIDE_CONTAINER_MAX_WIDTH;
+    });
+
+    /**
+     * 节流保存
+     */
+    const setSideContainerWidth = debounce((width) => {
+      console.info('[config] 保存左侧长度配置', width);
+      return setConfig('SIDE_CONTAINER_MAX_WIDTH', width);
     });
 
     onMounted(() => {
@@ -33,7 +42,9 @@ const Desktop = defineComponent({
         refDrapLine.value.onmousedown = () => {
           document.onmousemove = (e: MouseEvent) => {
             const clientX = e.clientX - DESKTOP_NAV_MENU_WIDTH;
-            configStore.setSideContainerWidth(clientX);
+            const sideContainerWidth = Math.max(SIDE_CONTAINER_MIN_WIDTH, Math.min(clientX, SIDE_CONTAINER_MAX_WIDTH));
+            setConfig('SIDE_CONTAINER_MAX_WIDTH', sideContainerWidth, false);
+            setSideContainerWidth(sideContainerWidth);
             return false;
           };
           document.onmouseup = function () {
@@ -46,7 +57,9 @@ const Desktop = defineComponent({
         refDrapLine.value.ontouchstart = () => {
           document.ontouchmove = (e: TouchEvent) => {
             const clientX = e.touches[0].clientX - DESKTOP_NAV_MENU_WIDTH;
-            configStore.setSideContainerWidth(clientX);
+            const sideContainerWidth = Math.max(SIDE_CONTAINER_MIN_WIDTH, Math.min(clientX, SIDE_CONTAINER_MAX_WIDTH));
+            setConfig('SIDE_CONTAINER_MAX_WIDTH', sideContainerWidth, false);
+            setSideContainerWidth(sideContainerWidth);
           };
         };
         refDrapLine.value.ontouchend = function () {

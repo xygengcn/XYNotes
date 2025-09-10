@@ -7,6 +7,7 @@
       &-inner {
         font-size: 1.7em;
         font-weight: 600;
+        padding-right: 2rem;
       }
       &::after {
         content: '标题';
@@ -14,6 +15,7 @@
         font-size: 0.7em;
         font-weight: normal;
         color: rgba(88, 96, 105, 0.36);
+        background-color: #fff;
         right: 0px;
         top: 0;
       }

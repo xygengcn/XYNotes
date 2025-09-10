@@ -2,26 +2,38 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "strict": true,
+    "composite": true,
+    "strict": false,
     "jsx": "preserve",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noUnusedLocals": true,
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "strictNullChecks": false,
     "experimentalDecorators": true,
     "skipLibCheck": true,
+    "noUnusedParameters": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "importHelpers": false,
+    "listEmittedFiles": true,
+    "listFiles": true,
+    "verbatimModuleSyntax": true,
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
     },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost", "ESNext"]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost", "ESNext"],
+    "customConditions": ["development"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx","src/**/*.d.ts", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/**/*.vue"],
+  "exclude": ["node_modules"],
+  "references": [
+    { "path": "./node_modules/@xynotes/components/tsconfig.json" },
+    { "path": "./node_modules/@xynotes/editor/tsconfig.json" },
+    { "path": "./node_modules/@xynotes/app-api/tsconfig.json" }
+  ]
 }
