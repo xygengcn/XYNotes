@@ -6,6 +6,11 @@
     user-select: text;
     -webkit-user-select: text;
   }
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
   &-content {
     width: 100%;
     input {
