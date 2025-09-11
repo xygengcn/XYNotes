@@ -15,6 +15,10 @@ const Input = defineComponent({
     border: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: {
@@ -88,7 +92,7 @@ const Input = defineComponent({
     });
 
     return () => (
-      <div class={{ input: true, 'input-border': props.border }} data-nodrag>
+      <div class={{ input: true, 'input-border': props.border, disabled: props.disabled }} data-nodrag>
         <div class="input-content">
           <input
             class="input-content-inner"
@@ -98,6 +102,7 @@ const Input = defineComponent({
             onBlur={handleBlur}
             onKeydown={handleKeyDown}
             placeholder={props.placeholder}
+            disabled={props.disabled}
           />
         </div>
       </div>

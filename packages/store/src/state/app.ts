@@ -1,10 +1,9 @@
 import ApiEvent from '@/api';
-import { INote } from '@xynotes/typings';
+import database from '@/database';
+import { AppLoadStatus } from '@/typings/app';
 import { readonly, ref } from 'vue';
 import { syncConfigs } from './configs';
-import { AppLoadStatus } from '@/typings/app';
-import { addNote, saveNote, setNoteList } from './note';
-import database from '@/database';
+import { setNoteList } from './note';
 
 declare const __APP_VERSION__: string;
 

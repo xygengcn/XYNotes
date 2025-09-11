@@ -1,7 +1,7 @@
+import ApiEvent from '@/api';
+import { is } from '@xynotes/utils';
 import { readonly, ref, toRaw } from 'vue';
 import { IConfigs, NoteListSortType } from '../typings/configs';
-import ApiEvent from '@/api';
-import { Cookie, is } from '@xynotes/utils';
 
 /**
  * 配置
@@ -12,7 +12,7 @@ const state = ref<IConfigs>({
   // 桌面端笔记列表排序
   NOTE_LIST_SORT: { value: NoteListSortType.updated, label: '更新时间' },
   // 在线同步地址
-  REMOTE_BASE_URL: '',
+  REMOTE_BASE_URL: __VITE_APP_AXIOS_BASEURL__,
   // 是否同步在线
   REMOTE_ONLINE_SYNC: false,
   // 在线认证Authorization
@@ -56,10 +56,22 @@ export const syncConfigs = async () => {
   return ApiEvent.api.apiFetchConfigsData().then((configList) => {
     console.log('[sync] configs', configList);
     const configs = configList.reduce((obj, i) => {
+      // 生产配置,不允许存储REMOTE_AUTHORIZATION
+      if (__VITE_APP_ENV__ !== 'development' && i.key === 'REMOTE_AUTHORIZATION') {
+        return obj;
+      }
+      // 生产配置,不允许存储REMOTE_BASE_URL
+      if (__VITE_APP_ENV__ !== 'development' && i.key === 'REMOTE_BASE_URL') {
+        if (state.value.REMOTE_BASE_URL) {
+          return obj;
+        }
+      }
+      // 转换
       obj[i.key] = i.value;
       return obj;
     }, {});
     state.value = { ...state.value, ...configs };
+
     return state.value;
   });
 };

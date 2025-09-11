@@ -13,6 +13,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=8080 --mode development",
+    "sit": "vite --port=8080 --mode sit",
     "build": "vite build --config vite.build.config.ts --mode production",
     "build:app": "vite build --config vite.app.config.ts --mode production",
     "start": "vite preview"

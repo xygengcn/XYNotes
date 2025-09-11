@@ -24,6 +24,14 @@ const RemoteConfigSetting = defineComponent({
      * @param value
      */
     const onSwitchOnlineConfig = async (value: boolean) => {
+      // 生产环境直接切换
+      if (import.meta.env.VITE_APP_ENV !== 'development') {
+        await setConfig('REMOTE_ONLINE_SYNC', value);
+        // 同步数据
+        syncApp();
+        return;
+      }
+
       if (
         (value && configsStoreState.value.REMOTE_AUTHORIZATION && configsStoreState.value.REMOTE_BASE_URL) ||
         !value
@@ -60,6 +68,7 @@ const RemoteConfigSetting = defineComponent({
                 v-model:value={configsStoreState.value.REMOTE_AUTHORIZATION}
                 onBlur={(e, origin) => onInputChangeToSaveConfig(e, origin, 'REMOTE_AUTHORIZATION')}
                 placeholder="Access Token"
+                disabled={import.meta.env.VITE_APP_ENV !== 'development'}
               ></Input>
             </div>
           </div>
