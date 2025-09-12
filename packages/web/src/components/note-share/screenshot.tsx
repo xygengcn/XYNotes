@@ -105,10 +105,10 @@ export default defineComponent({
                       popover: () => (
                         <div class="note-share-title-right-menu">
                           <div class="note-share-title-right-menu-item" onClick={handleClickCopyImage}>
-                            复制
+                            复制图像
                           </div>
                           <div class="note-share-title-right-menu-item" onClick={handleClickDownalodScreenshot}>
-                            存储为图像
+                            存储图像
                           </div>
                         </div>
                       )
