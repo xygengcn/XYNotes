@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 1498139 */
-  src: url('iconfont.woff2?t=1757689437519') format('woff2'),
-       url('iconfont.woff?t=1757689437519') format('woff'),
-       url('iconfont.ttf?t=1757689437519') format('truetype');
+  src: url('iconfont.woff2?t=1757693787490') format('woff2'),
+       url('iconfont.woff?t=1757693787490') format('woff'),
+       url('iconfont.ttf?t=1757693787490') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.note-create:before {
+  content: "\e67a";
+}
+
+.note-archive:before {
+  content: "\e611";
 }
 
 .note-restart:before {
@@ -73,10 +81,6 @@
   content: "\e639";
 }
 
-.note-nav-recycle:before {
-  content: "\e6cd";
-}
-
 .note-item-copy:before {
   content: "\e622";
 }
@@ -113,10 +117,6 @@
   content: "\e60b";
 }
 
-.note-mobile-add:before {
-  content: "\e8ac";
-}
-
 .note-todo-checked:before {
   content: "\e607";
 }
@@ -149,15 +149,11 @@
   content: "\e601";
 }
 
-.note-nav-editing:before {
-  content: "\e600";
-}
-
-.note-nav-setting:before {
+.note-setting:before {
   content: "\e602";
 }
 
-.note-nav-list:before {
+.note-list:before {
   content: "\e603";
 }
 

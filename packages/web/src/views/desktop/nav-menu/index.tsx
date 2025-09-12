@@ -17,7 +17,7 @@ const DesktopNavMenu = defineComponent({
     const desktopNavMenuList: IdesktopNavMenuItem[] = [
       {
         title: '新增',
-        icon: 'nav-editing',
+        icon: 'create',
         name: 'desktop-edit',
         visible: true,
         path: '/',
@@ -28,14 +28,14 @@ const DesktopNavMenu = defineComponent({
       },
       {
         title: '列表',
-        icon: 'nav-list',
+        icon: 'list',
         name: 'desktop-list',
         visible: true,
         path: '/'
       },
       {
         title: '归档',
-        icon: 'nav-recycle',
+        icon: 'archive',
         name: 'desktop-archive',
         visible: true,
         path: '/archive',
@@ -43,7 +43,7 @@ const DesktopNavMenu = defineComponent({
       },
       {
         title: '设置',
-        icon: 'nav-setting',
+        icon: 'setting',
         visible: true,
         name: 'desktop-setting',
         path: '/setting'
