@@ -39,7 +39,7 @@ const DesktopNavMenuItem = defineComponent({
             height={30}
             size={props.menu.size || 14}
             type={props.menu.icon}
-            active={props.menu.name === route.name}
+            active={(route.name as string)?.indexOf(props.menu.name) > -1}
             onClick={handleClickNavMenu}
           />
         </div>
