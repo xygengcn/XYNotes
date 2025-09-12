@@ -2,6 +2,12 @@
  * 获取设备信息
  * @returns
  */
+
+export enum DeviceType {
+  Mobile = 'mobile',
+  Desktop = 'desktop',
+  Tablet = 'tablet'
+}
 export function getDeviceType(): 'mobile' | 'desktop' | 'tablet' {
   const ua = navigator.userAgent,
     isWindowsPhone = /(?:Windows Phone)/i.test(ua),
@@ -14,21 +20,18 @@ export function getDeviceType(): 'mobile' | 'desktop' | 'tablet' {
 
   // 移动端
   if (isPhone || isAndroid || isSymbian) {
-    return 'mobile';
+    return DeviceType.Mobile;
   }
 
   // 平板
   if (isTablet) {
-    return 'tablet';
+    return DeviceType.Tablet;
   }
 
-  return 'desktop';
+  return DeviceType.Desktop;
 }
 
 /**
  * 设备型号
  */
 export const deviceType = getDeviceType();
-
-
-
