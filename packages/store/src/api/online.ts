@@ -42,7 +42,7 @@ class ApiEventOnline {
           ...(configs.headers || {})
         },
         baseURL,
-        timeout: 1000 // 1秒超时
+        timeout: configs.timeout || 1000 // 1秒超时
       })
       .then((response) => {
         const data = response.data;
@@ -167,7 +167,8 @@ class ApiEventOnline {
     return this.fetch('/note/assets/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
-      }
+      },
+      timeout: 30 * 1000 // 20秒超时
     })
       .then((result) => {
         return result;
