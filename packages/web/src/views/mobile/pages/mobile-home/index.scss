@@ -144,6 +144,10 @@
         & + & {
           border-top: var(--border-default-size) solid var(--border-default-color);
         }
+
+        .error {
+          color: var(--theme-error-color);
+        }
       }
     }
 

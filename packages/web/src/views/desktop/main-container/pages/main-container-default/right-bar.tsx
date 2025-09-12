@@ -67,7 +67,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
       },
       {
         title: '同步',
-        icon: 'item-sync',
+        icon: 'sync',
         visible: true,
         action: (note: Note) => {
           if (note) {
