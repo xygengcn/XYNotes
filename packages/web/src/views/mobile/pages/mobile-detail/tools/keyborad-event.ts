@@ -1,7 +1,7 @@
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
-export const useMobileKeyboardEvent = () => {
+export const useMobileKeyboardAndScrollEvent = () => {
   // 控制工具栏显示状态
   const keyBoardHeight = ref(0);
   // 滚动位置
@@ -65,6 +65,41 @@ export const useMobileKeyboardEvent = () => {
 
   return {
     editorFocus,
-    bottom
+    bottom,
+    keyBoardHeight
+  };
+};
+
+export const useMobileKeyboardEvent = () => {
+  // 控制工具栏显示状态
+  const keyBoardHeight = ref(0);
+
+  // 监听键盘事件
+  const handleKeyboardChange = () => {
+    if (window.visualViewport) {
+      keyBoardHeight.value = window.innerHeight - window.visualViewport.height;
+    }
+  };
+
+  onMounted(() => {
+    // 添加事件监听器
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleKeyboardChange);
+    } else {
+      window.addEventListener('resize', handleKeyboardChange);
+    }
+  });
+
+  onBeforeUnmount(() => {
+    // 移除事件监听器
+    if (window.visualViewport) {
+      window.visualViewport.removeEventListener('resize', handleKeyboardChange);
+    } else {
+      window.removeEventListener('resize', handleKeyboardChange);
+    }
+  });
+
+  return {
+    keyBoardHeight
   };
 };

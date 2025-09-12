@@ -15,13 +15,12 @@
   &-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
+    padding: 0px 10px;
 
     // 分享按钮
     .iconfont {
-      position: absolute;
-      right: 10px;
       color: var(--mobile-icon-color);
     }
   }
