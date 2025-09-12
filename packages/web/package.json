@@ -29,8 +29,8 @@
     "vue3-swipe-actions": "^0.0.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.1",
-    "@vitejs/plugin-vue-jsx": "4.1.1",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitejs/plugin-vue-jsx": "5.1.1",
     "@xynotes/app-api": "workspace:^",
     "@xynotes/components": "workspace:^",
     "@xynotes/editor": "workspace:^",
@@ -41,7 +41,8 @@
     "rollup-plugin-visualizer": "^5.8.3",
     "sass": "^1.52.1",
     "typescript": "5.7.2",
-    "vite": "5.0.5",
-    "vite-plugin-pwa": "^0.20.1"
+    "vite": "7.1.5",
+    "vite-plugin-pwa": "^1.0.3",
+    "vite-plugin-vue-devtools": "^8.0.2"
   }
 }

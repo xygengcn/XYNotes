@@ -1,12 +1,11 @@
-import { defineConfig, type PluginOption } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath } from 'url';
+import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import vueDevTools from 'vite-plugin-vue-devtools';
 import manifestJson from './mainifest';
 import packageConfig from './package.json';
-import { loadEnv } from 'vite';
-
 const appVersion = packageConfig.version;
 
 // https://vitejs.dev/config/
@@ -19,6 +18,7 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true
     },
     plugins: [
+      vueDevTools(),
       vue(),
       vueJsx({
         isCustomElement: (tag) => {
