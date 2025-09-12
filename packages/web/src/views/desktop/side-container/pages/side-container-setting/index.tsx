@@ -1,5 +1,5 @@
 import { Button } from '@xynotes/components';
-import { backupAppData, recoveryAppData } from '@xynotes/store/app';
+import { backupAppData, initAppData, recoveryAppData } from '@xynotes/store/app';
 import { downloadFile, jsonFileReader } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
@@ -39,6 +39,23 @@ const DesktopSideContainerSetting = defineComponent({
       router.push('/setting/config');
     };
 
+    const handleInitData = () => {
+      console.log('[init] 初始化数据');
+      window.$ui.confirm({
+        type: 'warn',
+        width: 300,
+        title: '重置数据',
+        content: '即将进行删除本地数据操作，包含本地所有笔记和配置，确定重置数据吗？',
+        onSubmit: () => {
+          initAppData();
+          window.$ui.toast('重置成功，即将要刷新应用！');
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        }
+      });
+    };
+
     return () => (
       <div class="desktop-side-container-setting">
         <div class="desktop-side-container-setting-header" data-tauri-drag-region>
@@ -66,6 +83,14 @@ const DesktopSideContainerSetting = defineComponent({
             <span class="desktop-side-container-setting-content-item-right">
               <Button size="min" onClick={handleEditConfig}>
                 配置
+              </Button>
+            </span>
+          </div>
+          <div class="desktop-side-container-setting-content-item">
+            <span class="desktop-side-container-setting-content-item-left">重置数据</span>
+            <span class="desktop-side-container-setting-content-item-right">
+              <Button size="min" onClick={handleInitData} type="error">
+                重置
               </Button>
             </span>
           </div>

@@ -17,7 +17,7 @@ export type ButtonSize = 'min' | 'max' | 'default';
 const Button = defineComponent({
   name: 'Button',
   props: {
-    icon: {
+    type: {
       type: String as PropType<ButtonType>,
       required: false,
       default: 'default'
@@ -38,7 +38,7 @@ const Button = defineComponent({
       emit('click', e);
     };
     return () => (
-      <button class={['button', `button-${props.icon}`, `button-size-${props.size}`]} onClick={handleClick}>
+      <button class={['button', `button-${props.type}`, `button-size-${props.size}`]} onClick={handleClick}>
         {slots.default?.()}
       </button>
     );

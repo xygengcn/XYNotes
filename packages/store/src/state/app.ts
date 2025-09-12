@@ -71,4 +71,13 @@ export const recoveryAppData = async (backupData: { version: string; database: a
     return syncApp();
   });
 };
+
+/**
+ * 初始化数据
+ */
+export const initAppData = async () => {
+  return database.drop();
+};
+
+// 数据
 export const appStoreState = readonly(state);

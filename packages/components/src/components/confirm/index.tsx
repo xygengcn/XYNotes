@@ -124,7 +124,7 @@ const ConfirmComponent = defineComponent({
                 <Button class="confirm-footer-submit" size="min" onClick={handleSubmit}>
                   确认
                 </Button>,
-                <Button class="confirm-footer-cancel" icon="normal" size="min" onClick={handleCancel}>
+                <Button class="confirm-footer-cancel" type="normal" size="min" onClick={handleCancel}>
                   取消
                 </Button>
               ]}
