@@ -183,7 +183,7 @@ const MobileHome = defineComponent({
           <div class="mobile-home-content-blank" v-show={noteList.value.length === 0 && !keyword.value.trim()}>
             <Icon type="list-empty" size={100}></Icon>
             <div class="mobile-home-content-blank-text">
-              点击下方<Icon type="mobile-add" size="1em"></Icon>创建你的第一个笔记吧!
+              点击下方<Icon type="create" size="1em"></Icon>创建你的第一个笔记吧!
             </div>
           </div>
         </div>
@@ -191,7 +191,7 @@ const MobileHome = defineComponent({
           <div class="mobile-home-footer-content">
             <span>{noteListCount.value}个笔记</span>
             <span class="mobile-home-footer-content-add" onClick={handleClickAdd}>
-              <Icon type="mobile-add" size="2em"></Icon>
+              <Icon type="create" size="20px"></Icon>
             </span>
           </div>
         </div>
@@ -214,7 +214,7 @@ const MobileHome = defineComponent({
               <div class="mobile-home-more-content-item">
                 <span class="mobile-home-more-content-item-left">基础配置</span>
                 <span class="mobile-home-more-content-item-right">
-                  <Icon onClick={handleSetSetting} type="nav-setting" size="1.2em"></Icon>
+                  <Icon onClick={handleSetSetting} type="setting" size="1.2em"></Icon>
                 </span>
               </div>
               <div class="mobile-home-more-content-item">
