@@ -12,6 +12,7 @@ type callback = ((...args: any) => void) | null;
 export interface MarkdownEditorInstance {
   editor: ShallowRef<Editor | undefined>;
   loading: ReturnType<typeof ref<boolean>>;
+  editorFocus: ShallowRef<boolean>;
   state: { top: number; bottom: number };
   onCreated: (cb: (editor: Editor) => void) => void;
   onChange: (cb: (editor: Editor) => void) => void;
@@ -49,6 +50,9 @@ export function defineMarkdownEditor() {
 
   // 缓存
   const editorCache = ref<Content>('');
+
+  // 编辑器是否聚焦
+  const editorFocus = ref(false);
 
   /**
    * 获取 Markdown 内容
@@ -194,9 +198,11 @@ export function defineMarkdownEditor() {
           },
           onBlur() {
             editorEvent.emit('blur', editor.value);
+            editorFocus.value = false;
           },
           onFocus() {
             editorEvent.emit('focus', editor.value);
+            editorFocus.value = true;
           }
         });
 
@@ -230,6 +236,7 @@ export function defineMarkdownEditor() {
       editor,
       loading,
       state,
+      editorFocus,
       onCreated,
       onChange,
       onBlur,

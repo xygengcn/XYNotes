@@ -8,6 +8,8 @@ import { activeNote, setActiveNoteId } from '@xynotes/store/note';
 import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
+import { MobileDetailTools } from './tools';
+import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 
 const MobileDetail = defineComponent({
   name: 'MobileDetail',
@@ -21,6 +23,11 @@ const MobileDetail = defineComponent({
      */
     const route = useRoute();
     const router = useRouter();
+
+    /**
+     * 编辑器
+     */
+    const { editorFocus } = useEditor() as MarkdownEditorInstance;
 
     /**
      * 是否显示抽屉
@@ -81,7 +88,7 @@ const MobileDetail = defineComponent({
     });
 
     return () => (
-      <div class="mobile-detail">
+      <div class={{ 'mobile-detail': true, 'mobile-detail-focus': editorFocus.value }}>
         {route.params?.nid ? (
           [
             <div class="mobile-detail-header">
@@ -107,6 +114,7 @@ const MobileDetail = defineComponent({
             <Loading></Loading>
           </div>
         )}
+        <MobileDetailTools></MobileDetailTools>
         {/* 抽屉 */}
         <Drawer
           visible={visibleMoreDrawer.value}

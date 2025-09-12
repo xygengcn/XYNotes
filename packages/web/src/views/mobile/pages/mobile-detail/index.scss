@@ -6,6 +6,11 @@
   display: flex;
   flex-direction: column;
 
+  // 聚焦的时候
+  &-focus {
+    padding-bottom: 48px;
+  }
+
   // 顶部
   &-header {
     display: flex;

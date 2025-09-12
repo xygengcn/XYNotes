@@ -1,11 +1,10 @@
+import { UploadService } from '@/services/upload';
 import { Editor, useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 import '@xynotes/editor/style.css';
 import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
 import { NoteStatus } from '@xynotes/typings';
 import { defineComponent, nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 import './index.scss';
-import { ApiEvent } from '@xynotes/store';
-import { isCheckOnlineSync } from '@xynotes/store/configs';
 
 const NoteEditor = defineComponent({
   name: 'NoteEditor',
@@ -106,27 +105,12 @@ const NoteEditor = defineComponent({
      * 处理文件上传
      */
     onUpload((files: FileList) => {
-      if (!files.length) {
-        return;
-      }
-      for (const file of files) {
-        // 图片
-        if (file.type.startsWith('image/')) {
-          if (isCheckOnlineSync()) {
-            ApiEvent.api.apiFetchResourceUpload(file).then(({ originUrl, name }) => {
-              setImage({
-                src: originUrl,
-                alt: name
-              });
-            });
-          } else {
-            setImage({
-              src: URL.createObjectURL(file),
-              alt: file.name
-            });
-          }
-        }
-      }
+      UploadService.upload(files, (file) => {
+        setImage({
+          src: file.originUrl,
+          alt: file.name
+        });
+      });
     });
 
     return () => (

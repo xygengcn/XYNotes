@@ -36,7 +36,7 @@ export const Viewer = defineComponent({
       <div
         class={{
           'img-viewer': true,
-          'img-viewer-blob': props.iseditable === 'true' && loaded.value && isBlobUrl(props.src),
+          'img-viewer-blob': props.iseditable === 'true' && loaded.value && isBlobUrl(props.src) && !error.value,
           'img-viewer-error': error.value
         }}
         contenteditable="false"
