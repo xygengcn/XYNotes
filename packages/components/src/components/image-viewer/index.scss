@@ -11,12 +11,13 @@ img-viewer {
     border: 1px solid var(--markdown-editor-gray-color);
     border-radius: 8px;
     max-width: 100%;
+    overflow: hidden;
     // 本地标识
     &-blob {
       position: relative;
       z-index: 0;
       &::after {
-        content: '未上传';
+        content: '本地';
         z-index: 1;
         position: absolute;
         top: 0;
@@ -26,10 +27,13 @@ img-viewer {
         background-color: #fff;
         padding: 2px 4px;
         border-radius: 4px;
+        text-align: center;
+        width: 40px;
       }
     }
     img {
       max-width: 100%;
+      height: auto;
     }
   }
 }
