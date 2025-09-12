@@ -30,7 +30,7 @@ export const MobileDetailTools = defineComponent({
       <div
         class={{ 'mobile-detail-tools': true, focus: editorFocus.value }}
         // 键盘弹出时显示
-        v-Show={!editorFocus.value || keyBoardHeight.value === 0}
+        v-Show={!(editorFocus.value && keyBoardHeight.value > 10)}
       >
         <div class="mobile-detail-tools-item">
           <Icon type="photo" size={24} onClick={handleSelectImageFile}></Icon>
