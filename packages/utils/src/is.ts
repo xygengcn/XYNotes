@@ -1,4 +1,4 @@
-import { deviceType } from './platform';
+import { DeviceType, deviceType } from './platform';
 
 const is = {
   // 是不是客户端
@@ -41,21 +41,21 @@ const is = {
    * @returns
    */
   mobile() {
-    return deviceType === 'mobile';
+    return deviceType === DeviceType.Mobile;
   },
   /**
    * 是不是桌面
    * @returns
    */
   desktop() {
-    return deviceType === 'desktop';
+    return deviceType === DeviceType.Desktop;
   },
   /**
    * 是不是平板
    * @returns
    */
   tablet() {
-    return deviceType === 'tablet';
+    return deviceType === DeviceType.Tablet;
   },
   /**
    * 竖屏
