@@ -15,6 +15,8 @@ export class UploadService {
       fileInput.type = 'file';
       fileInput.accept = options.accept || 'image/*';
       fileInput.style.display = 'none';
+      // 支持多文件选择
+      fileInput.multiple = true;
       // 监听文件选择事件
       fileInput.onchange = (event: Event) => {
         const target = event.target as HTMLInputElement;
