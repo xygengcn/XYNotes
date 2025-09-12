@@ -9,7 +9,11 @@ export function readText() {
   if (is.app()) {
     return clipboardReadText();
   }
-  return navigator.clipboard.readText();
+  // 检查navigator.clipboard是否存在
+  if (navigator.clipboard && navigator.clipboard.readText) {
+    return navigator.clipboard.readText();
+  }
+  return Promise.reject('Clipboard API is not available.');
 }
 
 /**
@@ -22,19 +26,23 @@ export async function copyBlob(blob: Blob | null): Promise<any> {
     if (is.app()) {
       return clipboardWriteImage(blob);
     }
-    const data = [
-      new ClipboardItem({
-        [blob.type]: blob
-      })
-    ];
-    return navigator.clipboard.write(data).then(
-      () => {
-        return Promise.resolve();
-      },
-      (e) => {
-        return Promise.reject('Unable to write to clipboard.');
-      }
-    );
+    // 检查navigator.clipboard是否存在
+    if (navigator.clipboard && navigator.clipboard.write) {
+      const data = [
+        new ClipboardItem({
+          [blob.type]: blob
+        })
+      ];
+      return navigator.clipboard.write(data).then(
+        () => {
+          return Promise.resolve();
+        },
+        (e) => {
+          return Promise.reject('Unable to write to clipboard.');
+        }
+      );
+    }
+    return Promise.reject('Clipboard API is not available.');
   }
   return Promise.reject('Unable to write to clipboard.');
 }
@@ -45,12 +53,34 @@ export async function copyBlob(blob: Blob | null): Promise<any> {
  * @returns
  */
 export function copyText(text: string): Promise<any> {
-  return navigator.clipboard.writeText(text).then(
-    () => {
+  // 检查navigator.clipboard是否存在
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).then(
+      () => {
+        return Promise.resolve();
+      },
+      () => {
+        return Promise.reject('Unable to write to clipboard.');
+      }
+    );
+  }
+
+  // 降级方案：使用document.execCommand
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.select();
+
+  try {
+    const successful = document.execCommand('copy');
+    document.body.removeChild(textArea);
+    if (successful) {
       return Promise.resolve();
-    },
-    () => {
+    } else {
       return Promise.reject('Unable to write to clipboard.');
     }
-  );
+  } catch (err) {
+    document.body.removeChild(textArea);
+    return Promise.reject('Unable to write to clipboard.');
+  }
 }
