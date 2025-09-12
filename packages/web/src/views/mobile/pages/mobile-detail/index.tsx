@@ -75,6 +75,14 @@ const MobileDetail = defineComponent({
         });
     };
 
+    /**
+     * 返回首页
+     */
+    const handleBack = () => {
+      router.push('/');
+      setActiveNoteId('');
+    };
+
     onBeforeMount(() => {
       if (route.params?.nid) {
         setActiveNoteId(route.params?.nid as string);
@@ -92,6 +100,7 @@ const MobileDetail = defineComponent({
         {route.params?.nid ? (
           [
             <div class="mobile-detail-header">
+              <Icon type="back" size={18} onClick={handleBack}></Icon>
               <NoteEditorCounter note={activeNote.value} />
               <Icon
                 type="mobile-more"

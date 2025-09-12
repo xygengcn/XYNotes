@@ -3,9 +3,11 @@ import { defineComponent } from 'vue';
 import './index.scss';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 import { UploadService } from '@/services/upload';
+import { useMobileKeyboardEvent } from './keyborad-event';
 export const MobileDetailTools = defineComponent({
   name: 'MobileDetailTools',
   setup() {
+    const { keyBoardHeight } = useMobileKeyboardEvent();
     const { editorFocus, setImage } = useEditor() as MarkdownEditorInstance;
 
     /**
@@ -28,10 +30,10 @@ export const MobileDetailTools = defineComponent({
       <div
         class={{ 'mobile-detail-tools': true, focus: editorFocus.value }}
         // 键盘弹出时显示
-        v-Show={!editorFocus.value}
+        v-Show={!editorFocus.value || keyBoardHeight.value === 0}
       >
         <div class="mobile-detail-tools-item">
-          <Icon type="item-share" size={24} onClick={handleSelectImageFile}></Icon>
+          <Icon type="photo" size={24} onClick={handleSelectImageFile}></Icon>
         </div>
       </div>
     );

@@ -80,7 +80,10 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: '0.0.0.0',
-      strictPort: true
+      strictPort: true,
+      watch: {
+        usePolling: true
+      }
     },
     define: {
       __APP_VERSION__: JSON.stringify(appVersion),
