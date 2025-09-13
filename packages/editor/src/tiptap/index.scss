@@ -61,4 +61,14 @@
   &-link {
     color: var(--markdown-editor-theme-color);
   }
+
+  // placeholder样式
+  p.is-editor-empty:first-child::before {
+    color: var(--markdown-editor-gray-color);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+    font-weight: 400;
+  }
 }
