@@ -146,7 +146,7 @@ const MobileDetail = defineComponent({
             </div>
             <div class="mobile-detail-drawer-item">
               <span class="mobile-detail-drawer-item-icon">
-                <Icon type="item-sync" size={24} onClick={handleClickSync}></Icon>
+                <Icon type="sync" size={24} onClick={handleClickSync}></Icon>
               </span>
               <span class="mobile-detail-drawer-item-text">同步</span>
             </div>
