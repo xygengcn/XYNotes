@@ -21,6 +21,7 @@ import ParagraphExtension from './paragraph';
 import StrikeExtension from './strike';
 import { TaskItemExtension, TaskListExtension } from './task-list';
 import PasteExtension from './paste-event';
+import { Placeholder } from '@tiptap/extensions';
 
 /**
  * 通用编辑器扩展
@@ -73,7 +74,10 @@ export const CommonExtension = () => [
   // 字数
   CharacterCountExtension,
   // 粘贴事件
-  PasteExtension
+  PasteExtension,
+  Placeholder.configure({
+    placeholder: '开始创作你的笔记吧...'
+  })
 ];
 
 /**

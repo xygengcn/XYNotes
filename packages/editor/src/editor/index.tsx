@@ -40,7 +40,7 @@ export const Editor = defineComponent({
 
     return () => (
       <div class={{ editor: true, test: editor.value?.isActive('bold') }} data-id={props.id} data-nodrag>
-        <div class="editor-content" ref="editor" />
+        <div class="editor-content" ref="editor" spellcheck="false" />
         {editor.value && <EditorBubbleMenu editor={editor.value} />}
         {(props.loading || loading.value) && (
           <div class="editor-loading">

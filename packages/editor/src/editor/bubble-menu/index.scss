@@ -7,7 +7,7 @@
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   > span {
     border: none;
     cursor: pointer;
@@ -15,9 +15,12 @@
     font-size: 16px;
     transition: all 0.3s;
     border-radius: 4px;
+    height: 22px;
+    line-height: 22px;
 
     &.heading {
       font-weight: 500;
+      font-size: 14px;
     }
     &:hover {
       color: #f3bb41;
