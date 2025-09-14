@@ -38,7 +38,7 @@ export class UploadService {
    * @param setImage
    * @returns
    */
-  static upload(files: FileList, setImage: (file: IUploadFile) => void) {
+  static async upload(files: FileList, setImage: (file: IUploadFile) => void) {
     if (!files.length) {
       return;
     }
@@ -46,7 +46,7 @@ export class UploadService {
       // 图片
       if (file.type.startsWith('image/')) {
         if (isCheckOnlineSync()) {
-          ApiEvent.api.apiFetchResourceUpload(file).then((file) => {
+          await ApiEvent.api.apiFetchResourceUpload(file).then((file) => {
             setImage(file);
           });
         } else {
