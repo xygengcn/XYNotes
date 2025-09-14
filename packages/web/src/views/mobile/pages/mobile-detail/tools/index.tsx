@@ -4,6 +4,8 @@ import './index.scss';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 import { UploadService } from '@/services/upload';
 import { useMobileKeyboardEvent } from './keyborad-event';
+import { useMobileDetailGallery } from '../gallery';
+import { isCheckOnlineSync } from '@xynotes/store/configs';
 export const MobileDetailTools = defineComponent({
   name: 'MobileDetailTools',
   setup() {
@@ -26,6 +28,8 @@ export const MobileDetailTools = defineComponent({
       });
     };
 
+    const { showMobileDetailGalleryView, MobileDetailGalleryView } = useMobileDetailGallery();
+
     return () => (
       <div
         class={{ 'mobile-detail-tools': true, focus: editorFocus.value }}
@@ -33,8 +37,13 @@ export const MobileDetailTools = defineComponent({
         v-Show={!(editorFocus.value && keyBoardHeight.value > 10)}
       >
         <div class="mobile-detail-tools-item">
-          <Icon type="photo" size={24} onClick={handleSelectImageFile}></Icon>
+          <Icon type="photo" size={26} onClick={handleSelectImageFile}></Icon>
         </div>
+        <div class="mobile-detail-tools-item" v-show={isCheckOnlineSync()}>
+          <Icon type="gallery" size={24} onClick={showMobileDetailGalleryView}></Icon>
+        </div>
+
+        <MobileDetailGalleryView></MobileDetailGalleryView>
       </div>
     );
   }

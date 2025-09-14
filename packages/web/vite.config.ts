@@ -81,6 +81,7 @@ export default defineConfig(({ mode }) => {
     server: {
       host: '0.0.0.0',
       strictPort: true,
+      allowedHosts: ['*', 'dev.xyg.local'],
       watch: {
         usePolling: true
       }

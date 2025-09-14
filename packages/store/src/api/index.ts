@@ -159,5 +159,10 @@ class ApiEvent implements ApiBridge {
   async apiFetchResourceUpload(file: File): Promise<IUploadFile> {
     return apiEventOnline.apiFetchResourceUpload(file);
   }
+
+  // 拉取文件
+  async apiFetchResourceList(): Promise<{ data: IUploadFile[]; next: string }> {
+    return apiEventOnline.apiFetchResourceList();
+  }
 }
 export default ApiEvent;
