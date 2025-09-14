@@ -1,15 +1,15 @@
 import NoteEditor from '@/components/note-editor';
 import NoteEditorCounter from '@/components/note-editor/counter';
 import NoteEditorTitle from '@/components/note-editor/title';
-import showShareNoteDialog from '@/components/note-share';
 import { useThemeColor } from '@/services/theme';
-import { Drawer, Icon, Loading } from '@xynotes/components';
+import { Icon, Loading } from '@xynotes/components';
+import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 import { activeNote, setActiveNoteId } from '@xynotes/store/note';
-import { defineComponent, onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { defineComponent, onBeforeMount, onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
+import { useMobileDetailSetting } from './setting';
 import { MobileDetailTools } from './tools';
-import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 
 const MobileDetail = defineComponent({
   name: 'MobileDetail',
@@ -29,51 +29,7 @@ const MobileDetail = defineComponent({
      */
     const { editorFocus } = useEditor() as MarkdownEditorInstance;
 
-    /**
-     * 是否显示抽屉
-     */
-    const visibleMoreDrawer = ref(false);
-
-    /**
-     * 分享
-     */
-    const handleClickShare = () => {
-      activeNote.value &&
-        showShareNoteDialog(activeNote.value, {
-          width: '90%',
-          height: '60%'
-        });
-    };
-
-    /**
-     * 同步数据
-     */
-    const handleClickSync = () => {
-      activeNote.value?.sync();
-    };
-
-    /**
-     * 下载markdown
-     */
-    const handleClickDownload = () => {
-      activeNote.value?.toMarkdown();
-    };
-
-    /**
-     * 删除
-     */
-    const handleClickDelete = () => {
-      activeNote.value &&
-        window.$ui.confirm({
-          type: 'warn',
-          width: 300,
-          content: '确定删除这个笔记吗？',
-          onSubmit: () => {
-            activeNote.value.archive();
-            router.back();
-          }
-        });
-    };
+    const { MobileDetailSettingView, showMobileDetailSettingView } = useMobileDetailSetting();
 
     /**
      * 返回首页
@@ -106,7 +62,7 @@ const MobileDetail = defineComponent({
                 type="mobile-more"
                 size={24}
                 onClick={() => {
-                  visibleMoreDrawer.value = true;
+                  showMobileDetailSettingView();
                 }}
               ></Icon>
             </div>,
@@ -125,7 +81,7 @@ const MobileDetail = defineComponent({
         )}
         <MobileDetailTools></MobileDetailTools>
         {/* 抽屉 */}
-        <Drawer
+        {/* <Drawer
           visible={visibleMoreDrawer.value}
           onClose={() => {
             visibleMoreDrawer.value = false;
@@ -157,7 +113,8 @@ const MobileDetail = defineComponent({
               <span class="mobile-detail-drawer-item-text">下载</span>
             </div>
           </div>
-        </Drawer>
+        </Drawer> */}
+        <MobileDetailSettingView></MobileDetailSettingView>
       </div>
     );
   }

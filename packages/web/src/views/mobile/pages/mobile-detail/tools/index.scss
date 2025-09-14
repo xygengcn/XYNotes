@@ -7,7 +7,7 @@
   background: #fff;
   border-radius: 20px;
   box-shadow: 1px 0px 8px rgba(0, 0, 0, 0.1);
-  height: 40px;
+  height: 42px;
   width: max-content;
   min-width: 60px;
   border-top: 1px solid var(--border-default-color);
@@ -22,5 +22,7 @@
 
   &-item {
     color: var(--mobile-icon-color);
+    display: inline-flex;
+    align-items: center;
   }
 }

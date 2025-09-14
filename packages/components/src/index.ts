@@ -1,5 +1,6 @@
 import Button, { ButtonSize, ButtonType } from './components/button';
 import Card from './components/card';
+import Checkbox from './components/checkbox';
 import Confirm from './components/confirm';
 import { IContextMenuOptions, IContextMenuProps, VueContextMenu } from './components/contextmenu';
 import Dialog from './components/dialog';
@@ -17,16 +18,25 @@ import Toast from './components/toast';
 
 export {
   Button,
-  Card, Confirm, Dialog,
+  Card,
+  Confirm,
+  Dialog,
   Drawer,
-  Icon, imageViewer, Input,
-  Loading, Nav, Popover, Scroller, ShortcutInput,
+  Icon,
+  imageViewer,
+  Input,
+  Loading,
+  Nav,
+  Popover,
+  Scroller,
+  ShortcutInput,
   Switch,
-  Toast, Viewer,
+  Toast,
+  Viewer,
+  Checkbox,
   VueContextMenu,
   type ButtonSize,
   type ButtonType,
   type IContextMenuOptions,
   type IContextMenuProps
 };
-

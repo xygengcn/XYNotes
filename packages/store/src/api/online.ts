@@ -177,6 +177,31 @@ class ApiEventOnline {
         console.log('[上传失败]', e);
       });
   }
+
+  /**
+   * 拉取文件列表
+   * @returns
+   */
+  async apiFetchResourceList(): Promise<{ data: IUploadFile[]; next: string }> {
+    // 开始上传
+    return this.fetch(
+      '/note/assets/list',
+      {
+        limit: 20,
+        next: '',
+        origin: location.origin
+      },
+      {
+        timeout: 30 * 1000 // 20秒超时
+      }
+    )
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        console.log('[上传失败]', e);
+      });
+  }
 }
 
 const apiEventOnline = new ApiEventOnline();

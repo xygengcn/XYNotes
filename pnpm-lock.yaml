@@ -446,9 +446,15 @@ importers:
       vue-tippy:
         specifier: ^6.3.1
         version: 6.4.4(vue@3.5.13(typescript@5.7.2))
+      vue-virtual-scroller:
+        specifier: 2.0.0-beta.8
+        version: 2.0.0-beta.8(vue@3.5.13(typescript@5.7.2))
       vue3-swipe-actions:
         specifier: ^0.0.1
         version: 0.0.1(typescript@5.7.2)
+      vue3-virtual-scroller:
+        specifier: ^0.2.3
+        version: 0.2.3(rollup@4.50.1)(vue@3.5.13(typescript@5.7.2))
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.1
@@ -479,7 +485,7 @@ importers:
         version: 2.8.8
       rollup-plugin-visualizer:
         specifier: ^5.8.3
-        version: 5.12.0(rollup@2.79.2)
+        version: 5.12.0(rollup@4.50.1)
       sass:
         specifier: ^1.52.1
         version: 1.77.8
@@ -2127,6 +2133,11 @@ packages:
     peerDependenciesMeta:
       '@types/babel__core':
         optional: true
+
+  '@rollup/plugin-json@4.1.0':
+    resolution: {integrity: sha512-yfLbTdNS6amI/2OpmbiBoW12vngr5NW2jCJVZSBEz+H5KfUJZ2M7sDjk0U6GOOdCWFVScShte29o9NezJ53TPw==}
+    peerDependencies:
+      rollup: ^1.20.0 || ^2.0.0
 
   '@rollup/plugin-node-resolve@15.3.0':
     resolution: {integrity: sha512-9eO5McEICxMzJpDW9OnMYSv4Sta3hmt7VtBFz5zR9273suNOydOyq/FrGeGy+KsTRFm8w0SLVhzig2ILFT63Ag==}
@@ -4121,10 +4132,6 @@ packages:
     resolution: {integrity: sha512-SJ1amZAJUiZS+PhsVLf5tGydlaVB8EdFpaSO4gmiUKUOxk8qzn5AIy4ZeJUmh22znIdk/uMAUT2pl3FxzVUH+Q==}
     engines: {node: '>= 0.4'}
 
-  has-symbols@1.0.3:
-    resolution: {integrity: sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==}
-    engines: {node: '>= 0.4'}
-
   has-symbols@1.1.0:
     resolution: {integrity: sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==}
     engines: {node: '>= 0.4'}
@@ -4743,6 +4750,9 @@ packages:
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
 
+  mitt@2.1.0:
+    resolution: {integrity: sha512-ILj2TpLiysu2wkBbWjAmww7TkZb65aiQO+DkVdUTBpBXq+MHYiETENkKFMtsJZX1Lf4pe4QOrTSjIfUwN5lRdg==}
+
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
 
@@ -5318,6 +5328,9 @@ packages:
     resolution: {integrity: sha512-4UHg6prsrycW20fqLGPShtEvo/WyHRVRHwOP4DzkUrObWoWI05QBSfzU71TVB7PFaL104TwNaHpjlWXAZbQiNQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
+
+  scrollparent@2.1.0:
+    resolution: {integrity: sha512-bnnvJL28/Rtz/kz2+4wpBjHzWoEzXhVg/TE8BeVGJHUqE8THNIRnDxDWMktwM+qahvlRdvlLdsQfYe+cuqfZeA==}
 
   secure-json-parse@4.0.0:
     resolution: {integrity: sha512-dxtLJO6sc35jWidmLxo7ij+Eg48PM/kleBsxpC8QJE0qJICe+KawkDQmvCMZUr9u7WKVHgMW6vy3fQ7zMiFZMA==}
@@ -5986,6 +5999,16 @@ packages:
   vscode-uri@3.0.8:
     resolution: {integrity: sha512-AyFQ0EVmsOZOlAnxoFOGOq1SQDWAB7C6aqMGS23svWAllfOaxbuFvcT8D1i8z3Gyn8fraVeZNNmN6e9bxxXkKw==}
 
+  vue-observe-visibility@2.0.0-alpha.1:
+    resolution: {integrity: sha512-flFbp/gs9pZniXR6fans8smv1kDScJ8RS7rEpMjhVabiKeq7Qz3D9+eGsypncjfIyyU84saU88XZ0zjbD6Gq/g==}
+    peerDependencies:
+      vue: ^3.0.0
+
+  vue-resize@2.0.0-alpha.1:
+    resolution: {integrity: sha512-7+iqOueLU7uc9NrMfrzbG8hwMqchfVfSzpVlCMeJQe4pyibqyoifDNbKTZvwxZKDvGkB+PdFeKvnGZMoEb8esg==}
+    peerDependencies:
+      vue: ^3.0.0
+
   vue-router@4.2.5:
     resolution: {integrity: sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==}
     peerDependencies:
@@ -6011,8 +6034,28 @@ packages:
     peerDependencies:
       typescript: '>=5.0.0'
 
+  vue-virtual-scroller@2.0.0-beta.8:
+    resolution: {integrity: sha512-b8/f5NQ5nIEBRTNi6GcPItE4s7kxNHw2AIHLtDp+2QvqdTjVN0FgONwX9cr53jWRgnu+HRLPaWDOR2JPI5MTfQ==}
+    peerDependencies:
+      vue: ^3.2.0
+
+  vue3-observe-visibility2@0.0.3:
+    resolution: {integrity: sha512-yJL0G5RrI/uXdDrs+0fdlk/dYKhKBRZtkwJO0ar44NTIX+Rnw63iHgTz+p00M+yp6Avm1Q+o6y82h0hkTzmpHg==}
+    peerDependencies:
+      vue: ^3.0.0
+
+  vue3-resize@0.2.0:
+    resolution: {integrity: sha512-vZkbEv4PjMEWFV0igAxCvdSIH9hrIJjXyJ9XPTxH0cS/L2/VW1dLVORMWJKU0VXHpHiYKwskB62ju7aBQMVpOQ==}
+    peerDependencies:
+      vue: ^3.0.0
+
   vue3-swipe-actions@0.0.1:
     resolution: {integrity: sha512-1/ilQlpPxES+L74BVCVYwY1EbsJftk8KMYxci3Fc6IWLdRvJEv/bNTOUKmqt8X6hxlF0QsSPDKrw+Zo5xFzkww==}
+
+  vue3-virtual-scroller@0.2.3:
+    resolution: {integrity: sha512-iPBi0FocZGxVar46iLYzLMfdTMe/O3X8h1iTc21aPhAaGRyMMAZ64AN7Dn6FA+qYFam5f3wHIUktAnpgCFtNuw==}
+    peerDependencies:
+      vue: ^3.0.0
 
   vue@3.5.13:
     resolution: {integrity: sha512-wmeiSMxkZCSc+PM2w2VRsOYAZC8GdipNFRTsLSfodVqI9mbejKeXEGr8SckuLnrQPGe3oJN5c3K0vpoU9q/wCQ==}
@@ -6546,8 +6589,8 @@ snapshots:
 
   '@babel/helper-simple-access@7.25.7':
     dependencies:
-      '@babel/traverse': 7.26.4
-      '@babel/types': 7.26.3
+      '@babel/traverse': 7.28.4
+      '@babel/types': 7.28.4
     transitivePeerDependencies:
       - supports-color
 
@@ -7939,6 +7982,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@rollup/plugin-json@4.1.0(rollup@4.50.1)':
+    dependencies:
+      '@rollup/pluginutils': 3.1.0(rollup@4.50.1)
+      rollup: 4.50.1
+
   '@rollup/plugin-node-resolve@15.3.0(rollup@2.79.2)':
     dependencies:
       '@rollup/pluginutils': 5.1.2(rollup@2.79.2)
@@ -7969,6 +8017,13 @@ snapshots:
       estree-walker: 1.0.1
       picomatch: 2.3.1
       rollup: 2.79.2
+
+  '@rollup/pluginutils@3.1.0(rollup@4.50.1)':
+    dependencies:
+      '@types/estree': 0.0.39
+      estree-walker: 1.0.1
+      picomatch: 2.3.1
+      rollup: 4.50.1
 
   '@rollup/pluginutils@5.1.2(rollup@2.79.2)':
     dependencies:
@@ -10280,13 +10335,11 @@ snapshots:
 
   has-proto@1.0.3: {}
 
-  has-symbols@1.0.3: {}
-
   has-symbols@1.1.0: {}
 
   has-tostringtag@1.0.2:
     dependencies:
-      has-symbols: 1.0.3
+      has-symbols: 1.1.0
 
   hasown@2.0.2:
     dependencies:
@@ -10881,6 +10934,8 @@ snapshots:
 
   minimist@1.2.8: {}
 
+  mitt@2.1.0: {}
+
   mitt@3.0.1: {}
 
   mlly@1.7.3:
@@ -11425,14 +11480,14 @@ snapshots:
 
   robust-predicates@3.0.2: {}
 
-  rollup-plugin-visualizer@5.12.0(rollup@2.79.2):
+  rollup-plugin-visualizer@5.12.0(rollup@4.50.1):
     dependencies:
       open: 8.4.2
       picomatch: 2.3.1
       source-map: 0.7.4
       yargs: 17.7.2
     optionalDependencies:
-      rollup: 2.79.2
+      rollup: 4.50.1
 
   rollup@2.79.2:
     optionalDependencies:
@@ -11525,6 +11580,8 @@ snapshots:
       chokidar: 3.6.0
       immutable: 4.3.7
       source-map-js: 1.2.1
+
+  scrollparent@2.1.0: {}
 
   secure-json-parse@4.0.0: {}
 
@@ -12189,6 +12246,14 @@ snapshots:
 
   vscode-uri@3.0.8: {}
 
+  vue-observe-visibility@2.0.0-alpha.1(vue@3.5.13(typescript@5.7.2)):
+    dependencies:
+      vue: 3.5.13(typescript@5.7.2)
+
+  vue-resize@2.0.0-alpha.1(vue@3.5.13(typescript@5.7.2)):
+    dependencies:
+      vue: 3.5.13(typescript@5.7.2)
+
   vue-router@4.2.5(vue@3.5.13(typescript@5.7.2)):
     dependencies:
       '@vue/devtools-api': 6.6.3
@@ -12230,11 +12295,36 @@ snapshots:
       semver: 7.6.3
       typescript: 5.5.4
 
+  vue-virtual-scroller@2.0.0-beta.8(vue@3.5.13(typescript@5.7.2)):
+    dependencies:
+      mitt: 2.1.0
+      vue: 3.5.13(typescript@5.7.2)
+      vue-observe-visibility: 2.0.0-alpha.1(vue@3.5.13(typescript@5.7.2))
+      vue-resize: 2.0.0-alpha.1(vue@3.5.13(typescript@5.7.2))
+
+  vue3-observe-visibility2@0.0.3(vue@3.5.13(typescript@5.7.2)):
+    dependencies:
+      vue: 3.5.13(typescript@5.7.2)
+
+  vue3-resize@0.2.0(vue@3.5.13(typescript@5.7.2)):
+    dependencies:
+      vue: 3.5.13(typescript@5.7.2)
+
   vue3-swipe-actions@0.0.1(typescript@5.7.2):
     dependencies:
       vue: 3.5.13(typescript@5.7.2)
     transitivePeerDependencies:
       - typescript
+
+  vue3-virtual-scroller@0.2.3(rollup@4.50.1)(vue@3.5.13(typescript@5.7.2)):
+    dependencies:
+      '@rollup/plugin-json': 4.1.0(rollup@4.50.1)
+      scrollparent: 2.1.0
+      vue: 3.5.13(typescript@5.7.2)
+      vue3-observe-visibility2: 0.0.3(vue@3.5.13(typescript@5.7.2))
+      vue3-resize: 0.2.0(vue@3.5.13(typescript@5.7.2))
+    transitivePeerDependencies:
+      - rollup
 
   vue@3.5.13(typescript@5.5.4):
     dependencies:
