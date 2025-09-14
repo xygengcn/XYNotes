@@ -156,6 +156,9 @@ importers:
       vue:
         specifier: 3.5.13
         version: 3.5.13(typescript@5.5.4)
+      vue-tippy:
+        specifier: ^6.3.1
+        version: 6.4.4(vue@3.5.13(typescript@5.5.4))
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.0.5
@@ -12195,6 +12198,11 @@ snapshots:
     dependencies:
       de-indent: 1.0.2
       he: 1.2.0
+
+  vue-tippy@6.4.4(vue@3.5.13(typescript@5.5.4)):
+    dependencies:
+      tippy.js: 6.3.7
+      vue: 3.5.13(typescript@5.5.4)
 
   vue-tippy@6.4.4(vue@3.5.13(typescript@5.7.2)):
     dependencies:
