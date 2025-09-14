@@ -1,10 +1,11 @@
 import { BubbleMenuPlugin } from '@tiptap/extension-bubble-menu';
-import { Level } from '@tiptap/extension-heading';
 import { PluginKey } from '@tiptap/pm/state';
 import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useEditor } from '..';
 import './index.scss';
+// import './heading/index.scss';
 import { Icon } from '@xynotes/components';
+import { useHeadingBubbleMenu } from './heading';
 
 export const EditorBubbleMenu = defineComponent({
   name: 'EditorBubbleMenu',
@@ -12,7 +13,9 @@ export const EditorBubbleMenu = defineComponent({
     const root = ref<HTMLElement | null>(null);
     const key = new PluginKey('editor-menu');
     const { editor } = useEditor();
-    const isActiveNode = ref({
+
+    // 菜单激活状态
+    const bubbleMenuActiveNode = ref({
       bold: editor.value.isActive('bold'),
       italic: editor.value.isActive('italic'),
       strike: editor.value.isActive('strike'),
@@ -21,6 +24,12 @@ export const EditorBubbleMenu = defineComponent({
       headingLevel: editor.value.getAttributes('heading').level,
       highlight: editor.value.isActive('highlight')
     });
+
+    // 标题
+    const headingRef = ref(null);
+    useHeadingBubbleMenu(headingRef);
+
+    // 挂载
     onMounted(() => {
       editor.value.registerPlugin(
         BubbleMenuPlugin({
@@ -38,13 +47,12 @@ export const EditorBubbleMenu = defineComponent({
             if (editor.isActive('codeBlock') || editor.isActive('image')) {
               return false;
             }
-            isActiveNode.value.bold = editor.isActive('bold');
-            isActiveNode.value.italic = editor.isActive('italic');
-            isActiveNode.value.strike = editor.isActive('strike');
-            isActiveNode.value.heading = editor.isActive('heading');
-            isActiveNode.value.headingLevel = editor.getAttributes('heading').level;
-            isActiveNode.value.codeBlock = editor.isActive('codeBlock');
-            isActiveNode.value.highlight = editor.isActive('highlight');
+            bubbleMenuActiveNode.value.bold = editor.isActive('bold');
+            bubbleMenuActiveNode.value.italic = editor.isActive('italic');
+            bubbleMenuActiveNode.value.strike = editor.isActive('strike');
+            bubbleMenuActiveNode.value.heading = editor.isActive('heading');
+            bubbleMenuActiveNode.value.codeBlock = editor.isActive('codeBlock');
+            bubbleMenuActiveNode.value.highlight = editor.isActive('highlight');
             return true;
           }
         })
@@ -55,20 +63,11 @@ export const EditorBubbleMenu = defineComponent({
     });
     return () => (
       <div class="editor-menu" ref={root}>
-        {[1, 2, 3, 4, 5, 6].map((item: Level) => {
-          return (
-            <span
-              class={{ heading: true, active: isActiveNode.value.heading && isActiveNode.value.headingLevel === item }}
-              onClick={() => {
-                editor.value.chain().focus().toggleHeading({ level: item }).run();
-              }}
-            >
-              H{item}
-            </span>
-          );
-        })}
+        <span class={{ active: bubbleMenuActiveNode.value.heading }} ref={headingRef}>
+          <Icon type="heading"></Icon>
+        </span>
         <span
-          class={{ active: isActiveNode.value.bold }}
+          class={{ active: bubbleMenuActiveNode.value.bold }}
           onClick={() => {
             editor.value.chain().focus().toggleBold().run();
           }}
@@ -76,7 +75,7 @@ export const EditorBubbleMenu = defineComponent({
           <Icon type="bold"></Icon>
         </span>
         <span
-          class={{ active: isActiveNode.value.italic }}
+          class={{ active: bubbleMenuActiveNode.value.italic }}
           onClick={() => {
             editor.value.chain().focus().toggleItalic().run();
           }}
@@ -84,15 +83,15 @@ export const EditorBubbleMenu = defineComponent({
           <Icon type="italic"></Icon>
         </span>
         <span
-          class={{ active: isActiveNode.value.strike }}
+          class={{ active: bubbleMenuActiveNode.value.strike }}
           onClick={() => {
             editor.value.chain().focus().toggleStrike().run();
           }}
         >
-          <Icon type="through"></Icon>
+          <Icon type="through" size="20px"></Icon>
         </span>
         <span
-          class={{ active: isActiveNode.value.highlight }}
+          class={{ active: bubbleMenuActiveNode.value.highlight }}
           onClick={() => {
             editor.value.chain().focus().toggleHighlight().run();
           }}
