@@ -1,5 +1,4 @@
-import ListItem from '@tiptap/extension-list-item';
-import BulletList from '@tiptap/extension-bullet-list';
+import { ListItem, BulletList } from '@tiptap/extension-list';
 
 const ListItemExtension = ListItem.extend({
   addOptions() {

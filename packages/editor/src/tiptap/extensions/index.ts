@@ -1,9 +1,9 @@
 import Document from '@tiptap/extension-document';
 import HistoryExtension from '@tiptap/extension-history';
-import Table from '@tiptap/extension-table';
-import TableCell from '@tiptap/extension-table-cell';
-import TableHeader from '@tiptap/extension-table-header';
-import TableRow from '@tiptap/extension-table-row';
+import { Table } from '@tiptap/extension-table';
+import { TableCell } from '@tiptap/extension-table/cell';
+import { TableHeader } from '@tiptap/extension-table/header';
+import { TableRow } from '@tiptap/extension-table/row';
 import Text from '@tiptap/extension-text';
 import { Markdown } from 'tiptap-markdown';
 import BlockquoteExtension from './blockquote';
