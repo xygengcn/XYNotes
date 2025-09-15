@@ -5,6 +5,8 @@ import { TableCell } from '@tiptap/extension-table/cell';
 import { TableHeader } from '@tiptap/extension-table/header';
 import { TableRow } from '@tiptap/extension-table/row';
 import Text from '@tiptap/extension-text';
+import { Color, TextStyle } from '@tiptap/extension-text-style';
+import { Placeholder } from '@tiptap/extensions';
 import { Markdown } from 'tiptap-markdown';
 import BlockquoteExtension from './blockquote';
 import BoldExtension from './bold';
@@ -18,16 +20,17 @@ import ImageExtension from './image';
 import ItalicExtension from './italic';
 import LinkExtension from './link';
 import ParagraphExtension from './paragraph';
+import PasteExtension from './paste-event';
 import StrikeExtension from './strike';
 import { TaskItemExtension, TaskListExtension } from './task-list';
-import PasteExtension from './paste-event';
-import { Placeholder } from '@tiptap/extensions';
 
 /**
  * 通用编辑器扩展
  */
 export const CommonExtension = () => [
   Text,
+  TextStyle,
+  Color,
   HistoryExtension,
   Document,
   LinkExtension,
