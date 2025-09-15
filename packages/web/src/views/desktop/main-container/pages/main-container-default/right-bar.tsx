@@ -1,5 +1,6 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
+import showNoteTagsDialog from '@/components/note-tags';
 import { createWindow } from '@xynotes/app-api';
 import { Note } from '@xynotes/store';
 import { copyText } from '@xynotes/utils';
@@ -16,6 +17,14 @@ const DesktopMainContainerDefaultRight = defineComponent({
   },
   setup(props) {
     const menuList = [
+      {
+        title: '标签',
+        icon: 'tags',
+        visible: true,
+        action: (note: Note) => {
+          note && showNoteTagsDialog(note);
+        }
+      },
       {
         title: '预览',
         icon: 'item-preview',

@@ -9,7 +9,9 @@ export const NoteTagsInput = defineComponent({
     const refInput = ref<HTMLInputElement>();
     const value = ref('');
     const handleInput = () => {
-      context.emit('input', value.value);
+      if (value.value.trim()) {
+        context.emit('input', value.value);
+      }
       editorStatus.value = false;
       value.value = '';
     };
