@@ -23,7 +23,9 @@ export const EditorBubbleMenu = defineComponent({
       codeBlock: editor.value.isActive('codeBlock'),
       heading: editor.value.isActive('heading'),
       headingLevel: editor.value.getAttributes('heading').level,
-      highlight: editor.value.isActive('highlight')
+      highlight: editor.value.isActive('highlight'),
+      task: editor.value.isActive('taskList'),
+      color: !!editor.value.getAttributes('textStyle')?.color
     });
 
     // 标题
@@ -57,6 +59,8 @@ export const EditorBubbleMenu = defineComponent({
             bubbleMenuActiveNode.value.heading = editor.isActive('heading');
             bubbleMenuActiveNode.value.codeBlock = editor.isActive('codeBlock');
             bubbleMenuActiveNode.value.highlight = editor.isActive('highlight');
+            bubbleMenuActiveNode.value.task = editor.isActive('taskList');
+            bubbleMenuActiveNode.value.color = !!editor.getAttributes('textStyle')?.color;
             return true;
           }
         })
@@ -102,8 +106,17 @@ export const EditorBubbleMenu = defineComponent({
         >
           <Icon type="highlight"></Icon>
         </span>
-        <span ref={colorRef}>
+
+        <span ref={colorRef} class={{ active: bubbleMenuActiveNode.value.color }}>
           <Icon type="fontColor"></Icon>
+        </span>
+        <span
+          class={{ active: bubbleMenuActiveNode.value.task }}
+          onClick={() => {
+            editor.value.chain().focus().toggleTaskList().run();
+          }}
+        >
+          <Icon type="todo"></Icon>
         </span>
       </div>
     );

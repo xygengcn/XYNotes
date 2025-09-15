@@ -3,7 +3,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { fileURLToPath } from 'url';
 import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
-import vueDevTools from 'vite-plugin-vue-devtools';
 import manifestJson from './mainifest';
 import packageConfig from './package.json';
 const appVersion = packageConfig.version;
@@ -18,7 +17,7 @@ export default defineConfig(({ mode }) => {
       emptyOutDir: true
     },
     plugins: [
-      vueDevTools(),
+      // vueDevTools(),
       vue(),
       vueJsx({
         isCustomElement: (tag) => {
