@@ -1,20 +1,20 @@
 import { useEditor } from '@editor/editor';
 import { Level } from '@tiptap/extension-heading';
-import { defineComponent, onActivated, onMounted, onUpdated, Ref, ref, watch } from 'vue';
-import './index.scss';
-import { useTippy } from 'vue-tippy';
 import { is } from '@xynotes/utils';
+import { defineComponent, Ref, ref } from 'vue';
+import { useTippy } from 'vue-tippy';
+import './index.scss';
 
-export const useHeadingBubbleMenu = (el: Ref<HTMLElement>) => {
+export const useBubbleMenuHeading = (el: Ref<HTMLElement>) => {
   const bubbleMenuHeading = ref({ active: false, level: 0 });
 
   const { editor } = useEditor();
 
-  const HeadingBubbleMenu = defineComponent({
-    name: 'HeadingBubbleMenu',
+  const BubbleMenuHeading = defineComponent({
+    name: 'BubbleMenuHeading',
     setup(props) {
       return () => (
-        <div class="heading-bubble-menu">
+        <div class="bubble-menu-heading">
           {[1, 2, 3, 4, 5, 6].map((item: Level) => {
             return (
               <span
@@ -35,7 +35,7 @@ export const useHeadingBubbleMenu = (el: Ref<HTMLElement>) => {
     }
   });
   useTippy(el, {
-    content: HeadingBubbleMenu,
+    content: BubbleMenuHeading,
     theme: 'light',
     interactive: true,
     trigger: is.desktop() ? 'mouseenter focus' : 'click',

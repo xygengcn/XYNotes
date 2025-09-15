@@ -5,7 +5,8 @@ import { useEditor } from '..';
 import './index.scss';
 // import './heading/index.scss';
 import { Icon } from '@xynotes/components';
-import { useHeadingBubbleMenu } from './heading';
+import { useBubbleMenuColor } from './color';
+import { useBubbleMenuHeading } from './heading';
 
 export const EditorBubbleMenu = defineComponent({
   name: 'EditorBubbleMenu',
@@ -27,7 +28,10 @@ export const EditorBubbleMenu = defineComponent({
 
     // 标题
     const headingRef = ref(null);
-    useHeadingBubbleMenu(headingRef);
+    useBubbleMenuHeading(headingRef);
+
+    const colorRef = ref(null);
+    useBubbleMenuColor(colorRef);
 
     // 挂载
     onMounted(() => {
@@ -97,6 +101,9 @@ export const EditorBubbleMenu = defineComponent({
           }}
         >
           <Icon type="highlight"></Icon>
+        </span>
+        <span ref={colorRef}>
+          <Icon type="fontColor"></Icon>
         </span>
       </div>
     );
