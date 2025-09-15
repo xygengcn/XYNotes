@@ -4,6 +4,7 @@ import { activeNote, notesStoreState } from '@xynotes/store/note';
 import { dateFormat, highLight, preventDefault } from '@xynotes/utils';
 import { type PropType, defineComponent, h, nextTick, ref, watch } from 'vue';
 import './index.scss';
+import NoteItemTags from './tags';
 
 const NoteItem = defineComponent({
   name: 'NoteItem',
@@ -84,6 +85,7 @@ const NoteItem = defineComponent({
             innerHTML: highLight(props.keyword, (props.note.intro || props.note.text)?.slice(0, 80))
           })}
         </div>
+        <NoteItemTags note={props.note}></NoteItemTags>
       </div>
     );
   }

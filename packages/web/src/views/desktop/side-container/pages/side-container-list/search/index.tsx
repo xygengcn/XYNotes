@@ -1,14 +1,11 @@
+import { notesStoreState, searchNoteList } from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopSideContainerListSearch = defineComponent({
   name: 'DesktopSideContainerListSearch',
-  props: {
-    keyword: String
-  },
-  emits: ['update:keyword'],
-  setup(props, context) {
+  setup() {
     /**
      * 搜索
      * @param e
@@ -16,7 +13,7 @@ const DesktopSideContainerListSearch = defineComponent({
      */
     const inputDebounce = debounce((e: PointerEvent) => {
       const target = e.target as HTMLInputElement;
-      context.emit('update:keyword', target.value);
+      searchNoteList(target.value.trimStart());
     }, 600);
     const handleInput = (e: Event) => {
       inputDebounce(e);
@@ -27,7 +24,7 @@ const DesktopSideContainerListSearch = defineComponent({
         <input
           type="text"
           placeholder="搜索笔记"
-          value={props.keyword}
+          value={notesStoreState.value.searchKeyword}
           onInput={handleInput}
           none-drag-region
           id="desktopSideContainerListSearch"

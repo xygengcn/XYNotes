@@ -58,6 +58,9 @@ export interface INote {
 
   // 在线同步时间
   onlineSyncAt?: number;
+
+  // 标签
+  tags: Array<string>;
 }
 
 /**

@@ -1,0 +1,18 @@
+.note-tags-input {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  input {
+    outline: none;
+    border: none;
+    background: transparent;
+    padding-block: 0px;
+    padding-inline: 0px;
+    font-family: var(--font-family-regular);
+  }
+
+  span {
+    color: #818181;
+  }
+}

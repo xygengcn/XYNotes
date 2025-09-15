@@ -4,32 +4,19 @@ import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import './index.scss';
 
 const DesktopSideContainerListContent = defineComponent({
   name: 'DesktopSideContainerListContent',
-  props: {
-    keyword: String
-  },
-  setup(props) {
-    // 笔记列表
-    const noteList = computed(() => {
-      if (!props.keyword.trim()) {
-        return notesListBySort.value;
-      }
-      return notesListBySort.value.filter((note) => {
-        return note.text.indexOf(props.keyword) > -1 || note.title.indexOf(props.keyword) > -1;
-      });
-    });
-
+  setup() {
     /**
      * 右键
      * @param cmdKey
      * @param index
      */
     const handleContextmenu = (options: IContextMenuProps) => {
-      const note = options.key && noteList.value.find((n) => n.nid === options.key);
+      const note = options.key && notesListBySort.value.find((n) => n.nid === options.key);
       if (note && options.menu) {
         switch (options.menu.value) {
           case 'sync':
@@ -72,7 +59,7 @@ const DesktopSideContainerListContent = defineComponent({
       <Scroller class="desktop-side-container-list-content">
         <div
           class="desktop-side-container-list-content-list"
-          v-show={noteList.value.length > 0}
+          v-show={notesListBySort.value.length > 0}
           v-contextmenu={{
             menuList: [
               { label: '同步', value: 'sync' },
@@ -82,14 +69,14 @@ const DesktopSideContainerListContent = defineComponent({
             onSelect: handleContextmenu
           }}
         >
-          {noteList.value.map((note, index) => {
+          {notesListBySort.value.map((note, index) => {
             return (
               <div class="desktop-side-container-list-content-list-item" data-contextmenukey={note.nid}>
                 <NoteItem
                   note={note}
                   key={note.nid}
                   sortIndex={index}
-                  keyword={props.keyword}
+                  keyword={notesStoreState.value.searchKeyword}
                   onSelect={handleSelectItem}
                   active={notesStoreState.value.activeNoteId === note?.nid}
                 />
@@ -97,7 +84,7 @@ const DesktopSideContainerListContent = defineComponent({
             );
           })}
         </div>
-        {noteList.value.length === 0 && (
+        {notesListBySort.value.length === 0 && (
           <div class="desktop-side-container-list-content-blank">
             <Icon type="list-empty" size={100}></Icon>
             <span>快来创建你的第一个笔记吧!</span>

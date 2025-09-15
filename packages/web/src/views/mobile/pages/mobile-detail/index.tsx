@@ -79,7 +79,7 @@ const MobileDetail = defineComponent({
             <Loading></Loading>
           </div>
         )}
-        <MobileDetailTools></MobileDetailTools>
+        <MobileDetailTools note={activeNote.value}></MobileDetailTools>
         <MobileDetailSettingView></MobileDetailSettingView>
       </div>
     );

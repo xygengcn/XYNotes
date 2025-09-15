@@ -8,11 +8,12 @@ import {
   noteListCount,
   notesListBySort,
   notesStoreState,
+  searchNoteList,
   setActiveNoteId,
   syncNote
 } from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
-import { computed, defineComponent, onBeforeMount, ref } from 'vue';
+import { defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SwipeList } from 'vue3-swipe-actions';
 import 'vue3-swipe-actions/dist/index.css';
@@ -22,10 +23,6 @@ const MobileHome = defineComponent({
   name: 'MobileHome',
   setup() {
     const router = useRouter();
-    /**
-     * 关键词
-     */
-    const keyword = ref('');
 
     /**
      * 列表数据ref
@@ -43,23 +40,9 @@ const MobileHome = defineComponent({
      */
     const handleInput = debounce((e: PointerEvent) => {
       const target = e.target as HTMLInputElement;
-      keyword.value = target.value.trimStart();
+      searchNoteList(target.value.trimStart());
     });
-    /**
-     * 笔记列表
-     */
-    const noteList = computed(() => {
-      if (!keyword.value.trim()) {
-        return notesListBySort.value;
-      }
-      return notesListBySort.value.filter((note) => {
-        return (
-          note.intro?.includes(keyword.value) ||
-          note.text?.includes(keyword.value) ||
-          note.title?.includes(keyword.value)
-        );
-      });
-    });
+
     /**
      * 点击
      */
@@ -102,7 +85,13 @@ const MobileHome = defineComponent({
       <div class="mobile-home">
         <div class="mobile-home-header">
           <div class="mobile-home-header-search">
-            <input type="text" onInput={handleInput} class="mobile-home-header-search__input" placeholder="搜索" />
+            <input
+              type="text"
+              onInput={handleInput}
+              class="mobile-home-header-search__input"
+              placeholder="搜索"
+              value={notesStoreState.value.searchKeyword}
+            />
           </div>
           <div
             class="mobile-home-header-more"
@@ -114,11 +103,11 @@ const MobileHome = defineComponent({
           </div>
         </div>
         <div class="mobile-home-content">
-          <Scroller class="mobile-home-content-list" v-show={noteList.value.length > 0}>
+          <Scroller class="mobile-home-content-list" v-show={notesListBySort.value.length > 0}>
             <SwipeList
               ref={swipeListRef}
               class="mobile-home-content-list-scroll"
-              items={noteList.value}
+              items={notesListBySort.value}
               item-key="id"
               v-slots={{
                 default: (props) => {
@@ -128,7 +117,7 @@ const MobileHome = defineComponent({
                       note={props.item}
                       sortIndex={props.index}
                       onSelect={handleSelectItem}
-                      keyword={keyword.value}
+                      keyword={notesStoreState.value.searchKeyword}
                       active={notesStoreState.value.activeNoteId === props.item?.nid}
                     ></NoteItem>
                   );
@@ -159,7 +148,10 @@ const MobileHome = defineComponent({
               }}
             />
           </Scroller>
-          <div class="mobile-home-content-blank" v-show={noteList.value.length === 0 && !keyword.value.trim()}>
+          <div
+            class="mobile-home-content-blank"
+            v-show={notesListBySort.value.length === 0 && !notesStoreState.value.searchKeyword.trim()}
+          >
             <Icon type="list-empty" size={100}></Icon>
             <div class="mobile-home-content-blank-text">
               点击下方<Icon type="create" size="1em"></Icon>创建你的第一个笔记吧!

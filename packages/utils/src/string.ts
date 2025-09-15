@@ -14,7 +14,7 @@ export function htmlEncode(html: string): string {
  */
 export function highLight(keyword: string, text: string): string {
   if (!keyword || !text) return text;
-  const keys = keyword.split('|') || [];
+  const keys = keyword.split(' ') || [];
   return keys.reduce((str: string, key: string) => {
     // 正则匹配所有的文本
     return htmlEncode(str).replace(new RegExp(`(${key})`, 'ig'), `<b>$1</b>`);
