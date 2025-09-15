@@ -2,7 +2,15 @@ import NoteItem from '@/components/note-item';
 import { Drawer, Icon, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { initAppData, syncApp } from '@xynotes/store/app';
-import { addNote, noteListCount, notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
+import { isCheckOnlineSync } from '@xynotes/store/configs';
+import {
+  addNote,
+  noteListCount,
+  notesListBySort,
+  notesStoreState,
+  setActiveNoteId,
+  syncNote
+} from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
 import { computed, defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -166,6 +174,15 @@ const MobileHome = defineComponent({
                 right: (props) => {
                   return (
                     <div class="mobile-home-content-list-scroll-right">
+                      <div
+                        class="mobile-home-content-list-scroll-right-sync"
+                        v-show={isCheckOnlineSync()}
+                        onClick={() => {
+                          syncNote(props.item);
+                        }}
+                      >
+                        <Icon type="sync"> </Icon>
+                      </div>
                       <div
                         class="mobile-home-content-list-scroll-right-delete"
                         onClick={() => {
