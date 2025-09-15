@@ -15,8 +15,12 @@
       left: -25px;
       font-size: 10px;
       color: #ccc;
+      @include mobile() {
+        left: -18px;
+      }
     }
   }
+
   h1 {
     &:hover {
       &::after {
