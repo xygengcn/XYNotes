@@ -57,6 +57,7 @@ const Input = defineComponent({
     const handleBlur = (e: Event) => {
       inputTimeOut && clearTimeout(inputTimeOut);
       context.emit('blur', e, orignalValue);
+      context.emit('change', (e.target as HTMLInputElement).value);
       orignalValue = (e.target as HTMLInputElement).value;
     };
 

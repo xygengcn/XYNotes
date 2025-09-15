@@ -206,11 +206,12 @@ export function clipboardWriteImage(blob: Blob) {
  * 粘贴板读取
  * @returns
  */
-export function clipboardReadText(): Promise<string> | void {
+export async function clipboardReadText(): Promise<string> {
   // tauri
   if (isTauriApp()) {
     return tauriClipboardReadText();
   }
+  return '';
 }
 
 /**

@@ -1,0 +1,39 @@
+.inputAutoSize {
+  width: 100%;
+  --input-border-color: #dadce0;
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  &-content {
+    width: 100%;
+    &-inner {
+      cursor: text;
+      overflow: overlay;
+      &:empty:before {
+        content: attr(placeholder);
+        color: #a1b5e8;
+      }
+      &[contenteditable]:focus {
+        content: none;
+        border: none;
+        outline: 0px solid transparent;
+      }
+      span {
+        user-select: text;
+      }
+    }
+  }
+
+  // 边框
+  &-border {
+    .inputAutoSize-content-inner {
+      border-radius: 4px;
+      border: 1px solid var(--input-border-color);
+      padding: 4px 10px;
+      &:focus {
+        --input-border-color: var(--theme-default-color);
+      }
+    }
+  }
+}
