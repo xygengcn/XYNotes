@@ -27,8 +27,7 @@
     "vue-router": "4.2.5",
     "vue-tippy": "^6.3.1",
     "vue-virtual-scroller": "2.0.0-beta.8",
-    "vue3-swipe-actions": "^0.0.1",
-    "vue3-virtual-scroller": "^0.2.3"
+    "vue3-swipe-actions": "^0.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
