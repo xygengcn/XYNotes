@@ -56,6 +56,15 @@
 
         // 右滑菜单
         &-right {
+          display: flex;
+          &-sync {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            color: #fff;
+            background-color: #f3bb41;
+          }
           &-delete {
             display: flex;
             justify-content: center;
@@ -106,7 +115,7 @@
 
       &-add {
         position: absolute;
-        right: 15px;
+        right: 20px;
         color: var(--mobile-icon-color);
       }
     }
