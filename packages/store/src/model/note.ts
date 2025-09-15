@@ -1,5 +1,5 @@
 import { archiveNote, removeNote, saveNote, syncNote } from '@/state/note';
-import { INote, NoteType, NoteStatus, INoteAttachment } from '@xynotes/typings';
+import { INote, INoteAttachment, NoteStatus, NoteType } from '@xynotes/typings';
 import { debounce, downloadFile, uuid } from '@xynotes/utils';
 import { toRaw } from 'vue';
 
@@ -45,20 +45,24 @@ export class Note implements INote {
   // 同步时间
   public onlineSyncAt: number = 0;
 
+  // 标签
+  public tags: Array<string> = [];
+
   // 保存节流
   private __saveNoteDebouce: number | undefined = undefined;
   private __saveNoteDebouceFn: (...args: any[]) => number;
 
   constructor(note?: INote) {
     if (note) {
-      Object.assign(this, note);
+      this.update(note);
     } else {
-      Object.assign(this, {
+      this.update({
         nid: uuid(),
         title: '示例',
         text: '',
         intro: '',
         content: null,
+        tags: [],
         createdAt: new Date().getTime(),
         updatedAt: new Date().getTime()
       });
@@ -71,12 +75,19 @@ export class Note implements INote {
   }
 
   /**
+   * 更新
+   */
+  public update(note: Partial<INote>) {
+    Object.assign(this, note, { tags: note.tags || [] });
+  }
+
+  /**
    * 设置值
    * @param note
    */
   public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
     if (note.status === NoteStatus.draft || this.status === NoteStatus.draft) {
-      Object.assign(this, note);
+      this.update(note);
     }
   }
 
@@ -116,7 +127,10 @@ export class Note implements INote {
       author: this.author,
 
       // 笔记附件
-      attachment: []
+      attachment: [],
+
+      // 标签
+      tags: this.tags ? toRaw(this.tags) : []
     };
   }
   /**
@@ -172,13 +186,6 @@ export class Note implements INote {
     if (this.status === NoteStatus.archive) {
       removeNote(this.toRaw());
     }
-  }
-
-  /**
-   * 更新
-   */
-  public update(note: Partial<INote>) {
-    Object.assign(this, note);
   }
 
   /**

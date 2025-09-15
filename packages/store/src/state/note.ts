@@ -1,11 +1,11 @@
 import ApiEvent from '@/api';
 import { Note } from '@/model/note';
+import { NoteListSortType } from '@/typings/configs';
+import { deleteNoteEvent, onNoteUpdate, updateNoteEvent } from '@xynotes/transport/web';
 import { INote } from '@xynotes/typings';
 import { ArrayMap } from '@xynotes/utils';
 import { computed, readonly, ref } from 'vue';
 import { configsStoreState } from './configs';
-import { NoteListSortType } from '@/typings/configs';
-import { deleteNoteEvent, onNoteUpdate, updateNoteEvent } from '@xynotes/transport/web';
 
 const state = ref({
   // 当前选中笔记，当前编辑笔记
@@ -13,7 +13,10 @@ const state = ref({
   // 笔记列表
   noteList: new ArrayMap<Note>('nid'),
   // 归档列表
-  archiveNoteList: new ArrayMap<Note>('nid')
+  archiveNoteList: new ArrayMap<Note>('nid'),
+
+  // 搜索关键词
+  searchKeyword: '' as string
 });
 
 // 当前笔记
@@ -33,10 +36,46 @@ export const noteListCount = computed(() => {
 // 排好序的数组
 export const notesListBySort = computed(() => {
   const noteListSortType = configsStoreState.value.NOTE_LIST_SORT.value || NoteListSortType.updated;
-  return state.value.noteList.sort((a, b) => {
-    return b[noteListSortType] - a[noteListSortType];
-  });
+  // 分割关键词
+  const keywords = state.value.searchKeyword
+    .trim()
+    .split(' ')
+    .filter((i) => i?.trim().toLocaleLowerCase());
+
+  if (keywords.length === 0) {
+    return state.value.noteList.sort((a, b) => {
+      return b[noteListSortType] - a[noteListSortType];
+    });
+  }
+  return state.value.noteList
+    .filter((note) => {
+      return keywords.some((keyword) => {
+        if (keyword.startsWith('#')) {
+          if (note.tags) {
+            return note.tags.includes(keyword.substring(1));
+          }
+          return false;
+        }
+        return (
+          note.intro?.toLocaleLowerCase().includes(keyword) ||
+          note.text?.toLocaleLowerCase().includes(keyword) ||
+          note.title?.toLocaleLowerCase().includes(keyword)
+        );
+      });
+    })
+    .sort((a, b) => {
+      return b[noteListSortType] - a[noteListSortType];
+    });
 });
+
+/**
+ * 搜索笔记列表
+ * @param keyword 关键字
+ */
+export const searchNoteList = (keyword: string) => {
+  state.value.searchKeyword = keyword;
+  return;
+};
 
 /**
  * 设置当前笔记

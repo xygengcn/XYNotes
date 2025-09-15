@@ -1,14 +1,24 @@
+import { useNoteTags } from '@/components/note-tags';
 import { UploadService } from '@/services/upload';
 import { Icon } from '@xynotes/components';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
+import type { Note } from '@xynotes/store';
 import { isCheckOnlineSync } from '@xynotes/store/configs';
-import { defineComponent } from 'vue';
+import { defineComponent, type PropType } from 'vue';
 import { useMobileDetailGallery } from '../gallery';
 import './index.scss';
 export const MobileDetailTools = defineComponent({
   name: 'MobileDetailTools',
-  setup() {
+  props: {
+    note: {
+      type: Object as PropType<Note>,
+      required: true
+    }
+  },
+  setup(props) {
     const { editorFocus, setImage, editor } = useEditor() as MarkdownEditorInstance;
+    const { showMobileDetailGalleryView, MobileDetailGalleryView } = useMobileDetailGallery();
+    const { show: showNoteTags, view: NoteTagsView } = useNoteTags(props.note);
 
     /**
      * 选择图片文件
@@ -33,7 +43,9 @@ export const MobileDetailTools = defineComponent({
       editor.value.chain().focus().toggleTaskList().run();
     };
 
-    const { showMobileDetailGalleryView, MobileDetailGalleryView } = useMobileDetailGallery();
+    const handleClickAddTag = () => {
+      showNoteTags();
+    };
 
     return () => (
       <div class={{ 'mobile-detail-tools': true, focus: editorFocus.value }}>
@@ -46,7 +58,10 @@ export const MobileDetailTools = defineComponent({
         <div class="mobile-detail-tools-item">
           <Icon type="todo" size={24} onClick={handleClickAddTodo}></Icon>
         </div>
-
+        <div class="mobile-detail-tools-item" onClick={handleClickAddTag}>
+          <Icon type="tags" size={24}></Icon>
+        </div>
+        <NoteTagsView></NoteTagsView>
         <MobileDetailGalleryView></MobileDetailGalleryView>
       </div>
     );

@@ -13,7 +13,7 @@ class ApiEventLocal {
     return database.module('notes').then((model) => {
       return model
         .findAll<INote>({
-          attributes: ['updatedAt', 'author', 'createdAt', 'intro', 'nid', 'order', 'status', 'title', 'type']
+          attributes: ['updatedAt', 'author', 'createdAt', 'intro', 'nid', 'order', 'status', 'title', 'type', 'tags']
         })
         .then((list) => {
           return list;
