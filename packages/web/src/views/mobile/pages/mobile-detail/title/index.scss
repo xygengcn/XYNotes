@@ -9,6 +9,16 @@
         font-weight: 600;
         padding-right: 2rem;
         caret-color: #f3bb41;
+        height: 24px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        &:focus {
+          height: max-content;
+          overflow: auto;
+          white-space: normal;
+        }
       }
       &::after {
         content: '标题';
