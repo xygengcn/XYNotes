@@ -42,7 +42,7 @@ class ApiEventOnline {
           ...(configs.headers || {})
         },
         baseURL,
-        timeout: configs.timeout || 1000 // 1秒超时
+        timeout: configs.timeout || 5000 // 1秒超时
       })
       .then((response) => {
         const data = response.data;
