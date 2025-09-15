@@ -1,8 +1,8 @@
 import { isBlobUrl } from '@xynotes/utils';
 import 'photoswipe/style.css';
 import { defineComponent, defineCustomElement, ref } from 'vue';
-import './index.scss';
 import ErrorPng from './img-error.png';
+import './index.scss';
 
 export const Viewer = defineComponent({
   name: 'Viewer',
@@ -60,7 +60,7 @@ export const Viewer = defineComponent({
  * @param urls
  */
 export async function imageViewer(urls: { src: string; width: number; height: number; alt?: string }[] = []) {
-  const PhotoSwipe = (await import('photoswipe')).default as any;
+  const PhotoSwipe = (await import('photoswipe')).default;
   const p = new PhotoSwipe({
     dataSource: urls,
     showHideAnimationType: 'none'

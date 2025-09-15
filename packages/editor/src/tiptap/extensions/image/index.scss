@@ -1,0 +1,6 @@
+.markdown-editor-image {
+  &.ProseMirror-selectednode {
+    border: 1px solid var(--markdown-editor-theme-color);
+    border-radius: 8px;
+  }
+}

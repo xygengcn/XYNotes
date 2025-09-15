@@ -1,6 +1,6 @@
 import { mergeAttributes, Node, nodeInputRule } from '@tiptap/core';
-import { Plugin, PluginKey, TextSelection } from '@tiptap/pm/state';
-
+import { TextSelection } from '@tiptap/pm/state';
+import './index.scss';
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     image: {
