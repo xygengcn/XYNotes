@@ -1,47 +1,8 @@
 import { Drawer, Icon } from '@xynotes/components';
-import type { Note } from '@xynotes/store';
+import { Note } from '@xynotes/store';
 import { NoteStatus } from '@xynotes/typings';
-import { defineComponent, ref, type PropType } from 'vue';
+import { createApp, defineAsyncComponent, ref } from 'vue';
 import './index.scss';
-import { NoteTagsInput } from './input';
-const NoteTagsContent = defineComponent({
-  name: 'NoteTagsContent',
-  props: {
-    note: {
-      type: Object as PropType<Note>,
-      required: true
-    }
-  },
-  setup: (props) => {
-    const refList = ref<HTMLElement>();
-
-    const handleClickDeleteTag = (tag: string) => {
-      props.note.tags = props.note.tags?.filter((item) => item !== tag);
-    };
-
-    /**
-     * 输入
-     * @param value
-     */
-    const handleClickAddTag = (value: string) => {
-      props.note.tags?.push(value);
-    };
-
-    return () => (
-      <div class="note-tags-content">
-        <div class="note-tags-content-list" ref={refList}>
-          {props.note?.tags?.map((tag) => (
-            <div class="note-tags-content-list-item">
-              <span>#{tag}</span>
-              <Icon type="delete" size={8} onclick={handleClickDeleteTag.bind(this, tag)}></Icon>
-            </div>
-          ))}
-          <NoteTagsInput onInput={handleClickAddTag}></NoteTagsInput>
-        </div>
-      </div>
-    );
-  }
-});
 
 export function useNoteTags(note: Note) {
   /**
@@ -67,6 +28,7 @@ export function useNoteTags(note: Note) {
   };
 
   const view = () => {
+    const Component = defineAsyncComponent(() => import('./content'));
     return (
       <Drawer class="note-tags-drawer" visible={visible.value} onClose={hide}>
         <div class="note-tags-drawer-wrapper">
@@ -81,7 +43,7 @@ export function useNoteTags(note: Note) {
               确定
             </span>
           </div>
-          <NoteTagsContent note={note} />
+          <Component note={note}></Component>
         </div>
       </Drawer>
     );
@@ -92,4 +54,26 @@ export function useNoteTags(note: Note) {
     show,
     view
   };
+}
+
+export default function showNoteTagsDialog(note: Note) {
+  console.log('[showNoteTagsDialog]', note);
+  const instance = document.querySelector('#NoteTags');
+  if (instance) {
+    document.body.removeChild(instance);
+  }
+  const el = document.createElement('div');
+  el.id = 'NoteTags';
+  document.body.appendChild(el);
+  const app = createApp(
+    defineAsyncComponent(() => import('./dialog')),
+    {
+      note,
+      onClose() {
+        app.unmount();
+        el && document.body.removeChild(el);
+      }
+    }
+  );
+  app.mount(el);
 }

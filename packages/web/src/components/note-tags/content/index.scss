@@ -1,0 +1,25 @@
+@import '@/styles/functions/tags.scss';
+.note-tags-content {
+  flex: 1;
+  &-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    &-item {
+      color: #818181;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      .icon {
+        margin-left: 6px;
+        font-weight: 300;
+        color: #bcbcbc;
+        cursor: pointer;
+      }
+
+      @include noteTagStyle();
+    }
+  }
+}
