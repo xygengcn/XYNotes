@@ -1,6 +1,5 @@
 import NoteEditor from '@/components/note-editor';
 import NoteEditorCounter from '@/components/note-editor/counter';
-import NoteEditorTitle from '@/components/note-editor/title';
 import { useThemeColor } from '@/services/theme';
 import { Icon, Loading } from '@xynotes/components';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
@@ -9,6 +8,7 @@ import { defineComponent, onBeforeMount, onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
 import { useMobileDetailSetting } from './setting';
+import MobileDetailTitle from './title';
 import { MobileDetailTools } from './tools';
 
 const MobileDetail = defineComponent({
@@ -69,7 +69,7 @@ const MobileDetail = defineComponent({
             <div class="mobile-detail-content">
               <NoteEditor nid={route.params?.nid as string}>
                 {{
-                  header: (props) => <NoteEditorTitle note={props.note} />
+                  header: (props) => <MobileDetailTitle note={props.note} />
                 }}
               </NoteEditor>
             </div>
@@ -80,40 +80,6 @@ const MobileDetail = defineComponent({
           </div>
         )}
         <MobileDetailTools></MobileDetailTools>
-        {/* 抽屉 */}
-        {/* <Drawer
-          visible={visibleMoreDrawer.value}
-          onClose={() => {
-            visibleMoreDrawer.value = false;
-          }}
-        >
-          <div class="mobile-detail-drawer">
-            <div class="mobile-detail-drawer-item">
-              <span class="mobile-detail-drawer-item-icon">
-                <Icon type="item-delete" size={24} onClick={handleClickDelete}></Icon>
-              </span>
-              <span class="mobile-detail-drawer-item-text">删除</span>
-            </div>
-            <div class="mobile-detail-drawer-item">
-              <span class="mobile-detail-drawer-item-icon">
-                <Icon type="item-share" size={24} onClick={handleClickShare}></Icon>
-              </span>
-              <span class="mobile-detail-drawer-item-text">分享</span>
-            </div>
-            <div class="mobile-detail-drawer-item">
-              <span class="mobile-detail-drawer-item-icon">
-                <Icon type="sync" size={24} onClick={handleClickSync}></Icon>
-              </span>
-              <span class="mobile-detail-drawer-item-text">同步</span>
-            </div>
-            <div class="mobile-detail-drawer-item">
-              <span class="mobile-detail-drawer-item-icon">
-                <Icon type="item-markdown" size={24} onClick={handleClickDownload}></Icon>
-              </span>
-              <span class="mobile-detail-drawer-item-text">下载</span>
-            </div>
-          </div>
-        </Drawer> */}
         <MobileDetailSettingView></MobileDetailSettingView>
       </div>
     );

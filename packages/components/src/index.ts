@@ -8,6 +8,7 @@ import Drawer from './components/drawer';
 import Icon from './components/icon';
 import { imageViewer, Viewer } from './components/image-viewer';
 import Input from './components/input';
+import { InputAutoSize } from './components/input-auto-size';
 import ShortcutInput from './components/input-shortcut';
 import Loading from './components/loading';
 import Nav from './components/nav';
@@ -25,6 +26,7 @@ export {
   Icon,
   imageViewer,
   Input,
+  InputAutoSize,
   Loading,
   Nav,
   Popover,

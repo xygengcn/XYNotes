@@ -1,0 +1,25 @@
+.mobile-detail-title {
+  position: relative;
+  padding: var(--note-item-title-padding);
+  .inputAutoSize {
+    position: relative;
+    &-content {
+      &-inner {
+        font-size: 1.2em;
+        font-weight: 600;
+        padding-right: 2rem;
+        caret-color: #f3bb41;
+      }
+      &::after {
+        content: '标题';
+        position: absolute;
+        font-size: 0.7em;
+        font-weight: normal;
+        color: rgba(88, 96, 105, 0.36);
+        background-color: #fff;
+        right: 0px;
+        top: 0;
+      }
+    }
+  }
+}
