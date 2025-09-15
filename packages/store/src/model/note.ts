@@ -78,7 +78,7 @@ export class Note implements INote {
    * 更新
    */
   public update(note: Partial<INote>) {
-    Object.assign(this, note, { tags: note.tags || [] });
+    Object.assign(this, note, { tags: note.tags || this.tags || [] });
   }
 
   /**
