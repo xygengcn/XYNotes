@@ -1,7 +1,8 @@
-import { mergeAttributes } from '@tiptap/core';
+import { CommandProps, mergeAttributes } from '@tiptap/core';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { common, createLowlight } from 'lowlight';
 import { createCodeBlockView } from './create-code-block';
+
 /**
  * 代码高亮模块
  */
@@ -18,6 +19,25 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
       HTMLAttributes: {
         class: 'markdown-editor-codeblock hljs'
       }
+    };
+  },
+  addCommands() {
+    return {
+      insertCodeBlock:
+        (language: string, code: string) =>
+        ({ state, dispatch, commands, tr, chain }: CommandProps) => {
+          chain()
+            .insertContent({
+              type: this.name,
+              text: '',
+              content: [{ type: 'text', text: code }],
+              attrs: { language }
+            })
+            .focus()
+            .run();
+          if (dispatch) tr.scrollIntoView();
+          return true;
+        }
     };
   },
   addNodeView() {
@@ -37,11 +57,7 @@ const CodeBlockExtension = CodeBlockLowlight.extend({
           inputEl.value = node.attrs.language;
         }
       };
-      const { codeBlock, codeEditor, container, code, onUpdated } = createCodeBlockView(
-        node,
-        editor,
-        onChange
-      );
+      const { codeBlock, codeEditor, container, code, onUpdated } = createCodeBlockView(node, editor, onChange);
       for (const [key, value] of Object.entries(mergeAttributes(this.options.HTMLAttributes))) {
         if (value !== undefined && value !== null) {
           codeBlock.setAttribute(key, value);

@@ -31,7 +31,7 @@ const Icon = defineComponent({
     });
     return () => (
       <i
-        class={['icon', 'iconfont', `note-${props.type}`]}
+        class={['icon', 'xynote-iconfont', `note-${props.type}`]}
         style={style.value}
         onClick={(e) => {
           emit('click', e);

@@ -84,11 +84,6 @@ const ImageExtension = Node.create({
             type: this.name,
             attrs: { ...options, inline: true }
           });
-          // 插入新的文本节点
-          // const { selection } = tr;
-          // const position = selection.$anchor.pos;
-          // const text = editor.schema.text(' ');
-          // commands.insertContentAt(position + 1, text);
           // 将选区移动到新段落的起始位置
           const newSelection = TextSelection.create(tr.doc, tr.selection.$from.end());
           tr.setSelection(newSelection);

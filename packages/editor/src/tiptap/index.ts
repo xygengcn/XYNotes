@@ -21,6 +21,7 @@ export interface MarkdownEditorInstance {
   onUpload: (cb: (file: FileList, e: Event, editor: Editor) => void) => void;
   getMarkdown: () => string | undefined;
   insertContent: (value: string) => ReturnType<Editor['commands']['insertContent']> | undefined;
+  setCodeBlock: (language: string, code: string) => void;
   setEditable: (value: boolean) => ReturnType<Editor['setEditable']> | undefined;
   setContent: (content: Content) => boolean | undefined;
   getCounter: () => { characters: number; words: number };
@@ -107,6 +108,16 @@ export function defineMarkdownEditor() {
    */
   const setImage = (options: { src: string; alt?: string; title?: string }) => {
     return editor.value?.commands.insertImage(options);
+  };
+
+  /**
+   * 插入代码块
+   * @param language
+   * @param code
+   */
+  const setCodeBlock = (language: string, code: string) => {
+    // @ts-ignore
+    return editor.value?.commands.insertCodeBlock(language, code);
   };
 
   /**
@@ -243,6 +254,7 @@ export function defineMarkdownEditor() {
       onFocus,
       getMarkdown,
       insertContent,
+      setCodeBlock,
       setEditable,
       setContent,
       getCounter,
