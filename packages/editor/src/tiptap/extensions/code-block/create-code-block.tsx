@@ -38,14 +38,24 @@ export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Ev
   codeContent.className = 'markdown-editor-codeblock-content';
 
   // 编辑器部分
-  const codeEditor = document.createElement('code');
-  codeEditor.className = 'markdown-editor-codeblock-content-code';
-  codeEditor.textContent = code.value;
-  codeEditor.setAttribute('spellcheck', 'false');
-  codeContent.appendChild(codeEditor);
+  const codeEditorWrapper = document.createElement('div');
+  codeEditorWrapper.className = 'markdown-editor-codeblock-content-code';
+  const codeEditorContent = document.createElement('code');
+  codeEditorContent.className = 'markdown-editor-codeblock-content-code-content';
+  codeEditorContent.textContent = code.value;
+  codeEditorContent.setAttribute('spellcheck', 'false');
+  codeEditorWrapper.appendChild(codeEditorContent);
+  codeContent.appendChild(codeEditorWrapper);
 
   // 预览部分
+  // 将头部容器和代码内容容器添加到根元素
+  const codePreviewWrapper = document.createElement('div');
   const codePreview = document.createElement('code-preview') as HTMLDivElement;
+  codePreviewWrapper.className = 'markdown-editor-codeblock-content-preview';
+  codePreviewWrapper.appendChild(codePreview);
+  codeContent.appendChild(codePreviewWrapper);
+  codeBlock.appendChild(codeContent);
+
   const setCodePreview = (language: string, code: string) => {
     // @ts-ignore
     codePreview.language = language || 'plaintext';
@@ -53,19 +63,13 @@ export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Ev
     codePreview.code = code || '';
     // 设置隐藏
     if (isPreviewLanguage(language)) {
-      codePreview.style.display = 'block';
+      codeContent.classList.add('has-preview');
+      codePreviewWrapper.style.display = 'block';
     } else {
-      codePreview.style.display = 'none';
+      codePreviewWrapper.style.display = 'none';
     }
   };
   setCodePreview(defaultLanguage, defaultCode);
-
-  // 将头部容器和代码内容容器添加到根元素
-  const div = document.createElement('div');
-  div.className = 'markdown-editor-codeblock-content-preview';
-  div.appendChild(codePreview);
-  codeContent.appendChild(div);
-  codeBlock.appendChild(codeContent);
 
   // 上一个语言
   let originLanguage = defaultLanguage;
@@ -81,7 +85,7 @@ export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Ev
   };
   return {
     codeBlock,
-    codeEditor,
+    codeEditor: codeEditorContent,
     codePreview,
     container: codeContainer,
     code,

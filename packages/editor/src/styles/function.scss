@@ -4,3 +4,19 @@
     @content;
   }
 }
+
+// 聚焦
+@mixin focus() {
+  &.has-focus {
+    @content;
+  }
+}
+
+// 移动端聚焦
+@mixin mobileFocus() {
+  @media screen and (max-width: 599px) {
+    &.has-focus {
+      @content;
+    }
+  }
+}
