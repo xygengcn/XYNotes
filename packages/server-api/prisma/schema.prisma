@@ -48,6 +48,9 @@ model NoteTable {
   // 更新时间
   updatedAt DateTime? @default(now()) @updatedAt
 
+  // 标签
+  tags String @default("[]")
+
   @@index([author])
   @@index([nid])
   @@map("note_list")

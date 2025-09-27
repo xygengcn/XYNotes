@@ -1,7 +1,9 @@
 import { logger } from '@/logger';
 import { IFile } from '@/typings';
 import { isFile, isString } from '@/utils';
-import { Controller, Middleware, Param, Post } from 'koa-api-plus';
+import { readdir } from 'fs/promises';
+import { Context, Controller, Middleware, Param, Post } from 'koa-api-plus';
+import { join } from 'path';
 
 @Middleware()
 @Controller()
@@ -39,6 +41,40 @@ export default class NoteAssetsController {
       size: file.size,
       name: file.originalFilename,
       mimeType: file.mimetype
+    };
+  }
+
+  /**
+   * 获取笔记资源管理列表
+   * @returns
+   */
+  @Post('/list')
+  async queryNoteAssetsList(
+    @Param.Body() options: { limit: number; next: string; origin: string },
+    @Param.Context() ctx: Context
+  ): Promise<{ data: { originUrl: string; size: number; name: string; mimeType: string }[]; next: string }> {
+    logger.info(options, '[resource] queryNoteAssetsList');
+
+    const uploadDir = join(process.cwd(), '/data/assets');
+    // 读取文件夹
+    const data = await readdir(uploadDir).then((files) => {
+      return files
+        .filter((file) => {
+          return isFile(join(uploadDir, file));
+        })
+        .map((file) => {
+          return {
+            name: file,
+            originUrl: options.origin + '/resources/assets/' + file,
+            mimeType: '',
+            size: 0
+          };
+        });
+    });
+
+    return {
+      data,
+      next: ''
     };
   }
 }
