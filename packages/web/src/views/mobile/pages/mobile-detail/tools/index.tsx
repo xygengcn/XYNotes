@@ -16,7 +16,7 @@ export const MobileDetailTools = defineComponent({
     }
   },
   setup(props) {
-    const { editorFocus, setImage, editor } = useEditor() as MarkdownEditorInstance;
+    const { editorFocus, setImage, editor, setCodeBlock } = useEditor() as MarkdownEditorInstance;
     const { showMobileDetailGalleryView, MobileDetailGalleryView } = useMobileDetailGallery();
     const { show: showNoteTags, view: NoteTagsView } = useNoteTags(props.note);
 
@@ -43,8 +43,18 @@ export const MobileDetailTools = defineComponent({
       editor.value.chain().focus().toggleTaskList().run();
     };
 
+    /**
+     * 添加标签
+     */
     const handleClickAddTag = () => {
       showNoteTags();
+    };
+
+    /**
+     * 创建思维导图
+     */
+    const handleClickCreateMindMap = () => {
+      setCodeBlock('mindmap', '- 主题1\n  - 主题2\n  - 主题3');
     };
 
     return () => (
@@ -57,6 +67,9 @@ export const MobileDetailTools = defineComponent({
         </div>
         <div class="mobile-detail-tools-item">
           <Icon type="todo" size={24} onClick={handleClickAddTodo}></Icon>
+        </div>
+        <div class="mobile-detail-tools-item" onClick={handleClickCreateMindMap}>
+          <Icon type="mind" size={24}></Icon>
         </div>
         <div class="mobile-detail-tools-item" onClick={handleClickAddTag}>
           <Icon type="tags" size={24}></Icon>

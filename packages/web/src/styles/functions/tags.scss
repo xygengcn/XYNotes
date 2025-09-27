@@ -1,12 +1,12 @@
 @mixin noteTagStyle() {
   &:nth-child(10n + 1) {
-    background-color: #fadadd;
-    border: 1px solid #fadadd;
+    background-color: #dff0d8;
+    border: 1px solid #dff0d8;
   }
 
   &:nth-child(10n + 2) {
-    background-color: #dff0d8;
-    border: 1px solid #dff0d8;
+    background-color: #fef0e0;
+    border: 1px solid #fef0e0;
   }
 
   &:nth-child(10n + 3) {
@@ -45,7 +45,7 @@
   }
 
   &:nth-child(10n + 10) {
-    background-color: #fef0e0;
-    border: 1px solid #fef0e0;
+    background-color: #fadadd;
+    border: 1px solid #fadadd;
   }
 }

@@ -14,7 +14,7 @@ export default defineComponent({
     const inputText = ref('');
 
     // 编辑器
-    const { insertContent, setContent, getMarkdown } = useEditor({ defaultValue: text.value });
+    const { insertContent, setContent, getMarkdown, setCodeBlock, getData } = useEditor({ defaultValue: text.value });
 
     /**
      * 处理输入事件
@@ -23,6 +23,10 @@ export default defineComponent({
      */
     const handleInput = () => {
       insertContent(inputText.value);
+    };
+
+    const handleInsertMind = () => {
+      setCodeBlock('mindmap', '- 主题1\n  - 主题2\n  - 主题3');
     };
 
     /**
@@ -37,6 +41,7 @@ export default defineComponent({
      */
     const handleGetContent = () => {
       console.log('content:', getMarkdown());
+      console.log('json:', getData());
     };
 
     return () => (
@@ -44,6 +49,7 @@ export default defineComponent({
         <div class="app-menu">
           <input type="text" v-model={inputText.value} />
           <button onClick={handleInput}>插入</button>
+          <button onClick={handleInsertMind}>插入思维导图</button>
           <button onClick={handleReset}>初始化</button>
           <button onClick={handleGetContent}>获取content</button>
         </div>
