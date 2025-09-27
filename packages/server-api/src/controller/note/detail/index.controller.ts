@@ -1,9 +1,9 @@
-import { isString, parseJson } from '@/utils';
 import { notePrismaClient } from '@/database';
 import { logger } from '@/logger';
 import { INote, NoteStatus } from '@/typings';
-import { type Context, Controller, Param, Post } from 'koa-api-plus';
+import { isString, parseJson } from '@/utils';
 import stringify from 'fast-safe-stringify';
+import { type Context, Controller, Param, Post } from 'koa-api-plus';
 @Controller()
 export default class NoteDetailController {
   @Post('/query')
@@ -26,6 +26,7 @@ export default class NoteDetailController {
         if (result && result?.status !== NoteStatus.deprecated) {
           return {
             ...result,
+            tags: result.tags ? parseJson(result.tags) : [],
             content: result.content ? parseJson(result.content) : null,
             createdAt: result.createdAt.getTime(),
             updatedAt: result.updatedAt.getTime(),
@@ -64,6 +65,7 @@ export default class NoteDetailController {
       .upsert({
         create: {
           content: note.content ? stringify(note.content) : '',
+          tags: note.content ? stringify(note.tags) : '[]',
           text: note.text,
           title: note.title,
           intro: note.intro || '',
@@ -78,6 +80,7 @@ export default class NoteDetailController {
         },
         update: {
           content: note.content ? stringify(note.content) : '',
+          tags: note.content ? stringify(note.tags) : '[]',
           text: note.text,
           title: note.title,
           intro: note.intro,
@@ -95,6 +98,7 @@ export default class NoteDetailController {
         return {
           ...result,
           content: result.content ? parseJson(result.content) : null,
+          tags: result.tags ? parseJson(result.tags) : [],
           createdAt: result.createdAt.getTime(),
           updatedAt: result.updatedAt.getTime(),
           onlineSyncAt: result.updatedAt.getTime()
@@ -149,6 +153,7 @@ export default class NoteDetailController {
         .create({
           data: {
             content: note.content ? stringify(note.content) : '',
+            tags: note.content ? stringify(note.tags) : '[]',
             text: note.text,
             title: note.title,
             intro: note.intro || '',
@@ -165,6 +170,7 @@ export default class NoteDetailController {
           return {
             ...result,
             content: result.content ? parseJson(result.content) : null,
+            tags: result.tags ? parseJson(result.tags) : [],
             createdAt: result.createdAt.getTime(),
             updatedAt: result.updatedAt.getTime(),
             onlineSyncAt: result.updatedAt.getTime()
@@ -187,6 +193,7 @@ export default class NoteDetailController {
       .update({
         data: {
           content: note.content ? stringify(note.content) : '',
+          tags: note.content ? stringify(note.tags) : '[]',
           text: note.text,
           title: note.title,
           intro: note.intro,
@@ -204,6 +211,7 @@ export default class NoteDetailController {
         return {
           ...result,
           content: result.content ? parseJson(result.content) : null,
+          tags: result.tags ? parseJson(result.tags) : [],
           createdAt: result.createdAt.getTime(),
           updatedAt: result.updatedAt.getTime(),
           onlineSyncAt: result.updatedAt.getTime()

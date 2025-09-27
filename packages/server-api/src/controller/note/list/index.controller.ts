@@ -54,6 +54,7 @@ export default class NoteListController {
           return {
             ...i,
             content: i.content ? parseJson(i.content) : null,
+            tags: i.tags ? parseJson(i.tags) : [],
             createdAt: i.createdAt.getTime(),
             updatedAt: i.updatedAt.getTime(),
             onlineSyncAt: i.updatedAt.getTime()
