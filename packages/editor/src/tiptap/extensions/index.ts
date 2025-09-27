@@ -6,7 +6,7 @@ import { TableHeader } from '@tiptap/extension-table/header';
 import { TableRow } from '@tiptap/extension-table/row';
 import Text from '@tiptap/extension-text';
 import { Color, TextStyle } from '@tiptap/extension-text-style';
-import { Placeholder } from '@tiptap/extensions';
+import { Focus, Placeholder } from '@tiptap/extensions';
 import { Markdown } from 'tiptap-markdown';
 import BlockquoteExtension from './blockquote';
 import BoldExtension from './bold';
@@ -78,8 +78,14 @@ export const CommonExtension = () => [
   CharacterCountExtension,
   // 粘贴事件
   PasteExtension,
+  // 默认值
   Placeholder.configure({
     placeholder: '开始创作你的笔记吧...'
+  }),
+  // 聚焦
+  Focus.configure({
+    className: 'has-focus',
+    mode: 'deepest'
   })
 ];
 

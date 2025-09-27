@@ -54,6 +54,8 @@ const CodeBlockContainer = defineComponent({
                 onMouseup={stopPropagation}
                 onMousedown={stopPropagation}
                 disabled={!this.isEditable}
+                onpaste={stopPropagation}
+                onClick={stopPropagation}
               />
             </div>
           </div>

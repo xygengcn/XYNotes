@@ -4,16 +4,16 @@
   --markdown-editor-codeblock-bg-color: #262335;
 }
 .markdown-editor-codeblock {
-  display: block;
+  display: flex;
+  flex-direction: column;
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
   height: max-content;
   position: relative;
-  margin: 0;
+  margin: 0 0 10px 0px;
   padding: 0;
   background-color: var(--markdown-editor-codeblock-bg-color);
-  max-height: 65vh;
 
   & + & {
     margin-top: 0.8rem;
@@ -127,27 +127,79 @@
   }
 
   &-content {
+    position: relative;
     display: flex;
+    overflow: hidden;
+    flex: 1;
+    max-height: calc(65vh + 40px);
     // 选中颜色
     ::selection {
       background: rgba($color: #fff, $alpha: 0.2) !important;
     }
-    @include mobile {
-      & {
-        flex-direction: column;
+
+    // 有预览
+    &.has-preview {
+      .markdown-editor-codeblock-content-code {
+        height: 65vh;
       }
     }
+
     &-code {
-      display: inline-block;
-      box-sizing: border-box;
       flex: 1;
-      width: 100%;
-      padding: 20px 16px 16px;
-      text-align: initial;
       height: max-content;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      max-height: 65vh;
+      padding: 20px 16px 16px;
+      /*定义滑块 内阴影+圆角*/
+      &::-webkit-scrollbar-thumb {
+        background-color: #1a1825;
+      }
+      &::-webkit-scrollbar {
+        background-color: #262335;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #262335;
+      }
+      &-content {
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
     }
     &-preview {
       flex: 1;
+    }
+  }
+
+  @include mobile() {
+    .markdown-editor-codeblock-content {
+      max-height: calc(50vh + 40px);
+      &.has-preview {
+        .markdown-editor-codeblock-content-code {
+          height: 50vh;
+          max-height: 50vh;
+        }
+      }
+    }
+
+    .markdown-editor-codeblock-content {
+      &-code {
+        display: none;
+      }
+      &-preview {
+        height: 50vh;
+      }
+    }
+  }
+
+  @include mobileFocus() {
+    .markdown-editor-codeblock-content-preview {
+      flex: 0;
+    }
+    .markdown-editor-codeblock-content-code {
+      display: block;
     }
   }
 }
