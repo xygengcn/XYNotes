@@ -14,6 +14,7 @@ export default defineComponent({
   },
   emits: ['close'],
   setup(props, context) {
+    const visible = ref(true);
     /**
      * 加载
      */
@@ -66,10 +67,16 @@ export default defineComponent({
      * 隐藏
      */
     const hide = () => {
-      context.emit('close');
+      if (visible.value) {
+        visible.value = false;
+        // 动画结束再关闭
+        setTimeout(() => {
+          context.emit('close');
+        }, 300);
+      }
     };
     return () => (
-      <Drawer visible={true} onClose={hide}>
+      <Drawer visible={visible.value} onClose={hide}>
         <div class="note-share-drawer">
           <div class="note-share-drawer-header">
             <Icon type="item-copy" size={20} onClick={handleClickCopyImage}></Icon>
