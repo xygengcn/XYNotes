@@ -3,11 +3,11 @@ import { EditorPerview, useEditorPreview } from '@xynotes/editor';
 import { Note } from '@xynotes/store';
 import { screenshot, screenshotCopy } from '@xynotes/utils';
 import { type PropType, defineComponent, ref } from 'vue';
-import MinMax from '../min-max';
+import MinMax from '../../min-max';
 import './index.scss';
 
 export default defineComponent({
-  name: 'Screenshot',
+  name: 'NoteShareDialog',
   props: {
     note: {
       type: Object as PropType<Note>,

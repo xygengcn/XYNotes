@@ -1,4 +1,4 @@
-import showShareNoteDialog from '@/components/note-share';
+import { showNoteShareDrawer } from '@/components/note-share';
 import router from '@/router';
 import { Drawer, Icon } from '@xynotes/components';
 import { activeNote } from '@xynotes/store/note';
@@ -23,11 +23,7 @@ export function useMobileDetailSetting() {
    * 分享
    */
   const handleClickShare = () => {
-    activeNote.value &&
-      showShareNoteDialog(activeNote.value, {
-        width: '90%',
-        height: '60%'
-      });
+    activeNote.value && showNoteShareDrawer(activeNote.value);
   };
 
   /**

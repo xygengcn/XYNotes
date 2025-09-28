@@ -1,5 +1,7 @@
-import { PropType, defineComponent, ref, watch } from 'vue';
+import { PropType, defineComponent, nextTick, ref, watch } from 'vue';
 import './index.scss';
+
+const DrawerIndex = ref(99);
 
 const Drawer = defineComponent({
   name: 'Drawer',
@@ -15,6 +17,7 @@ const Drawer = defineComponent({
   },
   emits: ['close'],
   setup(props, context) {
+    const index = DrawerIndex.value++;
     // 关闭事件
     const handleClose = () => {
       context.emit('close');
@@ -26,18 +29,21 @@ const Drawer = defineComponent({
     watch(
       () => props.visible,
       () => {
-        if (props.visible) {
-          refContent.value?.classList.remove(`drawer-content-${props.position}__close`);
-          refContent.value?.classList.add(`drawer-content-${props.position}__open`);
-        } else {
-          refContent.value?.classList.remove(`drawer-content-${props.position}__open`);
-          refContent.value?.classList.add(`drawer-content-${props.position}__close`);
-        }
-      }
+        nextTick(() => {
+          if (props.visible) {
+            refContent.value?.classList.remove(`drawer-content-${props.position}__close`);
+            refContent.value?.classList.add(`drawer-content-${props.position}__open`);
+          } else {
+            refContent.value?.classList.remove(`drawer-content-${props.position}__open`);
+            refContent.value?.classList.add(`drawer-content-${props.position}__close`);
+          }
+        });
+      },
+      { immediate: true }
     );
 
     return () => (
-      <div class={{ drawer: true, 'drawer-close': !props.visible }}>
+      <div class={{ drawer: true, 'drawer-close': !props.visible }} style={{ zIndex: index }}>
         <div class="drawer-shadow" onClick={handleClose}></div>
         <div ref={refContent} class={['drawer-content', `drawer-content-${props.position}`]}>
           {context.slots.default?.()}

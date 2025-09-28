@@ -1,32 +1,46 @@
-import { VueContextMenu } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { createApp, defineAsyncComponent } from 'vue';
-import './index.scss';
 
-interface IScreenshotProps {
-  width?: string;
-  height?: string;
-}
-
-export default function showShareNoteDialog(note: Note, options: IScreenshotProps = {}) {
-  console.log('[showShareNoteDialog]', note, options);
-  const instance = document.querySelector('#screenshot');
+export default function showShareNoteDialog(note: Note) {
+  console.log('[showShareNoteDialog]', note);
+  const instance = document.querySelector('#note-share-dialog');
   if (instance) {
     document.body.removeChild(instance);
   }
   const el = document.createElement('div');
-  el.id = 'screenshot';
+  el.id = 'note-share-dialog';
   document.body.appendChild(el);
   const app = createApp(
-    defineAsyncComponent(() => import('./screenshot')),
+    defineAsyncComponent(() => import('./dialog')),
     {
       note,
-      ...options,
       onClose() {
         app.unmount();
         el && document.body.removeChild(el);
       }
     }
   );
-  app.use(VueContextMenu).mount(el);
+  app.mount(el);
+}
+
+export function showNoteShareDrawer(note: Note) {
+  console.log('[showNoteShareDrawer]', note);
+  const instance = document.querySelector('#note-share-drawer');
+  if (instance) {
+    document.body.removeChild(instance);
+  }
+  const el = document.createElement('div');
+  el.id = 'note-share-drawer';
+  document.body.appendChild(el);
+  const app = createApp(
+    defineAsyncComponent(() => import('./drawer')),
+    {
+      note,
+      onClose() {
+        app.unmount();
+        el && document.body.removeChild(el);
+      }
+    }
+  );
+  app.mount(el);
 }
