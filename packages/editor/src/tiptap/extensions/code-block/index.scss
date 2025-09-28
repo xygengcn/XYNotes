@@ -180,14 +180,11 @@
         .markdown-editor-codeblock-content-code {
           height: 50vh;
           max-height: 50vh;
+          display: none;
         }
       }
     }
-
     .markdown-editor-codeblock-content {
-      &-code {
-        display: none;
-      }
       &-preview {
         height: 50vh;
       }
@@ -198,8 +195,12 @@
     .markdown-editor-codeblock-content-preview {
       flex: 0;
     }
-    .markdown-editor-codeblock-content-code {
-      display: block;
+    .markdown-editor-codeblock-content {
+      &.has-preview {
+        .markdown-editor-codeblock-content-code {
+          display: block;
+        }
+      }
     }
   }
 }
