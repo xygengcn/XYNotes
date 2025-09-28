@@ -61,34 +61,6 @@
       --note-item-content-padding: 0.5em 1em;
     }
 
-    &-bottom {
-      display: inline-flex;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      padding: 10px 0px;
-      gap: 20px;
-      span {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: #fff;
-        border: var(--border-default-size) solid #dcdfe6;
-        transition: 0.1s;
-        text-align: center;
-        color: var(--font-default-color);
-        cursor: pointer;
-        width: 36px;
-        height: 36px;
-        &:hover {
-          color: #fff;
-          background-color: var(--theme-default-color);
-          border-color: var(--theme-default-color);
-        }
-      }
-    }
-
     &-loading {
       background-color: #ffffffc2;
       position: absolute;
