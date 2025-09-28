@@ -13,7 +13,8 @@ const Drawer = defineComponent({
     position: {
       type: String as PropType<'top' | 'bottom'>,
       default: 'bottom'
-    }
+    },
+    immediate: { type: Boolean, default: false }
   },
   emits: ['close'],
   setup(props, context) {
@@ -39,7 +40,7 @@ const Drawer = defineComponent({
           }
         });
       },
-      { immediate: true }
+      { immediate: props.immediate }
     );
 
     return () => (
