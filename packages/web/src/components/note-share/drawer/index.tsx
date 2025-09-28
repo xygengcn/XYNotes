@@ -76,7 +76,7 @@ export default defineComponent({
       }
     };
     return () => (
-      <Drawer visible={visible.value} onClose={hide}>
+      <Drawer visible={visible.value} onClose={hide} immediate>
         <div class="note-share-drawer">
           <div class="note-share-drawer-header">
             <Icon type="item-copy" size={20} onClick={handleClickCopyImage}></Icon>
