@@ -27,6 +27,18 @@ export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Ev
   // 创建vue，挂载
   const codeContainer = createApp(CodeBlockContainer, {
     onChange,
+    onMaximize: () => {
+      if (!document.fullscreenElement) {
+        codeBlock.requestFullscreen().then(() => {
+          editor.commands.focus();
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    },
+    onMinimize: () => {
+      if (document.fullscreenElement) document.exitFullscreen();
+    },
     isEditable: editor.isEditable,
     lang: defaultLanguage
   });
