@@ -20,7 +20,7 @@ const NoteEditor = defineComponent({
      */
     const fetchNoteLoading = ref(false);
 
-    const { onChange, onBlur, setContent, getContent, state, getMarkdown, onUpload, setImage, editor, focus } =
+    const { onChange, onBlur, setContent, getContent, state, getMarkdown, onUpload, setImage, editor } =
       useEditor() as MarkdownEditorInstance;
 
     /**
@@ -53,9 +53,6 @@ const NoteEditor = defineComponent({
         })
         .finally(() => {
           fetchNoteLoading.value = false;
-          nextTick(() => {
-            focus();
-          });
         });
     };
 

@@ -1,11 +1,12 @@
-import { useNoteTags } from '@/components/note-tags';
+import { showNoteTagsDrawer } from '@/components/note-tags';
 import { UploadService } from '@/services/upload';
 import { Icon } from '@xynotes/components';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 import type { Note } from '@xynotes/store';
 import { isCheckOnlineSync } from '@xynotes/store/configs';
+import { stopPropagation } from '@xynotes/utils';
 import { defineComponent, type PropType } from 'vue';
-import { useMobileDetailGallery } from '../gallery';
+import { showNoteGalleryDrawer } from '../../../plugins/gallery';
 import './index.scss';
 export const MobileDetailTools = defineComponent({
   name: 'MobileDetailTools',
@@ -17,8 +18,6 @@ export const MobileDetailTools = defineComponent({
   },
   setup(props) {
     const { editorFocus, setImage, editor, setCodeBlock } = useEditor() as MarkdownEditorInstance;
-    const { showMobileDetailGalleryView, MobileDetailGalleryView } = useMobileDetailGallery();
-    const { show: showNoteTags, view: NoteTagsView } = useNoteTags(props.note);
 
     /**
      * 选择图片文件
@@ -47,7 +46,7 @@ export const MobileDetailTools = defineComponent({
      * 添加标签
      */
     const handleClickAddTag = () => {
-      showNoteTags();
+      showNoteTagsDrawer(props.note);
     };
 
     /**
@@ -58,12 +57,12 @@ export const MobileDetailTools = defineComponent({
     };
 
     return () => (
-      <div class={{ 'mobile-detail-tools': true, focus: editorFocus.value }}>
+      <div class={{ 'mobile-detail-tools': true, focus: editorFocus.value }} onClick={stopPropagation}>
         <div class="mobile-detail-tools-item">
           <Icon type="photo" size={26} onClick={handleSelectImageFile}></Icon>
         </div>
         <div class="mobile-detail-tools-item" v-show={isCheckOnlineSync()}>
-          <Icon type="gallery" size={24} onClick={showMobileDetailGalleryView}></Icon>
+          <Icon type="gallery" size={24} onClick={showNoteGalleryDrawer}></Icon>
         </div>
         <div class="mobile-detail-tools-item">
           <Icon type="todo" size={24} onClick={handleClickAddTodo}></Icon>
@@ -74,8 +73,6 @@ export const MobileDetailTools = defineComponent({
         <div class="mobile-detail-tools-item" onClick={handleClickAddTag}>
           <Icon type="tags" size={24}></Icon>
         </div>
-        <NoteTagsView></NoteTagsView>
-        <MobileDetailGalleryView></MobileDetailGalleryView>
       </div>
     );
   }

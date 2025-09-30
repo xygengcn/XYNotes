@@ -1,3 +1,4 @@
+import { useDrawer } from '@xynotes/components';
 import { Note } from '@xynotes/store';
 import { createApp, defineAsyncComponent } from 'vue';
 
@@ -25,22 +26,9 @@ export default function showShareNoteDialog(note: Note) {
 
 export function showNoteShareDrawer(note: Note) {
   console.log('[showNoteShareDrawer]', note);
-  const instance = document.querySelector('#note-share-drawer');
-  if (instance) {
-    document.body.removeChild(instance);
-  }
-  const el = document.createElement('div');
-  el.id = 'note-share-drawer';
-  document.body.appendChild(el);
-  const app = createApp(
+  const { show } = useDrawer(
     defineAsyncComponent(() => import('./drawer')),
-    {
-      note,
-      onClose() {
-        app.unmount();
-        el && document.body.removeChild(el);
-      }
-    }
+    { id: 'note-share-drawer', contentProps: { note } }
   );
-  app.mount(el);
+  show();
 }

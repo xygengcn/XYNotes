@@ -11,6 +11,7 @@
     pointer-events: none;
     .drawer-shadow {
       display: none;
+      opacity: 0;
       animation: all 0.3s linear normal;
     }
   }
@@ -22,14 +23,15 @@
     top: 0;
     left: 0px;
     z-index: 1;
-    background-color: rgba($color: #000000, $alpha: 0.2);
+    background-color: #000;
+    opacity: 0.1;
+    transition: all 0.3s linear normal;
   }
 
   &-content {
     width: 100%;
     height: max-content;
     overflow: hidden;
-    max-height: 50%;
     z-index: 2;
     background-color: #fff;
     position: absolute;

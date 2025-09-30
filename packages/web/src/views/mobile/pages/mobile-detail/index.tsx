@@ -7,7 +7,7 @@ import { activeNote, setActiveNoteId } from '@xynotes/store/note';
 import { defineComponent, onBeforeMount, onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
-import { useMobileDetailSetting } from './setting';
+import { showMobileDetailSettingDrawer } from './setting';
 import MobileDetailTitle from './title';
 import { MobileDetailTools } from './tools';
 
@@ -27,15 +27,13 @@ const MobileDetail = defineComponent({
     /**
      * 编辑器
      */
-    const { editorFocus } = useEditor() as MarkdownEditorInstance;
-
-    const { MobileDetailSettingView, showMobileDetailSettingView } = useMobileDetailSetting();
+    useEditor() as MarkdownEditorInstance;
 
     /**
      * 返回首页
      */
-    const handleBack = () => {
-      router.push('/');
+    const handleBack = async () => {
+      await router.push('/');
       setActiveNoteId('');
     };
 
@@ -52,24 +50,24 @@ const MobileDetail = defineComponent({
     });
 
     return () => (
-      <div class={{ 'mobile-detail': true, 'mobile-detail-focus': editorFocus.value }}>
+      <div class="mobile-detail">
         {route.params?.nid ? (
           [
             <div class="mobile-detail-header">
               <Icon type="back" size={18} onClick={handleBack}></Icon>
-              <NoteEditorCounter note={activeNote.value} />
+              <MobileDetailTitle note={activeNote.value}></MobileDetailTitle>
               <Icon
                 type="mobile-more"
                 size={24}
                 onClick={() => {
-                  showMobileDetailSettingView();
+                  showMobileDetailSettingDrawer();
                 }}
               ></Icon>
             </div>,
             <div class="mobile-detail-content">
               <NoteEditor nid={route.params?.nid as string}>
                 {{
-                  header: (props) => <MobileDetailTitle note={props.note} />
+                  header: (props) => <NoteEditorCounter note={props.note} />
                 }}
               </NoteEditor>
             </div>
@@ -80,7 +78,6 @@ const MobileDetail = defineComponent({
           </div>
         )}
         <MobileDetailTools note={activeNote.value}></MobileDetailTools>
-        <MobileDetailSettingView></MobileDetailSettingView>
       </div>
     );
   }
