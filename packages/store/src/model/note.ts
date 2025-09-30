@@ -1,6 +1,7 @@
+import ApiEvent from '@/api';
 import { archiveNote, removeNote, saveNote, syncNote } from '@/state/note';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@xynotes/typings';
-import { debounce, downloadFile, uuid } from '@xynotes/utils';
+import { debounce, downloadFile, omit, uuid } from '@xynotes/utils';
 import { toRaw } from 'vue';
 
 export class Note implements INote {
@@ -54,9 +55,9 @@ export class Note implements INote {
 
   constructor(note?: INote) {
     if (note) {
-      this.update(note);
+      this.assign(note);
     } else {
-      this.update({
+      this.assign({
         nid: uuid(),
         title: '示例',
         text: '',
@@ -77,7 +78,7 @@ export class Note implements INote {
   /**
    * 更新
    */
-  public update(note: Partial<INote>) {
+  public assign(note: Partial<INote>): void {
     Object.assign(this, note, { tags: note.tags || this.tags || [] });
   }
 
@@ -87,7 +88,7 @@ export class Note implements INote {
    */
   public set(note: Partial<Exclude<INote, 'updatedAt'>>): void {
     if (note.status === NoteStatus.draft || this.status === NoteStatus.draft) {
-      this.update(note);
+      this.assign(note);
     }
   }
 
@@ -154,7 +155,7 @@ export class Note implements INote {
         .then((note) => {
           if (note) {
             console.log('[save] success', note);
-            this.update(note);
+            this.assign(note);
           }
           return note;
         })
@@ -165,6 +166,21 @@ export class Note implements INote {
         });
     }
     return Promise.resolve();
+  }
+
+  /**
+   *  更新笔记
+   * @param note
+   * @returns
+   */
+  public async update(note: Partial<INote>) {
+    this.assign(note);
+    return ApiEvent.api.apiFetchNoteDetailData(this.nid).then((result) => {
+      if (result) {
+        this.assign(omit(result, Object.keys(note) as Array<keyof INote>));
+      }
+      return this.save(true);
+    });
   }
 
   /**
@@ -211,7 +227,7 @@ export class Note implements INote {
   public sync() {
     console.log('[note] sync', this.nid);
     return syncNote(this.toRaw()).then((note) => {
-      this.update(note);
+      this.assign(note);
       window.$ui.toast('同步成功');
     });
   }

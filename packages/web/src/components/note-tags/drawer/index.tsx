@@ -1,4 +1,3 @@
-import { Icon } from '@xynotes/components';
 import type { Note } from '@xynotes/store';
 import { NoteStatus } from '@xynotes/typings';
 import { defineComponent, type PropType } from 'vue';
@@ -14,7 +13,7 @@ export default defineComponent({
     }
   },
   setup(props, context) {
-    const hide = () => {
+    const handleClose = () => {
       context.emit('close');
     };
 
@@ -22,19 +21,16 @@ export default defineComponent({
      * 保存
      */
     const handleClickSubmit = () => {
-      props.note.set({ tags: props.note.tags, status: NoteStatus.draft });
-      props.note.save(true);
-      hide();
+      props.note.update({ tags: props.note.tags, updatedAt: Date.now(), status: NoteStatus.draft });
+      handleClose();
     };
     return () => (
       <div class="note-tags-drawer">
         <div class="note-tags-drawer-header">
-          <span class="active" onClick={hide}>
+          <span class="active" onClick={handleClose}>
             取消
           </span>
-          <span class="title">
-            <Icon type="tags" size={24}></Icon>
-          </span>
+          <span class="title">添加标签</span>
           <span class="active" onClick={handleClickSubmit}>
             确定
           </span>
