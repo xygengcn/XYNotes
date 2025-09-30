@@ -1,8 +1,8 @@
 import { Api } from 'koa-api-plus';
 import { join } from 'path';
 import { logger } from './logger';
-import { KoaLogMiddleware } from './middleware/koa-middleware';
 import { CorsMiddleware } from './middleware/cors-middleware';
+import { KoaLogMiddleware } from './middleware/koa-middleware';
 import { ensureDir } from './utils';
 
 // 上传文件夹目录
@@ -14,7 +14,7 @@ ensureDir(uploadDir);
  */
 
 const api = new Api({
-  port: Number(process.env.NOTE_API_PORT || 30001),
+  port: Number(process.env.NOTE_API_PORT || 30000),
   baseUrl: join(__dirname, './controller'),
   responseOptions: {
     allowErrorStatusCode: true

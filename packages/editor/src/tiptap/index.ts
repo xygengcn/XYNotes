@@ -125,7 +125,7 @@ export function defineMarkdownEditor() {
 
    * @returns 
    */
-  const focus = () => editor.value?.commands.focus();
+  const focus = () => editor.value?.chain().focus(null, { scrollIntoView: true }).run();
 
   /**
    * 设置值

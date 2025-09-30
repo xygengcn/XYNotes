@@ -4,7 +4,7 @@ import Checkbox from './components/checkbox';
 import Confirm from './components/confirm';
 import { IContextMenuOptions, IContextMenuProps, VueContextMenu } from './components/contextmenu';
 import Dialog from './components/dialog';
-import Drawer from './components/drawer';
+import Drawer, { useDrawer } from './components/drawer';
 import Icon from './components/icon';
 import { imageViewer, Viewer } from './components/image-viewer';
 import Input from './components/input';
@@ -20,6 +20,7 @@ import Toast from './components/toast';
 export {
   Button,
   Card,
+  Checkbox,
   Confirm,
   Dialog,
   Drawer,
@@ -34,8 +35,8 @@ export {
   ShortcutInput,
   Switch,
   Toast,
+  useDrawer,
   Viewer,
-  Checkbox,
   VueContextMenu,
   type ButtonSize,
   type ButtonType,

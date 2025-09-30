@@ -1,4 +1,4 @@
-import { Drawer, Icon, Loading } from '@xynotes/components';
+import { Icon, Loading } from '@xynotes/components';
 import { EditorPerview, useEditorPreview } from '@xynotes/editor';
 import type { Note } from '@xynotes/store';
 import { screenshot, screenshotCopy } from '@xynotes/utils';
@@ -12,9 +12,7 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['close'],
-  setup(props, context) {
-    const visible = ref(true);
+  setup(props) {
     /**
      * 加载
      */
@@ -63,37 +61,23 @@ export default defineComponent({
         });
     };
 
-    /**
-     * 隐藏
-     */
-    const hide = () => {
-      if (visible.value) {
-        visible.value = false;
-        // 动画结束再关闭
-        setTimeout(() => {
-          context.emit('close');
-        }, 300);
-      }
-    };
     return () => (
-      <Drawer visible={visible.value} onClose={hide} immediate>
-        <div class="note-share-drawer">
-          <div class="note-share-drawer-header">
-            <Icon type="item-copy" size={20} onClick={handleClickCopyImage}></Icon>
-            <Icon type="item-preview" size={20} onClick={handleClickDownalodScreenshot}></Icon>
-          </div>
-          <div class="note-share-drawer-content">
-            <div class="note-share-drawer-content-preview">
-              <EditorPerview value={props.note.content || props.note.text || ''} />
-            </div>
-            {loading.value && (
-              <div class="note-share-drawer-content-loading">
-                <Loading text="加载中" />
-              </div>
-            )}
-          </div>
+      <div class="note-share-drawer">
+        <div class="note-share-drawer-header">
+          <Icon type="item-copy" size={20} onClick={handleClickCopyImage}></Icon>
+          <Icon type="item-preview" size={20} onClick={handleClickDownalodScreenshot}></Icon>
         </div>
-      </Drawer>
+        <div class="note-share-drawer-content">
+          <div class="note-share-drawer-content-preview">
+            <EditorPerview value={props.note.content || props.note.text || ''} />
+          </div>
+          {loading.value && (
+            <div class="note-share-drawer-content-loading">
+              <Loading text="加载中" />
+            </div>
+          )}
+        </div>
+      </div>
     );
   }
 });

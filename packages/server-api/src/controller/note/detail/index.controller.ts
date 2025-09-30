@@ -58,7 +58,7 @@ export default class NoteDetailController {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: 'title参数不对' });
     }
     // 校验text
-    if (!(isString(note.text) && note.text)) {
+    if (!isString(note.text)) {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: 'text参数不对' });
     }
     return notePrismaClient.noteTable
@@ -131,7 +131,7 @@ export default class NoteDetailController {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: 'title参数不对' });
     }
     // 校验text
-    if (!(isString(note.text) && note.text)) {
+    if (!isString(note.text)) {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: 'text参数不对' });
     }
 

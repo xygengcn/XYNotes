@@ -1,0 +1,17 @@
+.note-tags-drawer {
+  background: #fff;
+  border-radius: 20px;
+  padding: 0px 20px;
+  margin: 0px auto;
+  width: 100%;
+  // 解决ios下巴高度问题
+  margin-bottom: env(SAFE-AREA-INSET-BOTTOM, 20px);
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    padding: 10px 0px 20px 0px;
+    color: var(--mobile-icon-color);
+  }
+}

@@ -1,11 +1,14 @@
 import { useDrawer } from '@xynotes/components';
 import { defineAsyncComponent } from 'vue';
-import './index.scss';
 
-export function showMobileDetailSettingDrawer() {
+export function showNoteGalleryDrawer() {
+  console.log('[showNoteGalleryDrawer]');
   const { show } = useDrawer(
     defineAsyncComponent(() => import('./drawer')),
-    { id: 'mobile-detail-setting-drawer', drawerOptions: { height: '110px' } }
+    {
+      id: 'note-gallery-drawer',
+      drawerOptions: { height: '90vh' }
+    }
   );
   show();
 }

@@ -14,3 +14,25 @@
     -webkit-box-orient: vertical;
   }
 }
+
+/**
+ * 移动端样式
+ */
+@mixin mobileStyle() {
+  @at-root {
+    .mobile {
+      @content;
+    }
+  }
+}
+
+/**
+ * PC端样式
+ */
+@mixin desktopStyle() {
+  @at-root {
+    .desktop {
+      @content;
+    }
+  }
+}

@@ -1,8 +1,18 @@
+@import '@/styles/functions/index.scss';
 .note-editor {
   display: flex;
   flex-direction: column;
   height: 100%;
   z-index: 0;
+
+  @include mobileStyle() {
+    .note-editor {
+      overflow: auto;
+    }
+    .editor-content {
+      overflow: hidden;
+    }
+  }
 
   &-header {
     // 标题下线
@@ -13,10 +23,14 @@
 
   &-content {
     flex: 1;
-    overflow: hidden;
+    @include desktopStyle() {
+      .note-editor-content {
+        overflow: hidden;
+      }
+    }
   }
 
   &-footer {
-    height: 1em;
+    height: max-content;
   }
 }

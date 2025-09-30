@@ -1,59 +1,14 @@
-import { Drawer, Icon } from '@xynotes/components';
+import { useDrawer } from '@xynotes/components';
 import { Note } from '@xynotes/store';
-import { NoteStatus } from '@xynotes/typings';
-import { createApp, defineAsyncComponent, ref } from 'vue';
-import './index.scss';
+import { createApp, defineAsyncComponent } from 'vue';
 
-export function useNoteTags(note: Note) {
-  /**
-   * 是否显示抽屉
-   */
-  const visible = ref(false);
-
-  const show = () => {
-    visible.value = true;
-  };
-
-  const hide = () => {
-    visible.value = false;
-  };
-
-  /**
-   * 保存
-   */
-  const handleClickSubmit = () => {
-    note.set({ tags: note.tags, status: NoteStatus.draft });
-    note.save(true);
-    hide();
-  };
-
-  const view = () => {
-    const Component = defineAsyncComponent(() => import('./content'));
-    return (
-      <Drawer class="note-tags-drawer" visible={visible.value} onClose={hide}>
-        <div class="note-tags-drawer-wrapper">
-          <div class="note-tags-drawer-wrapper-header">
-            <span class="active" onClick={hide}>
-              取消
-            </span>
-            <span class="title">
-              <Icon type="tags" size={24}></Icon>
-            </span>
-            <span class="active" onClick={handleClickSubmit}>
-              确定
-            </span>
-          </div>
-          <Component note={note}></Component>
-        </div>
-      </Drawer>
-    );
-  };
-
-  return {
-    hide,
-    show,
-    view
-  };
+export function showNoteTagsDrawer(note: Note) {
+  console.log('[showNoteTagsDrawer]');
+  const { show } = useDrawer(
+    defineAsyncComponent(() => import('./drawer')),
+    { id: 'note-tags-drawer', contentProps: { note }, drawerOptions: { height: '60vh' } }
+  );
+  show();
 }
 
 export default function showNoteTagsDialog(note: Note) {

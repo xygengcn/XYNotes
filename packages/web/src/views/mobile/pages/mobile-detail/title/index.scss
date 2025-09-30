@@ -1,13 +1,15 @@
 .mobile-detail-title {
   position: relative;
   padding: var(--note-item-title-padding);
+  flex: 1;
+  overflow: hidden;
   .inputAutoSize {
     position: relative;
     &-content {
       &-inner {
         font-size: 1.2em;
         font-weight: 600;
-        padding-right: 2rem;
+        padding-right: 1em;
         caret-color: #f3bb41;
         height: 24px;
         overflow: hidden;
@@ -19,16 +21,6 @@
           overflow: auto;
           white-space: normal;
         }
-      }
-      &::after {
-        content: '标题';
-        position: absolute;
-        font-size: 0.7em;
-        font-weight: normal;
-        color: rgba(88, 96, 105, 0.36);
-        background-color: #fff;
-        right: 0px;
-        top: 0;
       }
     }
   }

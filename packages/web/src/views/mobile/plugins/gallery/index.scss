@@ -1,7 +1,6 @@
-.mobile-detail-gallery {
+.note-gallery-drawer {
   width: 100%;
   min-height: 100px;
-  height: 80vh;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -9,13 +8,6 @@
   --app-bg-color: #f5f5f5;
   background-color: var(--app-bg-color);
   overflow: hidden;
-
-  &-drawer {
-    .drawer-content {
-      height: 80vh;
-      max-height: 80vh;
-    }
-  }
 
   &-header {
     display: flex;

@@ -1,10 +1,17 @@
+@import '@/styles/functions/index.scss';
 .note-editor-counter {
   font-size: 12px;
   color: var(--font-default-color);
-  height: var(--editor-counter-height);
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include mobileStyle() {
+    .note-editor-counter {
+      height: 20px;
+    }
+  }
 
   // 字数
   &-count {

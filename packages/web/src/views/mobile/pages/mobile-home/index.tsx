@@ -1,16 +1,14 @@
 import NoteItem from '@/components/note-item';
-import { useMobileSystemSetting } from '@/views/mobile/plugins/system-setting';
+import { showMobileHomeMoreDrawer } from '@/views/mobile/plugins/more';
 import { Icon, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
-import { isCheckOnlineSync } from '@xynotes/store/configs';
 import {
   addNote,
   noteListCount,
   notesListBySort,
   notesStoreState,
   searchNoteList,
-  setActiveNoteId,
-  syncNote
+  setActiveNoteId
 } from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
 import { defineComponent, onBeforeMount, ref } from 'vue';
@@ -28,11 +26,6 @@ const MobileHome = defineComponent({
      * 列表数据ref
      */
     const swipeListRef = ref<InstanceType<typeof SwipeList> | null>(null);
-
-    /**
-     * 抽屉
-     */
-    const { showMobileSystemSettingView, MobileSystemSettingView } = useMobileSystemSetting();
 
     /**
      * 搜索
@@ -78,6 +71,17 @@ const MobileHome = defineComponent({
       });
     };
 
+    /**
+     * 更多
+     */
+    const handleClickMore = () => {
+      showMobileHomeMoreDrawer({
+        onSetting: () => {
+          router.push('/m/setting');
+        }
+      });
+    };
+
     onBeforeMount(() => {
       setActiveNoteId('');
     });
@@ -93,13 +97,8 @@ const MobileHome = defineComponent({
               value={notesStoreState.value.searchKeyword}
             />
           </div>
-          <div
-            class="mobile-home-header-more"
-            onClick={() => {
-              showMobileSystemSettingView();
-            }}
-          >
-            <Icon type="mobile-more" size="2em"></Icon>
+          <div class="mobile-home-header-add" onClick={handleClickAdd}>
+            <Icon type="create" size="24px"></Icon>
           </div>
         </div>
         <div class="mobile-home-content">
@@ -122,18 +121,18 @@ const MobileHome = defineComponent({
                     ></NoteItem>
                   );
                 },
-                right: (props) => {
+                right: (props: { item: Note }) => {
                   return (
                     <div class="mobile-home-content-list-scroll-right">
-                      <div
-                        class="mobile-home-content-list-scroll-right-sync"
-                        v-show={isCheckOnlineSync()}
+                      {/* <div
+                        class="mobile-home-content-list-scroll-right-tags"
                         onClick={() => {
-                          syncNote(props.item);
+                          syncNote(props.item.toRaw());
+                          swipeListRef.value?.closeActions();
                         }}
                       >
-                        <Icon type="sync"> </Icon>
-                      </div>
+                        <Icon type="tags"> </Icon>
+                      </div> */}
                       <div
                         class="mobile-home-content-list-scroll-right-delete"
                         onClick={() => {
@@ -154,19 +153,18 @@ const MobileHome = defineComponent({
           >
             <Icon type="list-empty" size={100}></Icon>
             <div class="mobile-home-content-blank-text">
-              点击下方<Icon type="create" size="1em"></Icon>创建你的第一个笔记吧!
+              点击右上方<Icon type="create" size="1em"></Icon>创建你的第一个笔记吧!
             </div>
           </div>
         </div>
         <div class="mobile-home-footer">
           <div class="mobile-home-footer-content">
             <span>{noteListCount.value}个笔记</span>
-            <span class="mobile-home-footer-content-add" onClick={handleClickAdd}>
-              <Icon type="create" size="20px"></Icon>
+            <span class="mobile-home-footer-content-more" onClick={handleClickMore}>
+              <Icon type="mobile-more" size="2em"></Icon>
             </span>
           </div>
         </div>
-        <MobileSystemSettingView></MobileSystemSettingView>
       </div>
     );
   }

@@ -1,0 +1,52 @@
+// 抽屉
+.mobile-home-more-drawer {
+  width: 100%;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f6f6;
+  &-header {
+    background-color: #fff;
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  &-content {
+    margin: 15px 15px 20px;
+    flex: 1;
+    border-radius: 8px;
+    font-size: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    &-item {
+      background-color: #fff;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      &-left {
+        flex: 1;
+      }
+      & + & {
+        border-top: var(--border-default-size) solid var(--border-default-color);
+      }
+
+      .error {
+        color: var(--theme-error-color);
+      }
+    }
+  }
+
+  &-footer {
+    background-color: #f6f6f6;
+    text-align: center;
+    height: 40px;
+    padding-bottom: 15px;
+    a {
+      text-decoration: none;
+      outline: none;
+      font-size: 10px;
+      color: var(--theme-light-color);
+    }
+  }
+}
