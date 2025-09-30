@@ -98,7 +98,7 @@ export const setNoteList = (list: INote[]) => {
       // 如果在线的在后面，同步时间
       if (note.onlineSyncAt) {
         const originNote = state.value.noteList.get(note.nid);
-        originNote?.update({ onlineSyncAt: note.onlineSyncAt });
+        originNote?.assign({ onlineSyncAt: note.onlineSyncAt });
       }
     } else {
       state.value.noteList.push(new Note(note));
@@ -113,7 +113,7 @@ export const updateNote = (note: INote) => {
   console.log('[store] update:action', note.nid);
   const originNote = state.value.noteList.find((n) => note.nid === n.nid);
   if (originNote) {
-    originNote.update(note);
+    originNote.assign(note);
   } else {
     const newNote = new Note(note);
     state.value.noteList.unshift(newNote);
@@ -134,8 +134,8 @@ export const addNote = (detail?: INote) => {
  * @param note
  * @returns
  */
-export const saveNote = async (note: INote, onlineSyncAt: boolean) => {
-  const result = await ApiEvent.api.apiSaveOrUpdateNote(note, !!onlineSyncAt);
+export const saveNote = async (note: Partial<INote>, onlineSyncAt: boolean) => {
+  const result = await ApiEvent.api.apiSaveOrUpdateNote(note as INote, !!onlineSyncAt);
   if (result) {
     /**
      * 通知事件

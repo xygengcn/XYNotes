@@ -1,4 +1,5 @@
 import NoteItem from '@/components/note-item';
+import { showNoteTagsDrawer } from '@/components/note-tags';
 import { showMobileHomeMoreDrawer } from '@/views/mobile/plugins/more';
 import { Icon, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
@@ -124,15 +125,15 @@ const MobileHome = defineComponent({
                 right: (props: { item: Note }) => {
                   return (
                     <div class="mobile-home-content-list-scroll-right">
-                      {/* <div
+                      <div
                         class="mobile-home-content-list-scroll-right-tags"
                         onClick={() => {
-                          syncNote(props.item.toRaw());
+                          showNoteTagsDrawer(props.item);
                           swipeListRef.value?.closeActions();
                         }}
                       >
                         <Icon type="tags"> </Icon>
-                      </div> */}
+                      </div>
                       <div
                         class="mobile-home-content-list-scroll-right-delete"
                         onClick={() => {
