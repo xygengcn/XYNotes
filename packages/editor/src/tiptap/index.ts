@@ -20,6 +20,7 @@ export interface MarkdownEditorInstance {
   onFocus: (cb: (editor: Editor) => void) => void;
   onUpload: (cb: (file: FileList, e: Event, editor: Editor) => void) => void;
   getMarkdown: () => string | undefined;
+  getSelectedText: () => string;
   insertContent: (value: string) => ReturnType<Editor['commands']['insertContent']> | undefined;
   setCodeBlock: (language: string, code: string) => void;
   setEditable: (value: boolean) => ReturnType<Editor['setEditable']> | undefined;
@@ -63,6 +64,13 @@ export function defineMarkdownEditor() {
   const getMarkdown = () => {
     // @ts-ignore
     return editor.value?.storage.markdown.getMarkdown();
+  };
+
+  // 获取当前选中的文本
+  const getSelectedText = () => {
+    const { from, to } = editor.value.state.selection;
+    const selectedText = editor.value.state.doc.textBetween(from, to, ' ');
+    return selectedText;
   };
 
   /**
@@ -262,6 +270,7 @@ export function defineMarkdownEditor() {
       onUpload,
       getContent,
       setImage,
+      getSelectedText,
       focus
     };
   };

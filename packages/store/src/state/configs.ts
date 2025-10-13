@@ -57,11 +57,11 @@ export const syncConfigs = async () => {
     console.log('[sync] configs', configList);
     const configs = configList.reduce((obj, i) => {
       // 生产配置,不允许存储REMOTE_AUTHORIZATION
-      if (__VITE_APP_ENV__ !== 'development' && i.key === 'REMOTE_AUTHORIZATION') {
+      if (__VITE_APP_ENV__ === 'production' && i.key === 'REMOTE_AUTHORIZATION') {
         return obj;
       }
       // 生产配置,不允许存储REMOTE_BASE_URL
-      if (__VITE_APP_ENV__ !== 'development' && i.key === 'REMOTE_BASE_URL') {
+      if (__VITE_APP_ENV__ === 'production' && i.key === 'REMOTE_BASE_URL') {
         if (state.value.REMOTE_BASE_URL) {
           return obj;
         }

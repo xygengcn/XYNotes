@@ -64,7 +64,7 @@ export default defineComponent({
     return () => (
       <div class="note-share-drawer">
         <div class="note-share-drawer-header">
-          <Icon type="item-copy" size={20} onClick={handleClickCopyImage}></Icon>
+          <Icon type="copy" size={20} onClick={handleClickCopyImage}></Icon>
           <Icon type="item-preview" size={20} onClick={handleClickDownalodScreenshot}></Icon>
         </div>
         <div class="note-share-drawer-content">

@@ -16,7 +16,7 @@ const DesktopMainContainerArchiveRight = defineComponent({
     const menuList = [
       {
         title: '复制',
-        icon: 'item-copy',
+        icon: 'copy',
         visible: true,
         action: (note: Note) => {
           if (note.text) {

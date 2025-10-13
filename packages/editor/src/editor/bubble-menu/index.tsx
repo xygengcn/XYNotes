@@ -4,7 +4,8 @@ import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useEditor } from '..';
 import './index.scss';
 // import './heading/index.scss';
-import { Icon } from '@xynotes/components';
+import { Icon, Toast } from '@xynotes/components';
+import { copyText, readText } from '@xynotes/utils';
 import { useBubbleMenuColor } from './color';
 import { useBubbleMenuHeading } from './heading';
 
@@ -13,7 +14,7 @@ export const EditorBubbleMenu = defineComponent({
   setup(props) {
     const root = ref<HTMLElement | null>(null);
     const key = new PluginKey('editor-menu');
-    const { editor } = useEditor();
+    const { editor, getSelectedText, insertContent } = useEditor();
 
     // 菜单激活状态
     const bubbleMenuActiveNode = ref({
@@ -96,7 +97,7 @@ export const EditorBubbleMenu = defineComponent({
             editor.value.chain().focus().toggleStrike().run();
           }}
         >
-          <Icon type="through" size="20px"></Icon>
+          <Icon type="through" size="19px"></Icon>
         </span>
         <span
           class={{ active: bubbleMenuActiveNode.value.highlight }}
@@ -117,6 +118,26 @@ export const EditorBubbleMenu = defineComponent({
           }}
         >
           <Icon type="todo"></Icon>
+        </span>
+        <span
+          onClick={() => {
+            // 复制选中的文本
+            const text = getSelectedText() || '';
+            copyText(text);
+            Toast('复制成功');
+          }}
+        >
+          <Icon type="copy"></Icon>
+        </span>
+        <span
+          onClick={async () => {
+            const text = await readText();
+            if (text) {
+              insertContent(text);
+            }
+          }}
+        >
+          <Icon type="paste"></Icon>
         </span>
       </div>
     );

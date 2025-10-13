@@ -37,6 +37,7 @@ export const useBubbleMenuHeading = (el: Ref<HTMLElement>) => {
   useTippy(el, {
     content: BubbleMenuHeading,
     theme: 'light',
+    appendTo: document.body,
     interactive: true,
     trigger: is.desktop() ? 'mouseenter focus' : 'click',
     placement: 'top',
