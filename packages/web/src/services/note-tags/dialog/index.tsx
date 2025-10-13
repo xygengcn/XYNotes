@@ -12,7 +12,7 @@ const NoteTagsDialogCompnent = defineComponent({
     }
   },
   setup(props, context) {
-    const note = ref<Note>();
+    const note = ref<Note>(props.note);
 
     // 获取最新的笔记数据
     ApiEvent.api.apiFetchNoteDetailData(props.note.nid).then((data) => {
