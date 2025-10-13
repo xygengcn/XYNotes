@@ -61,6 +61,11 @@ export default class NoteDetailController {
     if (!isString(note.text)) {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: 'text参数不对' });
     }
+
+    // 校验content
+    if (!note?.content) {
+      return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: 'content参数不对' });
+    }
     return notePrismaClient.noteTable
       .upsert({
         create: {
