@@ -1,6 +1,6 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
-import showNoteTagsDialog from '@/components/note-tags';
+import showNoteTagsDialog from '@/services/note-tags';
 import { createWindow } from '@xynotes/app-api';
 import { Note } from '@xynotes/store';
 import { copyText } from '@xynotes/utils';
