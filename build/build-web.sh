@@ -36,12 +36,27 @@ if [ ! -d $productDir ]; then
     # 如果不存在，则创建 build 文件夹
     mkdir -p $productDir
 else
-    # rm -rf $productDir
+    rm -rf $productDir
     mkdir -p $productDir
 fi
 
 # 打包web应用
-pnpm --stream -r build
+echo "开始打包依赖..."
+pnpm --stream -r --filter=!@xynotes/web  build
+echo "打包依赖结束"
+
+# 打包应用
+if [[ $production == "yes" ]]; then
+    echo "打包生产web程序..."
+    cd $process_directory/packages/web
+    pnpm build
+else
+    echo "打包测试web程序..."
+    cd $process_directory/packages/web
+    pnpm build:sit
+fi
+
+echo "打包web程序结束"
 
 # 判断是否正确打包
 if [ $? -ne 0 ]; then
