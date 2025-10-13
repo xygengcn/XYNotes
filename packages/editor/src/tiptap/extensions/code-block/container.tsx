@@ -71,7 +71,7 @@ const CodeBlockContainer = defineComponent({
           </div>
           <div class="markdown-editor-codeblock-header-opts">
             <span>
-              <Icon type="item-copy" onClick={this.handleCopy}></Icon>
+              <Icon type="copy" onClick={this.handleCopy}></Icon>
             </span>
           </div>
         </div>

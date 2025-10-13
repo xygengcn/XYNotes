@@ -35,7 +35,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
       },
       {
         title: '复制',
-        icon: 'item-copy',
+        icon: 'copy',
         visible: true,
         action: (note: Note) => {
           if (note.text) {

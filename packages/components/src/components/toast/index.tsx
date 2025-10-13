@@ -15,7 +15,7 @@ const ToastComponent = defineComponent({
   }
 });
 
-function Toast(text: string): void {
+function Toast(text: string, options?: { delay: number }): void {
   const el = document.createElement('div');
   document.body.appendChild(el);
   const app = createApp(ToastComponent, {
@@ -25,7 +25,7 @@ function Toast(text: string): void {
   setTimeout(() => {
     app.unmount();
     document.body.removeChild(el);
-  }, 3000);
+  }, options?.delay || 3000);
 }
 
 export default Toast;
