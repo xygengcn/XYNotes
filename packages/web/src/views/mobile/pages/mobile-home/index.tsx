@@ -1,5 +1,5 @@
 import NoteItem from '@/components/note-item';
-import { showNoteTagsDrawer } from '@/components/note-tags';
+import { showNoteTagsDrawer } from '@/services/note-tags';
 import { showMobileHomeMoreDrawer } from '@/views/mobile/plugins/more';
 import { Icon, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';

@@ -1,4 +1,4 @@
-import { showNoteTagsDrawer } from '@/components/note-tags';
+import { showNoteTagsDrawer } from '@/services/note-tags';
 import { UploadService } from '@/services/upload';
 import { Icon } from '@xynotes/components';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
