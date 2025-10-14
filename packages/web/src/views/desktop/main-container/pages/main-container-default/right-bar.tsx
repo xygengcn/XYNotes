@@ -27,7 +27,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
       },
       {
         title: '预览',
-        icon: 'item-preview',
+        icon: 'image-preview',
         visible: true,
         action: (note: Note) => {
           note && showShareNoteDialog(note);
@@ -46,7 +46,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
       },
       {
         title: 'JSON下载',
-        icon: 'item-json-download',
+        icon: 'json-download',
         visible: true,
         action: (note: Note) => {
           if (note) {
@@ -56,7 +56,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
       },
       {
         title: 'Markdown下载',
-        icon: 'item-markdown',
+        icon: 'markdown',
         visible: true,
         action: (note: Note) => {
           if (note) {
@@ -66,7 +66,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
       },
       {
         title: '分屏',
-        icon: 'item-splitscreen',
+        icon: 'splitscreen',
         visible: true,
         action: (note: Note) => {
           if (note) {
@@ -86,7 +86,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
       },
       {
         title: '归档',
-        icon: 'item-delete',
+        icon: 'trash',
         visible: true,
         action: (note: Note) => {
           if (note) {

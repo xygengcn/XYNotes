@@ -48,7 +48,7 @@ export default defineComponent({
       <div class="mobile-detail-setting-drawer">
         <div class="mobile-detail-setting-drawer-item">
           <span class="mobile-detail-setting-drawer-item-icon">
-            <Icon type="item-delete" size={24} onClick={handleClickDelete}></Icon>
+            <Icon type="trash" size={24} onClick={handleClickDelete}></Icon>
           </span>
           <span class="mobile-detail-setting-drawer-item-text">删除</span>
         </div>
@@ -66,7 +66,7 @@ export default defineComponent({
         </div>
         <div class="mobile-detail-setting-drawer-item">
           <span class="mobile-detail-setting-drawer-item-icon">
-            <Icon type="item-markdown" size={24} onClick={handleClickDownload}></Icon>
+            <Icon type="markdown" size={24} onClick={handleClickDownload}></Icon>
           </span>
           <span class="mobile-detail-setting-drawer-item-text">下载</span>
         </div>

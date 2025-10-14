@@ -27,7 +27,7 @@ const DesktopMainContainerArchiveRight = defineComponent({
       },
       {
         title: 'JSON下载',
-        icon: 'item-json-download',
+        icon: 'json-download',
         visible: true,
         action: (note: Note) => {
           if (note) {
@@ -37,7 +37,7 @@ const DesktopMainContainerArchiveRight = defineComponent({
       },
       {
         title: 'Markdown下载',
-        icon: 'item-markdown',
+        icon: 'markdown',
         visible: true,
         action: (note: Note) => {
           if (note) {
@@ -48,7 +48,7 @@ const DesktopMainContainerArchiveRight = defineComponent({
 
       {
         title: '移除',
-        icon: 'item-delete',
+        icon: 'trash',
         visible: true,
         action: (note: Note) => {
           if (note) {

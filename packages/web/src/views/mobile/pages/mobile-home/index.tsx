@@ -140,7 +140,7 @@ const MobileHome = defineComponent({
                           handleDeleteNote(props.item);
                         }}
                       >
-                        <Icon type="item-delete"> </Icon>
+                        <Icon type="trash"> </Icon>
                       </div>
                     </div>
                   );
