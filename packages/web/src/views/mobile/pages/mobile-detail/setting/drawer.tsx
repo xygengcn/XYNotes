@@ -54,7 +54,7 @@ export default defineComponent({
         </div>
         <div class="mobile-detail-setting-drawer-item">
           <span class="mobile-detail-setting-drawer-item-icon">
-            <Icon type="item-share" size={24} onClick={handleClickShare}></Icon>
+            <Icon type="share" size={24} onClick={handleClickShare}></Icon>
           </span>
           <span class="mobile-detail-setting-drawer-item-text">分享</span>
         </div>

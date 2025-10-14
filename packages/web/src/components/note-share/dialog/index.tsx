@@ -99,7 +99,7 @@ export default defineComponent({
                     {{
                       default: () => (
                         <span class="note-share-title-right-icon">
-                          <Icon type="item-share"></Icon>
+                          <Icon type="share"></Icon>
                         </span>
                       ),
                       popover: () => (
