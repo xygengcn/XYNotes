@@ -4,6 +4,7 @@ import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useEditor } from '..';
 import './index.scss';
 // import './heading/index.scss';
+import { isTextSelection } from '@tiptap/core';
 import { Icon, Toast } from '@xynotes/components';
 import { copyText, readText } from '@xynotes/utils';
 import { useBubbleMenuColor } from './color';
@@ -45,13 +46,19 @@ export const EditorBubbleMenu = defineComponent({
           editor: editor.value,
           tippyOptions: { duration: 100, theme: 'light' },
           updateDelay: 300,
-          shouldShow({ from, to, editor }) {
-            // 没有选区
-            if (from === to) {
+          shouldShow({ from, to, editor, state }) {
+            const { doc, selection } = state;
+            const { empty } = selection;
+            // Sometime check for `empty` is not enough.
+            // Doubleclick an empty paragraph returns a node size of 2.
+            // So we check also for an empty text size.
+            const isEmptyTextBlock = !doc.textBetween(from, to).length && isTextSelection(state.selection);
+            if (isEmptyTextBlock || empty) {
               return false;
             }
+
             // 代码块屏蔽
-            if (editor.isActive('codeBlock') || editor.isActive('image')) {
+            if (editor.isActive('codeBlock') || editor.isActive('image') || editor.isActive('table')) {
               return false;
             }
             bubbleMenuActiveNode.value.bold = editor.isActive('bold');

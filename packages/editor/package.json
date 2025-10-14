@@ -31,7 +31,7 @@
     "@tiptap/extension-list": "^3.4.2",
     "@tiptap/extension-paragraph": "^2.4.0",
     "@tiptap/extension-strike": "^2.4.0",
-    "@tiptap/extension-table": "^3.4.2",
+    "@tiptap/extension-table": "^3.6.6",
     "@tiptap/extension-text": "^2.4.0",
     "@tiptap/extension-text-style": "^3.4.2",
     "@tiptap/extensions": "^3.4.2",

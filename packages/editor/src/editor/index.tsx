@@ -3,6 +3,7 @@ import { Loading } from '@xynotes/components';
 import { defineComponent, nextTick, watch } from 'vue';
 import { EditorBubbleMenu } from './bubble-menu';
 import './index.scss';
+import { EditorTableMenu } from './table-menu';
 
 export const useEditor: (options?: { defaultValue: string; editable?: boolean }) => MarkdownEditorInstance =
   defineMarkdownEditor();
@@ -42,6 +43,7 @@ export const Editor = defineComponent({
       <div class={{ editor: true, test: editor.value?.isActive('bold') }} data-id={props.id} data-nodrag>
         <div class="editor-content" ref="editor" spellcheck="false" />
         {editor.value && <EditorBubbleMenu editor={editor.value} />}
+        {editor.value && <EditorTableMenu editor={editor.value}></EditorTableMenu>}
         {(props.loading || loading.value) && (
           <div class="editor-loading">
             <Loading text="加载中" />

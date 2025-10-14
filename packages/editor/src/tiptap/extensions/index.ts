@@ -1,9 +1,5 @@
 import Document from '@tiptap/extension-document';
 import HistoryExtension from '@tiptap/extension-history';
-import { Table } from '@tiptap/extension-table';
-import { TableCell } from '@tiptap/extension-table/cell';
-import { TableHeader } from '@tiptap/extension-table/header';
-import { TableRow } from '@tiptap/extension-table/row';
 import Text from '@tiptap/extension-text';
 import { Color, TextStyle } from '@tiptap/extension-text-style';
 import { Focus, Placeholder } from '@tiptap/extensions';
@@ -22,6 +18,7 @@ import LinkExtension from './link';
 import ParagraphExtension from './paragraph';
 import PasteExtension from './paste-event';
 import StrikeExtension from './strike';
+import { TableExtension } from './table';
 import { TaskItemExtension, TaskListExtension } from './task-list';
 
 /**
@@ -34,17 +31,10 @@ export const CommonExtension = () => [
   HistoryExtension,
   Document,
   LinkExtension,
-  TableRow,
-  TableHeader,
-  TableCell,
-  Table.configure({
-    HTMLAttributes: {
-      class: 'markdown-editor-table'
-    }
-  }),
+  TableExtension,
   Markdown.configure({
     breaks: true,
-    transformPastedText: true
+    transformPastedText: false
     // transformCopiedText: true // 会影响复制的内容
   }),
 
