@@ -1,4 +1,5 @@
 import NoteItem from '@/components/note-item';
+import showNoteTagsDialog from '@/services/note-tags';
 import { createWindow, exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
 import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
@@ -24,6 +25,9 @@ const DesktopSideContainerListContent = defineComponent({
             break;
           case 'split':
             createWindow({ nid: note.nid });
+            break;
+          case 'tags':
+            showNoteTagsDialog(note);
             break;
           case 'archive':
             window.$ui.confirm({
@@ -63,6 +67,7 @@ const DesktopSideContainerListContent = defineComponent({
           v-contextmenu={{
             menuList: [
               { label: '同步', value: 'sync' },
+              { label: '标签', value: 'tags' },
               { label: '分屏', value: 'split', visible: is.app() },
               { label: '归档', value: 'archive' }
             ],
