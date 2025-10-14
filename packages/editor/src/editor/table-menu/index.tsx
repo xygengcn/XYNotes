@@ -58,35 +58,50 @@ export const EditorTableMenu = defineComponent({
             props.editor.chain().focus().deleteTable().run();
           }}
         >
-          <Icon type="trash" size={18}></Icon>
+          <Icon type="trash" size={20}></Icon>
         </span>
         <span
           onClick={() => {
             props.editor.chain().focus().addRowBefore().run();
           }}
         >
-          <Icon type="table-row-before" size={18}></Icon>
+          <Icon type="table-row-before" size={20}></Icon>
         </span>
         <span
           onClick={() => {
             props.editor.chain().focus().addRowAfter().run();
           }}
         >
-          <Icon type="table-row-after" size={18}></Icon>
+          <Icon type="table-row-after" size={20}></Icon>
         </span>
+        <span
+          onClick={() => {
+            props.editor.chain().focus().deleteRow().run();
+          }}
+        >
+          <Icon type="table-row-del" size={20}></Icon>
+        </span>
+
         <span
           onClick={() => {
             props.editor.chain().focus().addColumnBefore().run();
           }}
         >
-          <Icon type="table-col-before" size={18}></Icon>
+          <Icon type="table-col-before" size={20}></Icon>
         </span>
         <span
           onClick={() => {
             props.editor.chain().focus().addColumnAfter().run();
           }}
         >
-          <Icon type="table-col-after" size={18}></Icon>
+          <Icon type="table-col-after" size={20}></Icon>
+        </span>
+        <span
+          onClick={() => {
+            props.editor.chain().focus().deleteColumn().run();
+          }}
+        >
+          <Icon type="table-col-del" size={20}></Icon>
         </span>
       </div>
     );
