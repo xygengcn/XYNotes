@@ -52,8 +52,8 @@ const DesktopMainContainerDefaultRight = defineComponent({
         }
       },
       {
-        title: '预览',
-        icon: 'image-preview',
+        title: '分享',
+        icon: 'share',
         visible: true,
         action: (note: Note) => {
           note && showShareNoteDialog(note);
