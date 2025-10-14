@@ -33,27 +33,9 @@
     outline: none;
     min-height: 100%;
     caret-color: var(--markdown-editor-theme-color);
-  }
-
-  // 表格
-  &-table {
-    margin: 0.2em 0px;
-    border-collapse: collapse;
-    box-sizing: border-box;
-    border-radius: 4px;
-    width: 100%;
-
-    tr {
-      position: relative;
-      border: 1px solid var(--markdown-editor-gray-color);
-    }
-
-    th,
-    td {
-      position: relative;
-      min-width: 50px;
-      padding: 0.25em 0.5em;
-      border: 1px solid var(--markdown-editor-gray-color);
+    &.resize-cursor {
+      cursor: ew-resize;
+      cursor: col-resize;
     }
   }
 

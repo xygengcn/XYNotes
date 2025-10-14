@@ -1,7 +1,9 @@
 import IconNavMenu from '@/components/icon-nav-menu';
 import showShareNoteDialog from '@/components/note-share';
 import showNoteTagsDialog from '@/services/note-tags';
+import { UploadService } from '@/services/upload';
 import { createWindow } from '@xynotes/app-api';
+import { useEditor } from '@xynotes/editor';
 import { Note } from '@xynotes/store';
 import { copyText } from '@xynotes/utils';
 import { type PropType, defineComponent } from 'vue';
@@ -16,6 +18,7 @@ const DesktopMainContainerDefaultRight = defineComponent({
     }
   },
   setup(props) {
+    const { setTable, setImage } = useEditor();
     const menuList = [
       {
         title: '标签',
@@ -23,6 +26,29 @@ const DesktopMainContainerDefaultRight = defineComponent({
         visible: true,
         action: (note: Note) => {
           note && showNoteTagsDialog(note);
+        }
+      },
+      {
+        title: '图片',
+        icon: 'photo',
+        visible: true,
+        action: () => {
+          UploadService.select({ accept: 'image/*' }).then((files) => {
+            UploadService.upload(files, (file) => {
+              setImage({
+                src: file.originUrl,
+                alt: file.name
+              });
+            });
+          });
+        }
+      },
+      {
+        title: '表格',
+        icon: 'table',
+        visible: true,
+        action: () => {
+          setTable();
         }
       },
       {

@@ -1,0 +1,30 @@
+.editor-table-menu {
+  background-color: #ffffff;
+  border: 1px solid #fdfdfd;
+  border-radius: 6px;
+  box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.2);
+  padding: 4px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  > span {
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    transition: all 0.3s;
+    border-radius: 4px;
+    height: 22px;
+    line-height: 22px;
+    color: #454545;
+
+    &:hover {
+      color: #f3bb41;
+      background-color: #f5f5f5;
+    }
+
+    &.active {
+      color: #f3bb41;
+    }
+  }
+}

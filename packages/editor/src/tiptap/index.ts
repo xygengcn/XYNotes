@@ -23,6 +23,7 @@ export interface MarkdownEditorInstance {
   getSelectedText: () => string;
   insertContent: (value: string) => ReturnType<Editor['commands']['insertContent']> | undefined;
   setCodeBlock: (language: string, code: string) => void;
+  setTable: (rows?: number, cols?: number) => void;
   setEditable: (value: boolean) => ReturnType<Editor['setEditable']> | undefined;
   setContent: (content: Content) => boolean | undefined;
   getCounter: () => { characters: number; words: number };
@@ -116,6 +117,24 @@ export function defineMarkdownEditor() {
    */
   const setImage = (options: { src: string; alt?: string; title?: string }) => {
     return editor.value?.commands.insertImage(options);
+  };
+
+  /**
+   * 插入表格
+   */
+  const setTable = () => {
+    const { state } = editor.value;
+    const pos = state.selection.from;
+    return (
+      editor.value
+        .chain()
+        .focus()
+        .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+        // 44是3x3的表格计算的
+        .insertContentAt(pos - 1 + 44, { type: 'paragraph' })
+        .focus(pos + 1)
+        .run()
+    );
   };
 
   /**
@@ -263,6 +282,7 @@ export function defineMarkdownEditor() {
       getMarkdown,
       insertContent,
       setCodeBlock,
+      setTable,
       setEditable,
       setContent,
       getCounter,

@@ -1,4 +1,3 @@
-import { showNoteTagsDrawer } from '@/services/note-tags';
 import { UploadService } from '@/services/upload';
 import { Icon } from '@xynotes/components';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
@@ -16,8 +15,8 @@ export const MobileDetailTools = defineComponent({
       required: true
     }
   },
-  setup(props) {
-    const { editorFocus, setImage, editor, setCodeBlock } = useEditor() as MarkdownEditorInstance;
+  setup() {
+    const { editorFocus, setImage, editor, setCodeBlock, setTable } = useEditor() as MarkdownEditorInstance;
 
     /**
      * 选择图片文件
@@ -43,10 +42,10 @@ export const MobileDetailTools = defineComponent({
     };
 
     /**
-     * 添加标签
+     * 添加表格
      */
-    const handleClickAddTag = () => {
-      showNoteTagsDrawer(props.note);
+    const handleClickAddTable = () => {
+      setTable();
     };
 
     /**
@@ -70,8 +69,8 @@ export const MobileDetailTools = defineComponent({
         <div class="mobile-detail-tools-item" onClick={handleClickCreateMindMap}>
           <Icon type="mind" size={24}></Icon>
         </div>
-        <div class="mobile-detail-tools-item" onClick={handleClickAddTag}>
-          <Icon type="tags" size={24}></Icon>
+        <div class="mobile-detail-tools-item" onClick={handleClickAddTable}>
+          <Icon type="table" size={24}></Icon>
         </div>
       </div>
     );
