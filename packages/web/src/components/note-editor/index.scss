@@ -28,6 +28,11 @@
         overflow: hidden;
       }
     }
+    @include mobileStyle() {
+      .note-editor-content {
+        padding-bottom: 60px;
+      }
+    }
   }
 
   &-footer {
