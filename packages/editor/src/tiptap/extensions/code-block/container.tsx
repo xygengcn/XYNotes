@@ -13,7 +13,7 @@ const CodeBlockContainer = defineComponent({
       default: true
     }
   },
-  emits: ['change', 'maximize', 'minimize'],
+  emits: ['change', 'maximize', 'minimize', 'close'],
   setup(_, { emit }) {
     const code = inject<Ref<string>>('code');
     const handleInputChange = (e) => {
@@ -34,12 +34,17 @@ const CodeBlockContainer = defineComponent({
       emit('minimize');
     };
 
+    const handleClickClose = () => {
+      emit('close');
+    };
+
     return {
       code,
       handleInputChange,
       handleClickMinimize,
       handleClickMaximize,
-      handleCopy
+      handleCopy,
+      handleClickClose
     };
   },
   render() {
@@ -47,7 +52,7 @@ const CodeBlockContainer = defineComponent({
       <>
         <div class="markdown-editor-codeblock-header" contenteditable="false">
           <div class="markdown-editor-codeblock-header-icon">
-            <i onClick={this.handleClickMinimize}></i>
+            <i onClick={this.handleClickClose}></i>
             <i></i>
             <i onclick={this.handleClickMaximize}></i>
           </div>
