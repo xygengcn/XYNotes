@@ -9,7 +9,7 @@ export default defineComponent({
   name: 'App',
   setup() {
     // 文本
-    const text = ref('');
+    const text = ref(__MARKDOWN__);
     // 输入文本
     const inputText = ref('');
 

@@ -98,6 +98,19 @@ export const EditorTableMenu = defineComponent({
         </span>
         <span
           onClick={() => {
+            const editor = props.editor;
+            const parentNode = findParentNode((node) => node.type.name === 'table')(props.editor.state.selection);
+            editor
+              .chain()
+              .insertContentAt(parentNode.node.nodeSize + parentNode.start - 1, { type: 'paragraph' })
+              .focus()
+              .run();
+          }}
+        >
+          <Icon type="table-break" size={20}></Icon>
+        </span>
+        <span
+          onClick={() => {
             props.editor.chain().focus().deleteTable().run();
           }}
         >
