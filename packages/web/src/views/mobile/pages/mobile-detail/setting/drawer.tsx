@@ -1,5 +1,5 @@
-import { showNoteShareDrawer } from '@/components/note-share';
 import router from '@/router';
+import { showNoteShareDrawer } from '@/services/note-share';
 import { Icon } from '@xynotes/components';
 import { activeNote } from '@xynotes/store/note';
 import { defineComponent } from 'vue';
@@ -48,12 +48,6 @@ export default defineComponent({
       <div class="mobile-detail-setting-drawer">
         <div class="mobile-detail-setting-drawer-item">
           <span class="mobile-detail-setting-drawer-item-icon">
-            <Icon type="trash" size={24} onClick={handleClickDelete}></Icon>
-          </span>
-          <span class="mobile-detail-setting-drawer-item-text">删除</span>
-        </div>
-        <div class="mobile-detail-setting-drawer-item">
-          <span class="mobile-detail-setting-drawer-item-icon">
             <Icon type="item-share" size={24} onClick={handleClickShare}></Icon>
           </span>
           <span class="mobile-detail-setting-drawer-item-text">分享</span>
@@ -69,6 +63,12 @@ export default defineComponent({
             <Icon type="markdown" size={24} onClick={handleClickDownload}></Icon>
           </span>
           <span class="mobile-detail-setting-drawer-item-text">下载</span>
+        </div>
+        <div class="mobile-detail-setting-drawer-item">
+          <span class="mobile-detail-setting-drawer-item-icon">
+            <Icon type="trash" size={24} onClick={handleClickDelete}></Icon>
+          </span>
+          <span class="mobile-detail-setting-drawer-item-text">删除</span>
         </div>
       </div>
     );

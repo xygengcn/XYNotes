@@ -55,13 +55,6 @@ export const EditorTableMenu = defineComponent({
       <div class="editor-table-menu" ref={root}>
         <span
           onClick={() => {
-            props.editor.chain().focus().deleteTable().run();
-          }}
-        >
-          <Icon type="trash" size={20}></Icon>
-        </span>
-        <span
-          onClick={() => {
             props.editor.chain().focus().addRowBefore().run();
           }}
         >
@@ -102,6 +95,13 @@ export const EditorTableMenu = defineComponent({
           }}
         >
           <Icon type="table-col-del" size={20}></Icon>
+        </span>
+        <span
+          onClick={() => {
+            props.editor.chain().focus().deleteTable().run();
+          }}
+        >
+          <Icon type="trash" size={20}></Icon>
         </span>
       </div>
     );

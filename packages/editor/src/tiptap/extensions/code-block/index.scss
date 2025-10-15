@@ -204,4 +204,11 @@
       }
     }
   }
+
+  @include preview() {
+    .markdown-editor-codeblock-content-code {
+      max-height: 50vh !important;
+      height: max-content !important;
+    }
+  }
 }
