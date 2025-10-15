@@ -28,7 +28,7 @@ import {
 export function createWindow(options: { nid: string }) {
   console.log('[createWindow]', options);
   const windowId = `nid-${options.nid}`;
-  const windowLocationUrl = `/detail?nid=${options.nid}`;
+  const windowLocationUrl = `/edit/${options.nid}`;
   // tauri
   if (isTauriApp()) {
     return tauriCreateWindow({ id: windowId, url: windowLocationUrl });

@@ -8,14 +8,28 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '/',
-        name: 'desktop-list',
-        components: {
-          side: () => import('@/views/desktop/side-container/pages/side-container-list'),
-          main: () => import('@/views/desktop/main-container/pages/main-container-default')
-        },
+        name: 'desktop-main',
         meta: {
           device: 'desktop'
-        }
+        },
+        children: [
+          {
+            path: '',
+            name: 'desktop-main-default',
+            components: {
+              side: () => import('@/views/desktop/side-container/pages/side-container-list'),
+              main: () => import('@/views/desktop/main-container/pages/main-container-default')
+            }
+          },
+          {
+            path: 'detail/:nid',
+            name: 'desktop-main-detail',
+            components: {
+              side: () => import('@/views/desktop/side-container/pages/side-container-list'),
+              main: () => import('@/views/desktop/main-container/pages/main-container-detail')
+            }
+          }
+        ]
       },
       {
         path: 'setting',
@@ -73,8 +87,8 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/detail',
-    component: () => import('@/views/detail-page')
+    path: '/edit/:nid',
+    component: () => import('@/views/edit')
   },
   {
     path: '/m',
@@ -137,10 +151,10 @@ router.beforeEach((to, _from, next) => {
   }
   if (to.meta?.device == 'mobile') {
     if (is.desktop()) {
-      return next({ name: 'desktop-list' });
+      return next({ name: 'desktop-main' });
     }
     if (is.tablet() && is.landscape()) {
-      return next({ name: 'desktop-list' });
+      return next({ name: 'desktop-main' });
     }
   }
   next();

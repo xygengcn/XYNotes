@@ -8,8 +8,8 @@ import { Note } from '@xynotes/store';
 import { type PropType, defineComponent } from 'vue';
 import './index.scss';
 
-const DesktopMainContainerDefaultRight = defineComponent({
-  name: 'DesktopMainContainerDefaultRight',
+const DesktopMainContainerDetailRight = defineComponent({
+  name: 'DesktopMainContainerDetailRight',
   props: {
     note: {
       type: Object as PropType<Note>,
@@ -105,12 +105,12 @@ const DesktopMainContainerDefaultRight = defineComponent({
     ];
 
     return () => (
-      <div class="desktop-main-container-default-content-right" data-tauri-drag-region>
+      <div class="desktop-main-container-detail-content-right" data-tauri-drag-region>
         {menuList.map((menu) => {
           return (
             menu.visible && (
               <div
-                class="desktop-main-container-default-content-right-menu"
+                class="desktop-main-container-detail-content-right-menu"
                 v-tippy={{ placement: 'left', content: menu.title }}
               >
                 <IconNavMenu
@@ -131,4 +131,4 @@ const DesktopMainContainerDefaultRight = defineComponent({
   }
 });
 
-export default DesktopMainContainerDefaultRight;
+export default DesktopMainContainerDetailRight;
