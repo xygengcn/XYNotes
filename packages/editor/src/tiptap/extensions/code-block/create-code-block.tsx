@@ -30,7 +30,7 @@ export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Ev
     onMaximize: () => {
       if (!document.fullscreenElement) {
         codeBlock.requestFullscreen().then(() => {
-          editor.commands.focus();
+          editor.chain().focus().run();
         });
       } else {
         document.exitFullscreen();
@@ -38,6 +38,14 @@ export function createCodeBlockView(node: Node, editor: Editor, onChange: (e: Ev
     },
     onMinimize: () => {
       if (document.fullscreenElement) document.exitFullscreen();
+    },
+    onClose: () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+        return;
+      }
+      // 删除此节点
+      editor.commands.deleteNode('codeBlock');
     },
     isEditable: editor.isEditable,
     lang: defaultLanguage
