@@ -1,9 +1,9 @@
 import { Dialog, Icon, Loading, Popover } from '@xynotes/components';
 import { EditorPerview, useEditorPreview } from '@xynotes/editor';
 import { Note } from '@xynotes/store';
-import { screenshot, screenshotCopy } from '@xynotes/utils';
+import { copyText, screenshot, screenshotCopy } from '@xynotes/utils';
 import { type PropType, defineComponent, ref } from 'vue';
-import MinMax from '../../min-max';
+import MinMax from '../../../components/min-max';
 import './index.scss';
 
 export default defineComponent({
@@ -74,6 +74,31 @@ export default defineComponent({
     };
 
     /**
+     * 复制文字
+     * @returns
+     */
+    const handleClickCopyText = () => {
+      if (props.note.text) {
+        copyText(props.note.text || '');
+        window.$ui.toast('复制文本成功');
+      }
+    };
+
+    /**
+     * 下载JSON
+     */
+    const handleClickDownloadJson = () => {
+      props.note?.toJson();
+    };
+
+    /**
+     * 下载json
+     */
+    const handleClickDownloadMarkdown = () => {
+      props.note?.toMarkdown();
+    };
+
+    /**
      * 关闭事件
      */
     const handleClose = () => {
@@ -104,11 +129,20 @@ export default defineComponent({
                       ),
                       popover: () => (
                         <div class="note-share-title-right-menu">
+                          <div class="note-share-title-right-menu-item" onClick={handleClickCopyText}>
+                            复制文字
+                          </div>
                           <div class="note-share-title-right-menu-item" onClick={handleClickCopyImage}>
                             复制图像
                           </div>
+                          <div class="note-share-title-right-menu-item" onClick={handleClickDownloadJson}>
+                            导出JSON
+                          </div>
+                          <div class="note-share-title-right-menu-item" onClick={handleClickDownloadMarkdown}>
+                            导出Markdown
+                          </div>
                           <div class="note-share-title-right-menu-item" onClick={handleClickDownalodScreenshot}>
-                            存储图像
+                            存储为图像
                           </div>
                         </div>
                       )

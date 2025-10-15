@@ -20,3 +20,12 @@
     }
   }
 }
+
+// 预览模式
+@mixin preview() {
+  @at-root {
+    .editor-preview {
+      @content;
+    }
+  }
+}
