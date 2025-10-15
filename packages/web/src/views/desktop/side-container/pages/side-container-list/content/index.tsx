@@ -6,11 +6,13 @@ import { Note } from '@xynotes/store';
 import { notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 import './index.scss';
 
 const DesktopSideContainerListContent = defineComponent({
   name: 'DesktopSideContainerListContent',
   setup() {
+    const router = useRouter();
     /**
      * 右键
      * @param cmdKey
@@ -56,6 +58,12 @@ const DesktopSideContainerListContent = defineComponent({
           return;
         }
       }
+      router.push({
+        name: 'desktop-main-detail',
+        params: {
+          nid: note.nid
+        }
+      });
       setActiveNoteId(note.nid);
     };
 

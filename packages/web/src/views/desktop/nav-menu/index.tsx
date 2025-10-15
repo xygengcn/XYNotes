@@ -1,13 +1,13 @@
 import logo from '@/assets/images/logo/logo.png';
 import MinMax from '@/components/min-max';
-import { AppLoadStatus } from '@xynotes/store';
 import { Loading } from '@xynotes/components';
+import { AppLoadStatus } from '@xynotes/store';
+import { appStoreState } from '@xynotes/store/app';
+import { addNote, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
 import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
-import { addNote, setActiveNoteId } from '@xynotes/store/note';
-import { appStoreState } from '@xynotes/store/app';
 
 export const DESKTOP_NAV_MENU_WIDTH = 64;
 
@@ -29,7 +29,7 @@ const DesktopNavMenu = defineComponent({
       {
         title: '列表',
         icon: 'list',
-        name: 'desktop-list',
+        name: 'desktop-main',
         visible: true,
         path: '/'
       },

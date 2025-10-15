@@ -1,32 +1,5 @@
 .desktop-main-container-default {
   height: 100%;
-
-  &-content {
-    display: flex;
-    height: 100%;
-
-    // 编辑器
-    &-left {
-      flex: 1;
-      overflow: hidden;
-    }
-
-    // 右侧工具栏
-    &-right {
-      width: 49px;
-      height: 100%;
-      padding-top: 30px;
-      border-left: var(--border-default-size) solid var(--border-default-color);
-      &-menu {
-        display: flex;
-        justify-content: center;
-        & + & {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
   &-blank {
     width: 100%;
     height: 100%;
