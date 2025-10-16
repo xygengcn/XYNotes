@@ -1,5 +1,5 @@
-import { Dialog } from '@xynotes/components';
 import { defineComponent, type PropType } from 'vue';
+import Dialog from '../../dialog';
 import DatePickerComponent, { DatePickerOptions } from '../content';
 import './index.scss';
 const NoteTagsDialogCompnent = defineComponent({

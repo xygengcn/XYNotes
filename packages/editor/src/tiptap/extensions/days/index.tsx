@@ -1,4 +1,4 @@
-import { mergeAttributes, Node } from '@tiptap/core';
+import { Node } from '@tiptap/core';
 import { nodeViewProps, NodeViewWrapper, VueNodeViewRenderer } from '@tiptap/vue-3';
 import { calculateDaysBetween, timeFormat } from '@xynotes/utils';
 import { computed, defineComponent } from 'vue';
@@ -110,20 +110,56 @@ export default Node.create({
         }
     };
   },
-
-  parseHTML() {
-    return [
-      {
-        tag: 'div[data-type="days"]'
-      }
-    ];
+  renderText({ node }) {
+    let days = calculateDaysBetween(new Date(), new Date(node.attrs.endTime)) || 0;
+    if (days !== 0) {
+      days = Math.abs(days);
+    }
+    return node.attrs.title + ' ' + timeFormat(node.attrs.endTime, 'yyyy-MM-dd') + ' ' + days + '天';
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'days' })];
+    const div = document.createElement('div');
+    let days = calculateDaysBetween(new Date(), new Date(HTMLAttributes.endTime)) || 0;
+    if (days !== 0) {
+      days = Math.abs(days);
+    }
+    div.innerHTML = `<div class="markdown-editor-days">
+        <div class="markdown-editor-days-content">
+          <div class="markdown-editor-days-content-title">${HTMLAttributes.title}</div>
+          <div class="markdown-editor-days-content-date">${timeFormat(HTMLAttributes.endTime, 'yyyy-MM-dd')}</div>
+        </div>
+        <div
+          class="markdown-editor-days-count"
+          style="background-color: ${HTMLAttributes.countColor}"
+        >
+          <span class="count">${days}</span>
+          <span class="text">天</span>
+        </div>
+      </div>`;
+    return div;
   },
 
   addNodeView() {
     return VueNodeViewRenderer(Component);
+  },
+  /**
+   * @return {{markdown: MarkdownNodeSpec}}
+   */
+  addStorage() {
+    return {
+      markdown: {
+        serialize(state, node) {
+          let days = calculateDaysBetween(new Date(), new Date(node.attrs.endTime)) || 0;
+          if (days !== 0) {
+            days = Math.abs(days);
+          }
+          state.text(
+            '【' + node.attrs.title + '（' + timeFormat(node.attrs.endTime, 'yyyy-MM-dd') + '）' + days + '天' + '】'
+          );
+        },
+        parse: {}
+      }
+    };
   }
 });

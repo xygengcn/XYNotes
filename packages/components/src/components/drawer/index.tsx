@@ -91,7 +91,7 @@ export const useDrawer = (
     document.body.removeChild(instance);
   }
   const el = document.createElement('div');
-  el.style = 'height: 100vh;width: 100vw;';
+  el.style.cssText = 'height: 100vh;width: 100vw;';
   el.id = options.id;
   document.body.appendChild(el);
   const visible = ref(false);
@@ -103,7 +103,9 @@ export const useDrawer = (
         {...(options.drawerOptions || {})}
         onClose={() => {
           app.unmount();
-          el && document.body.removeChild(el);
+          if (el && document.body.contains(el)) {
+            document.body.removeChild(el);
+          }
         }}
       >
         {h(DrawerComponent, {
