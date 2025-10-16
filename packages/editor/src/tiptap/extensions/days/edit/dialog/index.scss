@@ -1,0 +1,72 @@
+.markdown-editor-days-dialog {
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
+    &-title {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 0px 1px 4px 0 rgba(26, 26, 26, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      gap: 10px;
+      &-icon {
+        color: #b6b6b6;
+      }
+      &-input {
+        flex: 1;
+        font-size: 1em;
+        line-height: 22px;
+        height: 22px;
+        input::placeholder {
+          color: #b6b6b6;
+          font-size: 14px;
+        }
+      }
+    }
+    &-date {
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      box-shadow: 0px 1px 4px 0 rgba(26, 26, 26, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      gap: 10px;
+      &-title {
+        color: #b6b6b6;
+        display: inline-flex;
+        align-items: center;
+        span {
+          margin-left: 10px;
+          font-size: 14px;
+        }
+      }
+
+      &-date {
+        color: #f3bb41;
+        font-weight: 700;
+        padding-left: calc(1.5em + 10px);
+        cursor: pointer;
+      }
+    }
+  }
+  &-wrapper {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &-footer {
+      display: inline-flex;
+      gap: 15px;
+      justify-content: center;
+      .button {
+        width: 150px;
+      }
+    }
+  }
+}

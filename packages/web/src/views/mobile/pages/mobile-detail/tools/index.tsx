@@ -55,6 +55,13 @@ export const MobileDetailTools = defineComponent({
       setCodeBlock('mindmap', '- 主题1\n  - 主题2\n  - 主题3');
     };
 
+    /**
+     * 添加倒数日
+     */
+    const handleClickAddDays = () => {
+      editor.value.chain().createDaysNodeDrawer().run();
+    };
+
     return () => (
       <div class={{ 'mobile-detail-tools': true, focus: editorFocus.value }} onClick={stopPropagation}>
         <div class="mobile-detail-tools-item">
@@ -71,6 +78,9 @@ export const MobileDetailTools = defineComponent({
         </div>
         <div class="mobile-detail-tools-item" onClick={handleClickAddTable}>
           <Icon type="table" size={24}></Icon>
+        </div>
+        <div class="mobile-detail-tools-item" onClick={handleClickAddDays}>
+          <Icon type="days" size={24}></Icon>
         </div>
       </div>
     );

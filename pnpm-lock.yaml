@@ -47,6 +47,9 @@ importers:
       photoswipe:
         specifier: ^5.4.4
         version: 5.4.4
+      swiper:
+        specifier: ^12.0.2
+        version: 12.0.2
       vue:
         specifier: 3.5.13
         version: 3.5.13(typescript@5.7.2)
@@ -5559,6 +5562,10 @@ packages:
 
   svg-tags@1.0.0:
     resolution: {integrity: sha512-ovssysQTa+luh7A5Weu3Rta6FJlFBBbInjOh722LIt6klpU2/HtdUbszju/G4devcvk8PGt7FCLv5wftu3THUA==}
+
+  swiper@12.0.2:
+    resolution: {integrity: sha512-y8F6fDGXmTVVgwqJj6I00l4FdGuhpFJn0U/9Ucn1MwWOw3NdLV8aH88pZOjyhBgU/6PyBlUx+JuAQ5KMWz906Q==}
+    engines: {node: '>= 4.7.0'}
 
   temp-dir@2.0.0:
     resolution: {integrity: sha512-aoBAniQmmwtcKp/7BzsH8Cxzv8OL736p7v1ihGb5e9DJ9kTwGWHrQrVB5+lfVDzfGrdRzXch+ig7LHaY1JTOrg==}
@@ -11785,6 +11792,8 @@ snapshots:
   supports-preserve-symlinks-flag@1.0.0: {}
 
   svg-tags@1.0.0: {}
+
+  swiper@12.0.2: {}
 
   temp-dir@2.0.0: {}
 
