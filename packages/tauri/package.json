@@ -1,6 +1,6 @@
 {
   "name": "@xynotes/tauri",
-  "version": "4.1.17",
+  "version": "4.1.18",
   "description": "",
   "scripts": {
     "dev": "tauri dev",
