@@ -1,6 +1,6 @@
 import { Icon, Input, showDatePickerDrawer } from '@xynotes/components';
 import { timeFormat } from '@xynotes/utils';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import { getRandomColor } from '../../colorUtils';
 import { IDaysOptions } from '../../type';
 import './index.scss';
@@ -8,6 +8,7 @@ export default defineComponent({
   name: 'MarkdownEditorDaysDrawer',
   setup(_, context) {
     const options = ref<IDaysOptions>({ title: '', endTime: Date.now(), type: 'days', countColor: getRandomColor() });
+    const refInput = ref<HTMLInputElement>();
     const enable = computed(() => {
       return options.value.title.trim().length > 0;
     });
@@ -32,6 +33,10 @@ export default defineComponent({
       });
     };
 
+    onMounted(() => {
+      refInput.value?.focus();
+    });
+
     return () => (
       <div class="markdown-editor-days-drawer">
         <div class="markdown-editor-days-drawer-header">
@@ -46,7 +51,7 @@ export default defineComponent({
               <Icon type="days-name" size="1.5em"></Icon>
             </span>
             <span class="markdown-editor-days-drawer-content-title-input">
-              <Input v-model:value={options.value.title} placeholder="输入事项名称"></Input>
+              <Input v-model:value={options.value.title} placeholder="输入事项名称" ref={refInput}></Input>
             </span>
           </div>
           <div class="markdown-editor-days-drawer-content-date">
