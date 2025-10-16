@@ -1,14 +1,14 @@
 import { Button, Dialog, Icon, Input, showDatePickerDialog } from '@xynotes/components';
 
 import { timeFormat } from '@xynotes/utils';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import { getRandomColor } from '../../colorUtils';
 import { IDaysOptions } from '../../type';
 import './index.scss';
 const MarkdownEditorDaysDialogCompnent = defineComponent({
   setup(_, context) {
     const options = ref<IDaysOptions>({ title: '', endTime: Date.now(), type: 'days', countColor: getRandomColor() });
-
+    const refInput = ref<HTMLInputElement>();
     const enable = computed(() => {
       return options.value.title.trim().length > 0;
     });
@@ -33,6 +33,10 @@ const MarkdownEditorDaysDialogCompnent = defineComponent({
       });
     };
 
+    onMounted(() => {
+      refInput.value?.focus();
+    });
+
     return () => (
       <Dialog
         class="markdown-editor-days-dialog"
@@ -49,7 +53,7 @@ const MarkdownEditorDaysDialogCompnent = defineComponent({
                 <Icon type="days-name" size="1.5em"></Icon>
               </span>
               <span class="markdown-editor-days-dialog-content-title-input">
-                <Input v-model:value={options.value.title} placeholder="输入事项名称"></Input>
+                <Input v-model:value={options.value.title} placeholder="输入事项名称" ref={refInput}></Input>
               </span>
             </div>
             <div class="markdown-editor-days-dialog-content-date">

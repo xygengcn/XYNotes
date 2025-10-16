@@ -28,6 +28,11 @@ const Input = defineComponent({
     'update:value': (_value: string) => true,
     blur: (_e: Event, _value: string) => true
   },
+  methods: {
+    focus(): void {
+      (this.$el as HTMLInputElement).querySelector('input')?.focus();
+    }
+  },
   setup(props, context) {
     /**
      * 输入计时器
