@@ -5,6 +5,10 @@
   border: 1px solid var(--markdown-editor-gray-color);
   border-radius: 8px;
   padding: 8px 16px;
+  user-select: none;
+  * {
+    user-select: none;
+  }
   @include focus() {
     border-color: var(--markdown-editor-theme-color);
   }
