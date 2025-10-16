@@ -50,8 +50,7 @@ const Component = defineComponent({
 
 export default Node.create({
   name: 'days',
-  group: 'inline',
-  inline: true,
+  group: 'block',
   draggable: true,
   addAttributes() {
     return {
