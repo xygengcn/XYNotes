@@ -6,6 +6,7 @@ import { appStoreState } from '@xynotes/store/app';
 import { addNote, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 import './index.scss';
 import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
 
@@ -14,6 +15,7 @@ export const DESKTOP_NAV_MENU_WIDTH = 64;
 const DesktopNavMenu = defineComponent({
   name: 'DesktopNavMenu',
   setup() {
+    const router = useRouter();
     const desktopNavMenuList: IdesktopNavMenuItem[] = [
       {
         title: '新增',
@@ -24,6 +26,12 @@ const DesktopNavMenu = defineComponent({
         action: () => {
           const note = addNote();
           setActiveNoteId(note.nid);
+          router.push({
+            name: 'desktop-main-detail',
+            params: {
+              nid: note.nid
+            }
+          });
         }
       },
       {
