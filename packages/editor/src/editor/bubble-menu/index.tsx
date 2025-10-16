@@ -58,7 +58,12 @@ export const EditorBubbleMenu = defineComponent({
             }
 
             // 代码块屏蔽
-            if (editor.isActive('codeBlock') || editor.isActive('image') || editor.isActive('table')) {
+            if (
+              editor.isActive('codeBlock') ||
+              editor.isActive('image') ||
+              editor.isActive('table') ||
+              editor.isActive('days')
+            ) {
               return false;
             }
             bubbleMenuActiveNode.value.bold = editor.isActive('bold');

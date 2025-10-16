@@ -1,0 +1,118 @@
+.date-picker-drawer {
+  width: 100%;
+  height: 100%;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 44px;
+    padding: 0 16px;
+    border-bottom: 1px solid #eee;
+  }
+
+  &-cancel,
+  &-confirm {
+    font-size: 16px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  &-cancel {
+    color: #999;
+  }
+
+  &-confirm {
+    color: #f3bb41; // 微信绿
+  }
+
+  &-title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  &-content {
+    padding: 20px 0;
+  }
+
+  &-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 220px;
+  }
+
+  &-column {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &-mask-top,
+  &-mask-bottom {
+    z-index: 10;
+    width: 100%;
+    height: 84px;
+    pointer-events: none;
+    transform: translateZ(0);
+    position: absolute;
+    left: 0;
+  }
+
+  &-mask-top {
+    top: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.95));
+  }
+
+  &-mask-bottom {
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.95));
+  }
+
+  &-indicator {
+    position: absolute;
+    top: 84px;
+    width: 100%;
+    height: 44px;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    z-index: 9;
+    transform: translateZ(0);
+    pointer-events: none;
+  }
+
+  &-swiper {
+    width: 100%;
+    height: 100%;
+
+    .swiper-wrapper {
+      transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &-item {
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    font-size: 16px;
+    color: #999;
+    transition: all 0.2s;
+
+    &--selected {
+      color: #333;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}

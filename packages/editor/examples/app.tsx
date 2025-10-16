@@ -9,7 +9,7 @@ export default defineComponent({
   name: 'App',
   setup() {
     // 文本
-    const text = ref(__MARKDOWN__);
+    const text = ref('');
     // 输入文本
     const inputText = ref('');
 
@@ -59,6 +59,18 @@ export default defineComponent({
         .run();
     };
 
+    const handleAddDays = () => {
+      editor.value
+        .chain()
+        .focus()
+        .insertDays({
+          title: '元旦倒计时',
+          type: 'days',
+          endTime: 1767196800000
+        })
+        .run();
+    };
+
     return () => (
       <div class="app">
         <div class="app-menu">
@@ -68,6 +80,7 @@ export default defineComponent({
           <button onClick={handleReset}>初始化</button>
           <button onClick={handleGetContent}>获取content</button>
           <button onClick={handleAddTable}>插入表格</button>
+          <button onClick={handleAddDays}>插入倒计时</button>
         </div>
         <Editor value={text.value}></Editor>
       </div>

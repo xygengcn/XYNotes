@@ -1,3 +1,4 @@
+import { isString } from '@xynotes/utils';
 import { PropType, StyleValue, Transition, computed, defineComponent, ref } from 'vue';
 import './index.scss';
 
@@ -76,7 +77,7 @@ const Dialog = defineComponent({
     const wrapStyle = computed<StyleValue>(() => {
       return {
         width: props.width + 'px',
-        height: props.height + 'px',
+        height: isString(props.height) ? props.height : props.height + 'px',
         ...(props.customStyle || {}),
         ...(isFullscreen.value
           ? { width: '100%', height: '100%', maxHeight: '100%', maxWidth: '100%', borderRadius: 0 }

@@ -244,6 +244,18 @@ export function defineMarkdownEditor() {
           }
         });
 
+        // @ts-ignore vue3组件能渲染的关键
+        editor.value.contentComponent = instance.ctx._;
+        if (instance) {
+          // @ts-ignore
+          editor.value.appContext = {
+            ...instance.appContext,
+            // @ts-ignore
+            provides: instance.provides
+          };
+        }
+        editor.value.createNodeViews();
+
         /**
          * 图片粘贴上传
          */

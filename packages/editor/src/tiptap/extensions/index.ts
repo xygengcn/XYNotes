@@ -10,6 +10,7 @@ import { BulletListExtension, ListItemExtension } from './bullet-list';
 import { CharacterCountExtension } from './character-count';
 import CodeExtension from './code';
 import CodeBlockExtension from './code-block';
+import DaysExtension from './days';
 import HeadingExtension from './heading';
 import HighlightExtension from './highlight';
 import ImageExtension from './image';
@@ -20,7 +21,6 @@ import PasteExtension from './paste-event';
 import StrikeExtension from './strike';
 import { TableExtension } from './table';
 import { TaskItemExtension, TaskListExtension } from './task-list';
-
 /**
  * 通用编辑器扩展
  */
@@ -76,7 +76,9 @@ export const CommonExtension = () => [
   Focus.configure({
     className: 'has-focus',
     mode: 'deepest'
-  })
+  }),
+  // 自定义组件
+  DaysExtension
 ];
 
 /**

@@ -157,3 +157,26 @@ export function dateFormat(dateTimeStamp: Date | number, format = 'yyyy/MM/dd'):
 
   return '刚刚';
 }
+
+/**
+ * 计算两个时间之间的天数（从零点开始算）
+ * @param startTime 开始时间
+ * @param endTime 结束时间
+ * @returns 天数差
+ */
+export function calculateDaysBetween(startTime: Date | number | string, endTime: Date | number | string): number {
+  // 确保输入是Date对象
+  const startDate = new Date(startTime);
+  const endDate = new Date(endTime);
+  
+  // 将日期设置为零点，只保留年月日
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
+  
+  // 计算毫秒差并转换为天数
+  const diffInMs = endDate.getTime() - startDate.getTime();
+  const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+  
+  // 向下取整确保从零点开始计算
+  return Math.floor(diffInDays);
+}

@@ -3,6 +3,7 @@ import Card from './components/card';
 import Checkbox from './components/checkbox';
 import Confirm from './components/confirm';
 import { IContextMenuOptions, IContextMenuProps, VueContextMenu } from './components/contextmenu';
+import { showDatePickerDialog, showDatePickerDrawer } from './components/date-picker-drawer';
 import Dialog from './components/dialog';
 import Drawer, { useDrawer } from './components/drawer';
 import Icon from './components/icon';
@@ -33,6 +34,8 @@ export {
   Popover,
   Scroller,
   ShortcutInput,
+  showDatePickerDialog,
+  showDatePickerDrawer,
   Switch,
   Toast,
   useDrawer,

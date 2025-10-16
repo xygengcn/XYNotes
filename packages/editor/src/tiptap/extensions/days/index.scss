@@ -1,0 +1,44 @@
+@import '@editor/styles/function.scss';
+.markdown-editor-days {
+  display: flex;
+  margin: 0.5rem 0px;
+  border: 1px solid var(--markdown-editor-gray-color);
+  border-radius: 8px;
+  padding: 8px 16px;
+  @include focus() {
+    border-color: var(--markdown-editor-theme-color);
+  }
+  &-content {
+    flex: 1;
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-right: 20px;
+    &-title {
+      font-weight: 500;
+    }
+    &-date {
+      font-size: 12px;
+      margin-top: 4px;
+      color: #aeaeae;
+    }
+  }
+  &-count {
+    color: #fff;
+    background-color: #2b85e4;
+    padding: 4px 10px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    .count {
+      display: inline-block;
+      font-size: 2em;
+      height: max-content;
+    }
+    .text {
+      display: inline-block;
+      margin-left: 4px;
+      height: max-content;
+    }
+  }
+}

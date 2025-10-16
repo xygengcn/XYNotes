@@ -1,5 +1,4 @@
-import { PropType } from 'vue';
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import './index.scss';
 
 /**
@@ -26,6 +25,11 @@ const Button = defineComponent({
       type: String as PropType<ButtonSize>,
       default: 'default',
       required: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+      required: false
     }
   },
   emits: ['click'],
@@ -35,10 +39,14 @@ const Button = defineComponent({
      * @param e
      */
     const handleClick = (e: Event) => {
+      if (props.disabled) return e.preventDefault();
       emit('click', e);
     };
     return () => (
-      <button class={['button', `button-${props.type}`, `button-size-${props.size}`]} onClick={handleClick}>
+      <button
+        class={['button', `button-${props.type}`, `button-size-${props.size}`, props.disabled && 'button-disabled']}
+        onClick={handleClick}
+      >
         {slots.default?.()}
       </button>
     );

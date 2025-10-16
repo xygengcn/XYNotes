@@ -17,7 +17,7 @@ const DesktopMainContainerDetailRight = defineComponent({
     }
   },
   setup(props) {
-    const { setTable, setImage, setCodeBlock } = useEditor();
+    const { setTable, setImage, setCodeBlock, editor } = useEditor();
     const menuList = [
       {
         title: '标签',
@@ -56,6 +56,14 @@ const DesktopMainContainerDetailRight = defineComponent({
         visible: true,
         action: () => {
           setCodeBlock('mindmap', '- 主题1\n  - 主题2\n  - 主题3');
+        }
+      },
+      {
+        title: '倒数日',
+        icon: 'days',
+        visible: true,
+        action: () => {
+          editor.value.chain().createDaysNodeDialog().run();
         }
       },
       {
