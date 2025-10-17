@@ -66,7 +66,8 @@ export default defineComponent({
         .insertDays({
           title: '元旦倒计时',
           type: 'days',
-          endTime: 1767196800000
+          endTime: 1767196800000,
+          countColor: '#ff0000'
         })
         .run();
     };

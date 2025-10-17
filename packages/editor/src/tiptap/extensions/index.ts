@@ -2,6 +2,7 @@ import Document from '@tiptap/extension-document';
 import HistoryExtension from '@tiptap/extension-history';
 import Text from '@tiptap/extension-text';
 import { Color, TextStyle } from '@tiptap/extension-text-style';
+import UniqueID from '@tiptap/extension-unique-id';
 import { Focus, Placeholder } from '@tiptap/extensions';
 import { Markdown } from 'tiptap-markdown';
 import BlockquoteExtension from './blockquote';
@@ -78,7 +79,11 @@ export const CommonExtension = () => [
     mode: 'deepest'
   }),
   // 自定义组件
-  DaysExtension
+  DaysExtension,
+  // 唯一ID
+  UniqueID.configure({
+    types: ['taskList', 'taskItem']
+  })
 ];
 
 /**
