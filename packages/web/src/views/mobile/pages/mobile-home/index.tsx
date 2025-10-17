@@ -97,6 +97,13 @@ const MobileHome = defineComponent({
               placeholder="搜索"
               value={notesStoreState.value.searchKeyword}
             />
+            <Icon
+              type="delete"
+              v-show={notesStoreState.value.searchKeyword.length > 0}
+              onClick={() => {
+                searchNoteList('');
+              }}
+            ></Icon>
           </div>
           <div class="mobile-home-header-add" onClick={handleClickAdd}>
             <Icon type="create" size="24px"></Icon>

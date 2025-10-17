@@ -13,15 +13,23 @@
     // 搜索
     &-search {
       flex: 1;
+      position: relative;
       &__input {
         border: none;
         background-color: #eee;
         outline: none;
         width: 100%;
-        padding: 5px 15px;
+        padding: 5px 30px 5px 15px;
         line-height: 2em;
         border-radius: 8px;
         font-size: 1em;
+      }
+      .icon {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: var(--font-default-color);
+        cursor: pointer;
       }
     }
     &-add {
