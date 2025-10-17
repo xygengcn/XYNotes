@@ -1,3 +1,4 @@
+import { Icon } from '@xynotes/components';
 import { notesStoreState, searchNoteList } from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
 import { defineComponent } from 'vue';
@@ -29,6 +30,13 @@ const DesktopSideContainerListSearch = defineComponent({
           none-drag-region
           id="desktopSideContainerListSearch"
         />
+        <Icon
+          type="delete"
+          v-show={notesStoreState.value.searchKeyword.length > 0}
+          onClick={() => {
+            searchNoteList('');
+          }}
+        ></Icon>
       </div>
     );
   }
