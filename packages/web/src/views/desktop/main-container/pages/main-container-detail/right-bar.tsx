@@ -34,10 +34,11 @@ const DesktopMainContainerDetailRight = defineComponent({
         action: () => {
           UploadService.select({ accept: 'image/*' }).then((files) => {
             UploadService.upload(files, (file) => {
-              setImage({
-                src: file.originUrl,
-                alt: file.name
-              });
+              file &&
+                setImage({
+                  src: file.originUrl,
+                  alt: file.name
+                });
             });
           });
         }
