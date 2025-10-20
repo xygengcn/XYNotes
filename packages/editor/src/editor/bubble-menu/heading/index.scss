@@ -1,10 +1,13 @@
 .bubble-menu-heading {
   background-color: #ffffff;
-  padding: 2px;
+  border: 1px solid #fdfdfd;
+  border-radius: 6px;
+  box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.2);
+  padding: 4px 10px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   > span {
     border: none;
     cursor: pointer;
