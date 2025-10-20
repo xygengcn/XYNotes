@@ -1,5 +1,5 @@
-import { Node } from '@tiptap/core';
-import { nodeViewProps, NodeViewWrapper, VueNodeViewRenderer } from '@tiptap/vue-3';
+import { Node as NodePm } from '@tiptap/pm/model';
+import { Node, nodeViewProps, NodeViewWrapper, VueNodeViewRenderer } from '@tiptap/vue-3';
 import { calculateDaysBetween, timeFormat } from '@xynotes/utils';
 import { computed, defineComponent } from 'vue';
 import { getRandomColor } from './colorUtils';
@@ -76,13 +76,7 @@ export default Node.create({
         () =>
         ({ editor }) => {
           showDaysDrawer((options) => {
-            editor
-              .chain()
-              .insertContent({
-                type: 'days',
-                attrs: options
-              })
-              .run();
+            editor.chain().insertDays(options).run();
           });
           return true;
         },
@@ -90,19 +84,22 @@ export default Node.create({
         () =>
         ({ editor }) => {
           showDaysDialog((options) => {
-            editor
-              .chain()
-              .insertContent({
-                type: 'days',
-                attrs: options
-              })
-              .run();
+            editor.chain().insertDays(options).run();
           });
           return true;
         },
       insertDays:
         (options: IDaysOptions) =>
-        ({ commands }) => {
+        ({ commands, state }) => {
+          // @ts-ignore
+          const node = state.selection?.node as NodePm;
+          if (node?.type.name === 'days') {
+            commands.insertContentAt(state.selection.to, {
+              type: 'days',
+              attrs: options
+            });
+            return true;
+          }
           commands.insertContent({
             type: 'days',
             attrs: options
