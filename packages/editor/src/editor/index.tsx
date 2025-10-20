@@ -2,7 +2,7 @@ import { defineMarkdownEditor, type MarkdownEditorInstance } from '@editor/tipta
 import { Loading } from '@xynotes/components';
 import { defineComponent, nextTick, watch } from 'vue';
 import { EditorBubbleMenu } from './bubble-menu';
-import { EditorDaysMenu } from './days-menu';
+import { EditorCommonMenu } from './common-menu';
 import './index.scss';
 import { EditorTableMenu } from './table-menu';
 
@@ -45,7 +45,7 @@ export const Editor = defineComponent({
         <div class="editor-content" ref="editor" spellcheck="false" />
         {editor.value && <EditorBubbleMenu editor={editor.value} />}
         {editor.value && <EditorTableMenu editor={editor.value}></EditorTableMenu>}
-        {editor.value && <EditorDaysMenu editor={editor.value}></EditorDaysMenu>}
+        {editor.value && <EditorCommonMenu editor={editor.value}></EditorCommonMenu>}
         {(props.loading || loading.value) && (
           <div class="editor-loading">
             <Loading text="加载中" />

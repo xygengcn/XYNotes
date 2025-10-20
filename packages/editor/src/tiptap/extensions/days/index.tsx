@@ -31,7 +31,7 @@ const Component = defineComponent({
       return 0;
     });
     return () => (
-      <NodeViewWrapper class="markdown-editor-days" draggable data-drag-handle>
+      <NodeViewWrapper class="markdown-editor-days" draggable>
         <div class="markdown-editor-days-content">
           <div class="markdown-editor-days-content-title">{options.value.title}</div>
           <div class="markdown-editor-days-content-date">{timeFormat(options.value.endTime, 'yyyy-MM-dd')}</div>
@@ -52,8 +52,6 @@ export default Node.create({
   name: 'days',
   group: 'block',
   draggable: true,
-  selectable: true,
-  priority: 1000,
   atom: true,
   content: 'inline*',
   addAttributes() {
@@ -145,7 +143,7 @@ export default Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(Component, {
-      stopEvent() {
+      stopEvent(e) {
         return false;
       }
     });

@@ -3,4 +3,7 @@
     border: 1px solid var(--markdown-editor-theme-color);
     border-radius: 8px;
   }
+  .img-viewer.ProseMirror-selectednode {
+    border: none;
+  }
 }
