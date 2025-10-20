@@ -33,6 +33,7 @@ const MobileDetail = defineComponent({
      * 返回首页
      */
     const handleBack = async () => {
+      await activeNote.value.save(true);
       await router.push('/');
       setActiveNoteId('');
     };
