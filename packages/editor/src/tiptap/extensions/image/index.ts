@@ -24,11 +24,12 @@ export const inputRegex = /(?:^|\s)(!\[(.+|:?)]\((\S+)(?:(?:\s+)["'](\S+)["'])?\
 
 const ImageExtension = Node.create({
   name: 'image',
-
+  group: 'block',
   draggable: true,
-  inline() {
-    return true;
-  },
+  selectable: true,
+  priority: 1000,
+  atom: true,
+  content: 'inline*',
 
   addAttributes() {
     return {
@@ -44,9 +45,6 @@ const ImageExtension = Node.create({
     };
   },
 
-  group() {
-    return 'inline';
-  },
   addNodeView() {
     return ({ node, editor }) => {
       const dom = document.createElement('img-viewer') as HTMLImageElement;
@@ -59,7 +57,8 @@ const ImageExtension = Node.create({
         }
       }
       return {
-        dom
+        dom,
+        content: null
       };
     };
   },
