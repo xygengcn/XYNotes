@@ -175,6 +175,7 @@ class ApiEventOnline {
       })
       .catch((e) => {
         console.log('[上传失败]', e);
+        throw e;
       });
   }
 

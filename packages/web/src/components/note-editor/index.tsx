@@ -103,10 +103,11 @@ const NoteEditor = defineComponent({
      */
     onUpload((files: FileList) => {
       UploadService.upload(files, (file) => {
-        setImage({
-          src: file.originUrl,
-          alt: file.name
-        });
+        file &&
+          setImage({
+            src: file.originUrl,
+            alt: file.name
+          });
       });
     });
 

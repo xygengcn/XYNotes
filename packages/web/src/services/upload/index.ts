@@ -46,17 +46,18 @@ export class UploadService {
       // 图片
       if (file.type.startsWith('image/')) {
         if (isCheckOnlineSync()) {
-          await ApiEvent.api.apiFetchResourceUpload(file).then((file) => {
-            setImage(file);
-          });
-        } else {
-          setImage({
-            originUrl: URL.createObjectURL(file),
-            size: file.size,
-            name: file.name,
-            mimeType: file.type
-          });
+          const fileReuslt = await ApiEvent.api.apiFetchResourceUpload(file).catch(() => null);
+          if (fileReuslt) {
+            setImage(fileReuslt);
+            continue;
+          }
         }
+        setImage({
+          originUrl: URL.createObjectURL(file),
+          size: file.size,
+          name: file.name,
+          mimeType: file.type
+        });
       }
     }
   }
