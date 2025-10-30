@@ -1,11 +1,11 @@
 import database from '@/database';
 import { isCheckOnlineSync } from '@/state/configs';
+import { IUploadFile } from '@/typings/assets';
 import { IConfigsColunm } from '@/typings/configs';
 import { INote, NoteStatus } from '@xynotes/typings';
 import ApiBridge from './api.bridge';
 import apiEventLocal from './local';
 import apiEventOnline from './online';
-import { IUploadFile } from '@/typings/assets';
 
 /**
  * 事件继承，所有数据处理都经过这里
@@ -133,13 +133,18 @@ class ApiEvent implements ApiBridge {
   // 移除归档
   async apiRecoveryNote(note: INote): Promise<INote> {
     return apiEventLocal
-      .apiRemoteNoteArchive(note)
+      .apiDeleteNoteArchive(note)
       .then(() => this.apiSaveOrUpdateNote({ ...note, status: NoteStatus.normal }, true));
   }
 
   // 移除归档
-  async apiRemoteNoteArchive(note: INote): Promise<boolean> {
-    return apiEventLocal.apiRemoteNoteArchive(note);
+  async apiDeleteNoteArchive(note: INote): Promise<boolean> {
+    return apiEventLocal.apiDeleteNoteArchive(note);
+  }
+
+  // 移除所有归档
+  async apiDeleteAllNoteArchive(): Promise<void> {
+    return apiEventLocal.apiDeleteAllNoteArchive();
   }
 
   // 拉取配置

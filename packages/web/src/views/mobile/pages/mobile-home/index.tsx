@@ -58,13 +58,13 @@ const MobileHome = defineComponent({
     };
 
     /**
-     * 删除
+     * 归档
      */
-    const handleDeleteNote = (note: Note) => {
+    const handleArchiveNote = (note: Note) => {
       window.$ui.confirm({
         type: 'warn',
         width: 300,
-        content: '确定删除这个笔记吗？',
+        content: '确定归档这个笔记吗？',
         onSubmit: () => {
           swipeListRef.value?.closeActions();
           note?.archive();
@@ -144,7 +144,7 @@ const MobileHome = defineComponent({
                       <div
                         class="mobile-home-content-list-scroll-right-delete"
                         onClick={() => {
-                          handleDeleteNote(props.item);
+                          handleArchiveNote(props.item);
                         }}
                       >
                         <Icon type="trash"> </Icon>

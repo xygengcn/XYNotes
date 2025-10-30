@@ -1,7 +1,7 @@
 import NoteItem from '@/components/note-item';
 import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import type { Note } from '@xynotes/store';
-import { fetchNoteArchiveList, notesStoreState, recovery, removeNote } from '@xynotes/store/note';
+import { fetchNoteArchiveList, notesStoreState, recovery, removeAllArchiveNote, removeNote } from '@xynotes/store/note';
 import { computed, defineComponent, onBeforeMount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
@@ -44,6 +44,17 @@ const DesktopSideContainerArchiveContent = defineComponent({
               }
             });
             break;
+          case 'deleteAll':
+            window.$ui.confirm({
+              type: 'warn',
+              width: 300,
+              content: '确定永久移除归档的全部笔记吗？',
+              onSubmit: () => {
+                removeAllArchiveNote();
+                window.$ui.toast('移除成功');
+              }
+            });
+            break;
         }
       }
     };
@@ -74,7 +85,8 @@ const DesktopSideContainerArchiveContent = defineComponent({
             v-contextmenu={{
               menuList: [
                 { label: '恢复', value: 'recovery' },
-                { label: '移除', value: 'delete' }
+                { label: '移除', value: 'delete' },
+                { label: '全部移除', value: 'deleteAll' }
               ],
               onSelect: handleContextmenu
             }}

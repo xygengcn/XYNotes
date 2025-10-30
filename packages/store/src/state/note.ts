@@ -1,4 +1,5 @@
 import ApiEvent from '@/api';
+import database from '@/database';
 import { Note } from '@/model/note';
 import { NoteListSortType } from '@/typings/configs';
 import { deleteNoteEvent, onNoteUpdate, updateNoteEvent } from '@xynotes/transport/web';
@@ -211,9 +212,20 @@ export const recovery = (note: INote) => {
  */
 export const removeNote = async (note: INote) => {
   state.value.archiveNoteList.delete(note.nid);
-  return await ApiEvent.api.apiRemoteNoteArchive(note);
+  return await ApiEvent.api.apiDeleteNoteArchive(note);
 };
 
+/**
+ * 删除所有归档笔记
+ * @returns
+ */
+export const removeAllArchiveNote = async () => {
+  return database.module('notes_archive').then((model) => {
+    return model.clear().then(() => {
+      state.value.archiveNoteList.reset([]);
+    });
+  });
+};
 /**
  * 拉取归档笔记
  * @returns

@@ -1,6 +1,6 @@
 import database from '@/database';
 import { IConfigsColunm } from '@/typings/configs';
-import { INote, NoteStatus } from '@xynotes/typings';
+import { INote } from '@xynotes/typings';
 import { omit } from '@xynotes/utils';
 
 /**
@@ -59,9 +59,15 @@ class ApiEventLocal {
     });
   }
   // 移除归档
-  async apiRemoteNoteArchive(note: INote): Promise<boolean> {
+  async apiDeleteNoteArchive(note: INote): Promise<boolean> {
     return database.module('notes_archive').then((model) => {
       return model.destory(note.nid).then(() => true);
+    });
+  }
+  // 删除所有归档
+  async apiDeleteAllNoteArchive(): Promise<void> {
+    return database.module('notes_archive').then((model) => {
+      return model.clear();
     });
   }
   // 拉取配置
