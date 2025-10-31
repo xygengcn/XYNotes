@@ -1,3 +1,3 @@
-import { useNoteEventBus } from '@/web';
+import { useNoteEventBus } from '@transport/web';
 
 export { useNoteEventBus };

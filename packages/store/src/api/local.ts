@@ -1,5 +1,5 @@
-import database from '@/database';
-import { IConfigsColunm } from '@/typings/configs';
+import database from '@store/database';
+import { IConfigsColunm } from '@store/typings/configs';
 import { INote } from '@xynotes/typings';
 import { omit } from '@xynotes/utils';
 

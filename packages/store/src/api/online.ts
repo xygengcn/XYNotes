@@ -1,6 +1,6 @@
-import { configsStoreState, isCheckOnlineSync } from '@/state/configs';
-import { IUploadFile } from '@/typings/assets';
-import { IConfigsColunm } from '@/typings/configs';
+import { configsStoreState, isCheckOnlineSync } from '@store/state/configs';
+import { IUploadFile } from '@store/typings/assets';
+import { IConfigsColunm } from '@store/typings/configs';
 import { INote } from '@xynotes/typings';
 import { Cookie, omit } from '@xynotes/utils';
 import axios, { AxiosError } from 'axios';

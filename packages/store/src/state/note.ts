@@ -1,7 +1,7 @@
-import ApiEvent from '@/api';
-import database from '@/database';
-import { Note } from '@/model/note';
-import { NoteListSortType } from '@/typings/configs';
+import ApiEvent from '@store/api';
+import database from '@store/database';
+import { Note } from '@store/model/note';
+import { NoteListSortType } from '@store/typings/configs';
 import { deleteNoteEvent, onNoteUpdate, updateNoteEvent } from '@xynotes/transport/web';
 import { INote } from '@xynotes/typings';
 import { ArrayMap } from '@xynotes/utils';

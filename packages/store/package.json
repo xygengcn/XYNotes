@@ -34,20 +34,24 @@
   },
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js"
     },
     "./configs": {
+      "development": "./src/state/configs.ts",
       "types": "./dist/state/configs.d.ts",
       "import": "./dist/configs.es.js"
     },
     "./app": {
+      "development": "./src/state/app.ts",
       "require": "./dist/app.cjs.js",
       "types": "./dist/state/app.d.ts",
       "import": "./dist/app.es.js"
     },
     "./note": {
+      "development": "./src/state/note.ts",
       "require": "./dist/note.cjs.js",
       "types": "./dist/state/note.d.ts",
       "import": "./dist/note.es.js"

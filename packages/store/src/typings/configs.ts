@@ -15,7 +15,7 @@ export interface INoteListSort {
 /**
  * 配置
  */
-export interface IConfigs {
+export type IConfigs = {
   // 桌面侧栏宽度
   SIDE_CONTAINER_MAX_WIDTH: number;
   // 桌面端笔记列表排序
@@ -28,7 +28,7 @@ export interface IConfigs {
   REMOTE_AUTHORIZATION: string;
   // 显示主界面快捷键
   SHORTCUT_KEY_SHOW: string;
-}
+};
 
 // 配置数据库
 export interface IConfigsColunm<K extends keyof IConfigs = keyof IConfigs> {

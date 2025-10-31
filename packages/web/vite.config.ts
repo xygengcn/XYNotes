@@ -37,6 +37,14 @@ export default defineConfig(({ mode }) => {
         {
           find: '@editor',
           replacement: fileURLToPath(new URL('../editor/src', import.meta.url))
+        },
+        {
+          find: '@store',
+          replacement: fileURLToPath(new URL('../store/src', import.meta.url))
+        },
+        {
+          find: '@transport',
+          replacement: fileURLToPath(new URL('../transport/src', import.meta.url))
         }
       ]
     },

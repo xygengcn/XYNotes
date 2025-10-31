@@ -13,7 +13,8 @@ export default defineConfig(
       resolve: {
         alias: {
           // @ts-ignore
-          '@': fileURLToPath(new URL('./src', import.meta.url))
+          '@': fileURLToPath(new URL('./src', import.meta.url)),
+          '@transport': fileURLToPath(new URL('./src', import.meta.url))
         }
       },
       build: {

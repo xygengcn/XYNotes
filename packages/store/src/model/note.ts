@@ -1,5 +1,5 @@
-import ApiEvent from '@/api';
-import { archiveNote, removeNote, saveNote, syncNote } from '@/state/note';
+import ApiEvent from '@store/api';
+import { archiveNote, removeNote, saveNote, syncNote } from '@store/state/note';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@xynotes/typings';
 import { debounce, downloadFile, omit, uuid } from '@xynotes/utils';
 import { toRaw } from 'vue';
