@@ -38,9 +38,6 @@
     "examples/**/*.tsx",
     "examples/**/*.vue"
   ],
-  "exclude": [
-    "src/vditor/*"
-  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

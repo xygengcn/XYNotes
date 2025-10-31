@@ -22,6 +22,5 @@
     "customConditions": ["development"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","examples/**/*.ts", "examples/**/*.d.ts", "examples/**/*.tsx", "examples/**/*.vue"],
-  "exclude": ["src/vditor/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
