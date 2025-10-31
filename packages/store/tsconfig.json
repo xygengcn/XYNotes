@@ -12,16 +12,41 @@
     "isolatedModules": false,
     "skipLibCheck": false,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "noImplicitAny": false,
     "declaration": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@store/*": [
+        "src/*"
+      ],
     },
-    "customConditions": ["development"]
+    "customConditions": [
+      "development"
+    ]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","examples/**/*.ts", "examples/**/*.d.ts", "examples/**/*.tsx", "examples/**/*.vue"],
-  "exclude": ["src/vditor/*"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "examples/**/*.ts",
+    "examples/**/*.d.ts",
+    "examples/**/*.tsx",
+    "examples/**/*.vue"
+  ],
+  "exclude": [
+    "src/vditor/*"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./node_modules/@xynotes/transport/tsconfig.json"
+    }
+  ]
 }

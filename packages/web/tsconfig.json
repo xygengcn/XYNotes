@@ -27,13 +27,14 @@
       "@/*": ["src/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost", "ESNext"],
-    "customConditions": ["development"]
+    // "customConditions": ["development"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/**/*.vue"],
   "exclude": ["node_modules"],
   "references": [
     { "path": "./node_modules/@xynotes/components/tsconfig.json" },
     { "path": "./node_modules/@xynotes/editor/tsconfig.json" },
-    { "path": "./node_modules/@xynotes/app-api/tsconfig.json" }
+    { "path": "./node_modules/@xynotes/app-api/tsconfig.json" },
+    { "path": "./node_modules/@xynotes/store/tsconfig.json" }
   ]
 }

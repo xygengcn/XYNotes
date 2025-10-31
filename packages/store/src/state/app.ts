@@ -1,6 +1,6 @@
-import ApiEvent from '@/api';
-import database from '@/database';
-import { AppLoadStatus } from '@/typings/app';
+import ApiEvent from '@store/api';
+import database from '@store/database';
+import { AppLoadStatus } from '@store/typings/app';
 import { readonly, ref } from 'vue';
 import { syncConfigs } from './configs';
 import { setNoteList } from './note';

@@ -17,11 +17,13 @@
   ],
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     },
     "./web": {
+      "development": "./src/web/index.ts",
       "import": "./dist/web.es.js",
       "require": "./dist/web.cjs.js",
       "types": "./dist/web/index.d.ts"

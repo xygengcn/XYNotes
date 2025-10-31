@@ -1,7 +1,6 @@
 import { Checkbox, Icon, Loading, Viewer } from '@xynotes/components';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
-import { ApiEvent } from '@xynotes/store';
-import type { IUploadFile } from 'node_modules/@xynotes/store/dist/typings/assets';
+import { ApiEvent, type IUploadFile } from '@xynotes/store';
 import { computed, defineComponent, ref } from 'vue';
 import { RecycleScroller } from 'vue-virtual-scroller';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';

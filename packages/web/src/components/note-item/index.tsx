@@ -1,5 +1,5 @@
 import { Icon } from '@xynotes/components';
-import { Note } from '@xynotes/store';
+import type { Note } from '@xynotes/store';
 import { activeNote, notesStoreState } from '@xynotes/store/note';
 import { dateFormat, highLight, preventDefault } from '@xynotes/utils';
 import { type PropType, defineComponent, h, nextTick, ref, watch } from 'vue';

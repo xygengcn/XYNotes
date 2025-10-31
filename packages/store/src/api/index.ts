@@ -1,7 +1,7 @@
-import database from '@/database';
-import { isCheckOnlineSync } from '@/state/configs';
-import { IUploadFile } from '@/typings/assets';
-import { IConfigsColunm } from '@/typings/configs';
+import database from '@store/database';
+import { isCheckOnlineSync } from '@store/state/configs';
+import { IUploadFile } from '@store/typings/assets';
+import { IConfigsColunm } from '@store/typings/configs';
 import { INote, NoteStatus } from '@xynotes/typings';
 import ApiBridge from './api.bridge';
 import apiEventLocal from './local';

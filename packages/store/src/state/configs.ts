@@ -1,4 +1,4 @@
-import ApiEvent from '@/api';
+import ApiEvent from '@store/api';
 import { is } from '@xynotes/utils';
 import { readonly, ref, toRaw } from 'vue';
 import { IConfigs, NoteListSortType } from '../typings/configs';
