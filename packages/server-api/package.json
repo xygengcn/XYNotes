@@ -6,7 +6,8 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rm -rf ./dist && tsc --project tsconfig.build.json && mkdir ./dist/prisma && cp ./prisma/schema.prisma ./dist/prisma/schema.prisma",
-    "dev": "nodemon src/index.ts",
+    "dev": "yarn kill && nodemon src/index.ts",
+    "kill": "netstat -tulnp | grep :30000 | awk '{print $7}' | cut -d'/' -f1 | xargs -r kill",
     "start": "node dist/index.js",
     "postinstall": "npm run build",
     "prisma:generate": "prisma generate",

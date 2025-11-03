@@ -22,6 +22,8 @@ export type IConfigs = {
   NOTE_LIST_SORT: INoteListSort;
   // 在线同步地址
   REMOTE_BASE_URL: string;
+  // 资源地址
+  REMOTE_RESOURCES_BASE_URL: string;
   // 是否同步在线
   REMOTE_ONLINE_SYNC: boolean;
   // 在线认证Authorization

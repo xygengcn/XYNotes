@@ -8,4 +8,5 @@ declare module '*.vue' {
 }
 
 declare const __VITE_APP_AXIOS_BASEURL__: string;
+declare const __VITE_APP_RESOURCES_BASEURL__: string;
 declare const __VITE_APP_ENV__: 'development' | 'production' | 'sit';

@@ -63,6 +63,7 @@ export default defineConfig(({ mode }) => {
     define: {
       __APP_VERSION__: JSON.stringify(appVersion),
       __VITE_APP_AXIOS_BASEURL__: JSON.stringify(env.VITE_APP_AXIOS_BASEURL || ''),
+      __VITE_APP_RESOURCES_BASEURL__: JSON.stringify(env.VITE_APP_RESOURCES_BASEURL || ''),
       __VITE_APP_ENV__: JSON.stringify(env.VITE_APP_ENV)
     },
     envPrefix: [

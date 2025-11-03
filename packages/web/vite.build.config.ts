@@ -1,12 +1,12 @@
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { fileURLToPath } from 'url';
 import { defineConfig, loadEnv, PluginOption } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import manifestJson from './mainifest';
 import packageConfig from './package.json';
-import path from 'path';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 const appVersion = packageConfig.version;
 export default defineConfig(({ mode }) => {
@@ -87,6 +87,7 @@ export default defineConfig(({ mode }) => {
     define: {
       __APP_VERSION__: JSON.stringify(appVersion),
       __VITE_APP_AXIOS_BASEURL__: JSON.stringify(env.VITE_APP_AXIOS_BASEURL || ''),
+      __VITE_APP_RESOURCES_BASEURL__: JSON.stringify(env.VITE_APP_RESOURCES_BASEURL || ''),
       __VITE_APP_ENV__: JSON.stringify(env.VITE_APP_ENV)
     },
     envPrefix: [

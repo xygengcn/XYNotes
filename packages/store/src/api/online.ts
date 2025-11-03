@@ -162,7 +162,7 @@ class ApiEventOnline {
   async apiFetchResourceUpload(file: File): Promise<IUploadFile> {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('origin', location.origin);
+    formData.append('origin', configsStoreState.value.REMOTE_RESOURCES_BASE_URL || location.origin);
     // 开始上传
     return this.fetch('/note/assets/upload', formData, {
       headers: {

@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "vite --port=8080 --mode development",
     "sit": "vite --port=8080 --mode sit",
+    "frp": "vite --port=8080 --mode frp",
     "build": "vite build --config vite.build.config.ts --mode production",
     "build:sit": "vite build --config vite.build.config.ts --mode sit",
     "build:app": "vite build --config vite.app.config.ts --mode production",

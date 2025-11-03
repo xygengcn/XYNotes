@@ -117,3 +117,4 @@ prisma/*.db-*
 
 # assets
 data
+core

@@ -13,6 +13,8 @@ const state = ref<IConfigs>({
   NOTE_LIST_SORT: { value: NoteListSortType.updated, label: '更新时间' },
   // 在线同步地址
   REMOTE_BASE_URL: __VITE_APP_AXIOS_BASEURL__,
+  // 资源地址
+  REMOTE_RESOURCES_BASE_URL: __VITE_APP_RESOURCES_BASEURL__,
   // 是否同步在线
   REMOTE_ONLINE_SYNC: false,
   // 在线认证Authorization
