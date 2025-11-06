@@ -1,30 +1,30 @@
-import { defineComponent } from 'vue';
+import { configsStoreState } from '@xynotes/store/configs';
+import { computed, defineComponent } from 'vue';
 import './index.scss';
+
+// 最大值
+export const SIDE_CONTAINER_MAX_WIDTH = 500;
+
+// 最小值
+export const SIDE_CONTAINER_MIN_WIDTH = 250;
 
 const DesktopSideContainer = defineComponent({
   name: 'DesktopSideContainer',
-  props: {
-    width: {
-      type: Number,
-      default: 250
-    },
-    maxWidth: {
-      type: Number,
-      default: 500
-    },
-    minWidth: {
-      type: Number,
-      default: 250
-    }
-  },
   setup(props) {
+    /**
+     * 列表栏长度
+     */
+    const sideContainerWidth = computed(() => {
+      return configsStoreState.value.SIDE_CONTAINER_MAX_WIDTH;
+    });
+
     return () => (
       <div
         class="desktop-side-container"
         style={{
-          width: props.width + 'px',
-          minWidth: props.minWidth + 'px',
-          maxWidth: props.maxWidth + 'px'
+          width: sideContainerWidth.value + 'px',
+          minWidth: SIDE_CONTAINER_MIN_WIDTH + 'px',
+          maxWidth: SIDE_CONTAINER_MAX_WIDTH + 'px'
         }}
       >
         <router-view name="side" />

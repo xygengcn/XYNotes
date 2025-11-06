@@ -1,16 +1,16 @@
+import { openDevtools } from '@xynotes/app-api';
+import { VueContextMenu } from '@xynotes/components';
 import '@xynotes/components/style.css';
+import { is } from '@xynotes/utils';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 import { createApp } from 'vue';
 import VueTippy from 'vue-tippy';
 import App from './App';
 import './components/index';
-import { VueContextMenu } from '@xynotes/components';
 import './registerServiceWorker';
 import router from './router';
 import './services/shortcut';
-import { is } from '@xynotes/utils';
-import { openDevtools } from '@xynotes/app-api';
 
 // 开发环境
 if (is.development() && is.app()) {

@@ -12,8 +12,8 @@ import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
 
 export const DESKTOP_NAV_MENU_WIDTH = 64;
 
-const DesktopNavMenu = defineComponent({
-  name: 'DesktopNavMenu',
+const DesktopNavContainer = defineComponent({
+  name: 'DesktopNavContainer',
   setup() {
     const router = useRouter();
     const desktopNavMenuList: IdesktopNavMenuItem[] = [
@@ -94,4 +94,4 @@ const DesktopNavMenu = defineComponent({
   }
 });
 
-export default DesktopNavMenu;
+export default DesktopNavContainer;

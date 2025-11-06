@@ -142,7 +142,6 @@ const router = createRouter({
   }
 });
 router.beforeEach((to, _from, next) => {
-  console.log('desktop', to.meta?.device, appStoreState.value.mode);
   if (to.meta?.device == 'desktop') {
     if (appStoreState.value.mode == AppMode.mobile) {
       return next({ name: 'mobile-home' });

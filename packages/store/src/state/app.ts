@@ -22,8 +22,19 @@ const state = ref({
   networkStatus: window.navigator.onLine,
 
   // 模式
-  mode: is.mobile() || (is.tablet() && is.portrait()) ? AppMode.mobile : AppMode.desktop
+  mode: is.mobile() || (is.tablet() && is.portrait()) ? AppMode.mobile : AppMode.desktop,
+
+  // 桌面端全屏模式
+  desktopFullScreen: false
 });
+
+/**
+ * 设置桌面端全屏模式
+ * @param flag 是否启用全屏模式
+ */
+export const setDesktopFullScreen = (flag: boolean) => {
+  state.value.desktopFullScreen = flag;
+};
 
 /**
  * 修改网络状态
