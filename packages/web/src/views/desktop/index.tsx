@@ -1,10 +1,10 @@
 import { configsStoreState, setConfig } from '@xynotes/store/configs';
-import { computed, defineComponent, nextTick, onMounted, ref } from 'vue';
-import './index.scss';
-import DesktopMainContainer from './main-container';
-import DesktopNavMenu, { DESKTOP_NAV_MENU_WIDTH } from './nav-menu';
-import DesktopSideContainer from './side-container';
 import { debounce } from '@xynotes/utils';
+import { computed, defineComponent, nextTick, onMounted, ref } from 'vue';
+import DesktopMainContainer from './contianer/main';
+import DesktopNavMenu, { DESKTOP_NAV_MENU_WIDTH } from './contianer/nav';
+import DesktopSideContainer from './contianer/side';
+import './index.scss';
 
 // 最大值
 export const SIDE_CONTAINER_MAX_WIDTH = 500;

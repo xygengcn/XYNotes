@@ -1,4 +1,5 @@
-import { is } from '@xynotes/utils';
+import { AppMode } from '@xynotes/store';
+import { appStoreState } from '@xynotes/store/app';
 import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
@@ -17,16 +18,16 @@ const routes: Array<RouteRecordRaw> = [
             path: '',
             name: 'desktop-main-default',
             components: {
-              side: () => import('@/views/desktop/side-container/pages/side-container-list'),
-              main: () => import('@/views/desktop/main-container/pages/main-container-default')
+              side: () => import('@/views/desktop/pages/list/side'),
+              main: () => import('@/views/desktop/contianer/main/default')
             }
           },
           {
             path: 'detail/:nid',
             name: 'desktop-main-detail',
             components: {
-              side: () => import('@/views/desktop/side-container/pages/side-container-list'),
-              main: () => import('@/views/desktop/main-container/pages/main-container-detail')
+              side: () => import('@/views/desktop/pages/list/side'),
+              main: () => import('@/views/desktop/pages/list/main/detail')
             }
           }
         ]
@@ -42,16 +43,16 @@ const routes: Array<RouteRecordRaw> = [
             path: '',
             name: 'desktop-setting-default',
             components: {
-              side: () => import('@/views/desktop/side-container/pages/side-container-setting'),
-              main: () => import('@/views/desktop/main-container/pages/main-container-default')
+              side: () => import('@/views/desktop/pages/settings/side'),
+              main: () => import('@/views/desktop/contianer/main/default')
             }
           },
           {
             path: 'config',
             name: 'desktop-setting-config',
             components: {
-              side: () => import('@/views/desktop/side-container/pages/side-container-setting'),
-              main: () => import('@/views/desktop/main-container/pages/main-container-config')
+              side: () => import('@/views/desktop/pages/settings/side'),
+              main: () => import('@/views/desktop/pages/settings/main')
             }
           }
         ]
@@ -67,16 +68,16 @@ const routes: Array<RouteRecordRaw> = [
             path: '',
             name: 'desktop-archive-default',
             components: {
-              side: () => import('@/views/desktop/side-container/pages/side-container-archive'),
-              main: () => import('@/views/desktop/main-container/pages/main-container-archive')
+              side: () => import('@/views/desktop/pages/archive/side'),
+              main: () => import('@/views/desktop/pages/archive/main')
             }
           },
           {
             path: 'preview/:nid',
             name: 'desktop-archive-preview',
             components: {
-              side: () => import('@/views/desktop/side-container/pages/side-container-archive'),
-              main: () => import('@/views/desktop/main-container/pages/main-container-archive')
+              side: () => import('@/views/desktop/pages/archive/side'),
+              main: () => import('@/views/desktop/pages/archive/main')
             }
           }
         ]
@@ -88,7 +89,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/edit/:nid',
-    component: () => import('@/views/edit')
+    component: () => import('@/views/desktop/pages/edit')
   },
   {
     path: '/m',
@@ -141,30 +142,18 @@ const router = createRouter({
   }
 });
 router.beforeEach((to, _from, next) => {
+  console.log('desktop', to.meta?.device, appStoreState.value.mode);
   if (to.meta?.device == 'desktop') {
-    if (is.mobile()) {
-      return next({ name: 'mobile-home' });
-    }
-    if (is.tablet() && is.portrait()) {
+    if (appStoreState.value.mode == AppMode.mobile) {
       return next({ name: 'mobile-home' });
     }
   }
   if (to.meta?.device == 'mobile') {
-    if (is.desktop()) {
-      return next({ name: 'desktop-main' });
-    }
-    if (is.tablet() && is.landscape()) {
+    if (appStoreState.value.mode == AppMode.desktop) {
       return next({ name: 'desktop-main' });
     }
   }
   next();
-});
-
-/**
- * 刷新页面
- */
-window.screen.orientation?.addEventListener('change', () => {
-  window.location.reload();
 });
 
 export default router;

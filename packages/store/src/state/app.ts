@@ -1,6 +1,6 @@
 import ApiEvent from '@store/api';
 import database from '@store/database';
-import { AppLoadStatus } from '@store/typings/app';
+import { AppLoadStatus, AppMode } from '@store/typings/app';
 import { is } from '@xynotes/utils';
 import { computed, readonly, ref } from 'vue';
 import { configsStoreState, syncConfigs } from './configs';
@@ -19,7 +19,10 @@ const state = ref({
   version: __APP_VERSION__,
 
   // 网络状态
-  networkStatus: window.navigator.onLine
+  networkStatus: window.navigator.onLine,
+
+  // 模式
+  mode: is.mobile() || (is.tablet() && is.portrait()) ? AppMode.mobile : AppMode.desktop
 });
 
 /**
@@ -116,4 +119,9 @@ export const appStoreState = readonly(state);
 // 监听网络变化
 window.addEventListener('online', () => {
   changeAppNetworkStatus(navigator.onLine);
+});
+// 监听屏幕旋转
+window.screen.orientation?.addEventListener('change', () => {
+  window.location.reload();
+  state.value.mode = is.mobile() || (is.tablet() && is.portrait()) ? AppMode.mobile : AppMode.desktop;
 });

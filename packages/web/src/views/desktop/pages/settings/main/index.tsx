@@ -1,15 +1,15 @@
 import RemoteConfigSetting from '@/components/remote-setting';
-import { defineComponent } from 'vue';
-import './index.scss';
 import ShortcutkeysSetting from '@/components/shortcutkey-setting';
 import { is } from '@xynotes/utils';
+import { defineComponent } from 'vue';
+import './index.scss';
 
-const DesktopMainContainerConfig = defineComponent({
-  name: 'DesktopMainContainerConfig',
+const DesktopMainContainerSetting = defineComponent({
+  name: 'DesktopMainContainerSetting',
   setup() {
     return () => (
-      <div class="desktop-main-container-config" data-tauri-drag-region>
-        <div class="desktop-main-container-config-container">
+      <div class="desktop-main-container-setting" data-tauri-drag-region>
+        <div class="desktop-main-container-setting-container">
           <RemoteConfigSetting></RemoteConfigSetting>
           <ShortcutkeysSetting v-show={is.app()}></ShortcutkeysSetting>
         </div>
@@ -18,4 +18,4 @@ const DesktopMainContainerConfig = defineComponent({
   }
 });
 
-export default DesktopMainContainerConfig;
+export default DesktopMainContainerSetting;

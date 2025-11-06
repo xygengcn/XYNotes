@@ -64,7 +64,7 @@ const is = {
     return (
       window.screen.orientation?.type === 'portrait-primary' ||
       window.screen.orientation?.type === 'portrait-secondary' ||
-      Math.abs(window.orientation) !== 0
+      Math.abs(window.orientation) === 0
     );
   },
   /**
