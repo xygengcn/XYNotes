@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
             name: 'desktop-main-default',
             components: {
               side: () => import('@/views/desktop/pages/list/side'),
-              main: () => import('@/views/desktop/contianer/main/default')
+              main: () => import('@/views/desktop/container/main/default')
             }
           },
           {
@@ -44,7 +44,7 @@ const routes: Array<RouteRecordRaw> = [
             name: 'desktop-setting-default',
             components: {
               side: () => import('@/views/desktop/pages/settings/side'),
-              main: () => import('@/views/desktop/contianer/main/default')
+              main: () => import('@/views/desktop/container/main/default')
             }
           },
           {

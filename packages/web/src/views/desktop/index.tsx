@@ -1,9 +1,9 @@
 import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { debounce } from '@xynotes/utils';
 import { computed, defineComponent, nextTick, onMounted, ref } from 'vue';
-import DesktopMainContainer from './contianer/main';
-import DesktopNavMenu, { DESKTOP_NAV_MENU_WIDTH } from './contianer/nav';
-import DesktopSideContainer from './contianer/side';
+import DesktopMainContainer from './container/main';
+import DesktopNavMenu, { DESKTOP_NAV_MENU_WIDTH } from './container/nav';
+import DesktopSideContainer from './container/side';
 import './index.scss';
 
 // 最大值
