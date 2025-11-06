@@ -2,7 +2,7 @@ import { UploadService } from '@/services/upload';
 import { Icon } from '@xynotes/components';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
 import type { Note } from '@xynotes/store';
-import { isCheckOnlineSync } from '@xynotes/store/configs';
+import { isCheckOnlineSync } from '@xynotes/store/app';
 import { stopPropagation } from '@xynotes/utils';
 import { defineComponent, type PropType } from 'vue';
 import { showNoteGalleryDrawer } from '../../../plugins/gallery';
@@ -68,7 +68,7 @@ export const MobileDetailTools = defineComponent({
         <div class="mobile-detail-tools-item">
           <Icon type="photo" size={26} onClick={handleSelectImageFile}></Icon>
         </div>
-        <div class="mobile-detail-tools-item" v-show={isCheckOnlineSync()}>
+        <div class="mobile-detail-tools-item" v-show={isCheckOnlineSync.value}>
           <Icon type="gallery" size={24} onClick={showNoteGalleryDrawer}></Icon>
         </div>
         <div class="mobile-detail-tools-item">

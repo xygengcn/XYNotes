@@ -1,3 +1,3 @@
-export { useEditor, Editor } from './editor';
-export * from './tiptap';
+export { Editor, useEditor } from './editor';
 export { EditorPerview, useEditorPreview } from './preview';
+export * from './tiptap';

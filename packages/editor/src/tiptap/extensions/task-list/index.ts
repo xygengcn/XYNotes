@@ -1,4 +1,16 @@
-import { TaskList, TaskItem } from '@tiptap/extension-list';
+import { TaskItem, TaskList } from '@tiptap/extension-list';
+
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    taskList: {
+      /**
+       * Toggle a task list
+       * @example editor.commands.toggleTaskList()
+       */
+      toggleTaskList: () => ReturnType;
+    };
+  }
+}
 
 const TaskListExtension = TaskList.extend({
   addOptions() {
@@ -23,4 +35,4 @@ const TaskItemExtension = TaskItem.extend({
   }
 });
 
-export { TaskListExtension, TaskItemExtension };
+export { TaskItemExtension, TaskListExtension };

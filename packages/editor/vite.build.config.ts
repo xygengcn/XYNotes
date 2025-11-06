@@ -14,17 +14,19 @@ export default defineConfig(
           template: {
             compilerOptions: {
               isCustomElement: (tag) => {
-                return ['mind-mark', 'code-preview','img-viewer'].includes(tag);
+                return ['mind-mark', 'code-preview', 'img-viewer'].includes(tag);
               }
             }
           }
         }),
         vueJsx({
           isCustomElement: (tag) => {
-            return ['mind-mark', 'code-preview','img-viewer'].includes(tag);
+            return ['mind-mark', 'code-preview', 'img-viewer'].includes(tag);
           }
         }),
-        dts({ entryRoot: './src' })
+        dts({
+          rollupTypes: true
+        })
       ],
       base: path.join(__dirname, './src'),
       envPrefix: ['VITE_'],

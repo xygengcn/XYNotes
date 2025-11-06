@@ -1,4 +1,5 @@
-import { configsStoreState, isCheckOnlineSync } from '@store/state/configs';
+import { changeAppNetworkStatus, isCheckOnlineSync } from '@store/state/app';
+import { configsStoreState } from '@store/state/configs';
 import { IUploadFile } from '@store/typings/assets';
 import { IConfigsColunm } from '@store/typings/configs';
 import { INote } from '@xynotes/typings';
@@ -18,15 +19,13 @@ interface ApiResponse<T> {
 }
 
 class ApiEventOnline {
-  // 由于网络多次失败问题，会停止网络同步状态
-  private ignoreOnlineSync: boolean = false;
   // 由于网络多次失败问题，记录失败次数
   private onlineSyncErrorCount: number = 0;
 
   // 基础拉取
   private async fetch<T extends unknown = any>(url: string, body: any = {}, configs: any = {}): Promise<T> {
     // 忽略同步
-    if (isCheckOnlineSync() && this.ignoreOnlineSync) {
+    if (!isCheckOnlineSync.value) {
       return Promise.resolve(null as any);
     }
 
@@ -48,7 +47,8 @@ class ApiEventOnline {
         const data = response.data;
         if (data.code === 200) {
           this.onlineSyncErrorCount = 0;
-          this.ignoreOnlineSync = false;
+          // 由于网络多次失败问题，会停止网络同步状态
+          changeAppNetworkStatus(true);
           return data.data;
         }
         data.userMsg && window.$ui.toast(data.userMsg);
@@ -58,7 +58,8 @@ class ApiEventOnline {
         // 记录失败次数
         this.onlineSyncErrorCount++;
         if (this.onlineSyncErrorCount >= 3) {
-          this.ignoreOnlineSync = true;
+          // 由于网络多次失败问题，会停止网络同步状态
+          changeAppNetworkStatus(false);
           console.error('[online] fetch 触发熔断机制', this.onlineSyncErrorCount);
         }
         console.error('[online] fetch', this.onlineSyncErrorCount, 'Error:', error);

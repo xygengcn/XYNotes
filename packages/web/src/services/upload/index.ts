@@ -1,6 +1,6 @@
 import type { IUploadFile } from '@xynotes/store';
 import { ApiEvent } from '@xynotes/store';
-import { isCheckOnlineSync } from '@xynotes/store/configs';
+import { isCheckOnlineSync } from '@xynotes/store/app';
 
 export class UploadService {
   /**
@@ -45,7 +45,7 @@ export class UploadService {
     for (const file of files) {
       // 图片
       if (file.type.startsWith('image/')) {
-        if (isCheckOnlineSync()) {
+        if (isCheckOnlineSync.value) {
           const fileReuslt = await ApiEvent.api.apiFetchResourceUpload(file).catch(() => null);
           if (fileReuslt) {
             setImage(fileReuslt);

@@ -1,5 +1,4 @@
 import ApiEvent from '@store/api';
-import { is } from '@xynotes/utils';
 import { readonly, ref, toRaw } from 'vue';
 import { IConfigs, NoteListSortType } from '../typings/configs';
 
@@ -22,17 +21,6 @@ const state = ref<IConfigs>({
   // 显示主界面快捷键
   SHORTCUT_KEY_SHOW: ''
 });
-
-/**
- * 检查是否已配置在线同步
- * @returns
- */
-export function isCheckOnlineSync(): boolean {
-  if (state.value.REMOTE_ONLINE_SYNC === true && is.url(state.value.REMOTE_BASE_URL)) {
-    return true;
-  }
-  return false;
-}
 
 /**
  * 保存配置

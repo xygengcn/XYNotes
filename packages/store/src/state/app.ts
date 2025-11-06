@@ -1,8 +1,9 @@
 import ApiEvent from '@store/api';
 import database from '@store/database';
 import { AppLoadStatus } from '@store/typings/app';
-import { readonly, ref } from 'vue';
-import { syncConfigs } from './configs';
+import { is } from '@xynotes/utils';
+import { computed, readonly, ref } from 'vue';
+import { configsStoreState, syncConfigs } from './configs';
 import { setNoteList } from './note';
 
 declare const __APP_VERSION__: string;
@@ -10,7 +11,37 @@ declare const __APP_VERSION__: string;
 /**
  * 配置
  */
-const state = ref({ loadStatus: AppLoadStatus.configsLoading, version: __APP_VERSION__ });
+const state = ref({
+  // 加载状态
+  loadStatus: AppLoadStatus.configsLoading,
+
+  // 版本
+  version: __APP_VERSION__,
+
+  // 网络状态
+  networkStatus: window.navigator.onLine
+});
+
+/**
+ * 修改网络状态
+ * @param status
+ */
+export const changeAppNetworkStatus = (status: boolean) => {
+  state.value.networkStatus = status;
+};
+
+/**
+ * 是否网络在线
+ */
+export const isCheckOnlineSync = computed(() => {
+  if (state.value.networkStatus === false) {
+    return false;
+  }
+  if (configsStoreState.value.REMOTE_ONLINE_SYNC === true && is.url(configsStoreState.value.REMOTE_BASE_URL)) {
+    return true;
+  }
+  return false;
+});
 
 // 修改状态
 export const setLoadStatus = (status: AppLoadStatus) => {
@@ -81,3 +112,8 @@ export const initAppData = async () => {
 
 // 数据
 export const appStoreState = readonly(state);
+
+// 监听网络变化
+window.addEventListener('online', () => {
+  changeAppNetworkStatus(navigator.onLine);
+});

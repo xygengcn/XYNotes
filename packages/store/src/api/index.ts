@@ -1,5 +1,5 @@
 import database from '@store/database';
-import { isCheckOnlineSync } from '@store/state/configs';
+import { isCheckOnlineSync } from '@store/state/app';
 import { IUploadFile } from '@store/typings/assets';
 import { IConfigsColunm } from '@store/typings/configs';
 import { INote, NoteStatus } from '@xynotes/typings';
@@ -30,7 +30,7 @@ class ApiEvent implements ApiBridge {
     return apiEventLocal
       .apiFetchNoteListData()
       .then((localResult) => {
-        if (isCheckOnlineSync()) {
+        if (isCheckOnlineSync.value) {
           return apiEventOnline.apiFetchNoteListData(content).then((onlineResult) => {
             return localResult.concat(onlineResult);
           });
@@ -50,7 +50,7 @@ class ApiEvent implements ApiBridge {
     // 线上数据
     let onlineNote: INote | null = null;
 
-    if (isCheckOnlineSync()) {
+    if (isCheckOnlineSync.value) {
       onlineNote = await apiEventOnline.apiFetchNoteDetailData(nid).catch(() => null);
     }
 
@@ -76,7 +76,7 @@ class ApiEvent implements ApiBridge {
   async apiSaveOrUpdateNote(note: INote, onlineSync: boolean): Promise<INote> {
     const content = structuredClone(note);
     return apiEventLocal.apiSaveOrUpdateNote(content).then((local) => {
-      if (isCheckOnlineSync() && onlineSync) {
+      if (isCheckOnlineSync.value && onlineSync) {
         return apiEventOnline
           .apiSaveOrUpdateNote(local)
           .then((result) => {
@@ -97,7 +97,7 @@ class ApiEvent implements ApiBridge {
       apiEventLocal.apiAddNoteArchive({ ...note, status: NoteStatus.archive }).catch(() => null);
 
       // 在线同步
-      if (isCheckOnlineSync()) {
+      if (isCheckOnlineSync.value) {
         return apiEventOnline.apiArchiveNote(note);
       }
       return result;
@@ -107,7 +107,7 @@ class ApiEvent implements ApiBridge {
   // 同步笔记
   async apiSyncNote(note: INote): Promise<INote | null> {
     // 同步线上
-    if (isCheckOnlineSync()) {
+    if (isCheckOnlineSync.value) {
       return apiEventOnline.apiSyncNote(note).then((online) => {
         return apiEventLocal.apiSaveOrUpdateNote(note, true).then(() => {
           return online;
