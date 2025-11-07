@@ -10,7 +10,7 @@ export const SIDE_CONTAINER_MIN_WIDTH = 250;
 
 const DesktopSideContainer = defineComponent({
   name: 'DesktopSideContainer',
-  setup(props) {
+  setup() {
     /**
      * 列表栏长度
      */

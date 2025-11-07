@@ -1,0 +1,12 @@
+.desktop-left-container {
+  display: flex;
+  width: max-content;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+
+  &-wrap {
+    position: relative;
+    display: flex;
+  }
+}

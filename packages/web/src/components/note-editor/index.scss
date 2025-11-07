@@ -4,6 +4,7 @@
   flex-direction: column;
   height: 100%;
   z-index: 0;
+  position: relative;
 
   @include mobileStyle() {
     .note-editor {

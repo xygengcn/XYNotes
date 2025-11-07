@@ -1,5 +1,6 @@
 import { AppMode } from '@xynotes/store';
 import { appStoreState } from '@xynotes/store/app';
+import { is } from '@xynotes/utils';
 import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
@@ -142,6 +143,7 @@ const router = createRouter({
   }
 });
 router.beforeEach((to, _from, next) => {
+  console.log(111, appStoreState.value.mode, is.tablet(), is.landscape(), is.portrait());
   if (to.meta?.device == 'desktop') {
     if (appStoreState.value.mode == AppMode.mobile) {
       return next({ name: 'mobile-home' });

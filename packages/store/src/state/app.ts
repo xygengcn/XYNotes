@@ -135,4 +135,5 @@ window.addEventListener('online', () => {
 window.screen.orientation?.addEventListener('change', () => {
   window.location.reload();
   state.value.mode = is.mobile() || (is.tablet() && is.portrait()) ? AppMode.mobile : AppMode.desktop;
+  console.log('[screen]', state.value.mode);
 });
