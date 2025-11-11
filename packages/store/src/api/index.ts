@@ -2,7 +2,7 @@ import database from '@store/database';
 import { isCheckOnlineSync } from '@store/state/app';
 import { IUploadFile } from '@store/typings/assets';
 import { IConfigsColunm } from '@store/typings/configs';
-import { INote, NoteStatus } from '@xynotes/typings';
+import { INote, ITaskItem, NoteStatus } from '@xynotes/typings';
 import ApiBridge from './api.bridge';
 import apiEventLocal from './local';
 import apiEventOnline from './online';
@@ -168,6 +168,28 @@ class ApiEvent implements ApiBridge {
   // 拉取文件
   async apiFetchResourceList(): Promise<{ data: IUploadFile[]; next: string }> {
     return apiEventOnline.apiFetchResourceList();
+  }
+
+  // 任务列表
+  async apiFetchTaskListData(): Promise<ITaskItem[]> {
+    return apiEventOnline.apiFetchTaskListData();
+  }
+
+  // 添加任务
+  async apiSaveOrUpdateTask(task: ITaskItem): Promise<ITaskItem> {
+    return apiEventOnline.apiSaveOrUpdateTask(task);
+  }
+
+  // 删除任务
+  async apiDeleteTask(task: ITaskItem): Promise<{ result: boolean }> {
+    return apiEventOnline.apiDeleteTask(task);
+  }
+
+  // 更新任务排序
+  async apiSaveOrUpdateTaskSort(
+    list: Array<Pick<ITaskItem, 'taskId' | 'quadrant' | 'priority'>>
+  ): Promise<{ result: boolean }> {
+    return apiEventOnline.apiSaveOrUpdateTaskSort(list);
   }
 }
 export default ApiEvent;

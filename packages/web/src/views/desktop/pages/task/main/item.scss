@@ -2,14 +2,21 @@
 .desktop-task-main-task-item {
   display: flex;
   align-items: center;
+  position: relative;
   width: 100%;
   padding: 10px;
   border-radius: 8px;
+  cursor: move;
   &:hover {
     background-color: var(--task-item-bg-color);
   }
-  cursor: pointer;
+
+  // 已完成
+  &.done {
+    opacity: 0.6;
+  }
   &-checkbox {
+    cursor: pointer;
     margin-right: 8px;
     .checkbox {
       &::before {
@@ -22,6 +29,7 @@
     overflow: hidden;
     &-title {
       font-size: 14px;
+      font-family: var(--font-family-medium);
       color: var(--theme-default-color);
       @include line(1);
     }
@@ -29,6 +37,30 @@
       font-size: 13px;
       color: var(--theme-light-color);
       padding-top: 2px;
+    }
+  }
+
+  &-opts {
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    right: 20px;
+    gap: 10px;
+    height: 100%;
+    padding: 0px 10px;
+    top: 0;
+    align-items: center;
+    .icon {
+      color: var(--task-item-theme-color);
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &:hover {
+    .desktop-task-main-task-item-opts {
+      display: flex;
     }
   }
 }

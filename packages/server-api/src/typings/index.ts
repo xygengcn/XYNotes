@@ -75,6 +75,9 @@ export interface IFile {
 export interface ITaskItem extends TaskQuadrant {
   id: number;
 
+  // 任务id
+  taskId: string;
+
   // 任务标题
   title: string;
 

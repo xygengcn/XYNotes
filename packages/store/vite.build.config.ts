@@ -30,7 +30,8 @@ export default defineConfig(
             index: path.join(__dirname, 'src/index.ts'),
             configs: path.join(__dirname, 'src/state/configs.ts'),
             note: path.join(__dirname, 'src/state/note.ts'),
-            app: path.join(__dirname, 'src/state/app.ts')
+            app: path.join(__dirname, 'src/state/app.ts'),
+            task: path.join(__dirname, 'src/module/task.ts')
           },
           formats: ['cjs', 'es']
         },

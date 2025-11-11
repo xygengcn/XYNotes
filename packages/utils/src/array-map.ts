@@ -3,7 +3,7 @@
  */
 export default class ArrayMap<T extends { [key: string]: any }> {
   private _array: T[];
-  private _map: Map<string, T>;
+  private _map: Map<string | number, T>;
   private keyProperty: string;
 
   constructor(keyProperty: string = 'id') {
@@ -130,7 +130,7 @@ export default class ArrayMap<T extends { [key: string]: any }> {
   }
 
   // Map methods
-  set(key: string, obj: T): void {
+  set(key: string | number, obj: T): void {
     if (!obj.hasOwnProperty(this.keyProperty)) {
       console.error(`Object must have a property '${this.keyProperty}'`);
       return;
@@ -162,7 +162,7 @@ export default class ArrayMap<T extends { [key: string]: any }> {
    * 返回key
    * @returns
    */
-  keys(): IterableIterator<string> {
+  keys(): IterableIterator<string | number> {
     return this._map.keys();
   }
 
@@ -178,7 +178,7 @@ export default class ArrayMap<T extends { [key: string]: any }> {
    * 删除
    * @param key
    */
-  delete(key: string) {
+  delete(key: string | number) {
     this._map.delete(key);
     this._array = this._array.filter((i) => {
       return i[this.keyProperty] !== key;

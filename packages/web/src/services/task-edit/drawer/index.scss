@@ -56,14 +56,16 @@
       box-shadow: 0px 1px 4px 0 rgba(26, 26, 26, 0.1);
       padding: 10px;
       border-radius: 8px;
-      gap: 10px;
+      gap: 6px;
       &-title {
         color: #b6b6b6;
         display: inline-flex;
         align-items: center;
         span {
           margin-left: 10px;
-          font-size: 16px;
+          font-size: 1em;
+          line-height: 22px;
+          font-weight: 500;
         }
       }
 
@@ -72,6 +74,72 @@
         font-weight: 700;
         padding-left: calc(1.5em + 10px);
         font-size: 14px;
+        cursor: pointer;
+      }
+    }
+    &-quadrant {
+      display: flex;
+      justify-content: space-between;
+      background-color: #fff;
+      box-shadow: 0px 1px 4px 0 rgba(26, 26, 26, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      gap: 6px;
+      &-title {
+        color: #b6b6b6;
+        display: inline-flex;
+        align-items: center;
+        span {
+          margin-left: 10px;
+          font-size: 1em;
+          line-height: 22px;
+          font-weight: 500;
+        }
+      }
+
+      &-content {
+        display: flex;
+        height: 22px;
+        align-items: center;
+        .A {
+          color: var(--task-quadrant-1-bg);
+        }
+        .B {
+          color: var(--task-quadrant-2-bg);
+        }
+        .C {
+          color: var(--task-quadrant-3-bg);
+        }
+        .D {
+          color: var(--task-quadrant-4-bg);
+        }
+        &-text {
+          font-size: 14px;
+        }
+        &-options {
+          text-decoration: none;
+          outline: none;
+          padding: 5px;
+          width: 150px;
+          cursor: default;
+          li {
+            padding: 5px 15px;
+            width: 100%;
+            font-size: 14px;
+            list-style: none;
+            display: inline-flex;
+            border-radius: 4px;
+            cursor: pointer;
+
+            .text {
+              flex: 1;
+              text-align: center;
+            }
+            &:hover {
+              background-color: var(--note-item-hover-color);
+            }
+          }
+        }
       }
     }
   }

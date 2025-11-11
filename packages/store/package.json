@@ -55,6 +55,12 @@
       "require": "./dist/note.cjs.js",
       "types": "./dist/state/note.d.ts",
       "import": "./dist/note.es.js"
+    },
+    "./task": {
+      "development": "./src/module/task.ts",
+      "require": "./dist/task.cjs.js",
+      "types": "./dist/module/task.d.ts",
+      "import": "./dist/task.es.js"
     }
   }
 }

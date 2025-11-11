@@ -1,6 +1,6 @@
 import { Button, Dialog, Icon, Input, Popover, showDatePickerDialog } from '@xynotes/components';
-import { TaskQuadrantText, type ITaskItem } from '@xynotes/typings';
-import { timeFormat } from '@xynotes/utils';
+import { TaskQuadrant, TaskQuadrantText, type ITaskItem } from '@xynotes/typings';
+import { timeFormat, uuid } from '@xynotes/utils';
 import { computed, defineComponent, onMounted, ref, type PropType } from 'vue';
 import './index.scss';
 const TaskEditDialogCompnent = defineComponent({
@@ -14,8 +14,9 @@ const TaskEditDialogCompnent = defineComponent({
     const options = ref<ITaskItem>(
       props.task || {
         id: undefined,
+        taskId: uuid(),
         title: '',
-        quadrant: 'A',
+        quadrant: TaskQuadrant.A,
         status: 0,
         priority: 0,
         deadline: null,
@@ -59,7 +60,7 @@ const TaskEditDialogCompnent = defineComponent({
         class="task-edit-dialog"
         visible={true}
         onClose={handleClose}
-        title="添加任务"
+        title="添加目标"
         width={500}
         height={'max-content'}
       >
@@ -89,16 +90,16 @@ const TaskEditDialogCompnent = defineComponent({
                     ),
                     popover: () => (
                       <ul class="task-edit-dialog-content-quadrant-content-options">
-                        <li onClick={() => (options.value.quadrant = 'A')}>
+                        <li onClick={() => (options.value.quadrant = TaskQuadrant.A)}>
                           <span class="A">{TaskQuadrantText.A}</span>
                         </li>
-                        <li onClick={() => (options.value.quadrant = 'B')}>
+                        <li onClick={() => (options.value.quadrant = TaskQuadrant.B)}>
                           <span class="B">{TaskQuadrantText.B}</span>
                         </li>
-                        <li onClick={() => (options.value.quadrant = 'C')}>
+                        <li onClick={() => (options.value.quadrant = TaskQuadrant.C)}>
                           <span class="C">{TaskQuadrantText.C}</span>
                         </li>
-                        <li onClick={() => (options.value.quadrant = 'D')}>
+                        <li onClick={() => (options.value.quadrant = TaskQuadrant.D)}>
                           <span class="D">{TaskQuadrantText.D}</span>
                         </li>
                       </ul>
@@ -110,7 +111,7 @@ const TaskEditDialogCompnent = defineComponent({
             <div class="task-edit-dialog-content-date">
               <div class="task-edit-dialog-content-date-title">
                 <Icon type="edit-time" size="1.5em"></Icon>
-                <span>目标日</span>
+                <span>目标时间</span>
               </div>
               <div class="task-edit-dialog-content-date-date" onClick={handleClickTime}>
                 <span v-show={options.value.deadline}>{timeFormat(options.value.deadline, 'yyyy年MM月dd日 DD')}</span>

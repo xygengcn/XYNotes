@@ -4,11 +4,14 @@
 export interface ITaskItem {
   id: number;
 
+  // 任务id
+  taskId: string;
+
   // 任务标题
   title: string;
 
   // 所属象限 (A-重要且紧急, B-重要不紧急, C-不重要但紧急, D-不重要不紧急)
-  quadrant: string;
+  quadrant: TaskQuadrant;
 
   // 任务状态 (0-未完成, 1-已完成)
   status: number;

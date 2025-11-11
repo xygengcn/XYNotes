@@ -2,7 +2,7 @@ import { changeAppNetworkStatus, isCheckOnlineSync } from '@store/state/app';
 import { configsStoreState } from '@store/state/configs';
 import { IUploadFile } from '@store/typings/assets';
 import { IConfigsColunm } from '@store/typings/configs';
-import { INote } from '@xynotes/typings';
+import { INote, ITaskItem } from '@xynotes/typings';
 import { Cookie, omit } from '@xynotes/utils';
 import axios, { AxiosError } from 'axios';
 
@@ -202,6 +202,55 @@ class ApiEventOnline {
       })
       .catch((e) => {
         console.log('[上传失败]', e);
+      });
+  }
+
+  /**
+   * 任务列表
+   * @returns 任务列表
+   */
+  async apiFetchTaskListData(): Promise<ITaskItem[]> {
+    return this.fetch('/note/task/list', {})
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        console.error('[拉取失败]', e);
+      });
+  }
+
+  // 保存任务
+  async apiSaveOrUpdateTask(task: ITaskItem): Promise<ITaskItem> {
+    return this.fetch('/note/task/save', task)
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        console.error('[保存失败]', e);
+      });
+  }
+
+  // 删除任务
+  async apiDeleteTask(task: ITaskItem): Promise<{ result: boolean }> {
+    return this.fetch('/note/task/delete', { taskId: task.taskId })
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        console.error('[删除失败]', e);
+      });
+  }
+
+  // 更新排序
+  async apiSaveOrUpdateTaskSort(
+    list: Array<Pick<ITaskItem, 'taskId' | 'quadrant' | 'priority'>>
+  ): Promise<{ result: boolean }> {
+    return this.fetch('/note/task/sort', list)
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        console.error('[保存失败]', e);
       });
   }
 }

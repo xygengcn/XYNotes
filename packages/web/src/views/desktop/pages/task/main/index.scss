@@ -4,9 +4,10 @@
   --task-item-bg-color: transparent;
 }
 .desktop-task-main {
-  padding: 20px;
+  padding: 30px;
   height: 100%;
   overflow: hidden;
+  background-color: #fff;
 
   &-container {
     height: 100%;
@@ -20,7 +21,10 @@
       flex-direction: column;
       position: relative;
       overflow: hidden;
+      background-color: #fff;
       &-title {
+        display: flex;
+        align-items: center;
         padding: 10px 20px;
         font-size: 16px;
         .value {
@@ -33,6 +37,9 @@
           font-size: 15px;
         }
         .title {
+          display: inline-block;
+          height: 20px;
+          line-height: 20px;
           margin-left: 8px;
         }
       }

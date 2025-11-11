@@ -2,12 +2,13 @@ import { useDrawer } from '@xynotes/components';
 import type { ITaskItem } from '@xynotes/typings';
 import { createApp, defineAsyncComponent } from 'vue';
 
-export function showTaskDrawer(onSubmit: (options: ITaskItem) => void) {
+export function showTaskDrawer(task: ITaskItem, onSubmit: (options: ITaskItem) => void) {
   const { show } = useDrawer(
     defineAsyncComponent(() => import('./drawer')),
     {
       id: 'task-drawer',
       contentProps: {
+        task,
         onSubmit: (options) => {
           options && onSubmit?.(options);
         }
@@ -18,7 +19,7 @@ export function showTaskDrawer(onSubmit: (options: ITaskItem) => void) {
   show();
 }
 
-export default function showTaskDialog(task:ITaskItem,onSubmit: (options: ITaskItem) => void) {
+export default function showTaskDialog(task: ITaskItem, onSubmit: (options: ITaskItem) => void) {
   const instance = document.querySelector('#task-dialog');
   if (instance) {
     document.body.removeChild(instance);

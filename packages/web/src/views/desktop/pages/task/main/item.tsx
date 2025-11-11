@@ -1,7 +1,9 @@
-import { Checkbox } from '@xynotes/components';
+import showTaskDialog from '@/services/task-edit';
+import { Checkbox, Icon } from '@xynotes/components';
+import { taskStoreAction } from '@xynotes/store/task';
 import type { ITaskItem } from '@xynotes/typings';
 import { timeFormat } from '@xynotes/utils';
-import { defineComponent, type PropType } from 'vue';
+import { defineComponent, toRaw, type PropType } from 'vue';
 import './item.scss';
 
 export const DesktopTaskMainTaskItem = defineComponent({
@@ -10,25 +12,46 @@ export const DesktopTaskMainTaskItem = defineComponent({
     task: Object as PropType<ITaskItem>
   },
   setup(props) {
+    // 切换任务完成状态
+    const handleChange = (val: boolean) => {
+      if (val) {
+        props.task.status = 1;
+        props.task.priority = 0; // 完成后优先级降低
+        props.task.completedAt = new Date();
+      } else {
+        props.task.status = 0;
+        props.task.completedAt = null;
+      }
+      taskStoreAction.saveTask(props.task);
+    };
+
+    // 删除任务
+    const handleClickDelete = () => {
+      taskStoreAction.deleteTask(props.task);
+    };
+
+    const handleClickSetting = () => {
+      showTaskDialog(structuredClone(toRaw(props.task)), (task) => {
+        taskStoreAction.saveTask(task);
+      });
+    };
     return () => (
-      <div class="desktop-task-main-task-item">
+      <div class={{ 'desktop-task-main-task-item': true, done: props.task.status === 1 }}>
         <div class="desktop-task-main-task-item-checkbox">
-          <Checkbox
-            value={props.task.status === 1}
-            onChange={(val: boolean) => {
-              if (val) {
-                props.task.status = 1;
-              } else {
-                props.task.status = 0;
-              }
-            }}
-          ></Checkbox>
+          <Checkbox value={props.task.status === 1} onChange={handleChange}></Checkbox>
         </div>
         <div class="desktop-task-main-task-item-content">
           <div class="desktop-task-main-task-item-content-title">{props.task.title}</div>
-          <div class="desktop-task-main-task-item-content-desc" v-show={props.task.deadline}>
-            <span>{timeFormat(props.task.deadline, 'MM月dd日')}</span>
+          <div class="desktop-task-main-task-item-content-desc" v-show={props.task.deadline && !props.task.completedAt}>
+            <span>{timeFormat(props.task.deadline, '目标：yyyy年MM月dd日')}</span>
           </div>
+          <div class="desktop-task-main-task-item-content-desc" v-show={props.task.completedAt}>
+            <span>{timeFormat(props.task.completedAt, 'MM月dd日已完成')}</span>
+          </div>
+        </div>
+        <div class="desktop-task-main-task-item-opts">
+          <Icon type="setting" onClick={handleClickSetting}></Icon>
+          <Icon type="trash" onClick={handleClickDelete}></Icon>
         </div>
       </div>
     );

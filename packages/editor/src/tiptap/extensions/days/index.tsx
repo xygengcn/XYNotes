@@ -11,6 +11,7 @@ declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     days: {
       createDaysNodeDrawer: () => ReturnType;
+      createDaysNodeDialog: () => ReturnType;
       insertDays: (options: IDaysOptions) => ReturnType;
     };
   }

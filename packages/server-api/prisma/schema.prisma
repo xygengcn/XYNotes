@@ -58,8 +58,11 @@ model NoteTable {
 
 // 四象限任务清单
 model TaskQuadrant {
-  // 任务ID
+  // id
   id Int @id @default(autoincrement())
+
+  // 任务ID
+  taskId String @unique
 
   // 任务标题
   title String

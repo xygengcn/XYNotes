@@ -1,7 +1,7 @@
 import { notePrismaClient } from '@/database';
 import { logger } from '@/logger';
 import { ITaskItem } from '@/typings';
-import { isNumber, isString } from '@/utils';
+import { isString } from '@/utils';
 import { Controller, Param, Post } from 'koa-api-plus';
 
 @Controller()
@@ -12,9 +12,17 @@ export default class TaskController {
     return notePrismaClient.taskQuadrant
       .findMany({
         where: {
-          author: 'admin',
-          status: 0 // 未完成
+          author: 'admin'
         }
+      })
+      .then((result) => {
+        // 排序 priority优先级高，再排序更新时间updatedAt
+        return result.sort((a, b) => {
+          if (a.priority === b.priority) {
+            return b.updatedAt.getTime() - a.updatedAt.getTime();
+          }
+          return b.priority - a.priority;
+        });
       })
       .catch((e) => {
         logger.error(e.message, '[task] list');
@@ -43,7 +51,7 @@ export default class TaskController {
           updatedAt: new Date()
         },
         where: {
-          id: task.id
+          taskId: task.taskId
         }
       })
       .catch((e) => {
@@ -53,16 +61,16 @@ export default class TaskController {
   }
 
   @Post('/delete')
-  public deleteTask(@Param.Body() task: { id: number }) {
+  public deleteTask(@Param.Body() task: { taskId: string }) {
     logger.debug('[task] remove');
     // 校验nid
-    if (!isNumber(task?.id)) {
+    if (!isString(task?.taskId, true)) {
       return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: '参数不对' });
     }
     return notePrismaClient.taskQuadrant
       .delete({
         where: {
-          id: task.id
+          taskId: task.taskId
         }
       })
       .then(() => {
@@ -75,6 +83,37 @@ export default class TaskController {
         return {
           result: false
         };
+      });
+  }
+
+  @Post('/sort')
+  public sortTask(@Param.Body() list: Array<Pick<ITaskItem, 'taskId' | 'quadrant' | 'priority'>>) {
+    logger.debug('[task] sort');
+    // 校验nid
+    if (!Array.isArray(list)) {
+      return Promise.reject({ code: 'KEY_PARAMETER_FAILED', message: '参数不对' });
+    }
+    return notePrismaClient
+      .$transaction(
+        list.map((item) => {
+          return notePrismaClient.taskQuadrant.update({
+            where: {
+              taskId: item.taskId
+            },
+            data: {
+              quadrant: item.quadrant,
+              priority: item.priority
+            }
+          });
+        })
+      )
+      .then(() => {
+        return {
+          result: true
+        };
+      })
+      .catch(() => {
+        return Promise.reject({ code: 'TASK_SORT_FAILED', message: '任务排序失败' });
       });
   }
 }

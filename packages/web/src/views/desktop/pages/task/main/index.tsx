@@ -1,7 +1,9 @@
 import showTaskDialog from '@/services/task-edit';
 import { Card, Icon } from '@xynotes/components';
+import { taskStoreAction, taskStoreState } from '@xynotes/store/task';
 import { TaskQuadrant, TaskQuadrantText, type ITaskItem } from '@xynotes/typings';
-import { defineComponent, ref } from 'vue';
+import { uuid } from '@xynotes/utils';
+import { defineComponent, onBeforeMount } from 'vue';
 import { VueDraggable, type SortableEvent } from 'vue-draggable-plus';
 import './index.scss';
 import { DesktopTaskMainTaskItem } from './item';
@@ -29,57 +31,53 @@ export default defineComponent({
   name: 'DesktopTaskMain',
   setup() {
     /**
-     * 任务列表
-     */
-    const taskList = ref<Record<string, ITaskItem[]>>({
-      A: [],
-      B: [],
-      C: [],
-      D: []
-    });
-
-    /**
      * 列表排序事件处理
      * @param event
      */
     const handleListSortEvent = (event: SortableEvent) => {
       switch (event.type) {
         case 'add': {
-          const toGroupName = event.to.dataset.groupname;
+          const toGroupName = event.to.dataset.groupname as TaskQuadrant;
           const taskId = ((event as any).data as ITaskItem)?.id;
           if (taskId) {
-            const task = taskList.value[toGroupName].find((task) => task.id === taskId);
+            const task = taskStoreState.taskList[toGroupName].find((task) => task.id === taskId);
             if (task) {
               task.quadrant = toGroupName;
             }
           }
         }
       }
+      taskStoreAction.orderTask();
     };
 
     /**
      * 创建任务
      * @param quadrant
      */
-    const handleClickCreate = (quadrant: string) => {
+    const handleClickCreate = (quadrant: TaskQuadrant) => {
       showTaskDialog(
         {
           title: '',
+          taskId: uuid(),
           id: undefined,
           quadrant,
-          status: 1,
-          priority: 1,
+          status: 0,
+          priority: 0,
           deadline: null,
           createdAt: new Date(),
           updatedAt: new Date(),
           completedAt: null,
           author: ''
         },
-        (options) => {
-          taskList.value[options.quadrant].push(options);
+        (task) => {
+          taskStoreAction.saveTask(task);
         }
       );
     };
+
+    onBeforeMount(() => {
+      taskStoreAction.fetchTaskList();
+    });
     return () => (
       <div class="desktop-task-main">
         <div class="desktop-task-main-container">
@@ -92,14 +90,14 @@ export default defineComponent({
               <VueDraggable
                 class="desktop-task-main-container-card-list"
                 data-groupname={quadrant.value}
-                v-model={taskList.value[quadrant.value]}
+                v-model={taskStoreState.taskList[quadrant.value]}
                 animation={150}
                 group="task"
                 onUpdate={handleListSortEvent}
                 onAdd={handleListSortEvent}
                 onRemove={handleListSortEvent}
               >
-                {taskList.value[quadrant.value]?.map((task) => (
+                {taskStoreState.taskList[quadrant.value]?.map((task) => (
                   <DesktopTaskMainTaskItem task={task} key={task.id}></DesktopTaskMainTaskItem>
                 ))}
               </VueDraggable>
