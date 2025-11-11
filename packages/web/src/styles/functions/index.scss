@@ -40,6 +40,7 @@
 // 悬浮时才显示的滚动条
 @mixin scroll-bar-hover($thumb-color: #d7dfef, $track-color: transparent) {
   scrollbar-gutter: stable;
+  scrollbar-color: transparent $track-color;
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;
@@ -57,7 +58,6 @@
   &:hover::-webkit-scrollbar-thumb {
     background-color: $thumb-color;
   }
-  scrollbar-color: transparent $track-color;
   &:hover {
     scrollbar-color: $thumb-color $track-color;
   }

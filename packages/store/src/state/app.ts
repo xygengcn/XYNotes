@@ -48,7 +48,7 @@ export const changeAppNetworkStatus = (status: boolean) => {
  * 是否网络在线
  */
 export const isCheckOnlineSync = computed(() => {
-  if (state.value.networkStatus === false) {
+  if (!state.value.networkStatus) {
     return false;
   }
   if (configsStoreState.value.REMOTE_ONLINE_SYNC === true && is.url(configsStoreState.value.REMOTE_BASE_URL)) {

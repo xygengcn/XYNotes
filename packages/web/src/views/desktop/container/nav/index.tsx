@@ -5,7 +5,7 @@ import { AppLoadStatus } from '@xynotes/store';
 import { appStoreState, isCheckOnlineSync } from '@xynotes/store/app';
 import { addNote, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import './index.scss';
 import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
@@ -16,7 +16,7 @@ const DesktopNavContainer = defineComponent({
   name: 'DesktopNavContainer',
   setup() {
     const router = useRouter();
-    const desktopNavMenuList: IdesktopNavMenuItem[] = [
+    const desktopNavMenuList = computed<IdesktopNavMenuItem[]>(() => [
       {
         title: '新增',
         icon: 'create',
@@ -64,7 +64,7 @@ const DesktopNavContainer = defineComponent({
         name: 'desktop-setting',
         path: '/setting'
       }
-    ];
+    ]);
 
     return () => (
       <div class="desktop-nav-menu" style={{ width: `${DESKTOP_NAV_MENU_WIDTH}px` }}>
@@ -78,7 +78,7 @@ const DesktopNavContainer = defineComponent({
         </div>
         <div class="desktop-nav-menu-content" data-tauri-drag-region>
           <div class="desktop-nav-menu-content-list" data-tauri-drag-region>
-            {desktopNavMenuList.map((item) => {
+            {desktopNavMenuList.value.map((item) => {
               return item.visible && <DesktopNavMenuItem menu={item} />;
             })}
           </div>
