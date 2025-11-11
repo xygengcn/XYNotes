@@ -50,7 +50,7 @@ const MarkdownEditorDaysDialogCompnent = defineComponent({
           <div class="markdown-editor-days-dialog-content">
             <div class="markdown-editor-days-dialog-content-title">
               <span class="markdown-editor-days-dialog-content-title-icon">
-                <Icon type="days-name" size="1.5em"></Icon>
+                <Icon type="edit-name" size="1.5em"></Icon>
               </span>
               <span class="markdown-editor-days-dialog-content-title-input">
                 <Input v-model:value={options.value.title} placeholder="输入事项名称" ref={refInput}></Input>
@@ -58,7 +58,7 @@ const MarkdownEditorDaysDialogCompnent = defineComponent({
             </div>
             <div class="markdown-editor-days-dialog-content-date">
               <div class="markdown-editor-days-dialog-content-date-title">
-                <Icon type="days-time" size="1.5em"></Icon>
+                <Icon type="edit-time" size="1.5em"></Icon>
                 <span>目标日（未来日期为倒数、过去时间为正数）</span>
               </div>
               <div class="markdown-editor-days-dialog-content-date-date" onClick={handleClickTime}>

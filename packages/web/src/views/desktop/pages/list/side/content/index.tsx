@@ -59,7 +59,7 @@ const DesktopSideContainerListContent = defineComponent({
         }
       }
       router.push({
-        name: 'desktop-main-detail',
+        name: 'desktop-main-list-detail',
         params: {
           nid: note.nid
         }

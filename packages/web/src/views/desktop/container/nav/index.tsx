@@ -2,7 +2,7 @@ import logo from '@/assets/images/logo/logo.png';
 import MinMax from '@/components/min-max';
 import { Loading } from '@xynotes/components';
 import { AppLoadStatus } from '@xynotes/store';
-import { appStoreState } from '@xynotes/store/app';
+import { appStoreState, isCheckOnlineSync } from '@xynotes/store/app';
 import { addNote, setActiveNoteId } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
@@ -27,7 +27,7 @@ const DesktopNavContainer = defineComponent({
           const note = addNote();
           setActiveNoteId(note.nid);
           router.push({
-            name: 'desktop-main-detail',
+            name: 'desktop-main-list-detail',
             params: {
               nid: note.nid
             }
@@ -40,6 +40,14 @@ const DesktopNavContainer = defineComponent({
         name: 'desktop-main',
         visible: true,
         path: '/'
+      },
+      {
+        title: '待办',
+        icon: 'task',
+        name: 'desktop-task',
+        visible: isCheckOnlineSync.value,
+        path: '/task',
+        size: 18
       },
       {
         title: '归档',

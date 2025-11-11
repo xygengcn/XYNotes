@@ -24,7 +24,9 @@
     "verbatimModuleSyntax": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@desktop/*": ["src/views/desktop/*"]
+
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost", "ESNext"],
     // "customConditions": ["development"]

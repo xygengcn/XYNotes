@@ -2,6 +2,15 @@ import parse from 'fast-json-parse';
 import { MakeDirectoryOptions, existsSync, mkdirSync, statSync } from 'fs';
 
 /**
+ * 是数字
+ * @param value
+ * @returns
+ */
+export function isNumber(value: unknown): boolean {
+  return typeof value === 'number' && !isNaN(value);
+}
+
+/**
  * 是不是字符串
  *
  *

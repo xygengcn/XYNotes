@@ -45,6 +45,10 @@ export default defineConfig(({ mode }) => {
         {
           find: '@transport',
           replacement: fileURLToPath(new URL('../transport/src', import.meta.url))
+        },
+        {
+          find: '@desktop',
+          replacement: fileURLToPath(new URL('./src/views/desktop/', import.meta.url))
         }
       ]
     },

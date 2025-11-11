@@ -6,8 +6,8 @@ import { computed, defineComponent, onBeforeMount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
 
-const DesktopSideContainerArchiveContent = defineComponent({
-  name: 'DesktopSideContainerArchiveContent',
+const DesktopSideContainerArchive = defineComponent({
+  name: 'DesktopSideContainerArchive',
   setup() {
     // 路由
     const router = useRouter();
@@ -117,4 +117,4 @@ const DesktopSideContainerArchiveContent = defineComponent({
   }
 });
 
-export default DesktopSideContainerArchiveContent;
+export default DesktopSideContainerArchive;

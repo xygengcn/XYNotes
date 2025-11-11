@@ -1,6 +1,5 @@
 import { AppMode } from '@xynotes/store';
 import { appStoreState } from '@xynotes/store/app';
-import { is } from '@xynotes/utils';
 import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
@@ -17,25 +16,27 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: '',
-            name: 'desktop-main-default',
-            components: {
-              side: () => import('@/views/desktop/pages/list/side'),
-              main: () => import('@/views/desktop/container/main/default')
-            }
-          },
-          {
-            path: 'detail/:nid',
-            name: 'desktop-main-detail',
-            components: {
-              side: () => import('@/views/desktop/pages/list/side'),
-              main: () => import('@/views/desktop/pages/list/main/detail')
-            }
+            name: 'desktop-main-list',
+            component: () => import('@/views/desktop/pages/list'),
+            children: [
+              {
+                path: '',
+                name: 'desktop-main-list-default',
+                component: () => import('@/views/desktop/container/main/default')
+              },
+              {
+                path: 'detail/:nid',
+                name: 'desktop-main-list-detail',
+                component: () => import('@/views/desktop/pages/list/main')
+              }
+            ]
           }
         ]
       },
       {
         path: 'setting',
         name: 'desktop-setting',
+        component: () => import('@/views/desktop/pages/settings'),
         meta: {
           device: 'desktop'
         },
@@ -43,18 +44,12 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: '',
             name: 'desktop-setting-default',
-            components: {
-              side: () => import('@/views/desktop/pages/settings/side'),
-              main: () => import('@/views/desktop/container/main/default')
-            }
+            component: () => import('@/views/desktop/container/main/default')
           },
           {
             path: 'config',
             name: 'desktop-setting-config',
-            components: {
-              side: () => import('@/views/desktop/pages/settings/side'),
-              main: () => import('@/views/desktop/pages/settings/main')
-            }
+            component: () => import('@/views/desktop/pages/settings/main')
           }
         ]
       },
@@ -64,22 +59,40 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           device: 'desktop'
         },
+        component: () => import('@/views/desktop/pages/archive'),
         children: [
           {
             path: '',
             name: 'desktop-archive-default',
-            components: {
-              side: () => import('@/views/desktop/pages/archive/side'),
-              main: () => import('@/views/desktop/pages/archive/main')
-            }
+            component: () => import('@/views/desktop/container/main/default')
           },
           {
             path: 'preview/:nid',
             name: 'desktop-archive-preview',
-            components: {
-              side: () => import('@/views/desktop/pages/archive/side'),
-              main: () => import('@/views/desktop/pages/archive/main')
-            }
+            component: () => import('@/views/desktop/pages/archive/main')
+          }
+        ]
+      },
+      {
+        path: 'edit/:nid',
+        name: 'desktop-edit',
+        meta: {
+          device: 'desktop'
+        },
+        component: () => import('@/views/desktop/pages/edit')
+      },
+      {
+        path: 'task',
+        name: 'desktop-task',
+        meta: {
+          device: 'desktop'
+        },
+        component: () => import('@/views/desktop/pages/task'),
+        children: [
+          {
+            path: '',
+            name: 'desktop-task-default',
+            component: () => import('@/views/desktop/pages/task/main')
           }
         ]
       }
@@ -87,10 +100,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       device: 'desktop'
     }
-  },
-  {
-    path: '/edit/:nid',
-    component: () => import('@/views/desktop/pages/edit')
   },
   {
     path: '/m',
@@ -143,7 +152,6 @@ const router = createRouter({
   }
 });
 router.beforeEach((to, _from, next) => {
-  console.log(111, appStoreState.value.mode, is.tablet(), is.landscape(), is.portrait());
   if (to.meta?.device == 'desktop') {
     if (appStoreState.value.mode == AppMode.mobile) {
       return next({ name: 'mobile-home' });

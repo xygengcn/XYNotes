@@ -6,6 +6,7 @@ export default {
   background_color: '#ffffff',
   description: '一款懒人笔记',
   theme_color: '#ffffff',
+  orientation: 'any',
   icons: [
     {
       src: './img/icons/android-chrome-192x192.png',

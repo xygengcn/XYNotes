@@ -14,6 +14,7 @@
   }
 
   &-content {
+    width: max-content;
     top: 100%;
     z-index: 2;
     position: absolute;
@@ -24,6 +25,9 @@
 
   &-position {
     &-left {
+      left: 0;
+    }
+    &-right {
       right: 0;
     }
   }

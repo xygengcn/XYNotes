@@ -1,5 +1,5 @@
-import { logger } from '../logger';
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../logger';
 
 const prismaClient = new PrismaClient();
 
@@ -13,13 +13,16 @@ const notePrismaClient = prismaClient.$extends({
           return result;
         } catch (error: any) {
           // 错误日志记录
-          logger.error('[prisma] ' + JSON.stringify({
-            operation,
-            model,
-            args: JSON.stringify(args),
-            time: new Date().getTime() - start,
-            error: error.message || error
-          }));
+          logger.error(
+            '[prisma] ' +
+              JSON.stringify({
+                operation,
+                model,
+                args: JSON.stringify(args),
+                time: new Date().getTime() - start,
+                error: error.message || error
+              })
+          );
           throw error;
         }
       }
@@ -27,5 +30,4 @@ const notePrismaClient = prismaClient.$extends({
   }
 });
 
-
-export { notePrismaClient };
+export { notePrismaClient, PrismaClient };

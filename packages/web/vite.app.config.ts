@@ -32,6 +32,10 @@ export default defineConfig(({ mode }) => {
         {
           find: '@',
           replacement: fileURLToPath(new URL('./src', import.meta.url))
+        },
+        {
+          find: '@desktop',
+          replacement: fileURLToPath(new URL('./src/views/desktop/', import.meta.url))
         }
       ]
     },

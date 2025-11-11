@@ -35,6 +35,7 @@ const DesktopSideContainerListHeader = defineComponent({
           </div>
           <div class="desktop-side-container-list-header-bottom-right">
             <Popover
+              position="right"
               v-slots={{
                 default: () => (
                   <span class="desktop-side-container-list-header-bottom-right-label">

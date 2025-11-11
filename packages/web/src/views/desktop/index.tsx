@@ -1,9 +1,4 @@
 import { defineComponent } from 'vue';
-import DesktopGap from './container/gap';
-import { DesktopLeftContainer } from './container/left';
-import DesktopMainContainer from './container/main';
-import DesktopNavContainer from './container/nav';
-import DesktopSideContainer from './container/side';
 import './index.scss';
 
 const Desktop = defineComponent({
@@ -11,12 +6,7 @@ const Desktop = defineComponent({
   setup() {
     return () => (
       <div class="desktop">
-        <DesktopLeftContainer>
-          <DesktopNavContainer />
-          <DesktopSideContainer />
-          <DesktopGap />
-        </DesktopLeftContainer>
-        <DesktopMainContainer />
+        <router-view></router-view>
       </div>
     );
   }

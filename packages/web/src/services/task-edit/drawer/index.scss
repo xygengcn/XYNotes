@@ -1,0 +1,78 @@
+.task-edit-drawer {
+  background: #fff;
+  padding: 0px 20px;
+  margin: 0px auto;
+  width: 100%;
+  // 解决ios下巴高度问题
+  margin-bottom: env(SAFE-AREA-INSET-BOTTOM, 20px);
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    padding: 10px 0px 20px 0px;
+    color: #f3bb41;
+    font-weight: 500;
+    .disabled {
+      opacity: 0.6;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 10px;
+    &-title {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 0px 1px 4px 0 rgba(26, 26, 26, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      gap: 10px;
+      &-icon {
+        color: #b6b6b6;
+      }
+      &-input {
+        flex: 1;
+        font-size: 16px;
+        line-height: 22px;
+        height: 22px;
+        input::placeholder {
+          color: #b6b6b6;
+          font-size: 14px;
+        }
+      }
+    }
+    &-date {
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      box-shadow: 0px 1px 4px 0 rgba(26, 26, 26, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      gap: 10px;
+      &-title {
+        color: #b6b6b6;
+        display: inline-flex;
+        align-items: center;
+        span {
+          margin-left: 10px;
+          font-size: 16px;
+        }
+      }
+
+      &-date {
+        color: #f3bb41;
+        font-weight: 700;
+        padding-left: calc(1.5em + 10px);
+        font-size: 14px;
+      }
+    }
+  }
+}

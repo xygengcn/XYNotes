@@ -1,4 +1,5 @@
 import ApiEvent from '@store/api';
+import { isCheckOnlineSync } from '@store/state/app';
 import { archiveNote, removeNote, saveNote, syncNote } from '@store/state/note';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@xynotes/typings';
 import { debounce, downloadFile, omit, uuid } from '@xynotes/utils';
@@ -65,7 +66,8 @@ export class Note implements INote {
         content: null,
         tags: [],
         createdAt: new Date().getTime(),
-        updatedAt: new Date().getTime()
+        updatedAt: new Date().getTime(),
+        onlineSyncAt: isCheckOnlineSync.value ? new Date().getTime() - 1 : 0
       });
     }
 

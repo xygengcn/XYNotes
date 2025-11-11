@@ -1,6 +1,5 @@
 import { UploadService } from '@/services/upload';
 import { Editor, useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
-import '@xynotes/editor/style.css';
 import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
 import { NoteStatus } from '@xynotes/typings';
 import { defineComponent, nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';

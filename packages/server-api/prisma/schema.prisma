@@ -55,3 +55,40 @@ model NoteTable {
   @@index([nid])
   @@map("note_list")
 }
+
+// 四象限任务清单
+model TaskQuadrant {
+  // 任务ID
+  id Int @id @default(autoincrement())
+
+  // 任务标题
+  title String
+
+  // 所属象限 (A-重要且紧急, B-重要不紧急, C-不重要但紧急, D-不重要不紧急)
+  quadrant String
+
+  // 任务状态 (0-未完成, 1-已完成)
+  status Int @default(0)
+
+  // 任务优先级 (数字越大优先级越高)
+  priority Int @default(0)
+
+  // 任务截止日期
+  deadline DateTime?
+
+  // 任务创建时间
+  createdAt DateTime @default(now())
+
+  // 任务更新时间
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // 任务完成时间
+  completedAt DateTime?
+
+  // 任务所属用户
+  author String
+
+  @@index([author])
+  @@index([quadrant])
+  @@index([status])
+}

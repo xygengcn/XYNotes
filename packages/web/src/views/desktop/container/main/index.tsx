@@ -6,7 +6,7 @@ const DesktopMainContainer = defineComponent({
   setup() {
     return () => (
       <div class="desktop-main-container">
-        <router-view name="main" />
+        <router-view />
       </div>
     );
   }

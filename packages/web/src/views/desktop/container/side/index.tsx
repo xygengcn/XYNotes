@@ -10,7 +10,7 @@ export const SIDE_CONTAINER_MIN_WIDTH = 250;
 
 const DesktopSideContainer = defineComponent({
   name: 'DesktopSideContainer',
-  setup() {
+  setup(_, context) {
     /**
      * 列表栏长度
      */
@@ -27,7 +27,7 @@ const DesktopSideContainer = defineComponent({
           maxWidth: SIDE_CONTAINER_MAX_WIDTH + 'px'
         }}
       >
-        <router-view name="side" />
+        {context.slots?.default()}
       </div>
     );
   }

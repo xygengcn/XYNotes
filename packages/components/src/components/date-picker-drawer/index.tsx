@@ -49,7 +49,6 @@ export function showDatePickerDialog(options?: DatePickerOptions) {
     {
       initialDate: finalOptions.initialDate,
       onConfirm: (result: DatePickerResult) => {
-        console.log(111);
         finalOptions.onConfirm(result);
       },
       onClose: () => {

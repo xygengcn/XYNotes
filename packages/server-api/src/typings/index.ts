@@ -1,4 +1,4 @@
-import { NoteTable } from '@prisma/client';
+import { NoteTable, TaskQuadrant } from '@prisma/client';
 
 /**
  * 笔记所有字段
@@ -67,4 +67,38 @@ export interface IFile {
   mimetype: string;
   hashAlgorithm: boolean;
   size: number;
+}
+
+/**
+ * 任务项
+ */
+export interface ITaskItem extends TaskQuadrant {
+  id: number;
+
+  // 任务标题
+  title: string;
+
+  // 所属象限 (A-重要且紧急, B-重要不紧急, C-不重要但紧急, D-不重要不紧急)
+  quadrant: string;
+
+  // 任务状态 (0-未完成, 1-已完成)
+  status: number;
+
+  // 任务优先级 (数字越大优先级越高)
+  priority: number;
+
+  // 任务截止日期
+  deadline: Date | null;
+
+  // 任务创建时间
+  createdAt: Date;
+
+  // 任务更新时间
+  updatedAt: Date;
+
+  // 任务完成时间
+  completedAt: Date | null;
+
+  // 任务所属用户
+  author: string;
 }

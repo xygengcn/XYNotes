@@ -49,6 +49,12 @@
   // 三个禁用颜色
   --window-icon-disabled: #eee;
 
+  // 四象限任务颜色
+  --task-quadrant-1-bg: rgb(248, 128, 137); // 重要且紧急 - 粉色
+  --task-quadrant-2-bg: rgb(255, 169, 111); // 重要不紧急 - 橙色
+  --task-quadrant-3-bg: rgb(143, 191, 239); // 不重要但紧急 - 淡蓝色
+  --task-quadrant-4-bg: rgb(150, 228, 189); // 不重要不紧急 - 青色
+
   // setting页面
   --setting-title-font-szie: var(--font-small-size);
   --setting-label-font-szie: var(--font-normal-size);
