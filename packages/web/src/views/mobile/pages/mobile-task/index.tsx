@@ -100,6 +100,12 @@ export default defineComponent({
                   <MobileTaskItem task={task} key={task.id}></MobileTaskItem>
                 ))}
               </VueDraggable>
+              <div
+                class="mobile-task-container-card-blank"
+                v-show={taskStoreState.taskList[quadrant.value]?.length === 0}
+              >
+                添加事项到清单吧!
+              </div>
               <div class="mobile-task-container-card-create" onClick={handleClickCreate.bind(null, quadrant.value)}>
                 <Icon type="create"></Icon>
               </div>

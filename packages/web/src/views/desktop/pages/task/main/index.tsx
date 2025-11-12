@@ -62,34 +62,43 @@ export default defineComponent({
     return () => (
       <div class="desktop-task-main">
         <div class="desktop-task-main-container">
-          {TaskQuadrantList.map((quadrant) => (
-            <Card class="desktop-task-main-container-card">
-              <div class="desktop-task-main-container-card-title">
-                <span class="value">{quadrant.value}</span>
-                <span class="title">{quadrant.title}</span>
-              </div>
-              <VueDraggable
-                class="desktop-task-main-container-card-list"
-                data-groupname={quadrant.value}
-                v-model={taskStoreState.taskList[quadrant.value]}
-                animation={150}
-                group="task"
-                onUpdate={handleListSortEvent}
-                onAdd={handleListSortEvent}
-                onRemove={handleListSortEvent}
-              >
-                {taskStoreState.taskList[quadrant.value]?.map((task) => (
-                  <DesktopTaskMainTaskItem task={task} key={task.id}></DesktopTaskMainTaskItem>
-                ))}
-              </VueDraggable>
-              <div
-                class="desktop-task-main-container-card-create"
-                onClick={handleClickCreate.bind(null, quadrant.value)}
-              >
-                <Icon type="create"></Icon>
-              </div>
-            </Card>
-          ))}
+          {TaskQuadrantList.map((quadrant) => {
+            return (
+              <Card class="desktop-task-main-container-card">
+                <div class="desktop-task-main-container-card-title">
+                  <span class="value">{quadrant.value}</span>
+                  <span class="title">{quadrant.title}</span>
+                </div>
+                <VueDraggable
+                  class="desktop-task-main-container-card-list"
+                  data-groupname={quadrant.value}
+                  v-model={taskStoreState.taskList[quadrant.value]}
+                  animation={150}
+                  group="task"
+                  onUpdate={handleListSortEvent}
+                  onAdd={handleListSortEvent}
+                  onRemove={handleListSortEvent}
+                  filter=".desktop-task-main-task-item-opts"
+                >
+                  {taskStoreState.taskList[quadrant.value]?.map((task) => (
+                    <DesktopTaskMainTaskItem task={task} key={task.id}></DesktopTaskMainTaskItem>
+                  ))}
+                </VueDraggable>
+                <div
+                  class="desktop-task-main-container-card-blank"
+                  v-show={taskStoreState.taskList[quadrant.value]?.length === 0}
+                >
+                  添加今天的事项到清单吧!
+                </div>
+                <div
+                  class="desktop-task-main-container-card-create"
+                  onClick={handleClickCreate.bind(null, quadrant.value)}
+                >
+                  <Icon type="create"></Icon>
+                </div>
+              </Card>
+            );
+          })}
         </div>
       </div>
     );

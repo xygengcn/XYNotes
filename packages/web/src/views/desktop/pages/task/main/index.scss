@@ -44,6 +44,22 @@
         }
       }
 
+      &-blank {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-size: 14px;
+        flex-direction: column;
+        color: var(--font-default-color);
+        gap: 10px;
+        pointer-events: none;
+      }
+
       &-create {
         display: inline-flex;
         align-items: center;
@@ -120,7 +136,7 @@
         padding: 0px 10px 20px;
         overflow: auto;
         flex: 1;
-        @include scroll-bar-hover();
+        @include scroll-bar-hover(var(--task-item-bg-color));
       }
     }
   }

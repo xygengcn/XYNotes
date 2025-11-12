@@ -29,9 +29,10 @@
       position: relative;
       background-color: #fff;
       width: 100%;
-      min-width: 0;
+      min-width: 0; // 避免宽度和高度超出
+      min-height: 0; // 可以触发滚动
       box-sizing: border-box;
-      
+
       &-title {
         display: flex;
         align-items: center;
@@ -52,6 +53,22 @@
           line-height: 20px;
           margin-left: 4px;
         }
+      }
+
+      &-blank {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        font-size: 12px;
+        flex-direction: column;
+        color: var(--font-default-color);
+        gap: 10px;
+        pointer-events: none;
       }
 
       &-create {
@@ -130,6 +147,7 @@
         padding: 0px 5px 10px;
         overflow: auto;
         flex: 1;
+        @include scroll-bar-hover(var(--task-item-bg-color));
       }
     }
   }
