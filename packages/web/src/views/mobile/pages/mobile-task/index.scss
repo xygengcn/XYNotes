@@ -1,0 +1,136 @@
+@import '@/styles/functions/index.scss';
+:root {
+  --task-item-theme-color: #bebebe;
+  --task-item-bg-color: transparent;
+}
+.mobile-task {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  // 解决ios下巴高度问题
+  padding-bottom: env(SAFE-AREA-INSET-BOTTOM, 20px);
+
+  &-container {
+    flex: 1;
+    gap: 10px;
+    padding: 0px 12px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    overflow: hidden;
+
+    &-card {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background-color: #fff;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      
+      &-title {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        font-size: 16px;
+        .value {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          font-size: 15px;
+        }
+        .title {
+          display: inline-block;
+          height: 20px;
+          line-height: 20px;
+          margin-left: 4px;
+        }
+      }
+
+      &-create {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        background-color: var(--task-item-theme-color);
+        .icon {
+          color: #fff;
+        }
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+
+      // 第一象限：重要且紧急 - 粉色背景，白色字体
+      &:nth-child(1) {
+        --task-item-theme-color: var(--task-quadrant-1-bg);
+        --task-item-bg-color: rgba(248, 128, 137, 0.1);
+        .value {
+          background-color: var(--task-quadrant-1-bg);
+          color: #ffffff;
+        }
+        .title {
+          color: var(--task-quadrant-1-bg);
+        }
+      }
+
+      // 第二象限：重要不紧急 - 橙色背景，白色字体
+      &:nth-child(2) {
+        --task-item-theme-color: var(--task-quadrant-2-bg);
+        --task-item-bg-color: rgba(255, 169, 111, 0.1);
+        .value {
+          background-color: var(--task-quadrant-2-bg);
+          color: #ffffff;
+        }
+        .title {
+          color: var(--task-quadrant-2-bg);
+        }
+      }
+
+      // 第三象限：不重要但紧急 - 淡蓝色背景，白色字体
+      &:nth-child(3) {
+        --task-item-theme-color: var(--task-quadrant-3-bg);
+        --task-item-bg-color: rgba(143, 191, 239, 0.1);
+        .value {
+          background-color: var(--task-quadrant-3-bg);
+          color: #ffffff;
+        }
+        .title {
+          color: var(--task-quadrant-3-bg);
+        }
+      }
+
+      // 第四象限：不重要不紧急 - 青色背景，白色字体
+      &:nth-child(4) {
+        --task-item-theme-color: var(--task-quadrant-4-bg);
+        --task-item-bg-color: rgba(150, 228, 189, 0.1);
+        .value {
+          background-color: var(--task-quadrant-4-bg);
+          color: #ffffff;
+        }
+        .title {
+          color: var(--task-quadrant-4-bg);
+        }
+      }
+
+      &-list {
+        padding: 0px 5px 10px;
+        overflow: auto;
+        flex: 1;
+      }
+    }
+  }
+}

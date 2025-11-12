@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import type { App } from 'vue';
 
 type CallBack = (event: PointerEvent) => void;
 
@@ -30,6 +30,7 @@ class VanillaLongPress {
     this.element.addEventListener('pointerdown', this.element._longPressStart);
     this.element.addEventListener('pointerup', this.element._longPressStop);
     this.element.addEventListener('pointermove', this.element._longPressMove);
+    this.element.addEventListener('touchmove', this.element._longPressStop);
   }
 
   private start(event: PointerEvent): void {
@@ -84,9 +85,11 @@ function beforeUnmount(el: Input) {
   el._longPressDestroy();
 }
 
+export const longPressDirective = {
+  mounted,
+  beforeUnmount
+};
+
 export default function VueLongPress(app: App) {
-  app.directive('longPress', {
-    mounted,
-    beforeUnmount
-  });
+  app.directive('longPress', longPressDirective);
 }

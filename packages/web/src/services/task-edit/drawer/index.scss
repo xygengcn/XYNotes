@@ -63,16 +63,16 @@
         align-items: center;
         span {
           margin-left: 10px;
-          font-size: 1em;
+          font-size: 14px;
           line-height: 22px;
           font-weight: 500;
+          font-family: var(--font-family-medium);
         }
       }
 
       &-date {
         color: #f3bb41;
-        font-weight: 700;
-        padding-left: calc(1.5em + 10px);
+        padding-left: calc(1.5em + 12px);
         font-size: 14px;
         cursor: pointer;
       }
@@ -91,9 +91,10 @@
         align-items: center;
         span {
           margin-left: 10px;
-          font-size: 1em;
+          font-size: 14px;
           line-height: 22px;
           font-weight: 500;
+          font-family: var(--font-family-medium);
         }
       }
 
@@ -141,6 +142,17 @@
           }
         }
       }
+    }
+
+    &-delete {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: 0px 1px 4px 0 rgba(26, 26, 26, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      color: var(--theme-error-color);
     }
   }
 }

@@ -112,8 +112,29 @@ export default class TaskController {
           result: true
         };
       })
-      .catch(() => {
+      .catch((e) => {
+        logger.error(e.message, '[task] sort 排序失败');
         return Promise.reject({ code: 'TASK_SORT_FAILED', message: '任务排序失败' });
+      });
+  }
+
+  @Post('/status')
+  public status() {
+    // 分别获取不同quadrant且status为0的数量
+    return notePrismaClient.taskQuadrant
+      .groupBy({
+        by: ['quadrant'],
+        where: {
+          status: 0
+        },
+        _count: true
+      })
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        logger.error(e.message, '[task] status 获取任务状态失败');
+        return Promise.reject({ code: 'TASK_STATUS_FAILED', message: '任务状态获取失败' });
       });
   }
 }

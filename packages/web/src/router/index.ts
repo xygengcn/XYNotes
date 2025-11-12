@@ -132,6 +132,15 @@ const routes: Array<RouteRecordRaw> = [
           device: 'mobile',
           index: 1
         }
+      },
+      {
+        path: 'task',
+        name: 'mobile-task',
+        component: () => import('@/views/mobile/pages/mobile-task'),
+        meta: {
+          device: 'mobile',
+          index: 1
+        }
       }
     ],
     meta: {

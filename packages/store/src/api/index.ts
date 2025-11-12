@@ -1,8 +1,8 @@
 import database from '@store/database';
-import { isCheckOnlineSync } from '@store/state/app';
+import { isCheckOnlineSync } from '@store/module/app';
 import { IUploadFile } from '@store/typings/assets';
 import { IConfigsColunm } from '@store/typings/configs';
-import { INote, ITaskItem, NoteStatus } from '@xynotes/typings';
+import { INote, ITaskItem, NoteStatus, TaskQuadrant } from '@xynotes/typings';
 import ApiBridge from './api.bridge';
 import apiEventLocal from './local';
 import apiEventOnline from './online';
@@ -190,6 +190,10 @@ class ApiEvent implements ApiBridge {
     list: Array<Pick<ITaskItem, 'taskId' | 'quadrant' | 'priority'>>
   ): Promise<{ result: boolean }> {
     return apiEventOnline.apiSaveOrUpdateTaskSort(list);
+  }
+  // 获取任务状态
+  async apiFetchTaskStatus(): Promise<Array<{ quadrant: TaskQuadrant; _count: number }>> {
+    return apiEventOnline.apiFetchTaskStatus();
   }
 }
 export default ApiEvent;

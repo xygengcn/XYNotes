@@ -11,6 +11,7 @@ export interface IdesktopNavMenuItem {
   path?: string;
   visible: boolean;
   size?: number;
+  badge?: string;
 }
 
 const DesktopNavMenuItem = defineComponent({
@@ -43,6 +44,9 @@ const DesktopNavMenuItem = defineComponent({
             onClick={handleClickNavMenu}
           />
         </div>
+        <span class="desktop-nav-menu-content-list-item-badge" v-show={props.menu.badge}>
+          {props.menu.badge}
+        </span>
       </div>
     );
   }

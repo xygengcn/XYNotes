@@ -7,6 +7,7 @@
   padding: 10px;
   border-radius: 8px;
   cursor: move;
+  overflow: hidden;
   &:hover {
     background-color: var(--task-item-bg-color);
   }
@@ -42,14 +43,18 @@
 
   &-opts {
     cursor: pointer;
-    display: none;
+    display: flex;
     position: absolute;
-    right: 20px;
-    gap: 10px;
+    right: -100%;
+    gap: 15px;
     height: 100%;
-    padding: 0px 10px;
+    padding: 0px 20px;
     top: 0;
     align-items: center;
+    background-color: #fff;
+    transition: all 0.5s;
+    border-radius: 0px 8px 8px 0px;
+    border: 0.5px solid var(--task-item-bg-color);
     .icon {
       color: var(--task-item-theme-color);
       &:hover {
@@ -60,7 +65,12 @@
 
   &:hover {
     .desktop-task-main-task-item-opts {
-      display: flex;
+      right: 0px;
+    }
+  }
+  &:active {
+    .desktop-task-main-task-item-opts {
+      display: none;
     }
   }
 }

@@ -1,0 +1,62 @@
+.mobile-home-note-list {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  // 列表
+  &-content {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+    padding: 10px 15px;
+    overflow-x: hidden;
+
+    // 列表
+    &-scroll {
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      transform: rotate(0deg); // 解决移动端border-radius不隐藏的问题
+
+      .swipeout-list-item + .swipeout-list-item {
+        border-top: var(--border-default-size) solid var(--border-default-color);
+      }
+
+      // 右滑菜单
+      &-right {
+        display: flex;
+        &-tags {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 44px;
+          color: #fff;
+          background-color: #f3bb41;
+        }
+        &-delete {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 44px;
+          height: 100%;
+          color: #fff;
+          background-color: var(--note-item-swipe-delete);
+        }
+      }
+    }
+  }
+  &-blank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 14px;
+    flex-direction: column;
+    color: var(--font-default-color);
+    gap: 10px;
+    &-text {
+      .icon {
+        margin: 0px 4px;
+      }
+    }
+  }
+}

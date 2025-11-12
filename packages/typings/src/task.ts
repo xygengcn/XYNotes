@@ -50,3 +50,22 @@ export enum TaskQuadrantText {
   C = '不重要但紧急',
   D = '不重要不紧急'
 }
+
+export const TaskQuadrantList = [
+  {
+    value: TaskQuadrant.A,
+    title: TaskQuadrantText.A
+  },
+  {
+    value: TaskQuadrant.B,
+    title: TaskQuadrantText.B
+  },
+  {
+    value: TaskQuadrant.C,
+    title: TaskQuadrantText.C
+  },
+  {
+    value: TaskQuadrant.D,
+    title: TaskQuadrantText.D
+  }
+];

@@ -50,9 +50,7 @@ const Input = defineComponent({
      */
     const handleInput = (e: Event) => {
       context.emit('input', (e.target as HTMLInputElement).value);
-      if (orignalValue !== (e.target as HTMLInputElement).value) {
-        context.emit('update:value', (e.target as HTMLInputElement).value);
-      }
+      context.emit('update:value', (e.target as HTMLInputElement).value);
       handleChange(e);
     };
     /**
@@ -76,9 +74,7 @@ const Input = defineComponent({
         clearTimeout(inputTimeOut);
       }
       inputTimeOut = window.setTimeout(() => {
-        if (orignalValue !== (e.target as HTMLInputElement).value) {
-          context.emit('change', (e.target as HTMLInputElement).value);
-        }
+        context.emit('change', (e.target as HTMLInputElement).value);
         inputTimeOut && clearTimeout(inputTimeOut);
       }, 500);
     };

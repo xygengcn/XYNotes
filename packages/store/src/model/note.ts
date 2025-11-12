@@ -1,6 +1,6 @@
 import ApiEvent from '@store/api';
-import { isCheckOnlineSync } from '@store/state/app';
-import { archiveNote, removeNote, saveNote, syncNote } from '@store/state/note';
+import { isCheckOnlineSync } from '@store/module/app';
+import { archiveNote, removeNote, saveNote, syncNote } from '@store/module/note';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@xynotes/typings';
 import { debounce, downloadFile, omit, uuid } from '@xynotes/utils';
 import { toRaw } from 'vue';

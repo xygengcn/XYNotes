@@ -11,6 +11,7 @@ const Checkbox = defineComponent({
   emits: ['update:value', 'change'],
   setup(props, context) {
     const onChange = (e) => {
+      e.stopPropagation();
       context.emit('update:value', e.target.checked);
       context.emit('change', e.target.checked);
     };

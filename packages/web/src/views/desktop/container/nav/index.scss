@@ -26,10 +26,25 @@
       flex-direction: column;
       align-items: center;
       &-item {
+        position: relative;
         &-content {
           display: flex;
           align-items: center;
           height: 70px;
+        }
+        &-badge {
+          position: absolute;
+          right: -5px;
+          top: 15px;
+          background-color: var(--theme-badge-color);
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #fff;
+          font-size: 14px;
         }
       }
     }

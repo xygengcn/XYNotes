@@ -1,8 +1,8 @@
-import { changeAppNetworkStatus, isCheckOnlineSync } from '@store/state/app';
-import { configsStoreState } from '@store/state/configs';
+import { changeAppNetworkStatus, isCheckOnlineSync } from '@store/module/app';
+import { configsStoreState } from '@store/module/configs';
 import { IUploadFile } from '@store/typings/assets';
 import { IConfigsColunm } from '@store/typings/configs';
-import { INote, ITaskItem } from '@xynotes/typings';
+import { INote, ITaskItem, TaskQuadrant } from '@xynotes/typings';
 import { Cookie, omit } from '@xynotes/utils';
 import axios, { AxiosError } from 'axios';
 
@@ -227,6 +227,7 @@ class ApiEventOnline {
       })
       .catch((e) => {
         console.error('[保存失败]', e);
+        return null;
       });
   }
 
@@ -238,6 +239,9 @@ class ApiEventOnline {
       })
       .catch((e) => {
         console.error('[删除失败]', e);
+        return {
+          result: false
+        };
       });
   }
 
@@ -251,6 +255,20 @@ class ApiEventOnline {
       })
       .catch((e) => {
         console.error('[保存失败]', e);
+      });
+  }
+  /**
+   * 任务状态
+   * @returns
+   */
+  async apiFetchTaskStatus(): Promise<Array<{ quadrant: TaskQuadrant; _count: number }>> {
+    return this.fetch('/note/task/status', {})
+      .then((result) => {
+        return result;
+      })
+      .catch((e) => {
+        console.error('[拉取失败]', e);
+        return {};
       });
   }
 }

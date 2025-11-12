@@ -1,16 +1,19 @@
-import showTaskDialog from '@/services/task-edit';
-import { Card, Icon } from '@xynotes/components';
+import { showTaskDrawer } from '@/services/task-edit';
+import { useThemeColor } from '@/services/theme';
+import { Card, Icon, Nav } from '@xynotes/components';
 import { taskStoreAction, taskStoreState } from '@xynotes/store/task';
 import { TaskQuadrant, TaskQuadrantList, type ITaskItem } from '@xynotes/typings';
 import { uuid } from '@xynotes/utils';
 import { defineComponent, onBeforeMount } from 'vue';
 import { VueDraggable, type SortableEvent } from 'vue-draggable-plus';
+import { useRouter } from 'vue-router';
 import './index.scss';
-import { DesktopTaskMainTaskItem } from './item';
+import { MobileTaskItem } from './item';
 
 export default defineComponent({
-  name: 'DesktopTaskMain',
+  name: 'MobileTask',
   setup() {
+    const router = useRouter();
     /**
      * 列表排序事件处理
      * @param event
@@ -30,13 +33,12 @@ export default defineComponent({
       }
       taskStoreAction.orderTask();
     };
-
     /**
      * 创建任务
      * @param quadrant
      */
     const handleClickCreate = (quadrant: TaskQuadrant) => {
-      showTaskDialog(
+      showTaskDrawer(
         {
           title: '',
           taskId: uuid(),
@@ -57,19 +59,35 @@ export default defineComponent({
     };
 
     onBeforeMount(() => {
+      /**
+       * 切换主题
+       */
+      useThemeColor('#fff');
       taskStoreAction.fetchTaskList();
     });
     return () => (
-      <div class="desktop-task-main">
-        <div class="desktop-task-main-container">
+      <div class="mobile-task">
+        <Nav
+          backText="返回"
+          title="四象限"
+          onBack={() => {
+            router.push({
+              name: 'mobile-home',
+              query: {
+                routerType: 'push'
+              }
+            });
+          }}
+        ></Nav>
+        <div class="mobile-task-container">
           {TaskQuadrantList.map((quadrant) => (
-            <Card class="desktop-task-main-container-card">
-              <div class="desktop-task-main-container-card-title">
+            <Card class="mobile-task-container-card">
+              <div class="mobile-task-container-card-title">
                 <span class="value">{quadrant.value}</span>
                 <span class="title">{quadrant.title}</span>
               </div>
               <VueDraggable
-                class="desktop-task-main-container-card-list"
+                class="mobile-task-container-card-list"
                 data-groupname={quadrant.value}
                 v-model={taskStoreState.taskList[quadrant.value]}
                 animation={150}
@@ -79,13 +97,10 @@ export default defineComponent({
                 onRemove={handleListSortEvent}
               >
                 {taskStoreState.taskList[quadrant.value]?.map((task) => (
-                  <DesktopTaskMainTaskItem task={task} key={task.id}></DesktopTaskMainTaskItem>
+                  <MobileTaskItem task={task} key={task.id}></MobileTaskItem>
                 ))}
               </VueDraggable>
-              <div
-                class="desktop-task-main-container-card-create"
-                onClick={handleClickCreate.bind(null, quadrant.value)}
-              >
+              <div class="mobile-task-container-card-create" onClick={handleClickCreate.bind(null, quadrant.value)}>
                 <Icon type="create"></Icon>
               </div>
             </Card>

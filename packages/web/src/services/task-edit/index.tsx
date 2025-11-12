@@ -2,7 +2,7 @@ import { useDrawer } from '@xynotes/components';
 import type { ITaskItem } from '@xynotes/typings';
 import { createApp, defineAsyncComponent } from 'vue';
 
-export function showTaskDrawer(task: ITaskItem, onSubmit: (options: ITaskItem) => void) {
+export function showTaskDrawer(task: ITaskItem, onSubmit: (options: ITaskItem) => void, onDelete?: () => void) {
   const { show } = useDrawer(
     defineAsyncComponent(() => import('./drawer')),
     {
@@ -11,6 +11,9 @@ export function showTaskDrawer(task: ITaskItem, onSubmit: (options: ITaskItem) =
         task,
         onSubmit: (options) => {
           options && onSubmit?.(options);
+        },
+        onDelete: () => {
+          onDelete?.();
         }
       },
       drawerOptions: { height: '60vh' }

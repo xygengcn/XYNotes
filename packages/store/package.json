@@ -40,26 +40,27 @@
       "import": "./dist/index.es.js"
     },
     "./configs": {
-      "development": "./src/state/configs.ts",
-      "types": "./dist/state/configs.d.ts",
-      "import": "./dist/configs.es.js"
+      "development": "./src/module/configs.ts",
+      "types": "./src/module/configs.ts",
+      "import": "./dist/configs.es.js",
+      "require": "./dist/configs.cjs.js"
     },
     "./app": {
-      "development": "./src/state/app.ts",
+      "development": "./src/module/app.ts",
       "require": "./dist/app.cjs.js",
-      "types": "./dist/state/app.d.ts",
+      "types": "./src/module/app.ts",
       "import": "./dist/app.es.js"
     },
     "./note": {
-      "development": "./src/state/note.ts",
+      "development": "./src/module/note.ts",
       "require": "./dist/note.cjs.js",
-      "types": "./dist/state/note.d.ts",
+      "types": "./src/module/note.ts",
       "import": "./dist/note.es.js"
     },
     "./task": {
       "development": "./src/module/task.ts",
       "require": "./dist/task.cjs.js",
-      "types": "./dist/module/task.d.ts",
+      "types": "./src/module/task.ts",
       "import": "./dist/task.es.js"
     }
   }

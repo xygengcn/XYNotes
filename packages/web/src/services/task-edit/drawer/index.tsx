@@ -1,7 +1,7 @@
 import { Icon, Input, Popover, showDatePickerDialog } from '@xynotes/components';
 import { TaskQuadrant, TaskQuadrantText, type ITaskItem } from '@xynotes/typings';
 import { timeFormat, uuid } from '@xynotes/utils';
-import { computed, defineComponent, onMounted, ref, type PropType } from 'vue';
+import { computed, defineComponent, ref, type PropType } from 'vue';
 import './index.scss';
 export default defineComponent({
   name: 'TaskEditDrawer',
@@ -52,16 +52,17 @@ export default defineComponent({
       });
     };
 
-    onMounted(() => {
-      refInput.value?.focus();
-    });
+    const handleClickDelete = () => {
+      context.emit('delete');
+      handleClose();
+    };
 
     return () => (
       <div class="task-edit-drawer">
         <div class="task-edit-drawer-header">
           <span class="title">添加目标</span>
           <span class={{ disabled: !enable.value }} onClick={handleClickSubmit}>
-            添加
+            保存
           </span>
         </div>
         <div class="task-edit-drawer-content">
@@ -70,7 +71,7 @@ export default defineComponent({
               <Icon type="edit-name" size="1.5em"></Icon>
             </span>
             <span class="task-edit-drawer-content-title-input">
-              <Input v-model:value={options.value.title} placeholder="输入事项名称" ref={refInput}></Input>
+              <Input v-model:value={options.value.title} placeholder="输入目标名称" ref={refInput}></Input>
             </span>
           </div>
           <div class="task-edit-drawer-content-quadrant">
@@ -116,6 +117,9 @@ export default defineComponent({
               <span v-show={options.value.deadline}>{timeFormat(options.value.deadline, 'yyyy年MM月dd日 DD')}</span>
               <span v-show={!options.value.deadline}>设置目标时间</span>
             </div>
+          </div>
+          <div class="task-edit-drawer-content-delete" v-show={options.value.id} onClick={handleClickDelete}>
+            <span>删除目标</span>
           </div>
         </div>
       </div>

@@ -1,0 +1,93 @@
+.mobile-home-task-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  padding: 0px 15px;
+
+  --task-item-bg-color: rgba(248, 128, 137, 0.1);
+
+  &-item {
+    display: flex;
+    padding: 10px;
+    background-color: #fff;
+    position: relative;
+    .value {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 15px;
+      margin-right: 4px;
+    }
+
+    .number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 12px;
+      right: 10px;
+      background-color: var(--task-item-bg-color);
+      color: var(--task-item-theme-color);
+      font-weight: bold;
+    }
+
+    // 第一象限：重要且紧急 - 粉色背景，白色字体
+    &:nth-child(1) {
+      --task-item-theme-color: var(--task-quadrant-1-bg);
+      --task-item-bg-color: rgba(248, 128, 137, 0.2);
+      .value {
+        background-color: var(--task-quadrant-1-bg);
+        color: #ffffff;
+      }
+      .title {
+        color: var(--task-quadrant-1-bg);
+      }
+    }
+
+    // 第二象限：重要不紧急 - 橙色背景，白色字体
+    &:nth-child(2) {
+      --task-item-theme-color: var(--task-quadrant-2-bg);
+      --task-item-bg-color: rgba(255, 169, 111, 0.1);
+      .value {
+        background-color: var(--task-quadrant-2-bg);
+        color: #ffffff;
+      }
+      .title {
+        color: var(--task-quadrant-2-bg);
+      }
+    }
+
+    // 第三象限：不重要但紧急 - 淡蓝色背景，白色字体
+    &:nth-child(3) {
+      --task-item-theme-color: var(--task-quadrant-3-bg);
+      --task-item-bg-color: rgba(143, 191, 239, 0.1);
+      .value {
+        background-color: var(--task-quadrant-3-bg);
+        color: #ffffff;
+      }
+      .title {
+        color: var(--task-quadrant-3-bg);
+      }
+    }
+
+    // 第四象限：不重要不紧急 - 青色背景，白色字体
+    &:nth-child(4) {
+      --task-item-theme-color: var(--task-quadrant-4-bg);
+      --task-item-bg-color: rgba(150, 228, 189, 0.1);
+      .value {
+        background-color: var(--task-quadrant-4-bg);
+        color: #ffffff;
+      }
+      .title {
+        color: var(--task-quadrant-4-bg);
+      }
+    }
+  }
+}

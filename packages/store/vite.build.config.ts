@@ -28,9 +28,9 @@ export default defineConfig(
           fileName: (format) => `[name].${format}.js`,
           entry: {
             index: path.join(__dirname, 'src/index.ts'),
-            configs: path.join(__dirname, 'src/state/configs.ts'),
-            note: path.join(__dirname, 'src/state/note.ts'),
-            app: path.join(__dirname, 'src/state/app.ts'),
+            configs: path.join(__dirname, 'src/module/configs.ts'),
+            note: path.join(__dirname, 'src/module/note.ts'),
+            app: path.join(__dirname, 'src/module/app.ts'),
             task: path.join(__dirname, 'src/module/task.ts')
           },
           formats: ['cjs', 'es']

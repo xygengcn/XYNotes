@@ -4,8 +4,9 @@ import { Loading } from '@xynotes/components';
 import { AppLoadStatus } from '@xynotes/store';
 import { appStoreState, isCheckOnlineSync } from '@xynotes/store/app';
 import { addNote, setActiveNoteId } from '@xynotes/store/note';
+import { taskStoreAction, taskStoreState } from '@xynotes/store/task';
 import { is } from '@xynotes/utils';
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import './index.scss';
 import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
@@ -47,7 +48,8 @@ const DesktopNavContainer = defineComponent({
         name: 'desktop-task',
         visible: isCheckOnlineSync.value,
         path: '/task',
-        size: 18
+        size: 18,
+        badge: taskStatusCount.value ? taskStatusCount.value.toString() : ''
       },
       {
         title: '归档',
@@ -65,6 +67,17 @@ const DesktopNavContainer = defineComponent({
         path: '/setting'
       }
     ]);
+
+    // 待办数量
+    const taskStatusCount = computed(() => {
+      return Object.values(taskStoreState.taskStatus).reduce((total, item) => {
+        return total + item;
+      }, 0);
+    });
+
+    onBeforeMount(() => {
+      taskStoreAction.status();
+    });
 
     return () => (
       <div class="desktop-nav-menu" style={{ width: `${DESKTOP_NAV_MENU_WIDTH}px` }}>

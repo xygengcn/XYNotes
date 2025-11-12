@@ -1,5 +1,5 @@
 import ApiEvent from '@store/api';
-import { ITaskItem } from '@xynotes/typings';
+import { ITaskItem, TaskQuadrant } from '@xynotes/typings';
 import { debounce } from '@xynotes/utils';
 import { reactive } from 'vue';
 
@@ -13,7 +13,14 @@ const state = reactive({
     B: new Array<ITaskItem>(),
     C: new Array<ITaskItem>(),
     D: new Array<ITaskItem>()
-  }
+  },
+  // 任务状态
+  taskStatus: {
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0
+  } as Record<TaskQuadrant, number>
 });
 
 /**
@@ -49,6 +56,14 @@ const saveTask = async (task: ITaskItem) => {
   } else {
     quadrant.push(result);
   }
+  Object.entries(state.taskList).forEach(([key, value]) => {
+    state.taskStatus[key] = value.reduce((acc, cur) => {
+      if (cur.status === 0) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+  });
 };
 
 // 删除任务项
@@ -89,8 +104,22 @@ const orderTask = debounce(async () => {
   await ApiEvent.api.apiSaveOrUpdateTaskSort(taskList);
 }, 500);
 
+// 获取任务状态
+const status = async () => {
+  taskStoreState.taskStatus = {
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0
+  };
+  const result = (await ApiEvent.api.apiFetchTaskStatus()) || [];
+  result.forEach((i) => {
+    taskStoreState.taskStatus[i.quadrant] = i._count;
+  });
+};
+
 // actions
-export const taskStoreAction = { fetchTaskList, saveTask, deleteTask, orderTask };
+export const taskStoreAction = { fetchTaskList, saveTask, deleteTask, orderTask, status };
 
 // state
 export const taskStoreState = state;
