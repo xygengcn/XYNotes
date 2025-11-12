@@ -21,9 +21,12 @@ export const DesktopLeftContainer = defineComponent({
     const width = computed(() => {
       if (props.side) {
         return DESKTOP_NAV_MENU_WIDTH + configsStoreState.value.SIDE_CONTAINER_MAX_WIDTH + 'px';
-      } else {
+      }
+
+      if (props.nav) {
         return DESKTOP_NAV_MENU_WIDTH + 'px';
       }
+      return '0px';
     });
 
     // 全屏
@@ -40,7 +43,7 @@ export const DesktopLeftContainer = defineComponent({
       }
     );
     return () => (
-      <div class="desktop-left-container" ref={root} style={{ width: width.value }}>
+      <div class="desktop-left-container" ref={root} style={{ width: width.value }} v-show={props.nav ?? props.side}>
         <div class="desktop-left-container-wrap">{context.slots.default?.()}</div>
       </div>
     );

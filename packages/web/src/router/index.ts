@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/desktop'),
     children: [
       {
-        path: '/',
+        path: '',
         name: 'desktop-main',
         meta: {
           device: 'desktop'
@@ -17,26 +17,39 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: '',
             name: 'desktop-main-list',
-            component: () => import('@/views/desktop/pages/list'),
             children: [
               {
                 path: '',
                 name: 'desktop-main-list-default',
-                component: () => import('@/views/desktop/container/main/default')
+                components: {
+                  side: () => import('@/views/desktop/pages/list/side'),
+                  default: () => import('@/views/desktop/container/main/default')
+                }
               },
               {
                 path: 'detail/:nid',
                 name: 'desktop-main-list-detail',
-                component: () => import('@/views/desktop/pages/list/main')
+                components: {
+                  side: () => import('@/views/desktop/pages/list/side'),
+                  default: () => import('@/views/desktop/pages/list/main')
+                }
               }
             ]
           }
         ]
       },
       {
+        path: 'task',
+        name: 'desktop-task',
+        meta: {
+          device: 'desktop',
+          side: false
+        },
+        component: () => import('@/views/desktop/pages/task/main')
+      },
+      {
         path: 'setting',
         name: 'desktop-setting',
-        component: () => import('@/views/desktop/pages/settings'),
         meta: {
           device: 'desktop'
         },
@@ -44,12 +57,18 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: '',
             name: 'desktop-setting-default',
-            component: () => import('@/views/desktop/container/main/default')
+            components: {
+              side: () => import('@/views/desktop/pages/settings/side'),
+              default: () => import('@/views/desktop/container/main/default')
+            }
           },
           {
             path: 'config',
             name: 'desktop-setting-config',
-            component: () => import('@/views/desktop/pages/settings/main')
+            components: {
+              side: () => import('@/views/desktop/pages/settings/side'),
+              default: () => import('@/views/desktop/pages/settings/main')
+            }
           }
         ]
       },
@@ -59,17 +78,22 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           device: 'desktop'
         },
-        component: () => import('@/views/desktop/pages/archive'),
         children: [
           {
             path: '',
             name: 'desktop-archive-default',
-            component: () => import('@/views/desktop/container/main/default')
+            components: {
+              side: () => import('@/views/desktop/pages/archive/side'),
+              default: () => import('@/views/desktop/container/main/default')
+            }
           },
           {
             path: 'preview/:nid',
             name: 'desktop-archive-preview',
-            component: () => import('@/views/desktop/pages/archive/main')
+            components: {
+              side: () => import('@/views/desktop/pages/archive/side'),
+              default: () => import('@/views/desktop/pages/archive/main')
+            }
           }
         ]
       },
@@ -77,24 +101,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'edit/:nid',
         name: 'desktop-edit',
         meta: {
-          device: 'desktop'
+          device: 'desktop',
+          side: false,
+          nav: false
         },
         component: () => import('@/views/desktop/pages/edit')
-      },
-      {
-        path: 'task',
-        name: 'desktop-task',
-        meta: {
-          device: 'desktop'
-        },
-        component: () => import('@/views/desktop/pages/task'),
-        children: [
-          {
-            path: '',
-            name: 'desktop-task-default',
-            component: () => import('@/views/desktop/pages/task/main')
-          }
-        ]
       }
     ],
     meta: {

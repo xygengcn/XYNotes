@@ -4,7 +4,7 @@ import { defineComponent, nextTick, onMounted, ref } from 'vue';
 import { DESKTOP_NAV_MENU_WIDTH } from '../nav';
 import { SIDE_CONTAINER_MAX_WIDTH, SIDE_CONTAINER_MIN_WIDTH } from '../side';
 import './index.scss';
-export default defineComponent({
+const DesktopGap = defineComponent({
   name: 'DesktopGap',
   setup() {
     /**
@@ -56,3 +56,5 @@ export default defineComponent({
     return () => <div class="desktop-gap" ref={refDrapLine}></div>;
   }
 });
+
+export default DesktopGap;
