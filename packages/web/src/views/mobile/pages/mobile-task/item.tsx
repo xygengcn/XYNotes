@@ -1,4 +1,3 @@
-import { longPressDirective } from '@/directive/long-press';
 import { showTaskDrawer } from '@/services/task-edit';
 import { Checkbox } from '@xynotes/components';
 import { taskStoreAction } from '@xynotes/store/task';
@@ -11,9 +10,6 @@ export const MobileTaskItem = defineComponent({
   name: 'MobileTaskItem',
   props: {
     task: Object as PropType<ITaskItem>
-  },
-  directives: {
-    longPress: longPressDirective
   },
   setup(props) {
     // 切换任务完成状态
@@ -47,8 +43,8 @@ export const MobileTaskItem = defineComponent({
       );
     };
     return () => (
-      <div class={{ 'mobile-task-item': true, done: props.task.status === 1 }} v-longPress={handleClickSetting}>
-        <div class="mobile-task-item-checkbox">
+      <div class={{ 'mobile-task-item': true, done: props.task.status === 1 }} onClick={handleClickSetting}>
+        <div class="mobile-task-item-checkbox" onClick={(e) => e.stopPropagation()}>
           <Checkbox value={props.task.status === 1} onChange={handleChange}></Checkbox>
         </div>
         <div class="mobile-task-item-content">

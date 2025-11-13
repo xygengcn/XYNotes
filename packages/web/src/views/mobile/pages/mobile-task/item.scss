@@ -29,6 +29,8 @@
     flex: 1;
     overflow: hidden;
     &-title {
+      line-height: 16px;
+      height: 16px;
       font-size: 14px;
       font-family: var(--font-family-medium);
       color: var(--theme-default-color);
@@ -38,6 +40,8 @@
     &-desc {
       font-size: 12px;
       color: var(--theme-light-color);
+      line-height: 14px;
+      height: 14px;
       padding-top: 2px;
     }
   }

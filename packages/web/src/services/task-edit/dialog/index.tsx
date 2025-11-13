@@ -44,7 +44,7 @@ const TaskEditDialogCompnent = defineComponent({
 
     const handleClickTime = () => {
       showDatePickerDialog({
-        initialDate: new Date(options.value.deadline),
+        initialDate: options.value.deadline ? new Date(options.value.deadline) : new Date(),
         onConfirm: (result) => {
           options.value.deadline = result.date;
         }
@@ -60,7 +60,7 @@ const TaskEditDialogCompnent = defineComponent({
         class="task-edit-dialog"
         visible={true}
         onClose={handleClose}
-        title="添加目标"
+        title={options.value.id ? '编辑事项' : '添加事项'}
         width={500}
         height={'max-content'}
       >
