@@ -26,6 +26,7 @@ class ApiEventOnline {
   private async fetch<T extends unknown = any>(url: string, body: any = {}, configs: any = {}): Promise<T> {
     // 忽略同步
     if (!isCheckOnlineSync.value) {
+      console.error('[online] fetch offline');
       return Promise.resolve(null as any);
     }
 
@@ -216,6 +217,7 @@ class ApiEventOnline {
       })
       .catch((e) => {
         console.error('[拉取失败]', e);
+        return [];
       });
   }
 

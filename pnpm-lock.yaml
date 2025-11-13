@@ -288,6 +288,9 @@ importers:
       axios:
         specifier: ^1.11.0
         version: 1.11.0
+      eventemitter3:
+        specifier: ^5.0.1
+        version: 5.0.1
       ts-database:
         specifier: 0.0.4
         version: 0.0.4

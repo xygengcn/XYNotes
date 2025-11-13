@@ -2,11 +2,11 @@ import logo from '@/assets/images/logo/logo.png';
 import MinMax from '@/components/min-max';
 import { Loading } from '@xynotes/components';
 import { AppLoadStatus } from '@xynotes/store';
-import { appStoreState, isCheckOnlineSync } from '@xynotes/store/app';
+import { appStoreState, isCheckOnlineSync, onAppSynced } from '@xynotes/store/app';
 import { addNote, setActiveNoteId } from '@xynotes/store/note';
 import { taskStoreAction, taskStoreState } from '@xynotes/store/task';
 import { is } from '@xynotes/utils';
-import { computed, defineComponent, onBeforeMount } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import './index.scss';
 import DesktopNavMenuItem, { type IdesktopNavMenuItem } from './nav-menu-item';
@@ -75,7 +75,7 @@ const DesktopNavContainer = defineComponent({
       }, 0);
     });
 
-    onBeforeMount(() => {
+    onAppSynced(() => {
       taskStoreAction.status();
     });
 

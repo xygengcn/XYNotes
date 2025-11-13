@@ -70,6 +70,22 @@ export const notesListBySort = computed(() => {
 });
 
 /**
+ * 同步笔记列表
+ * @returns
+ */
+export const sycnNoteList = () => {
+  // 同步笔记信息
+  return ApiEvent.api
+    .apiFetchNoteListData({ updateTime: 0, order: configsStoreState.value.NOTE_LIST_SORT.value, pageSize: 50 })
+    .then((list) => {
+      console.log('[sync] notes', list.length);
+      if (list.length > 0) {
+        setNoteList(list);
+      }
+    });
+};
+
+/**
  * 搜索笔记列表
  * @param keyword 关键字
  */

@@ -1,7 +1,8 @@
 import { Card } from '@xynotes/components';
+import { onAppSynced } from '@xynotes/store/app';
 import { taskStoreAction, taskStoreState } from '@xynotes/store/task';
 import { TaskQuadrantList } from '@xynotes/typings';
-import { defineComponent, onActivated, onBeforeMount } from 'vue';
+import { defineComponent, onActivated } from 'vue';
 import { useRouter } from 'vue-router';
 import './index.scss';
 
@@ -18,7 +19,7 @@ export default defineComponent({
     onActivated(() => {
       taskStoreAction.status();
     });
-    onBeforeMount(() => {
+    onAppSynced(() => {
       taskStoreAction.status();
     });
 

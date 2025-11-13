@@ -1,10 +1,9 @@
-import ApiEvent from '@store/api';
 import database from '@store/database';
+import eventBus from '@store/events';
 import { AppLoadStatus, AppMode } from '@store/typings/app';
 import { is } from '@xynotes/utils';
 import { computed, readonly, ref } from 'vue';
 import { configsStoreState, syncConfigs } from './configs';
-import { setNoteList } from './note';
 
 declare const __APP_VERSION__: string;
 
@@ -70,20 +69,27 @@ export const syncApp = async () => {
   // 同步配置
   return syncConfigs()
     .then(async (configs) => {
-      // 同步笔记信息
-      return ApiEvent.api
-        .apiFetchNoteListData({ updateTime: 0, order: configs.NOTE_LIST_SORT.value, pageSize: 50 })
-        .then((list) => {
-          console.log('[sync] notes', list.length);
-          if (list.length > 0) {
-            setNoteList(list);
-          }
-        });
+      // 结束加载
+      setLoadStatus(AppLoadStatus.synced);
+      // 同步事件
+      eventBus.emit('app:synced');
     })
     .finally(() => {
       // 结束加载
       setLoadStatus(AppLoadStatus.finish);
     });
+};
+
+/**
+ * 事件同步完成
+ * @param cb
+ */
+export const onAppSynced = (cb: () => void) => {
+  console.log('[onAppSynced]');
+  if (state.value.loadStatus >= AppLoadStatus.synced) {
+    return cb();
+  }
+  eventBus.once('app:synced', cb);
 };
 
 /**

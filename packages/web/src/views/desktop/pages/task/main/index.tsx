@@ -1,9 +1,10 @@
 import showTaskDialog from '@/services/task-edit';
 import { Card, Icon } from '@xynotes/components';
+import { onAppSynced } from '@xynotes/store/app';
 import { taskStoreAction, taskStoreState } from '@xynotes/store/task';
 import { TaskQuadrant, TaskQuadrantList, type ITaskItem } from '@xynotes/typings';
 import { uuid } from '@xynotes/utils';
-import { defineComponent, onBeforeMount } from 'vue';
+import { defineComponent } from 'vue';
 import { VueDraggable, type SortableEvent } from 'vue-draggable-plus';
 import './index.scss';
 import { DesktopTaskMainTaskItem } from './item';
@@ -56,7 +57,7 @@ export default defineComponent({
       );
     };
 
-    onBeforeMount(() => {
+    onAppSynced(() => {
       taskStoreAction.fetchTaskList();
     });
     return () => (

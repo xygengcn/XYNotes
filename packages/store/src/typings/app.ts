@@ -3,13 +3,11 @@
  */
 export enum AppLoadStatus {
   // 配置加载中
-  configsLoading = 'configsLoading',
-  // 本地数据加载中
-  localNotesLoading = 'localNotesLoading',
-  // 网络数据加载中
-  onlineNotesLoading = 'onlineNotesLoading',
+  configsLoading = 0,
+  // 数据完成
+  synced = 1,
   // 完成
-  finish = 'finish'
+  finish = 2
 }
 
 /**

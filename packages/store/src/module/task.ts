@@ -34,7 +34,7 @@ const fetchTaskList = async () => {
     C: new Array<ITaskItem>(),
     D: new Array<ITaskItem>()
   };
-  const taskList = await ApiEvent.api.apiFetchTaskListData();
+  const taskList = (await ApiEvent.api.apiFetchTaskListData()) || [];
   taskList.forEach((task) => {
     state.taskList[task.quadrant].push(task);
   });

@@ -36,7 +36,7 @@ export default defineConfig(
           formats: ['cjs', 'es']
         },
         rollupOptions: {
-          external: ['vue', '@xynotes/components', '@xynotes/utils', '@xynotes/typings']
+          external: ['vue', '@xynotes/components', '@xynotes/utils', '@xynotes/typings', 'eventemitter3']
         }
       }
     } as UserConfig)

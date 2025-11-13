@@ -2,7 +2,8 @@ import NoteItem from '@/components/note-item';
 import { showNoteTagsDrawer } from '@/services/note-tags';
 import { Icon, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
-import { notesListBySort, notesStoreState } from '@xynotes/store/note';
+import { onAppSynced } from '@xynotes/store/app';
+import { notesListBySort, notesStoreState, sycnNoteList } from '@xynotes/store/note';
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { SwipeList } from 'vue3-swipe-actions';
@@ -44,6 +45,10 @@ export const MobileHomeNoteList = defineComponent({
         }
       });
     };
+
+    onAppSynced(() => {
+      sycnNoteList();
+    });
     return () => (
       <div class="mobile-home-note-list">
         <Scroller class="mobile-home-note-list-content" v-show={notesListBySort.value.length > 0}>
