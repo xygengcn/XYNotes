@@ -40,9 +40,15 @@
     &-desc {
       font-size: 11px;
       color: var(--theme-light-color);
-      line-height: 14px;
-      height: 14px;
+      height: 16px;
       padding-top: 2px;
+      display: inline-flex;
+      align-items: center;
+      .icon {
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+      }
     }
   }
 }

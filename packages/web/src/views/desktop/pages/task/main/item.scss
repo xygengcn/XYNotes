@@ -38,6 +38,14 @@
       font-size: 13px;
       color: var(--theme-light-color);
       padding-top: 2px;
+      display: inline-flex;
+      align-items: center;
+      height: 20px;
+      .icon {
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+      }
     }
   }
 

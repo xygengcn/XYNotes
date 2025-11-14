@@ -1,8 +1,8 @@
 import { showTaskDrawer } from '@/services/task-edit';
-import { Checkbox } from '@xynotes/components';
+import { Checkbox, Icon } from '@xynotes/components';
 import { taskStoreAction } from '@xynotes/store/task';
 import type { ITaskItem } from '@xynotes/typings';
-import { timeFormat } from '@xynotes/utils';
+import { dateFormat, timeFormat } from '@xynotes/utils';
 import { defineComponent, toRaw, type PropType } from 'vue';
 import './item.scss';
 
@@ -50,10 +50,12 @@ export const MobileTaskItem = defineComponent({
         <div class="mobile-task-item-content">
           <div class="mobile-task-item-content-title">{props.task.title}</div>
           <div class="mobile-task-item-content-desc" v-show={props.task.deadline && !props.task.completedAt}>
-            <span>{timeFormat(props.task.deadline, 'yyyy年MM月dd日')}</span>
+            <Icon type="edit-time" size="14px"></Icon>
+            <span class="deadline">{timeFormat(props.task.deadline, 'yyyy年MM月dd日')}</span>
           </div>
           <div class="mobile-task-item-content-desc" v-show={props.task.completedAt}>
-            <span>{timeFormat(props.task.completedAt, 'MM月dd日已完成')}</span>
+            <Icon type="task" size="14px"></Icon>
+            <span class="completed">{dateFormat(props.task.completedAt, 'yyyy年MM月dd日')}</span>
           </div>
         </div>
       </div>
