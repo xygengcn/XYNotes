@@ -1,6 +1,6 @@
 {
   "productName": "XY笔记",
-  "version": "4.2.5",
+  "version": "4.2.9",
   "identifier": "com.xynotes.dev",
   "build": {
     "beforeDevCommand": "",
