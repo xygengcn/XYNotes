@@ -16,7 +16,7 @@ export function showTaskDrawer(task: ITaskItem, onSubmit: (options: ITaskItem) =
           onDelete?.();
         }
       },
-      drawerOptions: { height: '60vh' }
+      drawerOptions: { height: '50vh' }
     }
   );
   show();

@@ -50,11 +50,11 @@ export const MobileTaskItem = defineComponent({
         <div class="mobile-task-item-content">
           <div class="mobile-task-item-content-title">{props.task.title}</div>
           <div class="mobile-task-item-content-desc" v-show={props.task.deadline && !props.task.completedAt}>
-            <Icon type="edit-time" size="14px"></Icon>
+            <Icon type="edit-time"></Icon>
             <span class="deadline">{timeFormat(props.task.deadline, 'yyyy年MM月dd日')}</span>
           </div>
           <div class="mobile-task-item-content-desc" v-show={props.task.completedAt}>
-            <Icon type="task" size="14px"></Icon>
+            <Icon type="task"></Icon>
             <span class="completed">{dateFormat(props.task.completedAt, 'yyyy年MM月dd日')}</span>
           </div>
         </div>
