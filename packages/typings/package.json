@@ -17,7 +17,7 @@
   "devDependencies": {
     "prettier": "^2.8.7",
     "typescript": "5.7.2",
-    "vite": "^5.3.5",
+    "vite": "^5.4.21",
     "vite-plugin-dts": "^3.9.1"
   },
   "exports": {
