@@ -2,7 +2,7 @@ import { Icon } from '@xynotes/components';
 import { isCheckOnlineSync } from '@xynotes/store/app';
 import { addNote, notesStoreState, searchNoteList, setActiveNoteId } from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
-import { defineComponent, onBeforeMount } from 'vue';
+import { defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import 'vue3-swipe-actions/dist/index.css';
 import { MobileHomeFooter } from './footer';
@@ -14,6 +14,11 @@ const MobileHome = defineComponent({
   name: 'MobileHome',
   setup() {
     const router = useRouter();
+
+    /**
+     * 输入框聚焦
+     */
+    const isFocus = ref(false);
     /**
      * 搜索
      * @returns
@@ -49,6 +54,12 @@ const MobileHome = defineComponent({
               class="mobile-home-header-search__input"
               placeholder="搜索"
               value={notesStoreState.value.searchKeyword}
+              onFocus={() => {
+                isFocus.value = true;
+              }}
+              onBlur={() => {
+                isFocus.value = false;
+              }}
             />
             <Icon
               type="delete"
@@ -58,7 +69,7 @@ const MobileHome = defineComponent({
               }}
             ></Icon>
           </div>
-          <div class="mobile-home-header-add" onClick={handleClickAdd}>
+          <div class="mobile-home-header-add" onClick={handleClickAdd} v-show={!isFocus.value}>
             <Icon type="create" size="24px"></Icon>
           </div>
         </div>

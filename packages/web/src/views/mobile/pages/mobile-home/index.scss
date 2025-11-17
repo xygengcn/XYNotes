@@ -14,6 +14,7 @@
     &-search {
       flex: 1;
       position: relative;
+      transition: width 3s ease-in-out;
       &__input {
         border: none;
         background-color: #eee;
@@ -36,7 +37,8 @@
       display: flex;
       align-items: center;
       color: var(--mobile-icon-color);
-      margin-left: 10px;
+      padding-left: 10px;
+      overflow: hidden;
     }
   }
 
