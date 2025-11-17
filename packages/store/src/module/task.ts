@@ -106,13 +106,24 @@ const orderTask = debounce(async () => {
 
 // 获取任务状态
 const status = async () => {
-  taskStoreState.taskStatus = {
-    A: 0,
-    B: 0,
-    C: 0,
-    D: 0
-  };
-  const result = (await ApiEvent.api.apiFetchTaskStatus()) || [];
+  const result = (await ApiEvent.api.apiFetchTaskStatus()) || [
+    {
+      quadrant: 'A',
+      _count: 0
+    },
+    {
+      quadrant: 'B',
+      _count: 0
+    },
+    {
+      quadrant: 'C',
+      _count: 0
+    },
+    {
+      quadrant: 'D',
+      _count: 0
+    }
+  ];
   result.forEach((i) => {
     taskStoreState.taskStatus[i.quadrant] = i._count;
   });
@@ -123,3 +134,10 @@ export const taskStoreAction = { fetchTaskList, saveTask, deleteTask, orderTask,
 
 // state
 export const taskStoreState = state;
+
+// 监听页面激活
+window.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    taskStoreAction.status();
+  }
+});

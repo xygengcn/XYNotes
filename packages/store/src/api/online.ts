@@ -270,7 +270,7 @@ class ApiEventOnline {
       })
       .catch((e) => {
         console.error('[拉取失败]', e);
-        return {};
+        return null;
       });
   }
 }

@@ -21,7 +21,7 @@ const state = ref({
   networkStatus: window.navigator.onLine,
 
   // 模式
-  mode: is.mobile() || (is.tablet() && is.portrait()) ? AppMode.mobile : AppMode.desktop,
+  mode: is.mobile() || is.tablet() ? AppMode.mobile : AppMode.desktop,
 
   // 桌面端全屏模式
   desktopFullScreen: false
@@ -140,6 +140,6 @@ window.addEventListener('online', () => {
 // 监听屏幕旋转
 window.screen.orientation?.addEventListener('change', () => {
   window.location.reload();
-  state.value.mode = is.mobile() || (is.tablet() && is.portrait()) ? AppMode.mobile : AppMode.desktop;
+  state.value.mode = is.mobile() || is.tablet() ? AppMode.mobile : AppMode.desktop;
   console.log('[screen]', state.value.mode);
 });

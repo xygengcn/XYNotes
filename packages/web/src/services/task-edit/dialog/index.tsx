@@ -52,7 +52,9 @@ const TaskEditDialogCompnent = defineComponent({
     };
 
     onMounted(() => {
-      refInput.value?.focus();
+      if (options.value.title.length === 0) {
+        refInput.value?.focus();
+      }
     });
 
     return () => (
