@@ -1,6 +1,6 @@
 import { UploadService } from '@/services/upload';
 import { Editor, useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
-import { activeNote, notesStoreState, queryNote, setActiveNoteId } from '@xynotes/store/note';
+import { activeNote, notesStoreAction, notesStoreState } from '@xynotes/store/note';
 import { NoteStatus } from '@xynotes/typings';
 import { defineComponent, nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 import './index.scss';
@@ -41,7 +41,8 @@ const NoteEditor = defineComponent({
      */
     const handleQueryNoteDetail = async () => {
       fetchNoteLoading.value = true;
-      return queryNote(props.nid)
+      return notesStoreAction
+        .queryNote(props.nid)
         .then((result) => {
           if (result?.nid === activeNote.value?.nid) {
             setContent(result.content || result.text || '');
@@ -93,7 +94,7 @@ const NoteEditor = defineComponent({
 
     onBeforeMount(() => {
       if (!notesStoreState.value.activeNoteId && props.nid) {
-        setActiveNoteId(props.nid);
+        notesStoreAction.setActiveNoteId(props.nid);
       }
     });
 

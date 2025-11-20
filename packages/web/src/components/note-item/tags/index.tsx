@@ -1,7 +1,7 @@
 import type { Note } from '@xynotes/store';
+import { notesStoreAction } from '@xynotes/store/note';
 import { defineComponent, type PropType } from 'vue';
 import './index.scss';
-import { searchNoteList } from '@xynotes/store/note';
 export default defineComponent({
   name: 'NoteItemTags',
   props: {
@@ -14,7 +14,7 @@ export default defineComponent({
     const handleClickTag = (event: Event, tag: string) => {
       event.preventDefault();
       event.stopPropagation();
-      searchNoteList(`#${tag}`);
+      notesStoreAction.searchNoteList(`#${tag}`);
     };
     return () => (
       <div class="note-item-tags" v-show={props.note?.tags?.length}>

@@ -1,7 +1,7 @@
 import { Card, Input, Switch } from '@xynotes/components';
 import { type IConfigs } from '@xynotes/store';
-import { syncApp } from '@xynotes/store/app';
-import { configsStoreState, setConfig } from '@xynotes/store/configs';
+import { appStoreAction } from '@xynotes/store/app';
+import { configsStoreAction, configsStoreState } from '@xynotes/store/configs';
 import { defineComponent } from 'vue';
 import './index.scss';
 
@@ -16,7 +16,7 @@ const RemoteConfigSetting = defineComponent({
       if ((e.target as HTMLInputElement).value === origin) {
         return;
       }
-      return setConfig(key, (e.target as HTMLInputElement).value);
+      return configsStoreAction.setConfig(key, (e.target as HTMLInputElement).value);
     };
 
     /**
@@ -26,9 +26,9 @@ const RemoteConfigSetting = defineComponent({
     const onSwitchOnlineConfig = async (value: boolean) => {
       // 生产环境直接切换
       if (import.meta.env.VITE_APP_ENV === 'production') {
-        await setConfig('REMOTE_ONLINE_SYNC', value);
+        await configsStoreAction.setConfig('REMOTE_ONLINE_SYNC', value);
         // 同步数据
-        syncApp();
+        appStoreAction.syncApp();
         return;
       }
 
@@ -36,9 +36,9 @@ const RemoteConfigSetting = defineComponent({
         (value && configsStoreState.value.REMOTE_AUTHORIZATION && configsStoreState.value.REMOTE_BASE_URL) ||
         !value
       ) {
-        await setConfig('REMOTE_ONLINE_SYNC', value);
+        await configsStoreAction.setConfig('REMOTE_ONLINE_SYNC', value);
         // 同步数据
-        syncApp();
+        appStoreAction.syncApp();
       }
     };
     return () => (

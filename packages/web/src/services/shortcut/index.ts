@@ -4,14 +4,14 @@
 
 import { registerShortcut, showMainWindow, unregisterAllShortcut } from '@xynotes/app-api';
 import { configsStoreState } from '@xynotes/store/configs';
-import { activeNote, addNote, setActiveNoteId } from '@xynotes/store/note';
+import { activeNote, notesStoreAction } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 
 document.addEventListener('keydown', (e) => {
   // 新建笔记
   if ((e.metaKey || e.ctrlKey) && e.key === 'n' && is.mainWindow()) {
-    const note = addNote();
-    setActiveNoteId(note.nid);
+    const note = notesStoreAction.addNote();
+    notesStoreAction.setActiveNoteId(note.nid);
     e.stopPropagation();
     e.preventDefault();
     return;

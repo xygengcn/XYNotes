@@ -3,7 +3,7 @@ import eventBus from '@store/events';
 import { AppLoadStatus, AppMode } from '@store/typings/app';
 import { is } from '@xynotes/utils';
 import { computed, readonly, ref } from 'vue';
-import { configsStoreState, syncConfigs } from './configs';
+import { configsStoreAction, configsStoreState } from './configs';
 
 declare const __APP_VERSION__: string;
 
@@ -28,25 +28,9 @@ const state = ref({
 });
 
 /**
- * 设置桌面端全屏模式
- * @param flag 是否启用全屏模式
- */
-export const setDesktopFullScreen = (flag: boolean) => {
-  state.value.desktopFullScreen = flag;
-};
-
-/**
- * 修改网络状态
- * @param status
- */
-export const changeAppNetworkStatus = (status: boolean) => {
-  state.value.networkStatus = status;
-};
-
-/**
  * 是否网络在线
  */
-export const isCheckOnlineSync = computed(() => {
+const isCheckOnlineSync = computed(() => {
   if (!state.value.networkStatus) {
     return false;
   }
@@ -56,18 +40,35 @@ export const isCheckOnlineSync = computed(() => {
   return false;
 });
 
+/**
+ * 设置桌面端全屏模式
+ * @param flag 是否启用全屏模式
+ */
+const setDesktopFullScreen = (flag: boolean) => {
+  state.value.desktopFullScreen = flag;
+};
+
+/**
+ * 修改网络状态
+ * @param status
+ */
+const changeAppNetworkStatus = (status: boolean) => {
+  state.value.networkStatus = status;
+};
+
 // 修改状态
-export const setLoadStatus = (status: AppLoadStatus) => {
+const setLoadStatus = (status: AppLoadStatus) => {
   state.value.loadStatus = status;
 };
 
 /**
  * 同步数据
  */
-export const syncApp = async () => {
+const syncApp = async () => {
   setLoadStatus(AppLoadStatus.configsLoading);
   // 同步配置
-  return syncConfigs()
+  return configsStoreAction
+    .syncConfigs()
     .then(async (configs) => {
       // 结束加载
       setLoadStatus(AppLoadStatus.synced);
@@ -84,7 +85,7 @@ export const syncApp = async () => {
  * 事件同步完成
  * @param cb
  */
-export const onAppSynced = (cb: () => void) => {
+const onAppSynced = (cb: () => void) => {
   console.log('[onAppSynced]');
   if (state.value.loadStatus >= AppLoadStatus.synced) {
     return cb();
@@ -96,7 +97,7 @@ export const onAppSynced = (cb: () => void) => {
  * 备份
  * @returns
  */
-export const backupAppData = async () => {
+const backupAppData = async () => {
   console.info('[backup]');
   return database
     .backup()
@@ -117,7 +118,7 @@ export const backupAppData = async () => {
  * @param backupData
  * @returns
  */
-export const recoveryAppData = async (backupData: { version: string; database: any }) => {
+const recoveryAppData = async (backupData: { version: string; database: any }) => {
   return database.recovery(backupData.database).then(() => {
     return syncApp();
   });
@@ -126,12 +127,24 @@ export const recoveryAppData = async (backupData: { version: string; database: a
 /**
  * 初始化数据
  */
-export const initAppData = async () => {
+const initAppData = async () => {
   return database.drop();
 };
 
 // 数据
-export const appStoreState = readonly(state);
+const appStoreState = readonly(state);
+
+const appStoreAction = {
+  syncApp,
+  backupAppData,
+  recoveryAppData,
+  initAppData,
+  setDesktopFullScreen,
+  changeAppNetworkStatus,
+  setLoadStatus
+};
+
+export { appStoreAction, appStoreState, isCheckOnlineSync, onAppSynced };
 
 // 监听网络变化
 window.addEventListener('online', () => {

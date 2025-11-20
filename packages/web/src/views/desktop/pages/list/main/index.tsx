@@ -2,7 +2,7 @@ import NoteEditor from '@/components/note-editor';
 import NoteEditorCounter from '@/components/note-editor/counter';
 import NoteEditorTitle from '@/components/note-editor/title';
 import { Icon } from '@xynotes/components';
-import { activeNote, setActiveNoteId } from '@xynotes/store/note';
+import { activeNote, notesStoreAction } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 import { defineComponent, onBeforeMount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -21,7 +21,7 @@ const DesktopMainContainerDetail = defineComponent({
 
     onBeforeMount(() => {
       if (route.params?.nid) {
-        setActiveNoteId(route.params?.nid as string);
+        notesStoreAction.setActiveNoteId(route.params?.nid as string);
       } else {
         router.push('/');
       }

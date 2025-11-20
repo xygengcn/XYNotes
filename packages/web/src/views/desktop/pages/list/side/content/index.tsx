@@ -3,7 +3,7 @@ import showNoteTagsDialog from '@/services/note-tags';
 import { createWindow, exsitAppWindow, setWindowFocus } from '@xynotes/app-api';
 import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import { Note } from '@xynotes/store';
-import { notesListBySort, notesStoreState, setActiveNoteId } from '@xynotes/store/note';
+import { notesListBySort, notesStoreAction, notesStoreState } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
@@ -54,7 +54,7 @@ const DesktopSideContainerListContent = defineComponent({
         const has = await exsitAppWindow(note.nid);
         if (has) {
           setWindowFocus(note.nid);
-          setActiveNoteId(undefined);
+          notesStoreAction.setActiveNoteId(undefined);
           return;
         }
       }
@@ -64,7 +64,7 @@ const DesktopSideContainerListContent = defineComponent({
           nid: note.nid
         }
       });
-      setActiveNoteId(note.nid);
+      notesStoreAction.setActiveNoteId(note.nid);
     };
 
     return () => (

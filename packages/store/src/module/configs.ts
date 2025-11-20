@@ -27,11 +27,7 @@ const state = ref<IConfigs>({
  * @param key
  * @param value
  */
-export const setConfig = <K extends keyof IConfigs = keyof IConfigs>(
-  key: K,
-  value: IConfigs[K],
-  store: boolean = true
-) => {
+const setConfig = <K extends keyof IConfigs = keyof IConfigs>(key: K, value: IConfigs[K], store: boolean = true) => {
   state.value[key] = value;
   if (store) {
     return ApiEvent.api.apiSaveOrUpdateConfigs([{ key, value: toRaw(value) }]);
@@ -42,7 +38,7 @@ export const setConfig = <K extends keyof IConfigs = keyof IConfigs>(
  * 同步配置
  * @returns
  */
-export const syncConfigs = async () => {
+const syncConfigs = async () => {
   return ApiEvent.api.apiFetchConfigsData().then((configList) => {
     console.log('[sync] configs', configList);
     const configs = configList.reduce((obj, i) => {
@@ -70,3 +66,11 @@ export const syncConfigs = async () => {
  * 定义
  */
 export const configsStoreState = readonly(state);
+
+/**
+ * 方法
+ */
+export const configsStoreAction = {
+  setConfig,
+  syncConfigs
+};

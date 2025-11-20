@@ -1,4 +1,4 @@
-import { changeAppNetworkStatus, isCheckOnlineSync } from '@store/module/app';
+import { appStoreAction, isCheckOnlineSync } from '@store/module/app';
 import { configsStoreState } from '@store/module/configs';
 import { IUploadFile } from '@store/typings/assets';
 import { IConfigsColunm } from '@store/typings/configs';
@@ -49,7 +49,7 @@ class ApiEventOnline {
         if (data.code === 200) {
           this.onlineSyncErrorCount = 0;
           // 由于网络多次失败问题，会停止网络同步状态
-          changeAppNetworkStatus(true);
+          appStoreAction.changeAppNetworkStatus(true);
           return data.data;
         }
         data.userMsg && window.$ui.toast(data.userMsg);
@@ -60,7 +60,7 @@ class ApiEventOnline {
         this.onlineSyncErrorCount++;
         if (this.onlineSyncErrorCount >= 3) {
           // 由于网络多次失败问题，会停止网络同步状态
-          changeAppNetworkStatus(false);
+          appStoreAction.changeAppNetworkStatus(false);
           console.error('[online] fetch 触发熔断机制', this.onlineSyncErrorCount);
         }
         console.error('[online] fetch', this.onlineSyncErrorCount, 'Error:', error);

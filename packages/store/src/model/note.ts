@@ -1,6 +1,6 @@
 import ApiEvent from '@store/api';
 import { isCheckOnlineSync } from '@store/module/app';
-import { archiveNote, removeNote, saveNote, syncNote } from '@store/module/note';
+import { notesStoreAction } from '@store/module/note';
 import { INote, INoteAttachment, NoteStatus, NoteType } from '@xynotes/typings';
 import { debounce, downloadFile, omit, uuid } from '@xynotes/utils';
 import { toRaw } from 'vue';
@@ -153,7 +153,8 @@ export class Note implements INote {
       // 保存中
       this.status = NoteStatus.saving;
       const noteDetail = this.toRaw();
-      return saveNote({ ...noteDetail, status: 1 }, !!this.onlineSyncAt)
+      return notesStoreAction
+        .saveNote({ ...noteDetail, status: 1 }, !!this.onlineSyncAt)
         .then((note) => {
           if (note) {
             console.log('[save] success', note);
@@ -194,7 +195,7 @@ export class Note implements INote {
       window.clearTimeout(this.__saveNoteDebouce);
     }
     const note = this.toRaw();
-    return archiveNote(note);
+    return notesStoreAction.archiveNote(note);
   }
 
   /**
@@ -202,7 +203,7 @@ export class Note implements INote {
    */
   public remove() {
     if (this.status === NoteStatus.archive) {
-      removeNote(this.toRaw());
+      notesStoreAction.removeNote(this.toRaw());
     }
   }
 
@@ -228,7 +229,7 @@ export class Note implements INote {
    */
   public sync() {
     console.log('[note] sync', this.nid);
-    return syncNote(this.toRaw()).then((note) => {
+    return notesStoreAction.syncNote(this.toRaw()).then((note) => {
       this.assign(note);
       window.$ui.toast('同步成功');
     });

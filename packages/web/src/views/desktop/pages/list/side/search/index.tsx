@@ -1,5 +1,5 @@
 import { Icon } from '@xynotes/components';
-import { notesStoreState, searchNoteList } from '@xynotes/store/note';
+import { notesStoreAction, notesStoreState } from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import './index.scss';
@@ -14,7 +14,7 @@ const DesktopSideContainerListSearch = defineComponent({
      */
     const inputDebounce = debounce((e: PointerEvent) => {
       const target = e.target as HTMLInputElement;
-      searchNoteList(target.value.trimStart());
+      notesStoreAction.searchNoteList(target.value.trimStart());
     }, 600);
     const handleInput = (e: Event) => {
       inputDebounce(e);
@@ -34,7 +34,7 @@ const DesktopSideContainerListSearch = defineComponent({
           type="delete"
           v-show={notesStoreState.value.searchKeyword.length > 0}
           onClick={() => {
-            searchNoteList('');
+            notesStoreAction.searchNoteList('');
           }}
         ></Icon>
       </div>

@@ -1,6 +1,6 @@
 import { Icon } from '@xynotes/components';
 import { isCheckOnlineSync } from '@xynotes/store/app';
-import { addNote, notesStoreState, searchNoteList, setActiveNoteId } from '@xynotes/store/note';
+import { notesStoreAction, notesStoreState } from '@xynotes/store/note';
 import { debounce } from '@xynotes/utils';
 import { defineComponent, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -25,14 +25,14 @@ const MobileHome = defineComponent({
      */
     const handleInput = debounce((e: PointerEvent) => {
       const target = e.target as HTMLInputElement;
-      searchNoteList(target.value.trimStart());
+      notesStoreAction.searchNoteList(target.value.trimStart());
     });
 
     /**
      * 新增
      */
     const handleClickAdd = () => {
-      const note = addNote();
+      const note = notesStoreAction.addNote();
       return router.push({
         name: 'mobile-detail',
         params: {
@@ -42,7 +42,7 @@ const MobileHome = defineComponent({
     };
 
     onBeforeMount(() => {
-      setActiveNoteId('');
+      notesStoreAction.setActiveNoteId('');
     });
     return () => (
       <div class="mobile-home">
@@ -65,7 +65,7 @@ const MobileHome = defineComponent({
               type="delete"
               v-show={notesStoreState.value.searchKeyword.length > 0}
               onClick={() => {
-                searchNoteList('');
+                notesStoreAction.searchNoteList('');
               }}
             ></Icon>
           </div>

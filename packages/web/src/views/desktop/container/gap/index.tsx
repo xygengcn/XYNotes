@@ -1,4 +1,4 @@
-import { setConfig } from '@xynotes/store/configs';
+import { configsStoreAction } from '@xynotes/store/configs';
 import { debounce } from '@xynotes/utils';
 import { defineComponent, nextTick, onMounted, ref } from 'vue';
 import { DESKTOP_NAV_MENU_WIDTH } from '../nav';
@@ -18,7 +18,7 @@ const DesktopGap = defineComponent({
      */
     const setSideContainerWidth = debounce((width) => {
       console.info('[config] 保存左侧长度配置', width);
-      return setConfig('SIDE_CONTAINER_MAX_WIDTH', width);
+      return configsStoreAction.setConfig('SIDE_CONTAINER_MAX_WIDTH', width);
     });
 
     onMounted(() => {
@@ -29,7 +29,7 @@ const DesktopGap = defineComponent({
           document.onmousemove = (e: MouseEvent) => {
             const clientX = e.clientX - DESKTOP_NAV_MENU_WIDTH;
             const sideContainerWidth = Math.max(SIDE_CONTAINER_MIN_WIDTH, Math.min(clientX, SIDE_CONTAINER_MAX_WIDTH));
-            setConfig('SIDE_CONTAINER_MAX_WIDTH', sideContainerWidth, false);
+            configsStoreAction.setConfig('SIDE_CONTAINER_MAX_WIDTH', sideContainerWidth, false);
             setSideContainerWidth(sideContainerWidth);
             return false;
           };
@@ -44,7 +44,7 @@ const DesktopGap = defineComponent({
           document.ontouchmove = (e: TouchEvent) => {
             const clientX = e.touches[0].clientX - DESKTOP_NAV_MENU_WIDTH;
             const sideContainerWidth = Math.max(SIDE_CONTAINER_MIN_WIDTH, Math.min(clientX, SIDE_CONTAINER_MAX_WIDTH));
-            setConfig('SIDE_CONTAINER_MAX_WIDTH', sideContainerWidth, false);
+            configsStoreAction.setConfig('SIDE_CONTAINER_MAX_WIDTH', sideContainerWidth, false);
             setSideContainerWidth(sideContainerWidth);
           };
         };

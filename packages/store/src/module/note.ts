@@ -21,7 +21,7 @@ const state = ref({
 });
 
 // 当前笔记
-export const activeNote = computed(() => {
+const activeNote = computed(() => {
   if (state.value.activeNoteId) {
     const note = state.value.noteList.find((note) => note.nid === state.value.activeNoteId);
     return note;
@@ -30,12 +30,12 @@ export const activeNote = computed(() => {
 });
 
 // 笔记个数
-export const noteListCount = computed(() => {
+const noteListCount = computed(() => {
   return state.value.noteList?.length || 0;
 });
 
 // 排好序的数组
-export const notesListBySort = computed(() => {
+const notesListBySort = computed(() => {
   const noteListSortType = configsStoreState.value.NOTE_LIST_SORT.value || NoteListSortType.updated;
   // 分割关键词
   const keywords = state.value.searchKeyword
@@ -73,7 +73,7 @@ export const notesListBySort = computed(() => {
  * 同步笔记列表
  * @returns
  */
-export const sycnNoteList = () => {
+const sycnNoteList = () => {
   // 同步笔记信息
   return ApiEvent.api
     .apiFetchNoteListData({ updateTime: 0, order: configsStoreState.value.NOTE_LIST_SORT.value, pageSize: 50 })
@@ -89,7 +89,7 @@ export const sycnNoteList = () => {
  * 搜索笔记列表
  * @param keyword 关键字
  */
-export const searchNoteList = (keyword: string) => {
+const searchNoteList = (keyword: string) => {
   state.value.searchKeyword = keyword;
   return;
 };
@@ -98,7 +98,7 @@ export const searchNoteList = (keyword: string) => {
  * 设置当前笔记
  * @param nid
  */
-export const setActiveNoteId = (nid: string) => {
+const setActiveNoteId = (nid: string) => {
   state.value.activeNoteId = nid;
 };
 
@@ -107,7 +107,7 @@ export const setActiveNoteId = (nid: string) => {
  *
  * @param list
  */
-export const setNoteList = (list: INote[]) => {
+const setNoteList = (list: INote[]) => {
   // 先排序
   list = list.sort((a, b) => b.updatedAt - a.updatedAt);
   list.forEach((note) => {
@@ -126,7 +126,7 @@ export const setNoteList = (list: INote[]) => {
 /**
  * 更新笔记
  */
-export const updateNote = (note: INote) => {
+const updateNote = (note: INote) => {
   console.log('[store] update:action', note.nid);
   const originNote = state.value.noteList.find((n) => note.nid === n.nid);
   if (originNote) {
@@ -140,7 +140,7 @@ export const updateNote = (note: INote) => {
 /**
  * 增加笔记
  */
-export const addNote = (detail?: INote) => {
+const addNote = (detail?: INote) => {
   const note = new Note(detail);
   state.value.noteList.unshift(note);
   return note;
@@ -151,7 +151,7 @@ export const addNote = (detail?: INote) => {
  * @param note
  * @returns
  */
-export const saveNote = async (note: Partial<INote>, onlineSyncAt: boolean) => {
+const saveNote = async (note: Partial<INote>, onlineSyncAt: boolean) => {
   const result = await ApiEvent.api.apiSaveOrUpdateNote(note as INote, !!onlineSyncAt);
   if (result) {
     /**
@@ -167,7 +167,7 @@ export const saveNote = async (note: Partial<INote>, onlineSyncAt: boolean) => {
  * @param note
  * @returns
  */
-export const archiveNote = async (note: INote): Promise<void> => {
+const archiveNote = async (note: INote): Promise<void> => {
   return ApiEvent.api.apiArchiveNote(note).then(() => {
     const nid = note.nid;
     if (state.value.activeNoteId !== nid) {
@@ -188,7 +188,7 @@ export const archiveNote = async (note: INote): Promise<void> => {
  * @param note
  * @returns
  */
-export const syncNote = async (note: INote) => {
+const syncNote = async (note: INote) => {
   console.log('[note] sync:action', note.nid);
   return ApiEvent.api.apiSyncNote(note).then((result) => {
     window.$ui.toast('同步成功');
@@ -202,7 +202,7 @@ export const syncNote = async (note: INote) => {
  * @param nid
  * @returns
  */
-export const queryNote = async (nid: string) => {
+const queryNote = async (nid: string) => {
   return ApiEvent.api.apiFetchNoteDetailData(nid).then((result) => {
     result && updateNote(result);
     return result;
@@ -213,7 +213,7 @@ export const queryNote = async (nid: string) => {
  * 恢复数据
  * @param note
  */
-export const recovery = (note: INote) => {
+const recovery = (note: INote) => {
   state.value.archiveNoteList.delete(note.nid);
   state.value.noteList.push(new Note(note));
   console.log('恢复笔记', state.value.archiveNoteList);
@@ -226,7 +226,7 @@ export const recovery = (note: INote) => {
  * @param note
  * @returns
  */
-export const removeNote = async (note: INote) => {
+const removeNote = async (note: INote) => {
   state.value.archiveNoteList.delete(note.nid);
   return await ApiEvent.api.apiDeleteNoteArchive(note);
 };
@@ -235,7 +235,7 @@ export const removeNote = async (note: INote) => {
  * 删除所有归档笔记
  * @returns
  */
-export const removeAllArchiveNote = async () => {
+const removeAllArchiveNote = async () => {
   return database.module('notes_archive').then((model) => {
     return model.clear().then(() => {
       state.value.archiveNoteList.reset([]);
@@ -246,7 +246,7 @@ export const removeAllArchiveNote = async () => {
  * 拉取归档笔记
  * @returns
  */
-export const fetchNoteArchiveList = () => {
+const fetchNoteArchiveList = () => {
   return ApiEvent.api.apiFetchArchiveList().then((result) => {
     result.forEach((note) => {
       state.value.archiveNoteList.push(new Note(note));
@@ -254,7 +254,26 @@ export const fetchNoteArchiveList = () => {
   });
 };
 
-export const notesStoreState = readonly(state);
+const notesStoreState = readonly(state);
+
+const notesStoreAction = {
+  addNote,
+  archiveNote,
+  removeNote,
+  removeAllArchiveNote,
+  recovery,
+  queryNote,
+  saveNote,
+  syncNote,
+  updateNote,
+  setActiveNoteId,
+  setNoteList,
+  searchNoteList,
+  sycnNoteList,
+  fetchNoteArchiveList
+};
+
+export { activeNote, noteListCount, notesListBySort, notesStoreAction, notesStoreState };
 
 /**
  * 监听笔记事件

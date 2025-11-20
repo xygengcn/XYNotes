@@ -1,5 +1,5 @@
 import { Icon } from '@xynotes/components';
-import { initAppData, syncApp } from '@xynotes/store/app';
+import { appStoreAction } from '@xynotes/store/app';
 import { defineComponent } from 'vue';
 import './index.scss';
 
@@ -15,7 +15,7 @@ export default defineComponent({
      * 数据同步
      */
     const handleSyncList = () => {
-      syncApp();
+      appStoreAction.syncApp();
       handleClose();
     };
 
@@ -34,7 +34,7 @@ export default defineComponent({
         title: '重置数据',
         content: '即将进行删除本地数据操作，包含本地所有笔记和配置，确定重置数据吗？',
         onSubmit: () => {
-          initAppData();
+          appStoreAction.initAppData();
           window.$ui.toast('重置成功，即将要刷新应用！');
           setTimeout(() => {
             window.location.reload();

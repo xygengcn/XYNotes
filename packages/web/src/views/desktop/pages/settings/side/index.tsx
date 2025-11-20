@@ -1,5 +1,5 @@
 import { Button } from '@xynotes/components';
-import { backupAppData, initAppData, recoveryAppData } from '@xynotes/store/app';
+import { appStoreAction } from '@xynotes/store/app';
 import { downloadFile, jsonFileReader } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
@@ -14,7 +14,7 @@ const DesktopSideContainerSetting = defineComponent({
     // 数据备份
     const handleBackup = () => {
       console.info('[backup]', '数据备份');
-      return backupAppData().then((backupData) => {
+      return appStoreAction.backupAppData().then((backupData) => {
         downloadFile(JSON.stringify(backupData), 'database.json');
       });
     };
@@ -24,7 +24,7 @@ const DesktopSideContainerSetting = defineComponent({
       console.log('[recovery] 数据恢复');
       return jsonFileReader()
         .then((backupData: any) => {
-          recoveryAppData(backupData.database).then(() => {
+          appStoreAction.recoveryAppData(backupData.database).then(() => {
             window.$ui.toast('数据恢复成功');
           });
         })
@@ -47,7 +47,7 @@ const DesktopSideContainerSetting = defineComponent({
         title: '重置数据',
         content: '即将进行删除本地数据操作，包含本地所有笔记和配置，确定重置数据吗？',
         onSubmit: () => {
-          initAppData();
+          appStoreAction.initAppData();
           window.$ui.toast('重置成功，即将要刷新应用！');
           setTimeout(() => {
             window.location.reload();

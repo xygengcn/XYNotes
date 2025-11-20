@@ -1,7 +1,7 @@
 import NoteItem from '@/components/note-item';
 import { Icon, type IContextMenuProps, Scroller } from '@xynotes/components';
 import type { Note } from '@xynotes/store';
-import { fetchNoteArchiveList, notesStoreState, recovery, removeAllArchiveNote, removeNote } from '@xynotes/store/note';
+import { notesStoreAction, notesStoreState } from '@xynotes/store/note';
 import { computed, defineComponent, onBeforeMount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
@@ -29,7 +29,7 @@ const DesktopSideContainerArchive = defineComponent({
               width: 300,
               content: '确定恢复这个笔记吗？',
               onSubmit: () => {
-                recovery(note.toRaw());
+                notesStoreAction.recovery(note.toRaw());
                 window.$ui.toast('恢复成功');
               }
             });
@@ -39,7 +39,7 @@ const DesktopSideContainerArchive = defineComponent({
               width: 300,
               content: '确定永久移除这个笔记吗？',
               onSubmit: () => {
-                removeNote(note.toRaw());
+                notesStoreAction.removeNote(note.toRaw());
                 window.$ui.toast('移除成功');
               }
             });
@@ -50,7 +50,7 @@ const DesktopSideContainerArchive = defineComponent({
               width: 300,
               content: '确定永久移除归档的全部笔记吗？',
               onSubmit: () => {
-                removeAllArchiveNote();
+                notesStoreAction.removeAllArchiveNote();
                 window.$ui.toast('移除成功');
               }
             });
@@ -60,7 +60,7 @@ const DesktopSideContainerArchive = defineComponent({
     };
 
     onBeforeMount(() => {
-      fetchNoteArchiveList();
+      notesStoreAction.fetchNoteArchiveList();
     });
 
     /**

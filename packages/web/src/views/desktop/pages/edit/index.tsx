@@ -1,6 +1,6 @@
 import MinMax from '@/components/min-max';
 import NoteEditor from '@/components/note-editor';
-import { setActiveNoteId } from '@xynotes/store/note';
+import { notesStoreAction } from '@xynotes/store/note';
 import { is } from '@xynotes/utils';
 import { defineComponent } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -12,7 +12,7 @@ const DetailPage = defineComponent({
     const route = useRoute();
     const router = useRouter();
     if (route.params?.nid) {
-      setActiveNoteId(route.params?.nid as string);
+      notesStoreAction.setActiveNoteId(route.params?.nid as string);
     } else {
       router.push('/');
     }

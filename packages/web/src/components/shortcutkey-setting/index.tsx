@@ -1,7 +1,7 @@
-import { configsStoreState, setConfig } from '@xynotes/store/configs';
 import { registerShortcut, showMainWindow, unregisterAllShortcut } from '@xynotes/app-api';
+import { Card, ShortcutInput } from '@xynotes/components';
+import { configsStoreAction, configsStoreState } from '@xynotes/store/configs';
 import { defineComponent } from 'vue';
-import { ShortcutInput, Card } from '@xynotes/components';
 import './index.scss';
 
 const ShortcutkeysSetting = defineComponent({
@@ -19,7 +19,7 @@ const ShortcutkeysSetting = defineComponent({
           showMainWindow();
         })
           .then(() => {
-            setConfig('SHORTCUT_KEY_SHOW', value);
+            configsStoreAction.setConfig('SHORTCUT_KEY_SHOW', value);
           })
           .catch((e) => {
             console.error('[shortcut] setting', e);

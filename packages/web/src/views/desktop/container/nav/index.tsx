@@ -3,7 +3,7 @@ import MinMax from '@/components/min-max';
 import { Loading } from '@xynotes/components';
 import { AppLoadStatus } from '@xynotes/store';
 import { appStoreState, isCheckOnlineSync, onAppSynced } from '@xynotes/store/app';
-import { addNote, setActiveNoteId } from '@xynotes/store/note';
+import { notesStoreAction } from '@xynotes/store/note';
 import { taskStoreAction, taskStoreState } from '@xynotes/store/task';
 import { is } from '@xynotes/utils';
 import { computed, defineComponent } from 'vue';
@@ -25,8 +25,8 @@ const DesktopNavContainer = defineComponent({
         visible: true,
         path: '/',
         action: () => {
-          const note = addNote();
-          setActiveNoteId(note.nid);
+          const note = notesStoreAction.addNote();
+          notesStoreAction.setActiveNoteId(note.nid);
           router.push({
             name: 'desktop-main-list-detail',
             params: {

@@ -3,7 +3,7 @@ import NoteEditorCounter from '@/components/note-editor/counter';
 import { useThemeColor } from '@/services/theme';
 import { Icon, Loading } from '@xynotes/components';
 import { useEditor, type MarkdownEditorInstance } from '@xynotes/editor';
-import { activeNote, setActiveNoteId } from '@xynotes/store/note';
+import { activeNote, notesStoreAction } from '@xynotes/store/note';
 import { defineComponent, onBeforeMount, onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import './index.scss';
@@ -35,19 +35,19 @@ const MobileDetail = defineComponent({
     const handleBack = async () => {
       await activeNote.value.save(true);
       await router.push('/');
-      setActiveNoteId('');
+      notesStoreAction.setActiveNoteId('');
     };
 
     onBeforeMount(() => {
       if (route.params?.nid) {
-        setActiveNoteId(route.params?.nid as string);
+        notesStoreAction.setActiveNoteId(route.params?.nid as string);
       } else {
         router.back();
       }
     });
 
     onBeforeUnmount(() => {
-      setActiveNoteId('');
+      notesStoreAction.setActiveNoteId('');
     });
 
     return () => (
