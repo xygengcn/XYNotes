@@ -70,5 +70,9 @@ api.on('error', (error) => {
   logger.error(error);
 });
 
+api.on('start', () => {
+  logger.info('app start');
+});
+
 // 开启
 api.start();
