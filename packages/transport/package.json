@@ -36,7 +36,7 @@
     "eslint": "8.4.1",
     "prettier": "2.5.1",
     "typescript": "5.7.2",
-    "vite": "5.0.5",
+    "vite": "5.4.21",
     "vite-plugin-dts": "^3.9.1"
   },
   "dependencies": {
