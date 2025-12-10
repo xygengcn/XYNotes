@@ -28,7 +28,7 @@
     "@tiptap/extension-highlight": "^2.4.0",
     "@tiptap/extension-history": "^2.10.4",
     "@tiptap/extension-italic": "^2.4.0",
-    "@tiptap/extension-link": "^2.4.0",
+    "@tiptap/extension-link": "^2.10.4",
     "@tiptap/extension-list": "^3.4.2",
     "@tiptap/extension-paragraph": "^2.4.0",
     "@tiptap/extension-strike": "^2.4.0",
